@@ -4,5 +4,6 @@ namespace BudgetPlanner.ViewModels
 {
     public abstract class ViewModelBase : ObservableObject
     {
+
     }
 }

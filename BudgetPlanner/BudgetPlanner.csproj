@@ -18,4 +18,20 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Services\BudgetPlanner.Services.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.ViewModels\BudgetPlanner.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Debts\DebtView.axaml.cs">
+      <DependentUpon>DebtView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Expenses\ExpensesView.axaml.cs">
+      <DependentUpon>ExpensesView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

@@ -3,15 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner", "BudgetPlanner\BudgetPlanner.csproj", "{82600396-B90A-4171-A0F1-161FFDF1561E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner", "BudgetPlanner\BudgetPlanner.csproj", "{82600396-B90A-4171-A0F1-161FFDF1561E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Android", "BudgetPlanner.Android\BudgetPlanner.Android.csproj", "{76ED6D81-8F9C-4442-83F5-BDE3D90FD2C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Android", "BudgetPlanner.Android\BudgetPlanner.Android.csproj", "{76ED6D81-8F9C-4442-83F5-BDE3D90FD2C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Desktop", "BudgetPlanner.Desktop\BudgetPlanner.Desktop.csproj", "{4A29407C-456D-497D-AB6F-D823E4A2ED7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Desktop", "BudgetPlanner.Desktop\BudgetPlanner.Desktop.csproj", "{4A29407C-456D-497D-AB6F-D823E4A2ED7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.iOS", "BudgetPlanner.iOS\BudgetPlanner.iOS.csproj", "{36B5CA83-3343-4113-856E-401E9957EADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.iOS", "BudgetPlanner.iOS\BudgetPlanner.iOS.csproj", "{36B5CA83-3343-4113-856E-401E9957EADA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Browser", "BudgetPlanner.Browser\BudgetPlanner.Browser.csproj", "{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Browser", "BudgetPlanner.Browser\BudgetPlanner.Browser.csproj", "{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Services", "BudgetPlanner.Services\BudgetPlanner.Services.csproj", "{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{91BE5C63-A7FE-492D-84D8-8D40B0CC679F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Messages", "BudgetPlanner.Messages\BudgetPlanner.Messages.csproj", "{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.ViewModels.Shared", "BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj", "{D557DF87-A7DB-4190-935B-68510AD0DB44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.ViewModels", "BudgetPlanner.ViewModels\BudgetPlanner.ViewModels.csproj", "{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,9 +53,31 @@ Global
 		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D557DF87-A7DB-4190-935B-68510AD0DB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D557DF87-A7DB-4190-935B-68510AD0DB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D557DF87-A7DB-4190-935B-68510AD0DB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D557DF87-A7DB-4190-935B-68510AD0DB44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76ED6D81-8F9C-4442-83F5-BDE3D90FD2C6} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
+		{4A29407C-456D-497D-AB6F-D823E4A2ED7B} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
+		{36B5CA83-3343-4113-856E-401E9957EADA} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
+		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27901178-8D95-4CDB-AF34-7284161AC83D}

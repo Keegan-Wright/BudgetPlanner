@@ -44,5 +44,10 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+    - name: BuildDesktop
+      run: dotnet build -c=$env:Configuration
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
+      with:
+        path: BugetPlanner\Bin

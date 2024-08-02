@@ -35,6 +35,13 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
+    - name: Add community toolset nuget
+      uses: deitry/add-nuget-source-action@v2
+      with:
+        url: https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json
+
+
+
     - name: Execute unit tests
       run: dotnet test
 

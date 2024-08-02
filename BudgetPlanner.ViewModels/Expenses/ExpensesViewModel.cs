@@ -6,10 +6,10 @@ namespace BudgetPlanner.ViewModels
 {
     public partial class ExpensesViewModel : ViewModelBase
     {
-        private readonly INavigationService navigationService;
-        public ExpensesViewModel() { 
-       
-            navigationService = new NavigationService();
+        private readonly INavigationService _navigationService;
+        public ExpensesViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
         }
 
         [ObservableProperty]
@@ -19,7 +19,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public void ToDebts()
         {
-            navigationService.RequestNavigation(new DebtViewModel());
+            _navigationService.RequestNavigation<DebtViewModel>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BudgetPlanner.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,10 @@ namespace BudgetPlanner.ViewModels
 {
     public partial class DebtViewModel : ViewModelBase
     {
-        private readonly INavigationService navigationService;
-        public DebtViewModel()
+        private readonly INavigationService _navigationService;
+        public DebtViewModel(INavigationService navigationService)
         {
-
-            navigationService = new NavigationService();
+            _navigationService = navigationService;
         }
 
         [ObservableProperty]
@@ -25,7 +25,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public void ToExpenses()
         {
-            navigationService.RequestNavigation(new ExpensesViewModel());
+            _navigationService.RequestNavigation<ExpensesViewModel>();
         }
     }
 }

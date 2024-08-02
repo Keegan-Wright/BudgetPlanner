@@ -1,4 +1,3 @@
-
 name: .NET Build
 
 on:
@@ -44,10 +43,30 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    - name: BuildDesktop
+    - name: Build Solution
       run: dotnet build -c=release
 
-    - name: Upload build artifacts
+    - name: Upload build android artifact
       uses: actions/upload-artifact@v3
       with:
-        path: BudgetPlanner\Bin
+        name: Android build
+        path: BudgetPlanner.Android\Bin\Release\net8.0\
+
+    - name: Upload build browser artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Browser build
+        path: BudgetPlanner.Browser\Bin\Release\net8.0\
+
+    - name: Upload build desktop artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Desktop build
+        path: BudgetPlanner.Desktop\Bin\Release\net8.0\
+
+
+    - name: Upload build android artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: IOS build
+        path: BudgetPlanner.iOS\Bin\Release\net8.0\

@@ -45,9 +45,9 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: BuildDesktop
-      run: dotnet build -c=$env:Configuration
+      run: dotnet build -c=release
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        path: BugetPlanner\Bin
+        path: BudgetPlanner\Bin

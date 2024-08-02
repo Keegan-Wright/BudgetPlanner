@@ -24,11 +24,11 @@ namespace BudgetPlanner
         public override void OnFrameworkInitializationCompleted()
         {
             var services = new ServiceCollection();
-            // You can split registrations across multiple methods or classes, but you need to remember to call them all
+
             ConfigureServices(services);
             ConfigureViews(services);
             ConfigureViewModels(services);
-            var provider = services.BuildServiceProvider(); ; // Warning in MEDI 7.0, fixed in 8.0
+            var provider = services.BuildServiceProvider();
 
             Ioc.Default.ConfigureServices(provider);
 

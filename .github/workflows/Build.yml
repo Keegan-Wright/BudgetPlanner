@@ -50,13 +50,13 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Android build
-        path: BudgetPlanner.Android\Bin\Release\net8.0\
+        path: BudgetPlanner.Android\Bin\Release\net8.0-android\
 
     - name: Upload build browser artifact
       uses: actions/upload-artifact@v3
       with:
         name: Browser build
-        path: BudgetPlanner.Browser\Bin\Release\net8.0\
+        path: BudgetPlanner.Browser\Bin\Release\net8.0-browser\
 
     - name: Upload build desktop artifact
       uses: actions/upload-artifact@v3
@@ -65,8 +65,8 @@ jobs:
         path: BudgetPlanner.Desktop\Bin\Release\net8.0\
 
 
-    - name: Upload build android artifact
+    - name: Upload build ios artifact
       uses: actions/upload-artifact@v3
       with:
         name: IOS build
-        path: BudgetPlanner.iOS\Bin\Release\net8.0\
+        path: BudgetPlanner.iOS\Bin\Release\net8.0-ios\

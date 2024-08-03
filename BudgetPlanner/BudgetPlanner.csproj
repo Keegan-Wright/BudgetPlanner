@@ -18,14 +18,29 @@
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240801-build.1708" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.16" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+
+		<PackageReference Include="SQLite" Version="3.13.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Services\BudgetPlanner.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.ViewModels\BudgetPlanner.ViewModels.csproj" />
+		<ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -9,10 +9,7 @@ namespace BudgetPlanner.Views
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
 
-#endif
         }
     }
 }

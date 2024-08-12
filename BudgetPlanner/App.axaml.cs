@@ -47,22 +47,23 @@ namespace BudgetPlanner
                 _ = db.Database.EnsureCreated();
             }
 
-            var mainWindow = Ioc.Default.GetRequiredService<MainWindow>();
-            var mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 // Line below is needed to remove Avalonia data validation.
                 // Without this line you will get duplicate validations from both Avalonia and CT
                 BindingPlugins.DataValidators.RemoveAt(0);
 
-                desktop.MainWindow = mainWindow;
-                desktop.MainWindow.DataContext = mainViewModel;
+                desktop.MainWindow = Ioc.Default.GetRequiredService<MainWindow>(); ;
+                desktop.MainWindow.DataContext = Ioc.Default.GetRequiredService<MainViewModel>(); ;
 
             }
             else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             {
-                singleViewPlatform.MainView = mainWindow;
-                singleViewPlatform.MainView.DataContext = mainViewModel;
+                singleViewPlatform.MainView = new MainView
+                {
+                    DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>())
+                };
+
             }
 
             base.OnFrameworkInitializationCompleted();
@@ -70,6 +71,11 @@ namespace BudgetPlanner
 
         private static ServiceCollection BuildServices()
         {
+
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            var DbPath = System.IO.Path.Join(path, "BudgetPlanner.db");
+
             var services = new ServiceCollection();
 
             services.AddWindows();
@@ -77,9 +83,12 @@ namespace BudgetPlanner
             services.AddViewModels();
             services.AddServices();
 
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            var DbPath = System.IO.Path.Join(path, "BudgetPlanner.db");
+            services.AddSingleton(new DatabaseConfiguration()
+            {
+                ConnectionString = DbPath
+            });
+
+
 
 
             services.AddDbContext<BudgetPlannerDbContext>();

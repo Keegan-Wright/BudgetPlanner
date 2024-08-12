@@ -4,23 +4,22 @@ using System.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using BudgetPlanner.Data.Models;
+using Microsoft.Extensions.Options;
 
 namespace BudgetPlanner.Data.Db
 {
     public class BudgetPlannerDbContext : DbContext
     {
-        //public BudgetPlannerDbContext(DbContextOptions<BudgetPlannerDbContext> options) : base(options)
-        //{
-        //}
-        public BudgetPlannerDbContext()
+        private readonly DatabaseConfiguration _databaseConfiguration;
+        public BudgetPlannerDbContext(DatabaseConfiguration dbConfig)
         {
-            
+            _databaseConfiguration = dbConfig;
         }
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"Data Source=BudgetManager.Db", sqliteOptions =>
+            options.UseSqlite($"Data Source={_databaseConfiguration.ConnectionString}", sqliteOptions =>
             {
                 sqliteOptions.MigrationsAssembly("BudgetPlanner.Data.SqliteMigrations");
             });
@@ -37,4 +36,8 @@ namespace BudgetPlanner.Data.Db
 
     }
 
+    public class DatabaseConfiguration
+    {
+        public string ConnectionString { get; set; }
+    }
 }

@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BudgetPlanner.Data.Models\BudgetPlanner.Data.Models.csproj" />
-    <ProjectReference Include="..\BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj" />
   </ItemGroup>
 
 </Project>

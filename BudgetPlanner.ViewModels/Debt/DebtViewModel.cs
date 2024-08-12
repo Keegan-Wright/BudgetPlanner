@@ -20,7 +20,6 @@ namespace BudgetPlanner.ViewModels
 
         [ObservableProperty]
         private string _title = "Debt Page";
-        //https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/Routing/BasicViewLocatorSample#base-class
 
         [RelayCommand]
         public void ToExpenses()

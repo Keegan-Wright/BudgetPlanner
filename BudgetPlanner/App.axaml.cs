@@ -1,21 +1,16 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using BudgetPlanner.DI;
-using BudgetPlanner.Messages;
 using BudgetPlanner.Services;
 using BudgetPlanner.ViewModels;
 using BudgetPlanner.Views;
 using BudgetPlanner.Data.Db;
-using CommunityToolkit.Extensions.DependencyInjection;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 
 namespace BudgetPlanner
 {
@@ -29,7 +24,7 @@ namespace BudgetPlanner
         public override void OnFrameworkInitializationCompleted()
         {
             ServiceCollection services = BuildServices();
-
+            
             var provider = services.BuildServiceProvider();
 
 

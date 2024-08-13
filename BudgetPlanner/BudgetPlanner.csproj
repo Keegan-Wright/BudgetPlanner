@@ -16,7 +16,6 @@
 		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.2" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.2" />
-		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240801-build.1708" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
@@ -43,6 +42,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Controls\Budget\BudgetCategoryListItem.axaml.cs">
+		  <DependentUpon>BudgetCategoryListItem.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Budget\AddBudgetCategoryView.axaml.cs">
+		  <DependentUpon>AddBudgetCategoryView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Budget\BugetCategoriesView.axaml.cs">
+		  <DependentUpon>BugetCategoriesView.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Debts\DebtView.axaml.cs">
 			<DependentUpon>DebtView.axaml</DependentUpon>
 		</Compile>

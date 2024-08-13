@@ -17,7 +17,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    AvailbleFunds = table.Column<decimal>(type: "TEXT", nullable: false),
+                    AvailableFunds = table.Column<decimal>(type: "TEXT", nullable: false),
                     MonthlyStart = table.Column<decimal>(type: "TEXT", nullable: false),
                     SavingsGoal = table.Column<decimal>(type: "TEXT", nullable: false),
                     GoalCompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),

@@ -23,7 +23,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("AvailbleFunds")
+                    b.Property<decimal>("AvailableFunds")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")

@@ -15,4 +15,9 @@ namespace BudgetPlanner.Messages
                 
         }
     }
+
+    public class NavigationRequestedMessage2
+    {
+
+    }
 }

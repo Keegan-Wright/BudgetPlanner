@@ -8,15 +8,15 @@ using System.Net.Http.Headers;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class MainViewModel : ViewModelBase
+    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>
     {
 
         private readonly INavigationService _navigationService;
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            WeakReferenceMessenger.Default.Register<NavigationRequestedMessage>(this, (r, m) => { CurrentPage = m.Value; });
 
+            WeakReferenceMessenger.Default.Register(this);
         }
 
         [ObservableProperty]
@@ -27,7 +27,7 @@ namespace BudgetPlanner.ViewModels
         private string _greeting = "Welcome to Avalonia!";
 
         [ObservableProperty]
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<ExpensesViewModel>();
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<BudgetCategoriesViewModel>();
 
 
 
@@ -38,7 +38,9 @@ namespace BudgetPlanner.ViewModels
             SideMenuExpanded = !SideMenuExpanded;
         }
 
-
-
+        public void Receive(NavigationRequestedMessage message)
+        {
+            CurrentPage = message.Value;
+        }
     }
 }

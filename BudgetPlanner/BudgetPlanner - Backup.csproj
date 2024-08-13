@@ -45,9 +45,6 @@
 		<Compile Update="Controls\Budget\BudgetCategoryListItem.axaml.cs">
 		  <DependentUpon>BudgetCategoryListItem.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="Controls\HouseholdMembers\HouseholdMemberListItem.axaml.cs">
-		  <DependentUpon>HouseholdMemberListItem.axaml</DependentUpon>
-		</Compile>
 		<Compile Update="Views\Budget\AddBudgetCategoryView.axaml.cs">
 		  <DependentUpon>AddBudgetCategoryView.axaml</DependentUpon>
 		</Compile>

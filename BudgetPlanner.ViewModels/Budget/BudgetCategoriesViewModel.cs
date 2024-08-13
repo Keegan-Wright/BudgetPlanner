@@ -37,10 +37,10 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task GetBudgetCategoriesAsync()
         {
-            await LoadCategories();
+            await LoadCategoriesAsync();
         }
 
-        private async Task LoadCategories()
+        private async Task LoadCategoriesAsync()
         {
             SetLoading(true, "Loading Categories...");
 
@@ -71,7 +71,7 @@ namespace BudgetPlanner.ViewModels
         {
             if (message.Value)
             {
-                await LoadCategories();
+                await LoadCategoriesAsync();
             }
         }
     }

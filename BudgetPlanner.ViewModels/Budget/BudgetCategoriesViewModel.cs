@@ -1,11 +1,14 @@
-﻿using BudgetPlanner.Services;
+﻿using System.Runtime.CompilerServices;
+using BudgetPlanner.Messages.Budget;
+using BudgetPlanner.Services;
 using BudgetPlanner.Services.Budget;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class BudgetCategoriesViewModel : ViewModelBase
+    public partial class BudgetCategoriesViewModel : ViewModelBase, IRecipient<BudgetCategoriesChangedMessage>
     {
         private readonly INavigationService _navigationService;
         private readonly IBudgetCategoriesService _budgetsService;
@@ -14,43 +17,62 @@ namespace BudgetPlanner.ViewModels
             _navigationService = navigationService;
             _budgetsService = budgetsService;
 
-            Initialise();
+            WeakReferenceMessenger.Default.Register(this);
+
+            InitialiseAsync();
         }
 
-        private async void Initialise()
+        private async void InitialiseAsync()
         {
-            await GetBudgetCategories();
+            await GetBudgetCategoriesAsync();
         }
 
-        [ObservableProperty]
-        private string _title = "Your Budgets";
 
-        [ObservableProperty]
-        private bool _loading = false;
 
 
         [ObservableProperty]
-        private ICollection<BudgetCategoryItemViewModel> _budgetCategories = [];
+        private ICollection<BudgetCategoryListItemViewModel> _budgetCategories = [];
 
 
         [RelayCommand]
-        public async Task GetBudgetCategories()
+        public async Task GetBudgetCategoriesAsync()
         {
-            Loading = true;
+            await LoadCategories();
+        }
+
+        private async Task LoadCategories()
+        {
+            SetLoading(true, "Loading Categories...");
+
+            BudgetCategories.Clear(); 
 
             await foreach (var category in _budgetsService.GetBudgetItemsAsync())
             {
-                BudgetCategories.Add(new BudgetCategoryItemViewModel()
+                BudgetCategories.Add(new BudgetCategoryListItemViewModel()
                 {
                     Name = category.Name,
-                    AvailbleFunds = category.AvailbleFunds,
+                    AvailableFunds = category.AvailableFunds,
                     GoalCompletionDate = category.GoalCompletionDate,
                     MonthlyStart = category.MonthlyStart,
                     SavingsGoal = category.SavingsGoal
                 });
             }
 
-            Loading = false;
+            SetLoading(false);
+        }
+
+        [RelayCommand]
+        public void NavigateToAddBudgetCategory()
+        {
+            _navigationService.RequestNavigation<AddBudgetCategoryViewModel>();
+        }
+
+        public async void Receive(BudgetCategoriesChangedMessage message)
+        {
+            if (message.Value)
+            {
+                await LoadCategories();
+            }
         }
     }
 }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240801-build.1708" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
 		  <PrivateAssets>all</PrivateAssets>
@@ -19,6 +18,7 @@
 	<ItemGroup>
     <ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.RequestModels\BudgetPlanner.RequestModels.csproj" />
     <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
   </ItemGroup>
 

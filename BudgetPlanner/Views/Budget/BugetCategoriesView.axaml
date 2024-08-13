@@ -3,14 +3,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Views.BudgetCategoriesView"
              x:DataType="vm:BudgetCategoriesViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
 	<StackPanel>
+		<Button Command="{Binding NavigateToAddBudgetCategory}">Add New Category</Button>
+
+		<ListBox ItemsSource="{Binding BudgetCategories}"
+				 Background="Transparent"
+				 Margin="0 20"
+				 >
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<controls:BudgetCategoryListItem></controls:BudgetCategoryListItem>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
 	</StackPanel>
 </UserControl>

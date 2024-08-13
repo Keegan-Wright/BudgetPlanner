@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetPlanner.Views.AddBudgetCategoryView"
+             x:DataType="vm:AddBudgetCategoryViewModel">
+	<StackPanel>
+		<TextBlock Margin="0 5" >Category Name</TextBlock>
+		<TextBox  Watermark="Category Name" Text="{Binding Name}"/>
+
+		<TextBlock Margin="0 5" >Available Funds</TextBlock>
+		<TextBox  Watermark="Available Funds" Text="{Binding AvailableFunds}"/>
+
+		<TextBlock Margin="0 5" >Monthly Start</TextBlock>
+		<TextBox  Watermark="Monthly Start" Text="{Binding MonthlyStart}"/>
+
+		<TextBlock Margin="0 5" >Savings Goal</TextBlock>
+		<TextBox  Watermark="Savings Goal" Text="{Binding SavingsGoal}"/>
+
+		<TextBlock Margin="0 5" >Goal Completion Date</TextBlock>
+		<DatePicker DayFormat="ddd dd" SelectedDate="{Binding GoalCompletionDate}"/>
+
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			
+			<Button Grid.Column="0" Command="{Binding Cancel}">Cancel</Button>
+			<Button Grid.Column="1" Command="{Binding AddBudgetCategoryAsync}">Add Category</Button>
+
+		</Grid>
+		
+	</StackPanel>
+</UserControl>

@@ -1,14 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class BudgetCategoryItemViewModel : ViewModelBase
+    public partial class BudgetCategoryListItemViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private string _name;
+        private string? _name;
 
         [ObservableProperty]
-        private decimal _availbleFunds;
+        private decimal _availableFunds;
 
         [ObservableProperty]
         private decimal _monthlyStart;
@@ -18,6 +19,5 @@ namespace BudgetPlanner.ViewModels
 
         [ObservableProperty]
         private DateTime? _goalCompletionDate;
-
     }
 }

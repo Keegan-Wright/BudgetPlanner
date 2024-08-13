@@ -19,6 +19,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<ExpensesViewModel>();
             services.AddSingleton<DebtViewModel>();
             services.AddSingleton<BudgetCategoriesViewModel>();
+            services.AddSingleton<AddBudgetCategoryViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -32,6 +33,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<ExpensesView>();
             services.AddSingleton<DebtView>();
             services.AddSingleton<BudgetCategoriesView>();
+            services.AddSingleton<AddBudgetCategoryView>();
         }
 
         public static void AddServices(this IServiceCollection services)

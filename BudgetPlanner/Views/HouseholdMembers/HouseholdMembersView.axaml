@@ -8,7 +8,7 @@
              x:Class="BudgetPlanner.Views.HouseholdMembersView"
              x:DataType="vm:HouseholdMembersViewModel">
 	<StackPanel>
-		<Button Command="{Binding NavigateToAddBudgetCategory}">Add New Category</Button>
+		<Button Command="{Binding NavigateToAddHouseholdMember}">Add New Household Member</Button>
 
 		<ListBox ItemsSource="{Binding HouseholdMembers}"
 				 Background="Transparent"

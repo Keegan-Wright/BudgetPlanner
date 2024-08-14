@@ -34,7 +34,9 @@
 					
 					<PathIcon Height="11" Data="{StaticResource LineHorizontal3Regular}" />
 				</Button>
-				
+
+
+				<TextBlock Text="Test"/>
 				
 			</StackPanel>
 			

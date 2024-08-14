@@ -60,7 +60,7 @@ namespace BudgetPlanner.ViewModels
         }
 
         [RelayCommand]
-        public void NavigateToAddBudgetCategory()
+        public void NavigateToAddHouseholdMember()
         {
             _navigationService.RequestNavigation<AddHouseholdMemberViewModel>();
         }

@@ -8,13 +8,13 @@
              x:DataType="vm:AddHouseholdMemberViewModel">
 	<StackPanel>
 		<TextBlock Margin="0 5" >First Name</TextBlock>
-		<TextBox  Watermark="Category Name" Text="{Binding FirstName}"/>
+		<TextBox  Watermark="First Name" Text="{Binding FirstName}"/>
 
 		<TextBlock Margin="0 5" >Last Name</TextBlock>
-		<TextBox  Watermark="Available Funds" Text="{Binding LastName}"/>
+		<TextBox  Watermark="Last Name" Text="{Binding LastName}"/>
 
 		<TextBlock Margin="0 5" >Income</TextBlock>
-		<TextBox  Watermark="Monthly Start" Text="{Binding Income}"/>
+		<TextBox  Watermark="Income" Text="{Binding Income}"/>
 
 		<Grid>
 			<Grid.ColumnDefinitions>

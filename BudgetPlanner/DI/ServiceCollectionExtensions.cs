@@ -40,6 +40,9 @@ namespace BudgetPlanner.DI
             services.AddSingleton<BudgetCategoriesView>();
             services.AddSingleton<AddBudgetCategoryView>();
 
+            services.AddSingleton<HouseholdMembersView>();
+            services.AddSingleton<AddHouseholdMemberView>();
+
 
         }
 

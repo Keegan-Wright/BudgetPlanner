@@ -18,8 +18,13 @@ namespace BudgetPlanner.DI
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ExpensesViewModel>();
             services.AddSingleton<DebtViewModel>();
+
             services.AddSingleton<BudgetCategoriesViewModel>();
             services.AddSingleton<AddBudgetCategoryViewModel>();
+            services.AddSingleton<EditBudgetCategoryViewModel>();
+
+            services.AddSingleton<HouseholdMembersViewModel>();
+            services.AddSingleton<AddHouseholdMemberViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -34,12 +39,18 @@ namespace BudgetPlanner.DI
             services.AddSingleton<DebtView>();
             services.AddSingleton<BudgetCategoriesView>();
             services.AddSingleton<AddBudgetCategoryView>();
+
+            services.AddSingleton<HouseholdMembersView>();
+            services.AddSingleton<AddHouseholdMemberView>();
+
+
         }
 
         public static void AddServices(this IServiceCollection services)
         {
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IBudgetCategoriesService, BudgetCategoriesService>();
+            services.AddSingleton<IHouseholdMembersService,  HouseholdMembersService>();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace BudgetPlanner.ViewModels
         private string _greeting = "Welcome to Avalonia!";
 
         [ObservableProperty]
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<BudgetCategoriesViewModel>();
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<HouseholdMembersViewModel>();
 
 
 

@@ -3,11 +3,6 @@ using BudgetPlanner.Services.Budget;
 using BudgetPlanner.ViewModels;
 using BudgetPlanner.Views;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BudgetPlanner.DI
 {
@@ -25,6 +20,8 @@ namespace BudgetPlanner.DI
 
             services.AddSingleton<HouseholdMembersViewModel>();
             services.AddSingleton<AddHouseholdMemberViewModel>();
+
+            services.AddSingleton<DashboardViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -42,6 +39,8 @@ namespace BudgetPlanner.DI
 
             services.AddSingleton<HouseholdMembersView>();
             services.AddSingleton<AddHouseholdMemberView>();
+
+            services.AddSingleton<DashboardView>();
 
 
         }

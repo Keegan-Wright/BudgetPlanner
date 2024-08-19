@@ -54,6 +54,9 @@
 		<Compile Update="Views\Budget\BugetCategoriesView.axaml.cs">
 		  <DependentUpon>BugetCategoriesView.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\Dashboard\DashboardView.axaml.cs">
+		  <DependentUpon>DashboardView.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Debts\DebtView.axaml.cs">
 			<DependentUpon>DebtView.axaml</DependentUpon>
 		</Compile>

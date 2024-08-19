@@ -11,6 +11,8 @@ namespace BudgetPlanner.ViewModels
         private string? _loadingMessage;
 
 
+
+
         public void SetLoading(bool loading, string? loadingMessage = "")
         {
             Loading = loading;

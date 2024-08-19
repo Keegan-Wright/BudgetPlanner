@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Net.Http.Headers;
 
 namespace BudgetPlanner.ViewModels
 {
@@ -27,9 +26,7 @@ namespace BudgetPlanner.ViewModels
         private string _greeting = "Welcome to Avalonia!";
 
         [ObservableProperty]
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<HouseholdMembersViewModel>();
-
-
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
 
 
         [RelayCommand]
@@ -37,6 +34,33 @@ namespace BudgetPlanner.ViewModels
         {
             SideMenuExpanded = !SideMenuExpanded;
         }
+
+        [RelayCommand]
+        public void NavigateToDebts()
+        {
+            _navigationService.RequestNavigation<DebtViewModel>();
+        }
+
+        [RelayCommand]
+        public void NavigateToBudgetCategories()
+        {
+            _navigationService.RequestNavigation<BudgetCategoriesViewModel>();
+
+        }
+
+        [RelayCommand]
+        public void NavigateToHouseholdMembers()
+        {
+            _navigationService.RequestNavigation<HouseholdMembersViewModel>();
+        }
+
+        [RelayCommand]
+        public void NavigateToDashboard()
+        {
+            _navigationService.RequestNavigation<DashboardViewModel>();
+
+        }
+
 
         public void Receive(NavigationRequestedMessage message)
         {

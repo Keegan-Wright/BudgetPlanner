@@ -11,6 +11,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.Configuration;
+using BudgetPlanner.Configuration.Models;
 
 namespace BudgetPlanner
 {
@@ -26,7 +28,6 @@ namespace BudgetPlanner
             ServiceCollection services = BuildServices();
             
             var provider = services.BuildServiceProvider();
-
 
             Ioc.Default.ConfigureServices(provider);
 
@@ -71,12 +72,26 @@ namespace BudgetPlanner
             var path = Environment.GetFolderPath(folder);
             var DbPath = System.IO.Path.Join(path, "BudgetPlanner.db");
 
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            
+            
             var services = new ServiceCollection();
+
+            services.AddSingleton(config);
+
+            var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
+
+            config.GetSection("OpenBanking:TrueLayer").Bind(trueLayerConfig);
+            services.AddSingleton(trueLayerConfig);
 
             services.AddWindows();
             services.AddViews();
             services.AddViewModels();
             services.AddServices();
+            services.AddExternalServices();
 
             services.AddSingleton(new DatabaseConfiguration()
             {

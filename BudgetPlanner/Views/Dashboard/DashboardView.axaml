@@ -14,5 +14,9 @@
 	<StackPanel>
 
 		<TextBlock Text="{Binding Title}"/>
+
+
+		<Button Command="{Binding TestOpenBanking}">Test Open Banking</Button>
+		
 	</StackPanel>
 </UserControl>

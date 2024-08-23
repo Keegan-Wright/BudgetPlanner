@@ -1,5 +1,6 @@
 ﻿using BudgetPlanner.Services;
 using BudgetPlanner.Services.Budget;
+using BudgetPlanner.Services.OpenBanking;
 using BudgetPlanner.ViewModels;
 using BudgetPlanner.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,12 @@ namespace BudgetPlanner.DI
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IBudgetCategoriesService, BudgetCategoriesService>();
             services.AddSingleton<IHouseholdMembersService,  HouseholdMembersService>();
+            services.AddSingleton<IOpenBankingService, OpenBankingService>();
+        }
+
+        public static void AddExternalServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IOpenBankingApiService, TrueLayerOpenBankingApiService>();
         }
     }
 }

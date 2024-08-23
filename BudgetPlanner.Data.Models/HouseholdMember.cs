@@ -6,4 +6,5 @@
         public required string LastName { get; set; }
         public decimal? Income { get; set; }
     }
+
 }

@@ -19,6 +19,7 @@ jobs:
 
     env:
       Solution_Name: BudgetPlanner                         # Replace with your solution name, i.e. MyWpfApp.sln.
+      Should_Archive: false
       #Test_Project_Path: your-test-project-path                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       #Wap_Project_Directory: your-wap-project-directory-name    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
       #Wap_Project_Path: your-wap-project-path  
@@ -54,18 +55,21 @@ jobs:
       run: dotnet build -c=release
 
     - name: Upload build android artifact
+      if: $env:Should_Archive == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Android build
         path: BudgetPlanner.Android\Bin\Release\net8.0-android\
 
     - name: Upload build browser artifact
+      if: $env:Should_Archive == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Browser build
         path: BudgetPlanner.Browser\Bin\Release\net8.0-browser\
 
     - name: Upload build desktop artifact
+      if: $env:Should_Archive == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Desktop build
@@ -73,6 +77,7 @@ jobs:
 
 
     - name: Upload build ios artifact
+      if: $env:Should_Archive == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: IOS build

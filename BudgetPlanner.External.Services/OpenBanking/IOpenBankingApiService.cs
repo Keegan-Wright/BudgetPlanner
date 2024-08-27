@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.Services.OpenBanking
+namespace BudgetPlanner.External.Services.OpenBanking
 {
     public interface IOpenBankingApiService
     {
@@ -18,6 +18,7 @@ namespace BudgetPlanner.Services.OpenBanking
         Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken);
         Task<ExternalOpenBankingAccountStandingOrdersResponseModel> GetAccountStandingOrdersAsync(string accountId, string authToken);
         Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken);
-
+        IAsyncEnumerable<ExternalOpenBankingProvider> GetAvailableProvidersAsync();
+        string BuildAuthUrl(IEnumerable<string> providerIds, IEnumerable<string> scopes);
     }
 }

@@ -1,9 +1,12 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.External.Services.Models.OpenBanking;
+using BudgetPlanner.External.Services.OpenBanking;
+using BudgetPlanner.RequestModels.OpenBanking;
 using BudgetPlanner.States;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
+using System.Text;
 
 namespace BudgetPlanner.Services.OpenBanking
 {
@@ -131,7 +134,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await foreach (var standingOrder in standingOrders.Results)
                 {
-                    await UpdateOrCreateAccountStandingOrder(standingOrder, accountId, true);
+                    await UpdateOrCreateAccountStandingOrder(standingOrder, accountId);
                     yield return standingOrder;
                 }
 
@@ -152,11 +155,27 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await foreach (var directDebit in directDebits.Results)
                 {
-                    await UpdateOrCreateAccountDirectDebit(directDebit, accountId, true);
+                    await UpdateOrCreateAccountDirectDebit(directDebit, accountId);
                     yield return directDebit;
                 }
 
             }
+        }
+
+        public async IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync()
+        {
+            if (ApplicationState.HasInternetConnection)
+            {
+                await foreach (var provider in _openBankingApiService.GetAvailableProvidersAsync())
+                {
+                    yield return provider;
+                }
+            }
+        }
+
+        public string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel)
+        {
+            return _openBankingApiService.BuildAuthUrl(setupProviderRequestModel.ProviderIds, setupProviderRequestModel.Scopes);
         }
 
         private async Task<string> GetAccessTokenAsync(OpenBankingProvider provider)
@@ -303,7 +322,7 @@ namespace BudgetPlanner.Services.OpenBanking
             await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
-        private async Task UpdateOrCreateAccountStandingOrder(ExternalOpenBankingAccountStandingOrder standingOrder, string accountId, bool v)
+        private async Task UpdateOrCreateAccountStandingOrder(ExternalOpenBankingAccountStandingOrder standingOrder, string accountId)
         {
             var trackedStandingOrder = await _budgetPlannerDbContext.OpenBankingStandingOrders.FirstOrDefaultAsync(x => x.Reference == standingOrder.Reference && x.Payee == standingOrder.Payee);
 
@@ -346,7 +365,7 @@ namespace BudgetPlanner.Services.OpenBanking
             }
             await _budgetPlannerDbContext.SaveChangesAsync();
         }
-        private async Task UpdateOrCreateAccountDirectDebit(ExternalOpenBankingDirectDebit directDebit, string accountId, bool v)
+        private async Task UpdateOrCreateAccountDirectDebit(ExternalOpenBankingDirectDebit directDebit, string accountId)
         {
             var trackedDirectDebit = await _budgetPlannerDbContext.OpenBankingDirectDebits.FirstOrDefaultAsync(x => x.OpenBankingDirectDebitId == directDebit.DirectDebitId);
 

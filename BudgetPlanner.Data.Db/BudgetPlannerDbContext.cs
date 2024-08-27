@@ -38,6 +38,7 @@ namespace BudgetPlanner.Data.Db
         public DbSet<Debt> Debts { get; set; }
 
         public DbSet<OpenBankingProvider> OpenBankingProviders { get; set; }
+        public DbSet<OpenBankingProviderScopes> OpenBankingProviderScopes { get; set; }
         public DbSet<OpenBankingAccount> OpenBankingAccounts { get; set; }
         public DbSet<OpenBankingAccountBalance> OpenBankingAccountBalances { get; set; }
         public DbSet<OpenBankingTransaction> OpenBankingTransactions { get; set; }

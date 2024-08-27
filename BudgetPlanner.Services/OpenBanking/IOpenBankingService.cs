@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.External.Services.Models.OpenBanking;
+using BudgetPlanner.RequestModels.OpenBanking;
 using BudgetPlanner.States;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace BudgetPlanner.Services.OpenBanking
         IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> GetOpenBankingAccountStandingOrdersAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingDirectDebit> GetOpenBankingAccountDirectDebitsAsync(string openBankingProviderId, string accountId);
-
-
+        IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
+        string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
     }
 }

@@ -68,9 +68,13 @@ namespace BudgetPlanner.ViewModels
         public void NavigateToDashboard()
         {
             _navigationService.RequestNavigation<DashboardViewModel>();
-
         }
 
+        [RelayCommand]
+        public void NavigateToProviderSetup()
+        {
+            _navigationService.RequestNavigation<SetupProviderViewModel>();
+        }
 
         public void Receive(NavigationRequestedMessage message)
         {

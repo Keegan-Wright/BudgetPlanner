@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Services;
+﻿using BudgetPlanner.External.Services.OpenBanking;
+using BudgetPlanner.Services;
 using BudgetPlanner.Services.Budget;
 using BudgetPlanner.Services.OpenBanking;
 using BudgetPlanner.ViewModels;
@@ -22,6 +23,8 @@ namespace BudgetPlanner.DI
             services.AddSingleton<HouseholdMembersViewModel>();
             services.AddSingleton<AddHouseholdMemberViewModel>();
 
+            services.AddSingleton<SetupProviderViewModel>();
+
             services.AddSingleton<DashboardViewModel>();
         }
 
@@ -40,6 +43,8 @@ namespace BudgetPlanner.DI
 
             services.AddSingleton<HouseholdMembersView>();
             services.AddSingleton<AddHouseholdMemberView>();
+
+            services.AddSingleton<SetupProviderView>();
 
             services.AddSingleton<DashboardView>();
 

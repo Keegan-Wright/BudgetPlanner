@@ -5,8 +5,10 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Encodings.Web;
 
-namespace BudgetPlanner.Services.OpenBanking
+namespace BudgetPlanner.External.Services.OpenBanking
 {
     public class TrueLayerOpenBankingApiService : IOpenBankingApiService
     {
@@ -15,6 +17,27 @@ namespace BudgetPlanner.Services.OpenBanking
         public TrueLayerOpenBankingApiService(TrueLayerOpenBankingConfiguration trueLayerConfiguration)
         {
             _trueLayerConfiguration = trueLayerConfiguration;
+        }
+
+        public string BuildAuthUrl(IEnumerable<string> providerIds, IEnumerable<string> scopes)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(_trueLayerConfiguration.BaseAuthUrl);
+            sb.Append($"?response_type=code&client_id={_trueLayerConfiguration.ClientId}");
+            sb.Append("&");
+            sb.Append($"scope={Uri.EscapeDataString(string.Join(" ", scopes))}");
+            sb.Append(Uri.EscapeDataString(" "));
+
+
+            sb.Append($"&redirect_uri={_trueLayerConfiguration.AuthRedirectUrl}");
+            sb.Append($"&providers={Uri.EscapeDataString(string.Join(" ", providerIds))}");
+
+            sb.Append(Uri.EscapeDataString(" "));
+
+            sb.Append("uk-oauth-all");
+
+            return sb.ToString();
         }
 
         public async Task<ExternalOpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode)
@@ -107,7 +130,7 @@ namespace BudgetPlanner.Services.OpenBanking
             return responseBody;
         }
 
-        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync( string accountId, string authToken)
+        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken)
         {
             using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
@@ -129,6 +152,20 @@ namespace BudgetPlanner.Services.OpenBanking
 
             return responseBody;
         }
+
+
+        public async IAsyncEnumerable<ExternalOpenBankingProvider> GetAvailableProvidersAsync()
+        {
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
+
+            var response = await httpClient.GetAsync($"api/providers?client_id={_trueLayerConfiguration.ClientId}");
+
+            await foreach (var provider in response.Content.ReadFromJsonAsAsyncEnumerable<ExternalOpenBankingProvider>())
+            {
+                yield return provider;
+            }
+        }
+
 
         private async Task<HttpClient> BuildHttpClient(string baseUrl, string? authHeader = null)
         {

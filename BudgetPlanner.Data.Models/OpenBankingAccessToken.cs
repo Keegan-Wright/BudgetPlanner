@@ -1,4 +1,6 @@
-﻿namespace BudgetPlanner.Data.Models
+﻿using System.Diagnostics.Contracts;
+
+namespace BudgetPlanner.Data.Models
 {
     public class OpenBankingAccessToken : BaseEntity
     {
@@ -7,5 +9,6 @@
         public required int ExpiresIn { get; set; }
         public required string RefreshToken { get; set; }
     }
+
 
 }

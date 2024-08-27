@@ -1,5 +1,7 @@
-﻿using BudgetPlanner.Data.Models;
+﻿using BudgetPlanner.Data.Db;
+using BudgetPlanner.Data.Models;
 using BudgetPlanner.External.Services.Models.OpenBanking;
+using BudgetPlanner.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,14 @@ namespace BudgetPlanner.Services.OpenBanking
     public interface IOpenBankingService
     {
         IAsyncEnumerable<OpenBankingProvider> GetOpenBankingProvidersAsync();
-        IAsyncEnumerable<OpenBankingAccount> GetOpenBankingAccountsAsync(string providerId);
-        IAsyncEnumerable<OpenBankingAccount> GetOpenBankingAccountsAsync();
+        IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync(string openBankingProviderId);
+        IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync();
+        IAsyncEnumerable<ExternalOpenBankingAccountBalance> GetOpenBankingAccountBalanceAsync(string openBankingProviderId, string accountId);
+        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId);
+        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId);
+        IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> GetOpenBankingAccountStandingOrdersAsync(string openBankingProviderId, string accountId);
+        IAsyncEnumerable<ExternalOpenBankingDirectDebit> GetOpenBankingAccountDirectDebitsAsync(string openBankingProviderId, string accountId);
+
+
     }
 }

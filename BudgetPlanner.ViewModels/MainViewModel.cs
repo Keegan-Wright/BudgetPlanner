@@ -1,13 +1,15 @@
 ﻿using BudgetPlanner.Messages;
 using BudgetPlanner.Services;
+using BudgetPlanner.States;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Net.NetworkInformation;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>
+    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>, IDisposable
     {
 
         private readonly INavigationService _navigationService;
@@ -16,6 +18,14 @@ namespace BudgetPlanner.ViewModels
             _navigationService = navigationService;
 
             WeakReferenceMessenger.Default.Register(this);
+
+            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
+        }
+
+
+        private void NetworkChange_NetworkAvailabilityChanged(object? sender, NetworkAvailabilityEventArgs e)
+        {
+            ApplicationState.HasInternetConnection = e.IsAvailable;
         }
 
         [ObservableProperty]
@@ -27,7 +37,7 @@ namespace BudgetPlanner.ViewModels
 
         [ObservableProperty]
         private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
-
+        private bool disposedValue;
 
         [RelayCommand]
         public void TogglePane()
@@ -65,6 +75,25 @@ namespace BudgetPlanner.ViewModels
         public void Receive(NavigationRequestedMessage message)
         {
             CurrentPage = message.Value;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    NetworkChange.NetworkAvailabilityChanged -= NetworkChange_NetworkAvailabilityChanged;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

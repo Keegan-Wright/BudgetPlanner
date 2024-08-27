@@ -3,6 +3,7 @@ using System;
 using BudgetPlanner.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 {
     [DbContext(typeof(BudgetPlannerDbContext))]
-    partial class BudgetPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240827121951_OpenBankingModelUpdates")]
+    partial class OpenBankingModelUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
@@ -207,7 +210,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingAccountBalances");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingDirectDebit", b =>
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingDirectDebits", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -236,9 +239,6 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Updated")
@@ -317,19 +317,12 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.Property<DateTime>("NextPaymentDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Payee")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Reference")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Timestamp")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Updated")

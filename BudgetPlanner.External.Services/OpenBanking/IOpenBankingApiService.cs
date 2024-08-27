@@ -10,11 +10,14 @@ namespace BudgetPlanner.Services.OpenBanking
 {
     public interface IOpenBankingApiService
     {
-        Task<OpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode);
-        Task<OpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken);
-        Task<OpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken);
-        Task<OpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken);
-        Task<OpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken);
-        Task<OpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode);
+        Task<ExternalOpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken);
+        Task<ExternalOpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken);
+        Task<ExternalOpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccountStandingOrdersResponseModel> GetAccountStandingOrdersAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken);
+
     }
 }

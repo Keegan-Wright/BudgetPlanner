@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingTransactionMetadata
+    public class ExternalOpenBankingTransactionMetadata
     {
         [JsonPropertyName("provider_category")]
         public string ProviderCategory { get; set; }

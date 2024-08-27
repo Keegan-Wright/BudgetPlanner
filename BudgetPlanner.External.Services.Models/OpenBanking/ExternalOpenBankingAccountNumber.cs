@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingAccountNumber
+    public class ExternalOpenBankingAccountNumber
     {
         public string Iban { get; set; }
 

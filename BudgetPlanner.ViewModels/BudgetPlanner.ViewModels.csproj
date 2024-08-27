@@ -17,6 +17,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Services\BudgetPlanner.Services.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.States\BudgetPlanner.States.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
 	</ItemGroup>
 

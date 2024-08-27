@@ -16,7 +16,7 @@ namespace BudgetPlanner.Services.OpenBanking
             _trueLayerConfiguration = trueLayerConfiguration;
         }
 
-        public async Task<OpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode)
+        public async Task<ExternalOpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
 
@@ -33,12 +33,12 @@ namespace BudgetPlanner.Services.OpenBanking
 
             var response = await httpClient.PostAsync("connect/token", content);
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingAccessResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccessResponseModel>();
 
             return responseBody;
         }
 
-        public async Task<OpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken)
+        public async Task<ExternalOpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
 
@@ -54,55 +54,77 @@ namespace BudgetPlanner.Services.OpenBanking
 
             var response = await httpClient.PostAsync("connect/token", content);
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingAccessResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccessResponseModel>();
 
             return responseBody;
 
         }
 
-        public async Task<OpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken)
+        public async Task<ExternalOpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/balance");
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingGetAccountBalanceResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingGetAccountBalanceResponseModel>();
 
             return responseBody;
 
         }
 
-        public async Task<OpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken)
+        public async Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken)
+        {
+            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+
+            var response = await httpClient.GetAsync($"v1/accounts/{accountId}/direct_debits");
+
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountDirectDebitsResponseModel>();
+
+            return responseBody;
+        }
+
+        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions/pending");
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingAccountTransactionsResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountTransactionsResponseModel>();
 
             return responseBody;
 
         }
 
-        public async Task<OpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync( string accountId, string authToken)
+        public async Task<ExternalOpenBankingAccountStandingOrdersResponseModel> GetAccountStandingOrdersAsync(string accountId, string authToken)
+        {
+            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+
+            var response = await httpClient.GetAsync($"v1/accounts/{accountId}/standing_orders");
+
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountStandingOrdersResponseModel>();
+
+            return responseBody;
+        }
+
+        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync( string accountId, string authToken)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions");
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingAccountTransactionsResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountTransactionsResponseModel>();
 
             return responseBody;
 
         }
 
-        public async Task<OpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken)
+        public async Task<ExternalOpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken)
         {
             using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync("v1/accounts");
 
-            var responseBody = await response.Content.ReadFromJsonAsync<OpenBankingListAllAccountsResponseModel>();
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingListAllAccountsResponseModel>();
 
             return responseBody;
         }

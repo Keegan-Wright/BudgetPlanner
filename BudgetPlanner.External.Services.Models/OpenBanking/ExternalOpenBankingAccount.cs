@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingAccount
+    public class ExternalOpenBankingAccount
     {
         [JsonPropertyName("update_timestamp")]
         public DateTime UpdateTimestamp { get; set; }
@@ -19,9 +19,9 @@ namespace BudgetPlanner.External.Services.Models.OpenBanking
         public string Currency { get; set; }
 
         [JsonPropertyName("account_number")]
-        public OpenBankingAccountNumber AccountNumber { get; set; }
+        public ExternalOpenBankingAccountNumber AccountNumber { get; set; }
 
-        public OpenBankingAccountProvider Provider { get; set; }
+        public ExternalOpenBankingAccountProvider Provider { get; set; }
     }
 
 }

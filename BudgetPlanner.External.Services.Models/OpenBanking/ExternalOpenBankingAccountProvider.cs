@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingAccountProvider
+    public class ExternalOpenBankingAccountProvider
     {
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; }

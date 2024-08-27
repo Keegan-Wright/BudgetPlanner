@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingAccountTransaction
+    public class ExternalOpenBankingAccountTransaction
     {
         public DateTime Timestamp { get; set; }
         public string Description { get; set; }
@@ -15,7 +15,7 @@ namespace BudgetPlanner.External.Services.Models.OpenBanking
 
         [JsonPropertyName("transaction_classification")]
         public IAsyncEnumerable<string> TransactionClassification { get; set; }
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Currency { get; set; }
 
         [JsonPropertyName("transaction_id")]
@@ -27,7 +27,7 @@ namespace BudgetPlanner.External.Services.Models.OpenBanking
         [JsonPropertyName("normalised_provider_transaction_id")]
         public string NormalisedProviderTransactionId { get; set; }
 
-        public OpenBankingTransactionMetadata Meta { get; set; }
+        public ExternalOpenBankingTransactionMetadata Meta { get; set; }
 
         [JsonPropertyName("merchant_name")]
         public string MerchantName { get; set; }

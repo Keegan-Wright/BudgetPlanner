@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.External.Services.Models.OpenBanking
 {
-    public class OpenBankingAccessResponseModel
+    public class ExternalOpenBankingAccessResponseModel
     {
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }

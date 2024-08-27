@@ -22,13 +22,50 @@ namespace BudgetPlanner.ViewModels
         private string _title = "Dashboard";
 
         [RelayCommand]
-        public async Task TestOpenBanking()
+        public async Task GetDashboardStats()
         {
+            var accountCounter = 0;
+            var totalBalance = 0m;
+            var availableBalance = 0m;
+            var pendingTransactions = 0;
+            var totalTransactions = 0;
+            var totalDirectDebits = 0;
+            var totalStandingOrders = 0;
+
             await foreach (var account in _openBankingService.GetOpenBankingAccountsAsync())
             {
-                var a = account;
+                accountCounter++;
+
+                await foreach (var balance in _openBankingService.GetOpenBankingAccountBalanceAsync(account.Provider.ProviderId, account.AccountId))
+                {
+                    availableBalance += balance.Available;
+                    totalBalance += balance.Current;
+                }
+
+                await foreach (var _ in _openBankingService.GetOpenBankingAccountPendingTransactionsAsync(account.Provider.ProviderId, account.AccountId))
+                {
+                    pendingTransactions++;
+                    totalTransactions++;
+                }
+
+                await foreach (var _ in _openBankingService.GetOpenBankingAccountTransactionsAsync(account.Provider.ProviderId, account.AccountId))
+                {
+                    totalTransactions++;
+                }
+
+
+                await foreach (var _ in _openBankingService.GetOpenBankingAccountDirectDebitsAsync(account.Provider.ProviderId, account.AccountId))
+                {
+                    totalDirectDebits++;
+                }
+
+                await foreach (var _ in _openBankingService.GetOpenBankingAccountStandingOrdersAsync(account.Provider.ProviderId, account.AccountId))
+                {
+                    totalStandingOrders++;
+                }
+
+
             }
         }
-
     }
 }

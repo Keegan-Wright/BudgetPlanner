@@ -2,6 +2,7 @@
 using BudgetPlanner.Configuration.Models;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using Microsoft.Extensions.Options;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
@@ -18,7 +19,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccessResponseModel> ExchangeCodeForAccessTokenAsync(string vendorAccessCode)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
 
             var formData = new List<KeyValuePair<string, string>>
             {
@@ -40,7 +41,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseAuthUrl);
 
             var formData = new List<KeyValuePair<string, string>>
             {
@@ -62,7 +63,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/balance");
 
@@ -74,7 +75,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/direct_debits");
 
@@ -85,7 +86,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions/pending");
 
@@ -97,7 +98,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccountStandingOrdersResponseModel> GetAccountStandingOrdersAsync(string accountId, string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/standing_orders");
 
@@ -108,7 +109,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync( string accountId, string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions");
 
@@ -120,7 +121,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async Task<ExternalOpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken)
         {
-            using var httpClient = BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
             var response = await httpClient.GetAsync("v1/accounts");
 
@@ -129,7 +130,7 @@ namespace BudgetPlanner.Services.OpenBanking
             return responseBody;
         }
 
-        private HttpClient BuildHttpClient(string baseUrl, string? authHeader = null)
+        private async Task<HttpClient> BuildHttpClient(string baseUrl, string? authHeader = null)
         {
             var httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseUrl);
@@ -138,6 +139,9 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authHeader);
             }
+
+            var dnsEntries = await Dns.GetHostEntryAsync(Dns.GetHostName());
+            httpClient.DefaultRequestHeaders.Add("x-PSU-IP", dnsEntries.AddressList.FirstOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString());
 
             httpClient.Timeout = TimeSpan.FromMinutes(5);
 

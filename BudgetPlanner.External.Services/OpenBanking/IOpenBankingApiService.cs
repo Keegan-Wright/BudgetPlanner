@@ -20,5 +20,6 @@ namespace BudgetPlanner.External.Services.OpenBanking
         Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken);
         IAsyncEnumerable<ExternalOpenBankingProvider> GetAvailableProvidersAsync();
         string BuildAuthUrl(IEnumerable<string> providerIds, IEnumerable<string> scopes);
+        Task<ExternalOpenBankingAccountConnectionResponseModel> GetProviderInformation(string accessToken);
     }
 }

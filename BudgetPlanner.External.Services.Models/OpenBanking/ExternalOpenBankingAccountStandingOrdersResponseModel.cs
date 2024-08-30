@@ -2,7 +2,7 @@
 {
     public class ExternalOpenBankingAccountStandingOrdersResponseModel
     {
-        public IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> Results { get; set; }
+        public IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder>? Results { get; set; }
         public string Status { get; set; }
     }
 

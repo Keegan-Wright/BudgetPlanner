@@ -22,9 +22,18 @@ namespace BudgetPlanner.Services.OpenBanking
         }
 
 
-        public IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync(string providerId)
+        public async IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync(string providerId)
         {
-            throw new NotImplementedException();
+            if (ApplicationState.HasInternetConnection)
+            {
+                await foreach (var provider in GetOpenBankingProvidersAsync(providerId))
+                {
+                    await foreach (var account in ProcessAccountItem(provider))
+                    {
+                        yield return account;
+                    }
+                }
+            }
         }
 
         public async IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync()
@@ -33,16 +42,8 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 await foreach (var provider in GetOpenBankingProvidersAsync())
                 {
-                    await EnsureAuthenticatedAsync(provider);
-
-                    var authToken = await GetAccessTokenAsync(provider);
-
-                    var accounts = await _openBankingApiService.GetAllAccountsAsync(authToken);
-
-                    await foreach (var account in accounts.Results)
+                    await foreach (var account in ProcessAccountItem(provider))
                     {
-                        await UpdateOrCreateAccount(account, provider.OpenBankingProviderId);
-
                         yield return account;
                     }
                 }
@@ -120,6 +121,14 @@ namespace BudgetPlanner.Services.OpenBanking
                 yield return provider;
             }
         }
+
+        public async IAsyncEnumerable<OpenBankingProvider> GetOpenBankingProvidersAsync(string providerId)
+        {
+            await foreach (var provider in _budgetPlannerDbContext.OpenBankingProviders.Where(x => x.OpenBankingProviderId == providerId).AsAsyncEnumerable())
+            {
+                yield return provider;
+            }
+        }
         public async IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> GetOpenBankingAccountStandingOrdersAsync(string openBankingProviderId, string accountId)
         {
             if (ApplicationState.HasInternetConnection)
@@ -131,6 +140,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 var authToken = await GetAccessTokenAsync(provider);
 
                 var standingOrders = await _openBankingApiService.GetAccountStandingOrdersAsync(accountId, authToken);
+
 
                 await foreach (var standingOrder in standingOrders.Results)
                 {
@@ -177,6 +187,94 @@ namespace BudgetPlanner.Services.OpenBanking
         {
             return _openBankingApiService.BuildAuthUrl(setupProviderRequestModel.ProviderIds, setupProviderRequestModel.Scopes);
         }
+
+        public async Task<bool> AddVendorViaAccessCode(string accessCode)
+        {
+            var providerAccessToken = await _openBankingApiService.ExchangeCodeForAccessTokenAsync(accessCode);
+            var providerInformation = await _openBankingApiService.GetProviderInformation(providerAccessToken.AccessToken);
+
+            await CreateNewProvider(accessCode, providerAccessToken, providerInformation);
+
+            return true;
+        }
+
+        private async Task CreateNewProvider(string accessCode, ExternalOpenBankingAccessResponseModel providerAccessToken, ExternalOpenBankingAccountConnectionResponseModel providerInformation)
+        {
+            await foreach (var externalProvider in providerInformation.Results)
+            {
+                var provider = new OpenBankingProvider()
+                {
+                    AccessCode = accessCode,
+                    Name = externalProvider.Provider.DisplayName,
+                    OpenBankingProviderId = externalProvider.Provider.ProviderId,
+                    Created = DateTime.Now,
+                    Logo = []
+                };
+                await _budgetPlannerDbContext.AddAsync(provider);
+
+                await _budgetPlannerDbContext.SaveChangesAsync();
+
+                var accessToken = new OpenBankingAccessToken()
+                {
+                    AccessToken = providerAccessToken.AccessToken,
+                    ProviderId = provider.Id,
+                    ExpiresIn = providerAccessToken.ExpiresIn,
+                    RefreshToken = providerAccessToken.RefreshToken,
+                    Created = DateTime.Now
+                };
+
+                await _budgetPlannerDbContext.AddAsync(accessToken);
+                await _budgetPlannerDbContext.SaveChangesAsync();
+
+
+                await BulkLoadProvider(externalProvider.Provider.ProviderId);
+            }
+        }
+
+        private async Task BulkLoadProvider(string providerId)
+        {
+            await foreach (var account in GetOpenBankingAccountsAsync(providerId))
+            {
+                await foreach (var _ in GetOpenBankingAccountStandingOrdersAsync(providerId, account.AccountId))
+                {
+
+                }
+
+                await foreach (var _ in GetOpenBankingAccountDirectDebitsAsync(providerId, account.AccountId))
+                {
+
+                }
+
+                await foreach (var _ in GetOpenBankingAccountBalanceAsync(providerId, account.AccountId))
+                {
+
+                }
+                await foreach (var _ in GetOpenBankingAccountPendingTransactionsAsync(providerId, account.AccountId))
+                {
+
+                }
+                await foreach (var _ in GetOpenBankingAccountTransactionsAsync(providerId, account.AccountId))
+                {
+
+                }
+            }
+        }
+        private async IAsyncEnumerable<ExternalOpenBankingAccount> ProcessAccountItem(OpenBankingProvider provider)
+        {
+            await EnsureAuthenticatedAsync(provider);
+
+            var authToken = await GetAccessTokenAsync(provider);
+
+            var accounts = await _openBankingApiService.GetAllAccountsAsync(authToken);
+
+            await foreach (var account in accounts.Results)
+            {
+                await UpdateOrCreateAccount(account, provider.OpenBankingProviderId);
+
+                yield return account;
+            }
+        }
+
 
         private async Task<string> GetAccessTokenAsync(OpenBankingProvider provider)
         {
@@ -398,5 +496,6 @@ namespace BudgetPlanner.Services.OpenBanking
             }
             await _budgetPlannerDbContext.SaveChangesAsync();
         }
+
     }
 }

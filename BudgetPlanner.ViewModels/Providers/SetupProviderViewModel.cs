@@ -20,6 +20,14 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private ICollection<OpenBankingProviderViewModel> _openBankingProviders = [];
 
+        [ObservableProperty]
+        private string _openBankingAuthUrl;
+
+
+        [ObservableProperty]
+        private string _openBankingCode;
+
+
 
         private async void InitaliseAsync()
         {
@@ -49,10 +57,6 @@ namespace BudgetPlanner.ViewModels
             }
 
             SetLoading(false);
-
-            OpenBankingProviders.FirstOrDefault(X => X.Name.ToLower().Contains("halifax")).Checked = true;
-            OpenBankingProviders.FirstOrDefault(X => X.Name.ToLower().Contains("monzo")).Checked = true;
-            BuildAuthenticationUrl();
         }
 
         [RelayCommand]
@@ -64,7 +68,16 @@ namespace BudgetPlanner.ViewModels
             requestModel.ProviderIds = selectedProviders.Select(x => x.ProviderId);
             requestModel.Scopes = selectedProviders.SelectMany(x => x.Scopes).Where(x => x.Checked).Distinct().Select(x => x.Name);
 
-            var url = _openBankingService.BuildAuthUrl(requestModel);
+            OpenBankingAuthUrl = _openBankingService.BuildAuthUrl(requestModel);
         }
+
+
+        [RelayCommand]
+        public async Task AddProviderCommand()
+        {
+            await _openBankingService.AddVendorViaAccessCode(OpenBankingCode);
+        }
+
+
     }
 }

@@ -166,6 +166,16 @@ namespace BudgetPlanner.External.Services.OpenBanking
             }
         }
 
+        public async Task<ExternalOpenBankingAccountConnectionResponseModel> GetProviderInformation(string authToken)
+        {
+            using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
+
+            var response = await httpClient.GetAsync("v1/me");
+
+            var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountConnectionResponseModel>();
+
+            return responseBody;
+        }
 
         private async Task<HttpClient> BuildHttpClient(string baseUrl, string? authHeader = null)
         {

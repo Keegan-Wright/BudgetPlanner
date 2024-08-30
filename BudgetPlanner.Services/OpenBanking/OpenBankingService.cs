@@ -56,11 +56,25 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId.ToLower() == openBankingProviderId.ToLower());
 
+                var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
+
+
+                if(!providerScopes.Any(x => x.Scope.ToLower() == "balance"))
+                {
+                    yield break;
+                }
+
+
                 await EnsureAuthenticatedAsync(provider);
 
                 var authToken = await GetAccessTokenAsync(provider);
 
                 var accountBalance = await _openBankingApiService.GetAccountBalanceAsync(accountId, authToken);
+
+                if(accountBalance.Results is null)
+                {
+                    yield break;
+                }
 
                 await foreach (var balance in accountBalance.Results)
                 {
@@ -76,6 +90,14 @@ namespace BudgetPlanner.Services.OpenBanking
             if (ApplicationState.HasInternetConnection)
             {
                 var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId == openBankingProviderId);
+
+                var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
+
+
+                if (!providerScopes.Any(x => x.Scope.ToLower() == "transactions"))
+                {
+                    yield break;
+                }
 
                 await EnsureAuthenticatedAsync(provider);
 
@@ -98,7 +120,13 @@ namespace BudgetPlanner.Services.OpenBanking
             if (ApplicationState.HasInternetConnection)
             {
                 var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId == openBankingProviderId);
+                var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
 
+
+                if (!providerScopes.Any(x => x.Scope.ToLower() == "transactions"))
+                {
+                    yield break;
+                }
                 await EnsureAuthenticatedAsync(provider);
 
                 var authToken = await GetAccessTokenAsync(provider);
@@ -134,7 +162,13 @@ namespace BudgetPlanner.Services.OpenBanking
             if (ApplicationState.HasInternetConnection)
             {
                 var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId == openBankingProviderId);
+                var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
 
+
+                if (!providerScopes.Any(x => x.Scope.ToLower() == "standing_orders"))
+                {
+                    yield break;
+                }
                 await EnsureAuthenticatedAsync(provider);
 
                 var authToken = await GetAccessTokenAsync(provider);
@@ -156,7 +190,13 @@ namespace BudgetPlanner.Services.OpenBanking
             if (ApplicationState.HasInternetConnection)
             {
                 var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId == openBankingProviderId);
+                var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
 
+
+                if (!providerScopes.Any(x => x.Scope.ToLower() == "direct_debits"))
+                {
+                    yield break;
+                }
                 await EnsureAuthenticatedAsync(provider);
 
                 var authToken = await GetAccessTokenAsync(provider);
@@ -223,6 +263,19 @@ namespace BudgetPlanner.Services.OpenBanking
                     Created = DateTime.Now
                 };
 
+                await foreach(var scope in externalProvider.Scopes)
+                {
+                    var providerScope = new OpenBankingProviderScopes()
+                    {
+                        Scope = scope,
+                        Created = DateTime.Now,
+                        ProviderId = provider.Id
+                    };
+
+                    await _budgetPlannerDbContext.AddAsync(scope);
+                    await _budgetPlannerDbContext.SaveChangesAsync();
+                }
+
                 await _budgetPlannerDbContext.AddAsync(accessToken);
                 await _budgetPlannerDbContext.SaveChangesAsync();
 
@@ -261,6 +314,13 @@ namespace BudgetPlanner.Services.OpenBanking
         }
         private async IAsyncEnumerable<ExternalOpenBankingAccount> ProcessAccountItem(OpenBankingProvider provider)
         {
+            var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
+
+            if (!providerScopes.Any(x => x.Scope.ToLower() == "accounts"))
+            {
+                yield break;
+            }
+
             await EnsureAuthenticatedAsync(provider);
 
             var authToken = await GetAccessTokenAsync(provider);

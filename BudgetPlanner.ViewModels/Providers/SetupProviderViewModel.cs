@@ -66,7 +66,7 @@ namespace BudgetPlanner.ViewModels
 
             var requestModel = new GetProviderSetupUrlRequestModel();
             requestModel.ProviderIds = selectedProviders.Select(x => x.ProviderId);
-            requestModel.Scopes = selectedProviders.SelectMany(x => x.Scopes).Where(x => x.Checked).Distinct().Select(x => x.Name);
+            requestModel.Scopes = selectedProviders.SelectMany(x => x.Scopes).Where(x => x.Checked).Select(x => x.Name).Distinct();
 
             OpenBankingAuthUrl = _openBankingService.BuildAuthUrl(requestModel);
         }

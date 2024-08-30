@@ -3,13 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BudgetPlanner.Views.DashboardView"
-             x:DataType="vm:DashboardViewModel">
-	<StackPanel>
-
-		<TextBlock Text="{Binding Title}"/>
-
-
+             x:Class="BudgetPlanner.Views.AccountsView"
+             x:DataType="vm:AccountsViewModel">
+	
+	<StackPanel Spacing="10">
+		<ItemsControl ItemsSource="{Binding Accounts}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<controls:OpenBankingAccount/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
 	</StackPanel>
+	
 </UserControl>

@@ -11,8 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Configuration.Models.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using BudgetPlanner.External.Services.OpenBanking;
 using BudgetPlanner.Services;
+using BudgetPlanner.Services.Accounts;
 using BudgetPlanner.Services.Budget;
 using BudgetPlanner.Services.OpenBanking;
 using BudgetPlanner.ViewModels;
@@ -26,6 +27,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<SetupProviderViewModel>();
 
             services.AddSingleton<DashboardViewModel>();
+            services.AddSingleton<AccountsViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -48,6 +50,8 @@ namespace BudgetPlanner.DI
 
             services.AddSingleton<DashboardView>();
 
+            services.AddSingleton<AccountsView>();
+
 
         }
 
@@ -57,6 +61,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<IBudgetCategoriesService, BudgetCategoriesService>();
             services.AddSingleton<IHouseholdMembersService,  HouseholdMembersService>();
             services.AddSingleton<IOpenBankingService, OpenBankingService>();
+            services.AddSingleton<IAccountsService,  AccountsService>();
         }
 
         public static void AddExternalServices(this IServiceCollection services)

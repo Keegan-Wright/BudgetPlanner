@@ -1,6 +1,5 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
-using BudgetPlanner.RequestModels.Budget;
 using BudgetPlanner.RequestModels.HouseholdMember;
 using Microsoft.EntityFrameworkCore;
 

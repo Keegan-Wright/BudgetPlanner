@@ -76,6 +76,12 @@ namespace BudgetPlanner.ViewModels
             _navigationService.RequestNavigation<SetupProviderViewModel>();
         }
 
+        [RelayCommand]
+        public void NavigateToAccounts()
+        {
+            _navigationService.RequestNavigation<AccountsViewModel>();
+        }
+
         public void Receive(NavigationRequestedMessage message)
         {
             CurrentPage = message.Value;

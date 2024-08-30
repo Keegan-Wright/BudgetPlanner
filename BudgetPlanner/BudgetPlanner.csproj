@@ -36,10 +36,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Configuration.Models.csproj" />
+		<ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
+		<ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Services\BudgetPlanner.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.ViewModels\BudgetPlanner.ViewModels.csproj" />
@@ -52,6 +53,15 @@
 		</Compile>
 		<Compile Update="Controls\HouseholdMembers\HouseholdMemberListItem.axaml.cs">
 		  <DependentUpon>HouseholdMemberListItem.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransaction.axaml.cs">
+		  <DependentUpon>OpenBankingAccountTransaction.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccount.axaml.cs">
+		  <DependentUpon>OpenBankingAccount.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Account\AccountsView.axaml.cs">
+		  <DependentUpon>AccountsView.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Budget\AddBudgetCategoryView.axaml.cs">
 		  <DependentUpon>AddBudgetCategoryView.axaml</DependentUpon>

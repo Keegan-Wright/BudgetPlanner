@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
-			 			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Controls.OpenBankingAccount"
              x:DataType="vm:AccountItemViewModel">
@@ -61,13 +61,17 @@
 				<TextBlock Grid.Row="0" Grid.Column="3" Text="Status"></TextBlock>
 
 
-				<ItemsControl Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Transactions}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<controls:OpenBankingAccountTransaction/>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
+				<ScrollViewer AllowAutoHide="True" Grid.Row="1" Grid.ColumnSpan="4">
+					<ItemsControl  ItemsSource="{Binding Transactions}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<controls:OpenBankingAccountTransaction/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+
+					</ItemsControl>
+				</ScrollViewer>
+
 
 			</Grid>
 

@@ -26,6 +26,7 @@ namespace BudgetPlanner.Services.Accounts
                                             .Take(transactionsToReturn)
                                             .ToListAsync();
 
+                var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstOrDefaultAsync(x => x.OpenBankingProviderId == account.OpenBankingProviderId);
 
                 var response = new AccountAndTransactionsResponse()
                 {
@@ -33,6 +34,7 @@ namespace BudgetPlanner.Services.Accounts
                     AccountName = account.DisplayName,
                     AccountType = account.AccountType,
                     AvailableBalance = accountBalance.Available,
+                    Logo = provider.Logo,
                     Transactions = transactions.Select(transaction => new AccountTransactionResponse()
                     {
                         Amount = transaction.Amount,

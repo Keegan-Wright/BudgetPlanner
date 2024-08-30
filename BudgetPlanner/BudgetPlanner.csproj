@@ -11,6 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Controls\OpenBanking\Account\OpenBankingAccountTransaction.axaml~RFa577dd.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.1.2" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.2" />
 		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.2" />

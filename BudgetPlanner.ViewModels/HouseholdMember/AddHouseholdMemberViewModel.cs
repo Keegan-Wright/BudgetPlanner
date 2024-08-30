@@ -1,6 +1,6 @@
 ﻿using BudgetPlanner.Messages.Budget;
-using BudgetPlanner.RequestModels.Budget;
-using BudgetPlanner.RequestModels.HouseholdMember;
+using BudgetPlanner.Models.Request.Budget;
+using BudgetPlanner.Models.Request.HouseholdMember;
 using BudgetPlanner.Services;
 using BudgetPlanner.Services.Budget;
 using CommunityToolkit.Mvvm.ComponentModel;

@@ -8,5 +8,6 @@
         x:Class="BudgetPlanner.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="BudgetPlanner">
+	
 	<views:MainView/>
 </Window>

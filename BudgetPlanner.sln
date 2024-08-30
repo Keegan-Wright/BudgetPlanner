@@ -29,7 +29,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.Db", "Bu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.SqliteMigrations", "BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj", "{2A4C6B69-30E5-433F-A9B3-A062FA1765E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.RequestModels", "BudgetPlanner.RequestModels\BudgetPlanner.RequestModels.csproj", "{18C6775F-D7DE-49AA-842E-AC698A71012C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Request", "BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj", "{18C6775F-D7DE-49AA-842E-AC698A71012C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Configuration", "BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj", "{A12B7DC2-F043-4F53-854B-A792ED76C3A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.External.Services.Models", "BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj", "{B8528A12-4986-4099-82F4-CD33E9429719}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.External.Services", "BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj", "{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.States", "BudgetPlanner.States\BudgetPlanner.States.csproj", "{8D05E995-6E99-4060-8840-12C81A43C8F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Response", "BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj", "{D7741D68-9DB7-4130-8A40-1320C9D4AAED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +103,26 @@ Global
 		{18C6775F-D7DE-49AA-842E-AC698A71012C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18C6775F-D7DE-49AA-842E-AC698A71012C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18C6775F-D7DE-49AA-842E-AC698A71012C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12B7DC2-F043-4F53-854B-A792ED76C3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12B7DC2-F043-4F53-854B-A792ED76C3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12B7DC2-F043-4F53-854B-A792ED76C3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12B7DC2-F043-4F53-854B-A792ED76C3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8528A12-4986-4099-82F4-CD33E9429719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8528A12-4986-4099-82F4-CD33E9429719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8528A12-4986-4099-82F4-CD33E9429719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8528A12-4986-4099-82F4-CD33E9429719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D05E995-6E99-4060-8840-12C81A43C8F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D05E995-6E99-4060-8840-12C81A43C8F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D05E995-6E99-4060-8840-12C81A43C8F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D05E995-6E99-4060-8840-12C81A43C8F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

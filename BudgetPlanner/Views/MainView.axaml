@@ -37,9 +37,13 @@
 
 
 				<Button Command="{Binding NavigateToDashboard}">Dashboard</Button>
+				
+				<Button Command="{Binding NavigateToProviderSetup}">Provider Setup</Button>
+
 				<Button Command="{Binding NavigateToHouseholdMembers}">Household Members</Button>
 				<Button Command="{Binding NavigateToBudgetCategories}">Budget Categories</Button>
 				<Button Command="{Binding NavigateToDebts}">Debts</Button>
+				<Button Command="{Binding NavigateToAccounts}">Accounts</Button>
 
 			</StackPanel>
 			

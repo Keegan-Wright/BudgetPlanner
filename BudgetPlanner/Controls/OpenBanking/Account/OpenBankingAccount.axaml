@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetPlanner.Controls.OpenBankingAccount"
+             x:DataType="vm:AccountItemViewModel">
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0">
+			<Image Width="50" Source="avares://BudgetPlanner/Assets/avalonia-logo.ico"></Image>
+		</StackPanel>
+
+		<StackPanel
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Grid.Row="0"
+			Grid.ColumnSpan="2">
+
+			<TextBlock Text="{Binding AccountDisplayName}"/>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal" 
+					HorizontalAlignment="Center"
+					Spacing="100"
+					Grid.Row="1" 
+					Grid.ColumnSpan="2"
+					Margin="0 20">
+			<StackPanel Orientation="Vertical">
+				<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
+				<TextBlock TextAlignment="Center" Text="{Binding AccountBalance}"/>
+			</StackPanel>
+
+			<StackPanel Orientation="Vertical">
+				<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
+				<TextBlock TextAlignment="Center" Text="{Binding AvailableBalance}"/>
+			</StackPanel>
+		
+		</StackPanel>
+
+		<StackPanel Orientation="Vertical" Spacing="10" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 20">
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="3*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition	Height="*"/>
+					<RowDefinition	Height="*"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Description"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Amount"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Time"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="3" FontWeight="Bold" Text="Status"></TextBlock>
+
+
+				<ScrollViewer Margin="0 10 0 0" AllowAutoHide="True" Grid.Row="1" Grid.ColumnSpan="4">
+					<ItemsControl  ItemsSource="{Binding Transactions}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<controls:OpenBankingAccountTransaction/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+
+					</ItemsControl>
+				</ScrollViewer>
+
+
+			</Grid>
+
+		</StackPanel>
+	</Grid>
+</UserControl>

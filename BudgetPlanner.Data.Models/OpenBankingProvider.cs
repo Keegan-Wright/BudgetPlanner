@@ -1,0 +1,10 @@
+﻿namespace BudgetPlanner.Data.Models
+{
+    public class OpenBankingProvider : BaseEntity
+    {
+        public required string Name { get; set; }
+        public required string AccessCode { get; set; }
+        public required string OpenBankingProviderId { get; set; }
+        public required byte[] Logo { get; set; }
+    }
+}

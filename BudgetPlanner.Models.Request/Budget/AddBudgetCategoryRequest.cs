@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.ClientModels.Budget
+namespace BudgetPlanner.Models.Request.Budget
 {
-    public class BudgetCategory
+    public class AddBudgetCategoryRequest
     {
         public required string Name { get; set; }
-        public decimal AvailbleFunds { get; set; }
+        public decimal AvailableFunds { get; set; }
         public decimal MonthlyStart { get; set; }
         public decimal SavingsGoal { get; set; }
         public DateTime? GoalCompletionDate { get; set; }

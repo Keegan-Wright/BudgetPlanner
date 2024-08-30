@@ -15,11 +15,15 @@ namespace BudgetPlanner.Data.Db
         {
             _databaseConfiguration = dbConfig;
         }
+        public BudgetPlannerDbContext()
+        {
+            
+        }
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"Data Source={_databaseConfiguration.ConnectionString}", sqliteOptions =>
+            options.UseSqlite($"Data Source={_databaseConfiguration?.ConnectionString ?? "BudgetPlanner.db"}", sqliteOptions =>
             {
                 sqliteOptions.MigrationsAssembly("BudgetPlanner.Data.SqliteMigrations");
             });
@@ -31,8 +35,16 @@ namespace BudgetPlanner.Data.Db
 
         public DbSet<HouseholdMember> HouseholdMembers { get; set; }
         public DbSet<BudgetCategory> BudgetCategories { get; set; }
-
         public DbSet<Debt> Debts { get; set; }
+
+        public DbSet<OpenBankingProvider> OpenBankingProviders { get; set; }
+        public DbSet<OpenBankingProviderScopes> OpenBankingProviderScopes { get; set; }
+        public DbSet<OpenBankingAccount> OpenBankingAccounts { get; set; }
+        public DbSet<OpenBankingAccountBalance> OpenBankingAccountBalances { get; set; }
+        public DbSet<OpenBankingTransaction> OpenBankingTransactions { get; set; }
+        public DbSet<OpenBankingAccessToken> OpenBankingAccessTokens { get; set; }
+        public DbSet<OpenBankingStandingOrder> OpenBankingStandingOrders { get; set; }
+        public DbSet<OpenBankingDirectDebit> OpenBankingDirectDebits { get; set; }
 
     }
 

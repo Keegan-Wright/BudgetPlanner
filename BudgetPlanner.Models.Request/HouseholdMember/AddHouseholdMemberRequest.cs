@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.RequestModels.HouseholdMember
+namespace BudgetPlanner.Models.Request.HouseholdMember
 {
     public class AddHouseholdMemberRequest
     {

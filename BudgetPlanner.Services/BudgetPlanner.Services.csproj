@@ -12,13 +12,20 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>
 
 	
 	<ItemGroup>
+    <ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
-    <ProjectReference Include="..\BudgetPlanner.RequestModels\BudgetPlanner.RequestModels.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.States\BudgetPlanner.States.csproj" />
     <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
   </ItemGroup>
 

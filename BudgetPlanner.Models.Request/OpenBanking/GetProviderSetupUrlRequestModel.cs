@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.RequestModels.OpenBanking
+namespace BudgetPlanner.Models.Request.OpenBanking
 {
     public class GetProviderSetupUrlRequestModel
     {

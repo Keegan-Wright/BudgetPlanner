@@ -24,7 +24,7 @@
     <ProjectReference Include="..\BudgetPlanner.Messages\BudgetPlanner.Messages.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj" />
-    <ProjectReference Include="..\BudgetPlanner.RequestModels\BudgetPlanner.Models.Request.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
     <ProjectReference Include="..\BudgetPlanner.States\BudgetPlanner.States.csproj" />
     <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
   </ItemGroup>

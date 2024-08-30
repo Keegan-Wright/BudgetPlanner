@@ -1,5 +1,5 @@
 ﻿using BudgetPlanner.Messages.Budget;
-using BudgetPlanner.RequestModels.Budget;
+using BudgetPlanner.Models.Request.Budget;
 using BudgetPlanner.Services;
 using BudgetPlanner.Services.Budget;
 using CommunityToolkit.Mvvm.ComponentModel;

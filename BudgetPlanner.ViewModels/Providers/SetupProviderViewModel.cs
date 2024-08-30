@@ -1,5 +1,5 @@
 ﻿using BudgetPlanner.Data.Models;
-using BudgetPlanner.RequestModels.OpenBanking;
+using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.Services.OpenBanking;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

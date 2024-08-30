@@ -1,6 +1,6 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
-using BudgetPlanner.RequestModels.HouseholdMember;
+using BudgetPlanner.Models.Request.HouseholdMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Services.Budget

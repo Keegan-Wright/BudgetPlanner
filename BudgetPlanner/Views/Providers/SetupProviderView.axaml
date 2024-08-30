@@ -8,6 +8,6 @@
              x:Class="BudgetPlanner.Views.SetupProviderView"
              x:DataType="vm:SetupProviderViewModel">
 	<StackPanel>
-		<TextBlock Text="aa"/>
+		
 	</StackPanel>
 </UserControl>

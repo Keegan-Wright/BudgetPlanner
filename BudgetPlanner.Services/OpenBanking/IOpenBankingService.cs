@@ -1,7 +1,7 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.External.Services.Models.OpenBanking;
-using BudgetPlanner.RequestModels.OpenBanking;
+using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.States;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.RequestModels.Budget
+namespace BudgetPlanner.Models.Request.Budget
 {
     public class AddBudgetCategoryRequest
     {

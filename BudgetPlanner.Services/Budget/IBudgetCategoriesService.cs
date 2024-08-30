@@ -1,5 +1,5 @@
 ﻿using BudgetPlanner.Data.Models;
-using BudgetPlanner.RequestModels.Budget;
+using BudgetPlanner.Models.Request.Budget;
 
 namespace BudgetPlanner.Services.Budget
 {

@@ -175,7 +175,10 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var standingOrders = await _openBankingApiService.GetAccountStandingOrdersAsync(accountId, authToken);
 
-
+                if (standingOrders.Results == null)
+                {
+                    yield break;
+                }
                 await foreach (var standingOrder in standingOrders.Results)
                 {
                     await UpdateOrCreateAccountStandingOrder(standingOrder, accountId);
@@ -203,6 +206,10 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var directDebits = await _openBankingApiService.GetAccountDirectDebitsAsync(accountId, authToken);
 
+                if(directDebits.Results == null)
+                {
+                    yield break;
+                }
                 await foreach (var directDebit in directDebits.Results)
                 {
                     await UpdateOrCreateAccountDirectDebit(directDebit, accountId);
@@ -228,7 +235,7 @@ namespace BudgetPlanner.Services.OpenBanking
             return _openBankingApiService.BuildAuthUrl(setupProviderRequestModel.ProviderIds, setupProviderRequestModel.Scopes);
         }
 
-        public async Task<bool> AddVendorViaAccessCode(string accessCode)
+        public async Task<bool> AddVendorViaAccessCodeAsync(string accessCode)
         {
             var providerAccessToken = await _openBankingApiService.ExchangeCodeForAccessTokenAsync(accessCode);
             var providerInformation = await _openBankingApiService.GetProviderInformation(providerAccessToken.AccessToken);
@@ -238,17 +245,35 @@ namespace BudgetPlanner.Services.OpenBanking
             return true;
         }
 
+        public async Task PerformSyncAsync()
+        {
+            if (ApplicationState.HasInternetConnection)
+            {
+                await foreach (var provider in GetOpenBankingProvidersAsync())
+                {
+                    await BulkLoadProvider(provider.OpenBankingProviderId);
+                }
+            }
+        }
+
+
         private async Task CreateNewProvider(string accessCode, ExternalOpenBankingAccessResponseModel providerAccessToken, ExternalOpenBankingAccountConnectionResponseModel providerInformation)
         {
             await foreach (var externalProvider in providerInformation.Results)
             {
+                using var logoClient = new HttpClient();
+                var providerLogo = await logoClient.GetStreamAsync(externalProvider.Provider.LogoUri);
+
+                using var ms = new MemoryStream();
+                providerLogo.CopyTo(ms);
+
                 var provider = new OpenBankingProvider()
                 {
                     AccessCode = accessCode,
                     Name = externalProvider.Provider.DisplayName,
                     OpenBankingProviderId = externalProvider.Provider.ProviderId,
                     Created = DateTime.Now,
-                    Logo = []
+                    Logo = ms.ToArray()
                 };
                 await _budgetPlannerDbContext.AddAsync(provider);
 
@@ -272,7 +297,7 @@ namespace BudgetPlanner.Services.OpenBanking
                         ProviderId = provider.Id
                     };
 
-                    await _budgetPlannerDbContext.AddAsync(scope);
+                    await _budgetPlannerDbContext.AddAsync(providerScope);
                     await _budgetPlannerDbContext.SaveChangesAsync();
                 }
 
@@ -334,7 +359,6 @@ namespace BudgetPlanner.Services.OpenBanking
                 yield return account;
             }
         }
-
 
         private async Task<string> GetAccessTokenAsync(OpenBankingProvider provider)
         {
@@ -556,6 +580,7 @@ namespace BudgetPlanner.Services.OpenBanking
             }
             await _budgetPlannerDbContext.SaveChangesAsync();
         }
+
 
     }
 }

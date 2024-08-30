@@ -9,7 +9,7 @@ namespace BudgetPlanner.Services.Accounts
 {
     public interface IAccountsService
     {
-        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactions(int transactionsToReturn);
+        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn);
     }
 
 }

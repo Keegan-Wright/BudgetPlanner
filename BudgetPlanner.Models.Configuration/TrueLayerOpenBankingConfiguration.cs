@@ -1,4 +1,4 @@
-﻿namespace BudgetPlanner.Configuration.Models
+﻿namespace BudgetPlanner.Models.Configuration
 {
     public class TrueLayerOpenBankingConfiguration
     {

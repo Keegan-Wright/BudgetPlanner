@@ -1,5 +1,5 @@
 ﻿
-using BudgetPlanner.Configuration.Models;
+using BudgetPlanner.Models.Configuration;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using Microsoft.Extensions.Options;
 using System.Net;

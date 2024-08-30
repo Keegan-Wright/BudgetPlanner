@@ -7,8 +7,8 @@
   </PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -17,7 +17,7 @@
 
 	
 	<ItemGroup>
-    <ProjectReference Include="..\BudgetPlanner.Configuration.Models\BudgetPlanner.Models.Configuration.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
     <ProjectReference Include="..\BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj" />
     <ProjectReference Include="..\BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj" />

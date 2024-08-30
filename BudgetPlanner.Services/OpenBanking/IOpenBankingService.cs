@@ -23,6 +23,7 @@ namespace BudgetPlanner.Services.OpenBanking
         IAsyncEnumerable<ExternalOpenBankingDirectDebit> GetOpenBankingAccountDirectDebitsAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
         string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
-        Task<bool> AddVendorViaAccessCode(string accessCode);
+        Task<bool> AddVendorViaAccessCodeAsync(string accessCode);
+        Task PerformSyncAsync();
     }
 }

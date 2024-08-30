@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.States", "Bud
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Response", "BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj", "{D7741D68-9DB7-4130-8A40-1320C9D4AAED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Extensions", "BudgetPlanner.Extensions\BudgetPlanner.Extensions.csproj", "{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7741D68-9DB7-4130-8A40-1320C9D4AAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

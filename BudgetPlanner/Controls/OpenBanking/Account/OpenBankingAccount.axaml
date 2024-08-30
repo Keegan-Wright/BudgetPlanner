@@ -21,7 +21,7 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0">
-			<Image Width="50" Source="avares://BudgetPlanner/Assets/avalonia-logo.ico"></Image>
+			<Image Width="50" Source="{Binding Logo}"></Image>
 		</StackPanel>
 
 		<StackPanel

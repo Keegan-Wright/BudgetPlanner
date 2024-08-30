@@ -33,11 +33,22 @@
 			<TextBlock Text="{Binding AccountDisplayName}"/>
 		</StackPanel>
 
-		<StackPanel Orientation="Horizontal" Spacing="10" Grid.Row="1" Grid.ColumnSpan="2" Margin="0 20">
-			<TextBlock Text="{Binding AccountName}" />
-			<TextBlock Text="{Binding AccountBalance}"/>
-			<TextBlock Text="{Binding AccountType}"/>
-			<TextBlock Text="{Binding AvailableBalance}"/>
+		<StackPanel Orientation="Horizontal" 
+					HorizontalAlignment="Center"
+					Spacing="100"
+					Grid.Row="1" 
+					Grid.ColumnSpan="2"
+					Margin="0 20">
+			<StackPanel Orientation="Vertical">
+				<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
+				<TextBlock TextAlignment="Center" Text="{Binding AccountBalance}"/>
+			</StackPanel>
+
+			<StackPanel Orientation="Vertical">
+				<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
+				<TextBlock TextAlignment="Center" Text="{Binding AvailableBalance}"/>
+			</StackPanel>
+		
 		</StackPanel>
 
 		<StackPanel Orientation="Vertical" Spacing="10" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 20">
@@ -55,13 +66,13 @@
 					<RowDefinition	Height="*"/>
 				</Grid.RowDefinitions>
 
-				<TextBlock Grid.Row="0" Grid.Column="0" Text="Description"></TextBlock>
-				<TextBlock Grid.Row="0" Grid.Column="1" Text="Amount"></TextBlock>
-				<TextBlock Grid.Row="0" Grid.Column="2" Text="Time"></TextBlock>
-				<TextBlock Grid.Row="0" Grid.Column="3" Text="Status"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Description"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Amount"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Time"></TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="3" FontWeight="Bold" Text="Status"></TextBlock>
 
 
-				<ScrollViewer AllowAutoHide="True" Grid.Row="1" Grid.ColumnSpan="4">
+				<ScrollViewer Margin="0 10 0 0" AllowAutoHide="True" Grid.Row="1" Grid.ColumnSpan="4">
 					<ItemsControl  ItemsSource="{Binding Transactions}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>

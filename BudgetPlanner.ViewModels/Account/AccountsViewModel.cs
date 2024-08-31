@@ -21,6 +21,7 @@ namespace BudgetPlanner.ViewModels
 
         private async void InitaliseAsync()
         {
+
             SetLoading(true, "Loading Account Information...");
             await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5))
             {

@@ -5,6 +5,7 @@ using BudgetPlanner.External.Services.OpenBanking;
 using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.States;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Security.Principal;
 using System.Text;
 

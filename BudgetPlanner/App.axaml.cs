@@ -49,8 +49,8 @@ namespace BudgetPlanner
                 // Without this line you will get duplicate validations from both Avalonia and CT
                 BindingPlugins.DataValidators.RemoveAt(0);
 
-                desktop.MainWindow = Ioc.Default.GetRequiredService<MainWindow>(); ;
-                desktop.MainWindow.DataContext = Ioc.Default.GetRequiredService<MainViewModel>(); ;
+                desktop.MainWindow = Ioc.Default.GetRequiredService<MainWindow>();
+                desktop.MainWindow.DataContext = Ioc.Default.GetRequiredService<MainViewModel>();
 
             }
             else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)

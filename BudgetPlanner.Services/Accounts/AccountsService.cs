@@ -19,7 +19,6 @@ namespace BudgetPlanner.Services.Accounts
         public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn)
         {
             //await _openBankingService.PerformSyncAsync();
-
             await foreach (var account in _budgetPlannerDbContext.OpenBankingAccounts.AsAsyncEnumerable())
             {
                 var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);

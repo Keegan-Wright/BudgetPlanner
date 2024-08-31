@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,19 @@ namespace BudgetPlanner.ViewModels
         public DashboardViewModel(IOpenBankingService openBankingService)
         {
             _openBankingService = openBankingService;
+
+            UpcomingPayments = new UpcomingPaymentsWidgetViewModel() { Payments = new ObservableCollection<UpcomingPaymentViewModel> { new UpcomingPaymentViewModel() { PaymentName = "Test" } } };
+            SetLoading(true, "Testing");
+
+            UpcomingPayments.Payments.Add(new UpcomingPaymentViewModel() { PaymentName = "FFFFF" });
+
         }
 
         [ObservableProperty]
         private string _title = "Dashboard";
+
+        [ObservableProperty]
+        private UpcomingPaymentsWidgetViewModel _upcomingPayments;
 
         [RelayCommand]
         public async Task GetDashboardStats()
@@ -67,5 +77,7 @@ namespace BudgetPlanner.ViewModels
 
             }
         }
+
+
     }
 }

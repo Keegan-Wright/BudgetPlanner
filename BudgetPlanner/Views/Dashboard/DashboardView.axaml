@@ -3,13 +3,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Views.DashboardView"
-             x:DataType="vm:DashboardViewModel">
+             x:DataType="vm:DashboardViewModel"
+			 >
 	<StackPanel>
 
 		<TextBlock Text="{Binding Title}"/>
+		
+		<ScrollViewer Margin="0 10 0 0">
+			<ItemsControl  ItemsSource="{Binding UpcomingPayments.Payments}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<controls:UpcomingPayment/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
 
+			</ItemsControl>
+		</ScrollViewer>
 
 	</StackPanel>
 </UserControl>

@@ -31,6 +31,9 @@
 				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransactions.axaml"/>
 				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransaction.axaml"/>
 				
+				<MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMembers.axaml" />
+				<MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMember.axaml" />
+				
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

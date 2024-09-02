@@ -12,16 +12,7 @@
 
 		<TextBlock Text="{Binding Title}"/>
 		
-		<ScrollViewer Margin="0 10 0 0">
-			<ItemsControl  ItemsSource="{Binding UpcomingPayments.Payments}">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<controls:UpcomingPayment/>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-
-			</ItemsControl>
-		</ScrollViewer>
-
+		<controls:UpcomingPayments Payments="{Binding UpcomingPayments.Payments}"/>
+		
 	</StackPanel>
 </UserControl>

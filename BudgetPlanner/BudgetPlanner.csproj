@@ -64,9 +64,6 @@
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccount.axaml.cs">
 		  <DependentUpon>OpenBankingAccount.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="Controls\Widgets\UpcomingPayment.axaml.cs">
-		  <DependentUpon>UpcomingPayment.axaml</DependentUpon>
-		</Compile>
 		<Compile Update="Views\Account\AccountsView.axaml.cs">
 		  <DependentUpon>AccountsView.axaml</DependentUpon>
 		</Compile>

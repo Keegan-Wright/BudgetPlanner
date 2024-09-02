@@ -17,15 +17,4 @@ public class UpcomingPayment : TemplatedControl
         get => _payment;
         set => SetAndRaise(PaymentProperty, ref _payment, value);
     }
-
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == DataContext)
-        {
-            Payment = change.GetNewValue<UpcomingPaymentViewModel>();
-        }
-    }
 }

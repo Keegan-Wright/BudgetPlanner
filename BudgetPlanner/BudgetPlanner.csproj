@@ -10,9 +10,6 @@
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Controls\OpenBanking\Account\OpenBankingAccountTransaction.axaml~RFa577dd.TMP" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.1.3" />
@@ -58,11 +55,11 @@
 		<Compile Update="Controls\HouseholdMembers\HouseholdMemberListItem.axaml.cs">
 		  <DependentUpon>HouseholdMemberListItem.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransaction.axaml.cs">
-		  <DependentUpon>OpenBankingAccountTransaction.axaml</DependentUpon>
+		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccounts.axaml.cs">
+		  <DependentUpon>OpenBankingAccounts.axaml</DependentUpon>
 		</Compile>
-		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccount.axaml.cs">
-		  <DependentUpon>OpenBankingAccount.axaml</DependentUpon>
+		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
+		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Account\AccountsView.axaml.cs">
 		  <DependentUpon>AccountsView.axaml</DependentUpon>

@@ -11,26 +11,8 @@
 	<Panel>
 
 		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
-		
-		<ScrollViewer AllowAutoHide="True">
-			<StackPanel Spacing="10">
-				<ItemsControl ItemsSource="{Binding Accounts}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<controls:OpenBankingAccount/>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
 
-
-					<ItemsControl.ItemsPanel>
-						<ItemsPanelTemplate>
-							<VirtualizingStackPanel/>
-						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-
-				</ItemsControl>
-			</StackPanel>
-		</ScrollViewer>
+		<controls:OpenBankingAccounts Accounts="{Binding Accounts}"/>
 
 	</Panel>
 </UserControl>

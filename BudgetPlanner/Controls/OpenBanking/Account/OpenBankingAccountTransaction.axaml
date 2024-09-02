@@ -1,30 +1,41 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
-			 xmlns:converters="clr-namespace:BudgetPlanner.Converters;assembly=BudgetPlanner"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BudgetPlanner.Controls.OpenBankingAccountTransaction"
-             x:DataType="vm:AccountItemTransactionViewModel">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Controls"
+>
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
 
-	<UserControl.Resources>
-		<converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
-		<converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
-	</UserControl.Resources>
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:OpenBankingAccountTransaction />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="3*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
+	<ControlTheme x:Key="{x:Type controls:OpenBankingAccountTransaction}" TargetType="controls:OpenBankingAccountTransaction">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
 
-		<TextBlock Grid.Column="0" Text="{Binding Description}"></TextBlock>
-		<TextBlock Grid.Column="1" Text="{Binding Amount}" Foreground="{Binding Amount, Converter={StaticResource NegativeToColourConverter}}"></TextBlock>
-		<TextBlock Grid.Column="2" Text="{Binding Time}" ></TextBlock>
-		<TextBlock Grid.Column="3" Text="{Binding Status}" Foreground="{Binding Status, Converter={StaticResource StatusToColourConverter}}"></TextBlock>
-	</Grid>
+					<TextBlock Grid.Column="0" Text="{Binding Transaction.Description, RelativeSource={RelativeSource TemplatedParent}}"></TextBlock>
+					<TextBlock Grid.Column="1" Text="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}}" Foreground="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NegativeToColourConverter}}"></TextBlock>
 
-</UserControl>
+					<TextBlock Grid.Column="2" Text="{Binding Transaction.Time, RelativeSource={RelativeSource TemplatedParent}}" ></TextBlock>
+					<TextBlock Grid.Column="3" Text="{Binding Transaction.Status, RelativeSource={RelativeSource TemplatedParent}}" Foreground="{Binding Transaction.Status, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StatusToColourConverter}}"></TextBlock>
+				</Grid>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

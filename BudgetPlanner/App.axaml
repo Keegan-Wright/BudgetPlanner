@@ -1,8 +1,10 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:BudgetPlanner"
-             x:Class="BudgetPlanner.App"
-             RequestedThemeVariant="Default">
+             xmlns:converters="clr-namespace:BudgetPlanner.Converters;assembly=BudgetPlanner"
+			 x:Class="BudgetPlanner.App"
+             RequestedThemeVariant="Default"
+			 >
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
@@ -23,8 +25,19 @@
 				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayments.axaml"/>
 				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayment.axaml"/>
 				<MergeResourceInclude Source="/Controls/Spinners/IndeterminateLoadingSpinner.axaml"/>
+				
+				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccounts.axaml"/>
+				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccount.axaml"/>
+				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransactions.axaml"/>
+				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransaction.axaml"/>
+				
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>
 
+
+	<Application.Resources>
+		<converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
+		<converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
+	</Application.Resources>
 </Application>

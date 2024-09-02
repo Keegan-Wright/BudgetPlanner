@@ -1,17 +1,20 @@
-using Avalonia.Controls;
+using Avalonia;
+using Avalonia.Controls.Primitives;
 using BudgetPlanner.ViewModels;
-using System.Collections;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
-namespace BudgetPlanner.Controls
+namespace BudgetPlanner.Controls;
+
+public class OpenBankingAccount : TemplatedControl
 {
-    public partial class OpenBankingAccount : UserControl
+    public static readonly DirectProperty<OpenBankingAccount, AccountItemViewModel> AccountProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingAccount, AccountItemViewModel>(nameof(Account), p => p.Account, (p, v) => p.Account = v);
+
+    private AccountItemViewModel _account = new AccountItemViewModel();
+    public AccountItemViewModel Account
     {
-        public OpenBankingAccount()
-        {
-            InitializeComponent();
-        }
-
-
+        get => _account;
+        set => SetAndRaise(AccountProperty, ref _account, value);
     }
+
 }

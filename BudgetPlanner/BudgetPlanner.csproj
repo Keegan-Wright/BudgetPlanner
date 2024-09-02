@@ -49,9 +49,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Controls\Budget\BudgetCategoryListItem.axaml.cs">
-		  <DependentUpon>BudgetCategoryListItem.axaml</DependentUpon>
-		</Compile>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccounts.axaml.cs">
 		  <DependentUpon>OpenBankingAccounts.axaml</DependentUpon>
 		</Compile>

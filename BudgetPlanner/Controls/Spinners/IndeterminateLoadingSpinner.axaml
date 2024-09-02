@@ -1,13 +1,31 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BudgetPlanner.Controls.IndeterminateLoadingSpinner"
-			 x:CompileBindings="False">
-	
-	<StackPanel IsVisible="{Binding Loading}" VerticalAlignment="Center">
-		<ProgressBar IsIndeterminate="True" Value="{Binding Loading}"/>
-		<TextBlock Text="{Binding LoadingMessage}"></TextBlock>
-	</StackPanel>
-</UserControl>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Controls">
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:IndeterminateLoadingSpinner />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:IndeterminateLoadingSpinner}" TargetType="controls:IndeterminateLoadingSpinner">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<StackPanel IsVisible="{TemplateBinding Loading}" VerticalAlignment="Center">
+					<ProgressBar IsIndeterminate="True" Value="{TemplateBinding Loading}"/>
+					<TextBlock Text="{TemplateBinding LoadingMessage}"></TextBlock>
+				</StackPanel>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

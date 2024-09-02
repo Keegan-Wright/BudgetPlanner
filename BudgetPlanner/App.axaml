@@ -22,6 +22,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayments.axaml"/>
 				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayment.axaml"/>
+				<MergeResourceInclude Source="/Controls/Spinners/IndeterminateLoadingSpinner.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

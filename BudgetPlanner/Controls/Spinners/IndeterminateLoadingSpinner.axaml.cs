@@ -1,21 +1,29 @@
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using System.Runtime.CompilerServices;
+using Avalonia.Controls.Primitives;
+using BudgetPlanner.Controls;
+using BudgetPlanner.ViewModels;
+using System.Collections.Generic;
 
 namespace BudgetPlanner.Controls;
 
-public partial class IndeterminateLoadingSpinner : UserControl
+public class IndeterminateLoadingSpinner : TemplatedControl
 {
-    public static readonly AttachedProperty<bool> LoadingProperty = AvaloniaProperty.RegisterAttached<IndeterminateLoadingSpinner, bool>(nameof(Loading), typeof(IndeterminateLoadingSpinner));
-    public bool Loading { get; set; }
+    public static readonly DirectProperty<IndeterminateLoadingSpinner, bool> LoadingProperty =
+        AvaloniaProperty.RegisterDirect<IndeterminateLoadingSpinner, bool>(nameof(Loading), p => p.Loading, (p, v) => p.Loading = v);
 
-
-    public static readonly AttachedProperty<string> LoadingMessageProperty = AvaloniaProperty.RegisterAttached<IndeterminateLoadingSpinner, string>(nameof(LoadingMessage), typeof(IndeterminateLoadingSpinner));
-    public bool LoadingMessage { get; set; }
-
-    public IndeterminateLoadingSpinner()
+    private bool _loading = false;
+    public bool Loading
     {
-        InitializeComponent();
+        get => _loading;
+        set => SetAndRaise(LoadingProperty, ref _loading, value);
     }
+
+
+    public static readonly StyledProperty<string> LoadingMessageProperty = AvaloniaProperty.Register<IndeterminateLoadingSpinner, string>(nameof(LoadingMessage));
+    public string LoadingMessage
+    {
+        get => GetValue(LoadingMessageProperty);
+        set => SetValue(LoadingMessageProperty, value);
+    }
+
 }

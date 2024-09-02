@@ -17,12 +17,6 @@ namespace BudgetPlanner.ViewModels
         public DashboardViewModel(IOpenBankingService openBankingService)
         {
             _openBankingService = openBankingService;
-
-            UpcomingPayments = new UpcomingPaymentsWidgetViewModel() { Payments = new ObservableCollection<UpcomingPaymentViewModel> { new UpcomingPaymentViewModel() { PaymentName = "Test" } } };
-            SetLoading(true, "Testing");
-
-            UpcomingPayments.Payments.Add(new UpcomingPaymentViewModel() { PaymentName = "FFFFF" });
-
         }
 
         [ObservableProperty]

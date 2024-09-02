@@ -8,11 +8,14 @@
              x:Class="BudgetPlanner.Views.DashboardView"
              x:DataType="vm:DashboardViewModel"
 			 >
-	<StackPanel>
+	<Panel>
+		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
+		<StackPanel>
+			<TextBlock Text="{Binding Title}"/>
 
-		<TextBlock Text="{Binding Title}"/>
-		
-		<controls:UpcomingPayments Payments="{Binding UpcomingPayments.Payments}"/>
-		
-	</StackPanel>
+			<controls:UpcomingPayments Payments="{Binding UpcomingPayments.Payments}"/>
+
+		</StackPanel>
+
+	</Panel>
 </UserControl>

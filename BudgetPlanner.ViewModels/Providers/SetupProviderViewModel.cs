@@ -18,7 +18,7 @@ namespace BudgetPlanner.ViewModels
         }
 
         [ObservableProperty]
-        private ICollection<OpenBankingProviderViewModel> _openBankingProviders = [];
+        private ObservableCollection<OpenBankingProviderViewModel> _openBankingProviders = [];
 
         [ObservableProperty]
         private string _openBankingAuthUrl;
@@ -75,7 +75,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task AddProviderCommand()
         {
-            await _openBankingService.AddVendorViaAccessCode(OpenBankingCode);
+            await _openBankingService.AddVendorViaAccessCodeAsync(OpenBankingCode);
         }
 
 

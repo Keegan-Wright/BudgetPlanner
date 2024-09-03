@@ -291,6 +291,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Scope")
                         .IsRequired()
                         .HasColumnType("TEXT");

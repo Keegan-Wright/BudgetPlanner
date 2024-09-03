@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace BudgetPlanner.ViewModels
 
         [ObservableProperty]
         private string _title = "Dashboard";
+
+        [ObservableProperty]
+        private UpcomingPaymentsWidgetViewModel _upcomingPayments;
 
         [RelayCommand]
         public async Task GetDashboardStats()
@@ -67,5 +71,7 @@ namespace BudgetPlanner.ViewModels
 
             }
         }
+
+
     }
 }

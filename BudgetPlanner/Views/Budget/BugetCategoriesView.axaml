@@ -10,16 +10,7 @@
 	<StackPanel>
 		<Button Command="{Binding NavigateToAddBudgetCategory}">Add New Category</Button>
 
-		<ListBox ItemsSource="{Binding BudgetCategories}"
-				 Background="Transparent"
-				 Margin="0 20"
-				 >
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<controls:BudgetCategoryListItem></controls:BudgetCategoryListItem>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-
+		<controls:BudgetCategories Categories="{Binding BudgetCategories}" />
+		
 	</StackPanel>
 </UserControl>

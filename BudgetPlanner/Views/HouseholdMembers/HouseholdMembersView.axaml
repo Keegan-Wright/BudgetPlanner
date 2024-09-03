@@ -10,16 +10,8 @@
 	<StackPanel>
 		<Button Command="{Binding NavigateToAddHouseholdMember}">Add New Household Member</Button>
 
-		<ListBox ItemsSource="{Binding HouseholdMembers}"
-				 Background="Transparent"
-				 Margin="0 20"
-				 >
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<controls:HouseholdMemberListItem></controls:HouseholdMemberListItem>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
 
+		<controls:HouseholdMembers Members="{Binding HouseholdMembers}" />
+		
 	</StackPanel>
 </UserControl>

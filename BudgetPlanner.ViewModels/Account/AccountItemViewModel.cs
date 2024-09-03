@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BudgetPlanner.ViewModels
         private string _accountName;
 
         [ObservableProperty]
-        private byte[] _logo;
+        private Bitmap _logo;
 
         [ObservableProperty]
         private string _accountType;

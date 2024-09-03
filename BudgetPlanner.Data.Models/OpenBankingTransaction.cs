@@ -13,11 +13,4 @@ namespace BudgetPlanner.Data.Models
         public required DateTime TransactionTime { get; set; }
         public required bool Pending { get; set; }
     }
-
-    public class OpenBankingSyncronisation : BaseEntity
-    {
-        public required int SyncronisationTypeFlag { get; set; }
-        public required DateTime SyncronisedAt { get; set; }
-
-    }
 }

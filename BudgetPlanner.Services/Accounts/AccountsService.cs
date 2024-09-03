@@ -1,4 +1,5 @@
 ﻿using BudgetPlanner.Data.Db;
+using BudgetPlanner.Enums;
 using BudgetPlanner.Models.Response;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,10 @@ namespace BudgetPlanner.Services.Accounts
             _openBankingService = openBankingService;
         }
 
-        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn)
+        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn,SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null)
         {
-            //await _openBankingService.PerformSyncAsync();
+
+            await _openBankingService.PerformSyncAsync(syncFlags, progress);
             await foreach (var account in _budgetPlannerDbContext.OpenBankingAccounts.AsAsyncEnumerable())
             {
                 var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);

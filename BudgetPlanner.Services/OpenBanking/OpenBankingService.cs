@@ -1,10 +1,12 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
+using BudgetPlanner.Enums;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using BudgetPlanner.External.Services.OpenBanking;
 using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.States;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite.Storage.Json.Internal;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Text;
@@ -60,7 +62,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();
 
 
-                if(!providerScopes.Any(x => x.Scope.ToLower() == "balance"))
+                if (!providerScopes.Any(x => x.Scope.ToLower() == "balance"))
                 {
                     yield break;
                 }
@@ -72,7 +74,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var accountBalance = await _openBankingApiService.GetAccountBalanceAsync(accountId, authToken);
 
-                if(accountBalance.Results is null)
+                if (accountBalance.Results is null)
                 {
                     yield break;
                 }
@@ -86,7 +88,7 @@ namespace BudgetPlanner.Services.OpenBanking
             }
         }
 
-        public async IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId)
+        public async IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null)
         {
             if (ApplicationState.HasInternetConnection)
             {
@@ -104,7 +106,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var authToken = await GetAccessTokenAsync(provider);
 
-                var transactions = await _openBankingApiService.GetAccountTransactionsAsync(accountId, authToken);
+                var transactions = await _openBankingApiService.GetAccountTransactionsAsync(accountId, authToken, transactionsStartingDate);
 
                 await foreach (var transaction in transactions.Results)
                 {
@@ -116,7 +118,7 @@ namespace BudgetPlanner.Services.OpenBanking
             }
         }
 
-        public async IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId)
+        public async IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null)
         {
             if (ApplicationState.HasInternetConnection)
             {
@@ -132,7 +134,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var authToken = await GetAccessTokenAsync(provider);
 
-                var transactions = await _openBankingApiService.GetAccountPendingTransactionsAsync(accountId, authToken);
+                var transactions = await _openBankingApiService.GetAccountPendingTransactionsAsync(accountId, authToken, transactionsStartingDate);
 
                 await foreach (var transaction in transactions.Results)
                 {
@@ -207,7 +209,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 var directDebits = await _openBankingApiService.GetAccountDirectDebitsAsync(accountId, authToken);
 
-                if(directDebits.Results == null)
+                if (directDebits.Results == null)
                 {
                     yield break;
                 }
@@ -246,13 +248,15 @@ namespace BudgetPlanner.Services.OpenBanking
             return true;
         }
 
-        public async Task PerformSyncAsync()
+        public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
         {
             if (ApplicationState.HasInternetConnection)
             {
+
                 await foreach (var provider in GetOpenBankingProvidersAsync())
                 {
-                    await BulkLoadProvider(provider.OpenBankingProviderId);
+                    progress?.Report($"Processing your {provider.Name} banking information...");
+                    await BulkLoadProvider(provider.OpenBankingProviderId, syncFlags);
                 }
             }
         }
@@ -289,7 +293,7 @@ namespace BudgetPlanner.Services.OpenBanking
                     Created = DateTime.Now
                 };
 
-                await foreach(var scope in externalProvider.Scopes)
+                await foreach (var scope in externalProvider.Scopes)
                 {
                     var providerScope = new OpenBankingProviderScopes()
                     {
@@ -310,34 +314,61 @@ namespace BudgetPlanner.Services.OpenBanking
             }
         }
 
-        private async Task BulkLoadProvider(string providerId)
+        private async Task BulkLoadProvider(string providerId, SyncTypes syncFlags = SyncTypes.All)
         {
             await foreach (var account in GetOpenBankingAccountsAsync(providerId))
             {
-                await foreach (var _ in GetOpenBankingAccountStandingOrdersAsync(providerId, account.AccountId))
+                if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.StandingOrders))
                 {
+                    await foreach (var _ in GetOpenBankingAccountStandingOrdersAsync(providerId, account.AccountId))
+                    {
 
+                    }
                 }
 
-                await foreach (var _ in GetOpenBankingAccountDirectDebitsAsync(providerId, account.AccountId))
+                if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.DirectDebits))
                 {
+                    await foreach (var _ in GetOpenBankingAccountDirectDebitsAsync(providerId, account.AccountId))
+                    {
 
+                    }
                 }
 
-                await foreach (var _ in GetOpenBankingAccountBalanceAsync(providerId, account.AccountId))
+                if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.Balance))
                 {
+                    await foreach (var _ in GetOpenBankingAccountBalanceAsync(providerId, account.AccountId))
+                    {
 
+                    }
                 }
-                await foreach (var _ in GetOpenBankingAccountPendingTransactionsAsync(providerId, account.AccountId))
-                {
 
-                }
-                await foreach (var _ in GetOpenBankingAccountTransactionsAsync(providerId, account.AccountId))
+                if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.Transactions) || syncFlags.HasFlag(SyncTypes.PendingTransactions))
                 {
+                    var latestTransaction = await _budgetPlannerDbContext.OpenBankingTransactions
+                                    .Where(x => x.OpenBankingAccountId == account.AccountId)
+                                    .OrderByDescending(x => x.TransactionTime)
+                                    .FirstOrDefaultAsync();
+
+                    if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.PendingTransactions))
+                    {
+                        await foreach (var _ in GetOpenBankingAccountPendingTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                        {
+
+                        }
+                    }
+
+                    if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.Transactions))
+                    {
+                        await foreach (var _ in GetOpenBankingAccountTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                        {
+
+                        }
+                    }
 
                 }
             }
         }
+
         private async IAsyncEnumerable<ExternalOpenBankingAccount> ProcessAccountItem(OpenBankingProvider provider)
         {
             var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes.Where(x => x.ProviderId == provider.Id).ToListAsync();

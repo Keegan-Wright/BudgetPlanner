@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using BudgetPlanner.Enums;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Services.Accounts;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,9 +22,12 @@ namespace BudgetPlanner.ViewModels
 
         private async void InitaliseAsync()
         {
+            SetLoading(true);
+            var progress = new Progress<string>(s => SetLoadingMessage(s));
 
-            SetLoading(true, "Loading Account Information...");
-            await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5))
+            var syncFlags = SyncTypes.Account | SyncTypes.Balance | SyncTypes.Transactions | SyncTypes.PendingTransactions;
+
+            await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
             {
 
                 var accountToAdd = new AccountItemViewModel()

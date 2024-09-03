@@ -1,5 +1,6 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
+using BudgetPlanner.Enums;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.States;
@@ -17,13 +18,13 @@ namespace BudgetPlanner.Services.OpenBanking
         IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync(string openBankingProviderId);
         IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync();
         IAsyncEnumerable<ExternalOpenBankingAccountBalance> GetOpenBankingAccountBalanceAsync(string openBankingProviderId, string accountId);
-        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId);
-        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId);
+        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null);
+        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null);
         IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> GetOpenBankingAccountStandingOrdersAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingDirectDebit> GetOpenBankingAccountDirectDebitsAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
         string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
         Task<bool> AddVendorViaAccessCodeAsync(string accessCode);
-        Task PerformSyncAsync();
+        Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null);
     }
 }

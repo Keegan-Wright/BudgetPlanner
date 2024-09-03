@@ -107,11 +107,19 @@ namespace BudgetPlanner.External.Services.OpenBanking
             return responseBody;
         }
 
-        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken)
+        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken, DateTime? transactionsStartingDate = null)
         {
             using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
-            var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions/pending");
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append($"v1/accounts/{accountId}/transactions/pending");
+
+            if (transactionsStartingDate.HasValue)
+            {
+                urlBuilder.Append($"?from={transactionsStartingDate:yyyy-MM-dd}&to={DateTime.Now:yyyy-MM-dd}");
+            }
+
+            var response = await httpClient.GetAsync(urlBuilder.ToString());
 
             var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountTransactionsResponseModel>();
 
@@ -130,11 +138,19 @@ namespace BudgetPlanner.External.Services.OpenBanking
             return responseBody;
         }
 
-        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken)
+        public async Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken, DateTime? transactionsStartingDate = null)
         {
             using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
 
-            var response = await httpClient.GetAsync($"v1/accounts/{accountId}/transactions");
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append($"v1/accounts/{accountId}/transactions");
+
+            if (transactionsStartingDate.HasValue)
+            {
+                urlBuilder.Append($"?from={transactionsStartingDate:yyyy-MM-dd}&to={DateTime.Now:yyyy-MM-dd}");
+            }
+
+            var response = await httpClient.GetAsync(urlBuilder.ToString());
 
             var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingAccountTransactionsResponseModel>();
 

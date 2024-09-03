@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Models.Response;
+﻿using BudgetPlanner.Enums;
+using BudgetPlanner.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BudgetPlanner.Services.Accounts
 {
     public interface IAccountsService
     {
-        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn);
+        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null);
     }
 
 }

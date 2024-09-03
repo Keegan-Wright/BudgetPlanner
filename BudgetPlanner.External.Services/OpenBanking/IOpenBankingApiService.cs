@@ -14,8 +14,8 @@ namespace BudgetPlanner.External.Services.OpenBanking
         Task<ExternalOpenBankingAccessResponseModel> GetAccessTokenByRefreshTokenAsync(string refreshToken);
         Task<ExternalOpenBankingListAllAccountsResponseModel> GetAllAccountsAsync(string authToken);
         Task<ExternalOpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken);
-        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken);
-        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken);
+        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountTransactionsAsync(string accountId, string authToken, DateTime? transactionsStartingDate);
+        Task<ExternalOpenBankingAccountTransactionsResponseModel> GetAccountPendingTransactionsAsync(string accountId, string authToken, DateTime? transactionsStartingDate);
         Task<ExternalOpenBankingAccountStandingOrdersResponseModel> GetAccountStandingOrdersAsync(string accountId, string authToken);
         Task<ExternalOpenBankingAccountDirectDebitsResponseModel> GetAccountDirectDebitsAsync(string accountId, string authToken);
         IAsyncEnumerable<ExternalOpenBankingProvider> GetAvailableProvidersAsync();

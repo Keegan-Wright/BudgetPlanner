@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.Extensions.Configuration;
 using BudgetPlanner.Models.Configuration;
+using System.IO;
+using System.Reflection;
 
 namespace BudgetPlanner
 {
@@ -72,8 +74,13 @@ namespace BudgetPlanner
             var path = Environment.GetFolderPath(folder);
             var DbPath = System.IO.Path.Join(path, "BudgetPlanner.db");
 
+            var assembly = Assembly.GetExecutingAssembly();
+            var appSettingPath = $"{assembly.GetName().Name}.appsettings.json";
+            using var stream = assembly.GetManifestResourceStream(appSettingPath);
+
+
             IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonStream(stream)
                 .Build();
 
             

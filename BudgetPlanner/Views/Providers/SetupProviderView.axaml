@@ -45,7 +45,7 @@
 
 
 			<StackPanel Grid.Row="2">
-				<Label>Open this link in your browser and continue the process there</Label>
+				<TextBlock TextWrapping="Wrap">Open this link in your browser and continue the process there</TextBlock>
 				<SelectableTextBlock TextWrapping="Wrap" Text="{Binding OpenBankingAuthUrl}"></SelectableTextBlock>
 			</StackPanel>
 

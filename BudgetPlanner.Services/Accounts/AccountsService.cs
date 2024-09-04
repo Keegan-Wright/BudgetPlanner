@@ -41,7 +41,7 @@ namespace BudgetPlanner.Services.Accounts
                     AccountType = account.AccountType,
                     AvailableBalance = accountBalance.Available,
                     Logo = provider.Logo,
-                    Transactions = transactions.Select(transaction => new AccountTransactionResponse()
+                    Transactions = transactions?.Select(transaction => new AccountTransactionResponse()
                     {
                         Amount = transaction.Amount,
                         Description = transaction.Description,

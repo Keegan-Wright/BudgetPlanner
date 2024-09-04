@@ -12,38 +12,55 @@
 		<vm:MainViewModel />
 	</Design.DataContext>
 
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<StreamGeometry x:Key="NavigationMenuExpandIconGlyph">M5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2ZM6 4C5.44772 4 5 4.44772 5 5V19C5 19.5523 5.44772 20 6 20H9C9.55229 20 10 19.5523 10 19V5C10 4.44772 9.55229 4 9 4H6Z</StreamGeometry>
+		</ResourceDictionary>
+	</UserControl.Resources>
 
-	<SplitView IsPaneOpen="{Binding SideMenuExpanded}"
+	<SplitView 
+		IsPaneOpen="{Binding SideMenuExpanded}"
 			CompactPaneLength="45"
 			DisplayMode="CompactInline"
-			OpenPaneLength="300"
-			Background="#1e1e1e"
-			PaneBackground="#1e1e1e">
+			OpenPaneLength="300">
 		<SplitView.Pane>
 
 			<StackPanel Orientation="Vertical"
 						Spacing="5"
-						HorizontalAlignment="Stretch"
+						HorizontalAlignment="Left"
 						VerticalAlignment="Top">
 
-				<Button HorizontalAlignment="Left"
-						Width="32"
-						Height="32"
-						Margin="7 10"
-						Command="{Binding TogglePane}">
+				<ToggleSwitch
+					Grid.Row="2"
+					Theme="{DynamicResource ButtonToggleSwitch}"
+					IsChecked="{Binding SideMenuExpanded}">
+					<ToggleSwitch.OnContent>
+						<PathIcon
+							Width="16"
+							Height="16"
+							Data="{StaticResource NavigationMenuExpandIconGlyph}" />
+					</ToggleSwitch.OnContent>
+					<ToggleSwitch.OffContent>
+						<PathIcon
+							Width="16"
+							Height="16"
+							Data="{StaticResource NavigationMenuExpandIconGlyph}" />
+					</ToggleSwitch.OffContent>
+				</ToggleSwitch>
 
-					<PathIcon Height="11" Data="{StaticResource LineHorizontal3Regular}" />
-				</Button>
+				<TreeView Margin="0,10">
+					<TreeView.Items>
 
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToDashboard}">Dashboard</Button>
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToProviderSetup}">Provider Setup</Button>
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToHouseholdMembers}">Household Members</Button>
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToBudgetCategories}">Budget Categories</Button>
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToDebts}">Debts</Button>
+						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToAccounts}">Accounts</Button>
 
-				<Button Command="{Binding NavigateToDashboard}">Dashboard</Button>
+					</TreeView.Items>
+				</TreeView>
 
-				<Button Command="{Binding NavigateToProviderSetup}">Provider Setup</Button>
-
-				<Button Command="{Binding NavigateToHouseholdMembers}">Household Members</Button>
-				<Button Command="{Binding NavigateToBudgetCategories}">Budget Categories</Button>
-				<Button Command="{Binding NavigateToDebts}">Debts</Button>
-				<Button Command="{Binding NavigateToAccounts}">Accounts</Button>
 
 			</StackPanel>
 

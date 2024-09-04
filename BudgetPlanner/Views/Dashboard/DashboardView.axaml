@@ -9,12 +9,8 @@
              x:DataType="vm:DashboardViewModel"
 			 >
 	<Panel>
-		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
 		<StackPanel>
-			<TextBlock Text="{Binding Title}"/>
-
-			<controls:UpcomingPayments Payments="{Binding UpcomingPayments.Payments}"/>
-
+			<TextBlock Text="{Binding Title}"/>		
 		</StackPanel>
 
 	</Panel>

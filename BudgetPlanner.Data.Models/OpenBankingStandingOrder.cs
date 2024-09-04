@@ -15,6 +15,4 @@
         public required string Payee { get; set; }
         public required DateTime Timestamp { get; set; }
     }
-
-
 }

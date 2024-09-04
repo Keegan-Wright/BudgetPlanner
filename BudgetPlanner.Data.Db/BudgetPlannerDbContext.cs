@@ -44,6 +44,7 @@ namespace BudgetPlanner.Data.Db
         public DbSet<OpenBankingTransaction> OpenBankingTransactions { get; set; }
         public DbSet<OpenBankingAccessToken> OpenBankingAccessTokens { get; set; }
         public DbSet<OpenBankingStandingOrder> OpenBankingStandingOrders { get; set; }
+        public DbSet<OpenBankingSynronisation> OpenBankingSyncronisations { get; set; }
         public DbSet<OpenBankingDirectDebit> OpenBankingDirectDebits { get; set; }
 
     }

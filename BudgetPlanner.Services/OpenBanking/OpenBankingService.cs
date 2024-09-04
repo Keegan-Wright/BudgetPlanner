@@ -17,6 +17,7 @@ namespace BudgetPlanner.Services.OpenBanking
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
         private readonly IOpenBankingApiService _openBankingApiService;
+        private readonly int _syncMins = 5;
 
         public OpenBankingService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingApiService openBankingApiService)
         {
@@ -320,25 +321,37 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.StandingOrders))
                 {
-                    await foreach (var _ in GetOpenBankingAccountStandingOrdersAsync(providerId, account.AccountId))
+                    if (await ShouldResync(SyncTypes.StandingOrders, providerId))
                     {
+                        await foreach (var _ in GetOpenBankingAccountStandingOrdersAsync(providerId, account.AccountId))
+                        {
 
+                        }
+                        await AddSyncronisationLog(SyncTypes.StandingOrders, providerId);
                     }
                 }
 
                 if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.DirectDebits))
                 {
-                    await foreach (var _ in GetOpenBankingAccountDirectDebitsAsync(providerId, account.AccountId))
+                    if (await ShouldResync(SyncTypes.DirectDebits, providerId))
                     {
+                        await foreach (var _ in GetOpenBankingAccountDirectDebitsAsync(providerId, account.AccountId))
+                        {
 
+                        }
+                        await AddSyncronisationLog(SyncTypes.DirectDebits, providerId);
                     }
                 }
 
                 if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.Balance))
                 {
-                    await foreach (var _ in GetOpenBankingAccountBalanceAsync(providerId, account.AccountId))
+                    if (await ShouldResync(SyncTypes.Balance, providerId))
                     {
+                        await foreach (var _ in GetOpenBankingAccountBalanceAsync(providerId, account.AccountId))
+                        {
 
+                        }
+                        await AddSyncronisationLog(SyncTypes.Balance, providerId);
                     }
                 }
 
@@ -351,22 +364,46 @@ namespace BudgetPlanner.Services.OpenBanking
 
                     if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.PendingTransactions))
                     {
-                        await foreach (var _ in GetOpenBankingAccountPendingTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                        if (await ShouldResync(SyncTypes.PendingTransactions, providerId))
                         {
+                            await foreach (var _ in GetOpenBankingAccountPendingTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                            {
 
+                            }
+                            await AddSyncronisationLog(SyncTypes.PendingTransactions, providerId);
                         }
                     }
-
                     if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.Transactions))
                     {
-                        await foreach (var _ in GetOpenBankingAccountTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                        if (await ShouldResync(SyncTypes.Transactions, providerId))
                         {
+                            await foreach (var _ in GetOpenBankingAccountTransactionsAsync(providerId, account.AccountId, latestTransaction?.TransactionTime))
+                            {
 
+                            }
+                            await AddSyncronisationLog(SyncTypes.Transactions, providerId);
                         }
                     }
 
                 }
             }
+        }
+
+        private async Task AddSyncronisationLog(SyncTypes syncType, string providerId)
+        {
+            await _budgetPlannerDbContext.AddAsync(new OpenBankingSynronisation() { Created = DateTime.Now, SyncronisationTime = DateTime.Now, SyncronisationType = (int)syncType, ProviderId = providerId });
+            await _budgetPlannerDbContext.SaveChangesAsync();
+        }
+
+        private async Task<bool> ShouldResync(SyncTypes syncType, string providerId)
+        {
+            var hasItem =  await _budgetPlannerDbContext.OpenBankingSyncronisations
+                                   .Where(x => x.SyncronisationType == (int)syncType 
+                                    && x.SyncronisationTime > DateTime.Now.AddMinutes(-_syncMins)
+                                    && x.ProviderId == providerId)
+                                   .OrderByDescending(x => x.SyncronisationTime).AnyAsync();
+
+            return !hasItem;
         }
 
         private async IAsyncEnumerable<ExternalOpenBankingAccount> ProcessAccountItem(OpenBankingProvider provider)

@@ -21,76 +21,78 @@
 	<ControlTheme x:Key="{x:Type controls:OpenBankingAccount}" TargetType="controls:OpenBankingAccount">
 		<Setter Property="Template">
 			<ControlTemplate>
-				<Grid>
+				<Border CornerRadius="10">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
 
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
 
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="*"/>
-					</Grid.RowDefinitions>
-
-					<StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0">
-						<Image Width="50" Source="{Binding Account.Logo, RelativeSource={RelativeSource TemplatedParent}}"></Image>
-					</StackPanel>
-
-					<StackPanel
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Grid.Row="0"
-						Grid.ColumnSpan="2">
-
-						<TextBlock Text="{Binding Account.AccountDisplayName, RelativeSource={RelativeSource TemplatedParent}}"/>
-					</StackPanel>
-
-					<StackPanel Orientation="Horizontal"
-								HorizontalAlignment="Center"
-								Spacing="100"
-								Grid.Row="1"
-								Grid.ColumnSpan="2"
-								Margin="0 20">
-						<StackPanel Orientation="Vertical">
-							<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
-							<TextBlock TextAlignment="Center" Text="{Binding Account.AccountBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+						<StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0">
+							<Image Width="50" Source="{Binding Account.Logo, RelativeSource={RelativeSource TemplatedParent}}"></Image>
 						</StackPanel>
 
-						<StackPanel Orientation="Vertical">
-							<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
-							<TextBlock TextAlignment="Center" Text="{Binding Account.AvailableBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+						<StackPanel
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Grid.Row="0"
+							Grid.ColumnSpan="2">
+
+							<TextBlock Text="{Binding Account.AccountDisplayName, RelativeSource={RelativeSource TemplatedParent}}"/>
 						</StackPanel>
 
-					</StackPanel>
+						<StackPanel Orientation="Horizontal"
+									HorizontalAlignment="Center"
+									Spacing="100"
+									Grid.Row="1"
+									Grid.ColumnSpan="2"
+									Margin="0 20">
+							<StackPanel Orientation="Vertical">
+								<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AccountBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+							</StackPanel>
 
-					<StackPanel Orientation="Vertical" Spacing="10" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 20">
+							<StackPanel Orientation="Vertical">
+								<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AvailableBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+							</StackPanel>
 
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="3*"></ColumnDefinition>
-								<ColumnDefinition Width="*"></ColumnDefinition>
-								<ColumnDefinition Width="*"></ColumnDefinition>
-								<ColumnDefinition Width="*"></ColumnDefinition>
-							</Grid.ColumnDefinitions>
+						</StackPanel>
 
-							<Grid.RowDefinitions>
-								<RowDefinition	Height="*"/>
-								<RowDefinition	Height="*"/>
-							</Grid.RowDefinitions>
+						<StackPanel Orientation="Vertical" Spacing="10" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 20">
 
-							<TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Description"></TextBlock>
-							<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Amount"></TextBlock>
-							<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Time"></TextBlock>
-							<TextBlock Grid.Row="0" Grid.Column="3" FontWeight="Bold" Text="Status"></TextBlock>
-						</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="3*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+								</Grid.ColumnDefinitions>
 
-						<controls:OpenBankingAccountTransactions Transactions="{Binding Account.Transactions, RelativeSource={RelativeSource TemplatedParent}}"/>
+								<Grid.RowDefinitions>
+									<RowDefinition	Height="*"/>
+									<RowDefinition	Height="*"/>
+								</Grid.RowDefinitions>
+
+								<TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Description"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Amount"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Time"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="3" FontWeight="Bold" Text="Status"></TextBlock>
+							</Grid>
+
+							
+							<controls:OpenBankingAccountTransactions Transactions="{Binding Account.Transactions, RelativeSource={RelativeSource TemplatedParent}}"/>
 
 
-					</StackPanel>
-				</Grid>
+						</StackPanel>
+					</Grid>
+				</Border>
 			</ControlTemplate>
 		</Setter>
 	</ControlTheme>

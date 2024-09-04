@@ -26,7 +26,7 @@
 						<ItemsControl ItemsSource="{TemplateBinding Accounts}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<controls:OpenBankingAccount Account="{Binding }"/>
+									<controls:OpenBankingAccount Margin="0, 10, 0, 0" Account="{Binding }"/>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
 

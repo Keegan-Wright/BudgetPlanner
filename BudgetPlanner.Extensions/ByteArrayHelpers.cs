@@ -1,6 +1,5 @@
-﻿using Svg;
-using System.Drawing.Imaging;
-using System.Security.Principal;
+﻿using SkiaSharp;
+using Svg.Skia;
 
 namespace BudgetPlanner.Extensions
 {
@@ -9,12 +8,12 @@ namespace BudgetPlanner.Extensions
         public static MemoryStream ConvertSvgStreamToPngStream(byte[] bytes)
         {
             using var originalStream = new MemoryStream(bytes);
-            var svgDoc = SvgDocument.Open<SvgDocument>(originalStream);
+            using var svg = new SKSvg();
+            svg.Load(originalStream);
 
-            using var svgAsBmp = svgDoc.Draw();
 
             var pngStream = new MemoryStream();
-            svgAsBmp.Save(pngStream, ImageFormat.Png);
+            svg.Save(pngStream,SKColor.Empty, SKEncodedImageFormat.Png);
             pngStream.Seek(0, SeekOrigin.Begin);
 
             return pngStream;

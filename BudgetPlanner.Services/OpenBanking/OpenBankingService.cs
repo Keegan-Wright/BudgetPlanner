@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.Enums;
+using BudgetPlanner.Extensions;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using BudgetPlanner.External.Services.OpenBanking;
 using BudgetPlanner.Models.Request.OpenBanking;
@@ -281,7 +282,8 @@ namespace BudgetPlanner.Services.OpenBanking
                         Name = externalProvider.Provider.DisplayName,
                         OpenBankingProviderId = externalProvider.Provider.ProviderId,
                         Created = DateTime.Now,
-                        Logo = ms.ToArray()
+                        Logo = ByteArrayHelpers.ConvertSvgStreamToPngStream(ms.ToArray()).ToArray()
+
                     };
                     await _budgetPlannerDbContext.AddAsync(provider);
 

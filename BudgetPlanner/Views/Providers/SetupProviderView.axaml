@@ -9,6 +9,8 @@
              x:DataType="vm:SetupProviderViewModel">
 	<StackPanel>
 
+		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
+
 		<TextBlock>Provider Selection</TextBlock>
 		<Grid>
 			<Grid.RowDefinitions>

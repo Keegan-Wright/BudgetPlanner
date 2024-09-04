@@ -18,6 +18,7 @@
 	
 	<ItemGroup>
     <ProjectReference Include="..\BudgetPlanner.Enums\BudgetPlanner.Enums.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Extensions\BudgetPlanner.Extensions.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
     <ProjectReference Include="..\BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj" />

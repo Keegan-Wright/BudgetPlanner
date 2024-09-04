@@ -29,6 +29,7 @@ namespace BudgetPlanner.ViewModels
 
             await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
             {
+                using var logo = new MemoryStream(account.Logo);
 
                 var accountToAdd = new AccountItemViewModel()
                 {
@@ -36,7 +37,7 @@ namespace BudgetPlanner.ViewModels
                     AccountName = account.AccountName,
                     AccountType = account.AccountType,
                     AvailableBalance = account.AvailableBalance,
-                    Logo = account.Logo.Length != 0 ? new Bitmap(ByteArrayHelpers.ConvertSvgStreamToPngStream(account.Logo)) : null // Not working for android, find a way to save and render SVG images. Stick them in the db and custom svg control using skia?
+                    Logo = new Bitmap(logo)
                 };
 
                 await foreach (var transaction in account.Transactions)

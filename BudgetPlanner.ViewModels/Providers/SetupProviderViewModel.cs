@@ -75,7 +75,9 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task AddProviderCommand()
         {
+            SetLoading(true, "Adding Provider");
             await _openBankingService.AddVendorViaAccessCodeAsync(OpenBankingCode);
+            SetLoading(false);
         }
 
 

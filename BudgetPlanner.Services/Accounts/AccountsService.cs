@@ -20,7 +20,7 @@ namespace BudgetPlanner.Services.Accounts
         public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn,SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null)
         {
 
-            await _openBankingService.PerformSyncAsync(syncFlags, progress);
+           // await _openBankingService.PerformSyncAsync(syncFlags, progress);
             await foreach (var account in _budgetPlannerDbContext.OpenBankingAccounts.AsAsyncEnumerable())
             {
                 var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);

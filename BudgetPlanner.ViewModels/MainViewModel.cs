@@ -87,6 +87,12 @@ namespace BudgetPlanner.ViewModels
             CurrentPage = message.Value;
         }
 
+        [RelayCommand]
+        public void ChangeTheme()
+        {
+            WeakReferenceMessenger.Default.Send(new ThemeChangeRequestedMessage(true));
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

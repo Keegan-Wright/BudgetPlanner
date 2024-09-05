@@ -39,7 +39,6 @@
 				
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategories.axaml" />
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategory.axaml" />
-				
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

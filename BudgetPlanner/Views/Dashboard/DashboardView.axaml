@@ -9,8 +9,20 @@
              x:DataType="vm:DashboardViewModel"
 			 >
 	<Panel>
+		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
 		<StackPanel>
-			<TextBlock Text="{Binding Title}"/>		
+			<TextBlock Text="{Binding Title}"/>
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"></ColumnDefinition>
+					<ColumnDefinition Width="1*"></ColumnDefinition>
+					<ColumnDefinition Width="1*"></ColumnDefinition>
+					<ColumnDefinition Width="1*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<controls:UpcomingPayments Grid.Column="0" Payments="{Binding UpcomingPayments.Payments}"/>
+			</Grid>
+			
 		</StackPanel>
 
 	</Panel>

@@ -17,7 +17,7 @@ namespace BudgetPlanner.Models.Response
 
         public decimal AvailableBalance { get; set; }
 
-        public IAsyncEnumerable<AccountTransactionResponse> Transactions { get; set; }
+        public IAsyncEnumerable<AccountTransactionResponse>? Transactions { get; set; }
 
     }
 }

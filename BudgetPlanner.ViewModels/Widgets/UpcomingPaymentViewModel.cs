@@ -13,6 +13,8 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private DateTime _paymentDate;
 
+        [ObservableProperty]
+        private string _paymentType;
     }
 
 }

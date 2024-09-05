@@ -7,59 +7,63 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Views.SetupProviderView"
              x:DataType="vm:SetupProviderViewModel">
-	<StackPanel>
+	<Panel>
 
 		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
 
-		<TextBlock>Provider Selection</TextBlock>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="400"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+		<StackPanel Spacing="10">
+			<TextBlock>Provider Selection</TextBlock>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="400"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
 
-			<ScrollViewer Grid.Row="0" AllowAutoHide="True">
-				<StackPanel Spacing="10">
-					<ItemsControl ItemsSource="{Binding OpenBankingProviders}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<StackPanel Orientation="Horizontal">
-									<CheckBox IsChecked="{Binding Checked}"><TextBlock Text="{Binding Name}"/></CheckBox>
-								</StackPanel>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
+				<ScrollViewer Grid.Row="0" AllowAutoHide="True">
+					<StackPanel Spacing="10">
+						<ItemsControl ItemsSource="{Binding OpenBankingProviders}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal">
+										<CheckBox IsChecked="{Binding Checked}">
+											<TextBlock Text="{Binding Name}"/>
+										</CheckBox>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
 
 
-						<ItemsControl.ItemsPanel>
-							<ItemsPanelTemplate>
-								<VirtualizingStackPanel/>
-							</ItemsPanelTemplate>
-						</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<VirtualizingStackPanel/>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
 
-					</ItemsControl>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+
+
+				<Button Grid.Row="1" Command="{Binding BuildAuthenticationUrlCommand}">Confirm Selection</Button>
+
+
+				<StackPanel Grid.Row="2">
+					<TextBlock TextWrapping="Wrap">Open this link in your browser and continue the process there</TextBlock>
+					<SelectableTextBlock TextWrapping="Wrap" Text="{Binding OpenBankingAuthUrl}"></SelectableTextBlock>
 				</StackPanel>
-			</ScrollViewer>
 
-			
-			<Button Grid.Row="1" Command="{Binding BuildAuthenticationUrlCommand}">Confirm Selection</Button>
-
-
-			<StackPanel Grid.Row="2">
-				<TextBlock TextWrapping="Wrap">Open this link in your browser and continue the process there</TextBlock>
-				<SelectableTextBlock TextWrapping="Wrap" Text="{Binding OpenBankingAuthUrl}"></SelectableTextBlock>
-			</StackPanel>
-
-			<StackPanel Grid.Row="3">
-				<Label>Enter your code below</Label>
-				<TextBox Text="{Binding OpenBankingCode}"/>
-				<Button Command="{Binding AddProviderCommand}">Add Provider</Button>
-			</StackPanel>
+				<StackPanel Grid.Row="3">
+					<Label>Enter your code below</Label>
+					<TextBox Text="{Binding OpenBankingCode}"/>
+					<Button Command="{Binding AddProviderCommand}">Add Provider</Button>
+				</StackPanel>
 
 
-		</Grid>
+			</Grid>
+
+		</StackPanel>
 		
-		
-	</StackPanel>
+	</Panel>
 </UserControl>

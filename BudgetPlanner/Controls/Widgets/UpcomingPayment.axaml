@@ -23,11 +23,13 @@
 	<ControlTheme x:Key="{x:Type controls:UpcomingPayment}" TargetType="controls:UpcomingPayment">
 		<Setter Property="Template">
 			<ControlTemplate>
-				<StackPanel>
-					<TextBlock Text="{Binding Payment.PaymentName, RelativeSource={RelativeSource TemplatedParent}}"/>
-					<TextBlock Text="{Binding Payment.Amount, RelativeSource={RelativeSource TemplatedParent}}"/>
-					<TextBlock Text="{Binding Payment.PaymentDate, RelativeSource={RelativeSource TemplatedParent}}"/>
-				</StackPanel>
+					<StackPanel>
+						<TextBlock Text="{Binding Payment.PaymentName, RelativeSource={RelativeSource TemplatedParent}}"/>
+						<TextBlock Text="{Binding Payment.Amount, RelativeSource={RelativeSource TemplatedParent}}"/>
+						<TextBlock Text="{Binding Payment.PaymentDate, RelativeSource={RelativeSource TemplatedParent}}"/>
+						<TextBlock Text="{Binding Payment.PaymentType, RelativeSource={RelativeSource TemplatedParent}}"/>
+					</StackPanel>
+
 			</ControlTemplate>
 		</Setter>
 	</ControlTheme>

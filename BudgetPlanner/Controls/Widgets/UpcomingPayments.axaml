@@ -21,15 +21,17 @@
 	<ControlTheme x:Key="{x:Type controls:UpcomingPayments}" TargetType="controls:UpcomingPayments">
 		<Setter Property="Template">
 			<ControlTemplate>
-				<ScrollViewer Margin="0 10 0 0">
-					<ItemsControl  ItemsSource="{TemplateBinding Payments}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<controls:UpcomingPayment Payment="{Binding }"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</ScrollViewer>
+				<Border Theme="{StaticResource CardBorder}">
+					<ScrollViewer Margin="0 10 0 0">
+						<ItemsControl  ItemsSource="{TemplateBinding Payments}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<controls:UpcomingPayment Margin="20" Payment="{Binding }"/>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</ScrollViewer>
+				</Border>
 			</ControlTemplate>
 		</Setter>
 	</ControlTheme>

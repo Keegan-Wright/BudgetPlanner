@@ -15,21 +15,25 @@
 	<Design.PreviewWith>
 		<StackPanel Width="400" Spacing="10">
 			<StackPanel Background="{DynamicResource SystemRegionBrush}">
-				<controls:UpcomingPayment />
+				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this week"/>
+				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this Month"/>
+				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent Today"/>
+				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this year"/>
 			</StackPanel>
 		</StackPanel>
 	</Design.PreviewWith>
 
-	<ControlTheme x:Key="{x:Type controls:UpcomingPayment}" TargetType="controls:UpcomingPayment">
+	<ControlTheme x:Key="{x:Type controls:SpentInTimePeriod}" TargetType="controls:SpentInTimePeriod">
 		<Setter Property="Template">
 			<ControlTemplate>
-					<StackPanel>
-						<TextBlock Text="{Binding Payment.PaymentName, RelativeSource={RelativeSource TemplatedParent}}"/>
-						<TextBlock Text="{Binding Payment.Amount, RelativeSource={RelativeSource TemplatedParent}}"/>
-						<TextBlock Text="{Binding Payment.PaymentDate, RelativeSource={RelativeSource TemplatedParent}}"/>
-						<TextBlock Text="{Binding Payment.PaymentType, RelativeSource={RelativeSource TemplatedParent}}"/>
-					</StackPanel>
+				<Border Theme="{StaticResource CardBorder}">
+					<StackPanel Orientation="Vertical" Spacing="">
 
+						<TextBlock Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
+						<TextBlock Classes="Success">£<TextBlock Text="{TemplateBinding TotalSpent}"></TextBlock>
+						</TextBlock>
+					</StackPanel>
+				</Border>
 			</ControlTemplate>
 		</Setter>
 	</ControlTheme>

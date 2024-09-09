@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BudgetPlanner.Extensions;
 using BudgetPlanner.Services.Dashboard;
 using BudgetPlanner.Services.OpenBanking;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -25,6 +26,22 @@ namespace BudgetPlanner.ViewModels
         {
             SetLoading(true, "Loading Dashboard Data...");
 
+            await LoadUpcomingPayments();
+            await LoadSpendingPeriods();
+            SetLoading(false);
+        }
+
+        private async Task LoadSpendingPeriods()
+        {
+            var today = DateTime.Today;
+            SpentToday = await _dashboardService.GetSpentInTimePeriod(today);
+            SpentThisWeek = await _dashboardService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
+            SpentThisMonth = await _dashboardService.GetSpentInTimePeriod(today.StartOfMonth(), today);
+            SpentThisYear = await _dashboardService.GetSpentInTimePeriod(today.StartOfYear(), today);
+        }
+
+        private async Task LoadUpcomingPayments()
+        {
             UpcomingPayments = new UpcomingPaymentsWidgetViewModel();
 
             await foreach (var upcomingPayment in _dashboardService.GetUpcomingPaymentsAsync(5))
@@ -37,9 +54,6 @@ namespace BudgetPlanner.ViewModels
                     PaymentType = upcomingPayment.PaymentType
                 });
             }
-
-
-            SetLoading(false);
         }
 
         [ObservableProperty]
@@ -48,55 +62,17 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private UpcomingPaymentsWidgetViewModel _upcomingPayments;
 
-
-
-        //[RelayCommand]
-        //public async Task GetDashboardStats()
-        //{
-        //    var accountCounter = 0;
-        //    var totalBalance = 0m;
-        //    var availableBalance = 0m;
-        //    var pendingTransactions = 0;
-        //    var totalTransactions = 0;
-        //    var totalDirectDebits = 0;
-        //    var totalStandingOrders = 0;
-
-        //    await foreach (var account in _openBankingService.GetOpenBankingAccountsAsync())
-        //    {
-        //        accountCounter++;
-
-        //        await foreach (var balance in _openBankingService.GetOpenBankingAccountBalanceAsync(account.Provider.ProviderId, account.AccountId))
-        //        {
-        //            availableBalance += balance.Available;
-        //            totalBalance += balance.Current;
-        //        }
-
-        //        await foreach (var _ in _openBankingService.GetOpenBankingAccountPendingTransactionsAsync(account.Provider.ProviderId, account.AccountId))
-        //        {
-        //            pendingTransactions++;
-        //            totalTransactions++;
-        //        }
-
-        //        await foreach (var _ in _openBankingService.GetOpenBankingAccountTransactionsAsync(account.Provider.ProviderId, account.AccountId))
-        //        {
-        //            totalTransactions++;
-        //        }
-
-
-        //        await foreach (var _ in _openBankingService.GetOpenBankingAccountDirectDebitsAsync(account.Provider.ProviderId, account.AccountId))
-        //        {
-        //            totalDirectDebits++;
-        //        }
-
-        //        await foreach (var _ in _openBankingService.GetOpenBankingAccountStandingOrdersAsync(account.Provider.ProviderId, account.AccountId))
-        //        {
-        //            totalStandingOrders++;
-        //        }
-
-
-        //    }
-        //}
-
+        [ObservableProperty]
+        private decimal _spentToday;
+        
+        [ObservableProperty]
+        private decimal _spentThisWeek;
+        
+        [ObservableProperty]
+        private decimal _spentThisMonth;
+        
+        [ObservableProperty]
+        private decimal _spentThisYear;
 
     }
 }

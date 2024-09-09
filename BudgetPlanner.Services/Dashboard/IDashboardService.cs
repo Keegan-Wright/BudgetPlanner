@@ -9,6 +9,8 @@ namespace BudgetPlanner.Services.Dashboard
 {
     public interface IDashboardService
     {
+        Task<decimal> GetSpentInTimePeriod(DateTime from, DateTime to);
+        Task<decimal> GetSpentInTimePeriod(DateTime date);
         IAsyncEnumerable<UpcomingPaymentsResponse> GetUpcomingPaymentsAsync(int numberToFetch);
     }
 }

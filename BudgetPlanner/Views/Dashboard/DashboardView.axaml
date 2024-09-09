@@ -14,13 +14,21 @@
 			<TextBlock Text="{Binding Title}"/>
 
 			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<controls:UpcomingPayments Grid.Column="0" Payments="{Binding UpcomingPayments.Payments}"/>
+				<!-- https://github.com/AvaloniaUI/Avalonia.Samples/issues/53 make the UI responsive per platform -->
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				
+				<controls:UpcomingPayments Grid.Row="0" Payments="{Binding UpcomingPayments.Payments}"/>
+
+				<StackPanel Grid.Row="1">
+					<controls:SpentInTimePeriod Title="Spent Today" TotalSpent="{Binding SpentToday}" />
+					<controls:SpentInTimePeriod Title="Spent This Week" TotalSpent="{Binding SpentThisWeek}" />
+					<controls:SpentInTimePeriod Title="Spent This Month" TotalSpent="{Binding SpentThisMonth}" />
+					<controls:SpentInTimePeriod Title="Spent This Year" TotalSpent="{Binding SpentThisYear}" />
+				</StackPanel>
+
 			</Grid>
 			
 		</StackPanel>

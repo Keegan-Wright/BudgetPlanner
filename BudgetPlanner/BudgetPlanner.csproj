@@ -69,6 +69,9 @@
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
+		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Account\AccountsView.axaml.cs">
 		  <DependentUpon>AccountsView.axaml</DependentUpon>
 		</Compile>

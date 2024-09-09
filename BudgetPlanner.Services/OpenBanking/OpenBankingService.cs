@@ -372,6 +372,7 @@ namespace BudgetPlanner.Services.OpenBanking
                                     .OrderByDescending(x => x.TransactionTime)
                                     .FirstOrDefaultAsync();
 
+
                     if (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(SyncTypes.PendingTransactions))
                     {
                         if (await ShouldResync(SyncTypes.PendingTransactions, providerId, account.AccountId))

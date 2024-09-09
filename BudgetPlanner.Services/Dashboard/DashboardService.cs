@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Models.Response;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BudgetPlanner.Services.Dashboard
 {
@@ -12,6 +13,18 @@ namespace BudgetPlanner.Services.Dashboard
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }
+
+        public async Task<decimal> GetSpentInTimePeriod(DateTime from, DateTime to)
+        {
+            return await GetTotalSpendInTimePeriod(from, to);
+        }
+
+        public async Task<decimal> GetSpentInTimePeriod(DateTime date)
+        {
+            return await GetTotalSpendInTimePeriod(date, date);
+        }
+
+
 
         public async IAsyncEnumerable<UpcomingPaymentsResponse> GetUpcomingPaymentsAsync(int numberToFetch)
         {
@@ -46,6 +59,14 @@ namespace BudgetPlanner.Services.Dashboard
             {
                 yield return upcomingPayment;
             }
+        }
+
+        private async Task<decimal> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
+        {
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.Where(x => x.TransactionTime >= from &&  x.TransactionTime <= to);
+            var items = await query.Select(x => x.Amount).ToListAsync();
+
+            return items.Sum();
         }
     }
 }

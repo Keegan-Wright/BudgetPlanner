@@ -33,17 +33,17 @@
 
 
 						<TextBlock Classes="Success">
-							£<TextBlock Text="{TemplateBinding TotalIn}"/>
+							In £<TextBlock Text="{TemplateBinding TotalIn}"/>
 						</TextBlock>
 
 
 						<TextBlock Classes="Danger">
-							£<TextBlock Text="{TemplateBinding TotalOut}"/>
+							Out £<TextBlock Text="{TemplateBinding TotalOut}"/>
 						</TextBlock>
 
 
 						<TextBlock Classes="Warning">
-							£<TextBlock Text="{TemplateBinding Normalised}"/>
+							Dif £<TextBlock Text="{TemplateBinding Normalised}"/>
 						</TextBlock>
 
 					</StackPanel>

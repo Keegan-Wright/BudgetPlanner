@@ -10,30 +10,31 @@
 			 >
 	<Panel>
 		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
-		<StackPanel>
-			<TextBlock Text="{Binding Title}"/>
+		<ScrollViewer>
 
-			<Grid>
-				<!-- https://github.com/AvaloniaUI/Avalonia.Samples/issues/53 make the UI responsive per platform -->
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-				
-				<controls:UpcomingPayments Grid.Row="0" Payments="{Binding UpcomingPayments.Payments}"/>
+			<StackPanel>
 
-				<StackPanel Grid.Row="1">
-					
-					<controls:SpentInTimePeriod Title="Spent Today" TotalIn="{Binding SpentToday.TotalIn}" TotalOut="{Binding SpentToday.TotalOut}" Normalised="{Binding SpentToday.Normalised}" />
-					<controls:SpentInTimePeriod Title="Spent This Week" TotalIn="{Binding SpentThisWeek.TotalIn}" TotalOut="{Binding SpentThisWeek.TotalOut}" Normalised="{Binding SpentThisWeek.Normalised}" />
-					<controls:SpentInTimePeriod Title="Spent This Month" TotalIn="{Binding SpentThisMonth.TotalIn}" TotalOut="{Binding SpentThisMonth.TotalOut}" Normalised="{Binding SpentThisMonth.Normalised}" />
-					<controls:SpentInTimePeriod Title="Spent This Year" TotalIn="{Binding SpentThisYear.TotalIn}" TotalOut="{Binding SpentThisYear.TotalOut}" Normalised="{Binding SpentThisYear.Normalised}" />
-					
-				</StackPanel>
+				<Grid>
+					<!-- https://github.com/AvaloniaUI/Avalonia.Samples/issues/53 make the UI responsive per platform -->
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
 
-			</Grid>
-			
-		</StackPanel>
+					<controls:UpcomingPayments Grid.Row="0" Payments="{Binding UpcomingPayments.Payments}"/>
+
+					<StackPanel Grid.Row="1">
+
+						<controls:SpentInTimePeriod Title="Spent Today" TotalIn="{Binding SpentToday.TotalIn}" TotalOut="{Binding SpentToday.TotalOut}" Normalised="{Binding SpentToday.Normalised}" />
+						<controls:SpentInTimePeriod Title="Spent This Week" TotalIn="{Binding SpentThisWeek.TotalIn}" TotalOut="{Binding SpentThisWeek.TotalOut}" Normalised="{Binding SpentThisWeek.Normalised}" />
+						<controls:SpentInTimePeriod Title="Spent This Month" TotalIn="{Binding SpentThisMonth.TotalIn}" TotalOut="{Binding SpentThisMonth.TotalOut}" Normalised="{Binding SpentThisMonth.Normalised}" />
+						<controls:SpentInTimePeriod Title="Spent This Year" TotalIn="{Binding SpentThisYear.TotalIn}" TotalOut="{Binding SpentThisYear.TotalOut}" Normalised="{Binding SpentThisYear.Normalised}" />
+
+					</StackPanel>
+
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
 
 	</Panel>
 </UserControl>

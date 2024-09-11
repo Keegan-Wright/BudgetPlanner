@@ -15,10 +15,10 @@
 	<Design.PreviewWith>
 		<StackPanel Width="400" Spacing="10">
 			<StackPanel Background="{DynamicResource SystemRegionBrush}">
-				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this week"/>
-				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this Month"/>
-				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent Today"/>
-				<controls:SpentInTimePeriod TotalSpent="100" Title="Spent this year"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this week"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this Month"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent Today"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this year"/>
 			</StackPanel>
 		</StackPanel>
 	</Design.PreviewWith>
@@ -30,8 +30,22 @@
 					<StackPanel Orientation="Vertical" Spacing="">
 
 						<TextBlock Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
-						<TextBlock Classes="Success">£<TextBlock Text="{TemplateBinding TotalSpent}"></TextBlock>
+
+
+						<TextBlock Classes="Success">
+							£<TextBlock Text="{TemplateBinding TotalIn}"/>
 						</TextBlock>
+
+
+						<TextBlock Classes="Danger">
+							£<TextBlock Text="{TemplateBinding TotalOut}"/>
+						</TextBlock>
+
+
+						<TextBlock Classes="Warning">
+							£<TextBlock Text="{TemplateBinding Normalised}"/>
+						</TextBlock>
+
 					</StackPanel>
 				</Border>
 			</ControlTemplate>

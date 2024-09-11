@@ -13,5 +13,4 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private ObservableCollection<UpcomingPaymentViewModel> _payments = [];
     }
-
 }

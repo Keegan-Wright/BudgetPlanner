@@ -34,10 +34,16 @@ namespace BudgetPlanner.ViewModels
         private async Task LoadSpendingPeriods()
         {
             var today = DateTime.Today;
-            SpentToday = await _dashboardService.GetSpentInTimePeriod(today);
-            SpentThisWeek = await _dashboardService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
-            SpentThisMonth = await _dashboardService.GetSpentInTimePeriod(today.StartOfMonth(), today);
-            SpentThisYear = await _dashboardService.GetSpentInTimePeriod(today.StartOfYear(), today);
+
+            var spentToday = await _dashboardService.GetSpentInTimePeriod(today);
+            var spentThisWeek = await _dashboardService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
+            var spentThisMonth = await _dashboardService.GetSpentInTimePeriod(today.StartOfMonth(), today);
+            var spentThisYear = await _dashboardService.GetSpentInTimePeriod(today.StartOfYear(), today);
+
+            SpentToday = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentToday.TotalIn, TotalOut = spentToday.TotalOut };
+            SpentThisWeek = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentThisWeek.TotalIn, TotalOut = spentThisWeek.TotalOut };
+            SpentThisMonth = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentThisMonth.TotalIn, TotalOut = spentThisMonth.TotalOut };
+            SpentThisYear = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentThisYear.TotalIn, TotalOut = spentThisYear.TotalOut };
         }
 
         private async Task LoadUpcomingPayments()
@@ -63,16 +69,16 @@ namespace BudgetPlanner.ViewModels
         private UpcomingPaymentsWidgetViewModel _upcomingPayments;
 
         [ObservableProperty]
-        private decimal _spentToday;
+        private SpentInTimePeriodWidgetViewModel _spentToday;
         
         [ObservableProperty]
-        private decimal _spentThisWeek;
+        private SpentInTimePeriodWidgetViewModel _spentThisWeek;
         
         [ObservableProperty]
-        private decimal _spentThisMonth;
+        private SpentInTimePeriodWidgetViewModel _spentThisMonth;
         
         [ObservableProperty]
-        private decimal _spentThisYear;
+        private SpentInTimePeriodWidgetViewModel _spentThisYear;
 
     }
 }

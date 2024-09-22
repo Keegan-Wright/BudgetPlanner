@@ -94,7 +94,6 @@ namespace BudgetPlanner.ViewModels
             {
                 if (disposing)
                 {
-                    NetworkChange.NetworkAvailabilityChanged -= NetworkChange_NetworkAvailabilityChanged;
                 }
 
                 disposedValue = true;

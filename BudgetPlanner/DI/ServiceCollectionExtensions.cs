@@ -14,21 +14,21 @@ namespace BudgetPlanner.DI
     {
         public static void AddViewModels(this IServiceCollection services)
         {
-            services.AddSingleton<MainViewModel>();
-            services.AddSingleton<ExpensesViewModel>();
-            services.AddSingleton<DebtViewModel>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<ExpensesViewModel>();
+            services.AddTransient<DebtViewModel>();
 
-            services.AddSingleton<BudgetCategoriesViewModel>();
-            services.AddSingleton<AddBudgetCategoryViewModel>();
-            services.AddSingleton<EditBudgetCategoryViewModel>();
+            services.AddTransient<BudgetCategoriesViewModel>();
+            services.AddTransient<AddBudgetCategoryViewModel>();
+            services.AddTransient<EditBudgetCategoryViewModel>();
 
-            services.AddSingleton<HouseholdMembersViewModel>();
-            services.AddSingleton<AddHouseholdMemberViewModel>();
+            services.AddTransient<HouseholdMembersViewModel>();
+            services.AddTransient<AddHouseholdMemberViewModel>();
 
-            services.AddSingleton<SetupProviderViewModel>();
+            services.AddTransient<SetupProviderViewModel>();
 
-            services.AddSingleton<DashboardViewModel>();
-            services.AddSingleton<AccountsViewModel>();
+            services.AddTransient<DashboardViewModel>();
+            services.AddTransient<AccountsViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -38,20 +38,20 @@ namespace BudgetPlanner.DI
 
         public static void AddViews(this IServiceCollection services)
         {
-            services.AddSingleton<MainView>();
-            services.AddSingleton<ExpensesView>();
-            services.AddSingleton<DebtView>();
-            services.AddSingleton<BudgetCategoriesView>();
-            services.AddSingleton<AddBudgetCategoryView>();
+            services.AddTransient<MainView>();
+            services.AddTransient<ExpensesView>();
+            services.AddTransient<DebtView>();
+            services.AddTransient<BudgetCategoriesView>();
+            services.AddTransient<AddBudgetCategoryView>();
 
-            services.AddSingleton<HouseholdMembersView>();
-            services.AddSingleton<AddHouseholdMemberView>();
+            services.AddTransient<HouseholdMembersView>();
+            services.AddTransient<AddHouseholdMemberView>();
 
-            services.AddSingleton<SetupProviderView>();
+            services.AddTransient<SetupProviderView>();
 
-            services.AddSingleton<DashboardView>();
+            services.AddTransient<DashboardView>();
 
-            services.AddSingleton<AccountsView>();
+            services.AddTransient<AccountsView>();
 
 
         }

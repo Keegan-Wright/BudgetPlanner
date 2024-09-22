@@ -42,6 +42,7 @@ namespace BudgetPlanner.Services.Dashboard
 
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingDirectDebits
+                .Where(x => x.PreviousPaymentAmount != 0)
                 .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now)
                 .Select(x => new UpcomingPaymentsResponse()
                 {

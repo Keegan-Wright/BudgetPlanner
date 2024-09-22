@@ -23,13 +23,17 @@
 			<ControlTemplate>
 				<Border Theme="{StaticResource CardBorder}">
 					<ScrollViewer Margin="0 10 0 0">
-						<ItemsControl  ItemsSource="{TemplateBinding Payments}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<controls:UpcomingPayment Margin="20" Payment="{Binding }"/>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
+						<StackPanel>
+							<TextBlock Margin="0 0 0 10">Upcoming Payments</TextBlock>
+							<ItemsControl  ItemsSource="{TemplateBinding Payments}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<controls:UpcomingPayment Payment="{Binding }"/>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+
+						</StackPanel>
 					</ScrollViewer>
 				</Border>
 			</ControlTemplate>

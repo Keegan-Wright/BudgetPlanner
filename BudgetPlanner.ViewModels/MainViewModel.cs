@@ -18,15 +18,10 @@ namespace BudgetPlanner.ViewModels
             _navigationService = navigationService;
 
             WeakReferenceMessenger.Default.Register(this);
-
-            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
         }
 
 
-        private void NetworkChange_NetworkAvailabilityChanged(object? sender, NetworkAvailabilityEventArgs e)
-        {
-            ApplicationState.HasInternetConnection = e.IsAvailable;
-        }
+
 
         [ObservableProperty]
         private bool _sideMenuExpanded = true;

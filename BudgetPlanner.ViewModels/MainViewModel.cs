@@ -1,11 +1,11 @@
-﻿using BudgetPlanner.Messages;
+﻿using BudgetPlanner.Enums;
+using BudgetPlanner.Messages;
 using BudgetPlanner.Services;
-using BudgetPlanner.States;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Net.NetworkInformation;
+using System.Collections.ObjectModel;
 
 namespace BudgetPlanner.ViewModels
 {
@@ -16,23 +16,48 @@ namespace BudgetPlanner.ViewModels
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            SetupNavigationItems();
 
             WeakReferenceMessenger.Default.Register(this);
         }
 
+        private void SetupNavigationItems()
+        {
+            NavigationItems =
+            [
+                new NavigationItemViewModel() { DisplayName = "Dashboard", RouteType = Enums.AppRoutes.Dashboard},
+                new NavigationItemViewModel() { DisplayName = "Provider Setup", RouteType = Enums.AppRoutes.ProviderSetup},
+                new NavigationItemViewModel() { DisplayName = "Household Members", RouteType = Enums.AppRoutes.HouseholdMembers},
+                new NavigationItemViewModel() { DisplayName = "Budget Categories", RouteType = Enums.AppRoutes.BudgetCategories},
+                new NavigationItemViewModel() { DisplayName = "Debts", RouteType = Enums.AppRoutes.Debts},
+                new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = Enums.AppRoutes.Accounts},
+            ];
 
-
+            SelectedNavigationItem = NavigationItems[0];
+        }
 
         [ObservableProperty]
         private bool _sideMenuExpanded = true;
 
 
         [ObservableProperty]
-        private string _greeting = "Welcome to Avalonia!";
+        private ObservableCollection<NavigationItemViewModel> _navigationItems;
+
 
         [ObservableProperty]
+        private NavigationItemViewModel _selectedNavigationItem;
+
+
+        public NavigationItemViewModel electedNavigationItem;
+
+        [ObservableProperty]
+
         private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
+
+
         private bool disposedValue;
+
+
 
         [RelayCommand]
         public void TogglePane()
@@ -40,41 +65,32 @@ namespace BudgetPlanner.ViewModels
             SideMenuExpanded = !SideMenuExpanded;
         }
 
-        [RelayCommand]
-        public void NavigateToDebts()
-        {
-            _navigationService.RequestNavigation<DebtViewModel>();
-        }
 
-        [RelayCommand]
-        public void NavigateToBudgetCategories()
+        partial void OnSelectedNavigationItemChanged(NavigationItemViewModel value)
         {
-            _navigationService.RequestNavigation<BudgetCategoriesViewModel>();
-
-        }
-
-        [RelayCommand]
-        public void NavigateToHouseholdMembers()
-        {
-            _navigationService.RequestNavigation<HouseholdMembersViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToDashboard()
-        {
-            _navigationService.RequestNavigation<DashboardViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToProviderSetup()
-        {
-            _navigationService.RequestNavigation<SetupProviderViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToAccounts()
-        {
-            _navigationService.RequestNavigation<AccountsViewModel>();
+            switch (value.RouteType)
+            {
+                case AppRoutes.Dashboard:
+                    _navigationService.RequestNavigation<DashboardViewModel>();
+                    break;
+                case AppRoutes.ProviderSetup:
+                    _navigationService.RequestNavigation<SetupProviderViewModel>();
+                    break;
+                case AppRoutes.HouseholdMembers:
+                    _navigationService.RequestNavigation<HouseholdMembersViewModel>();
+                    break;
+                case AppRoutes.BudgetCategories:
+                    _navigationService.RequestNavigation<BudgetCategoriesViewModel>();
+                    break;
+                case AppRoutes.Debts:
+                    _navigationService.RequestNavigation<DebtViewModel>();
+                    break;
+                case AppRoutes.Accounts:
+                    _navigationService.RequestNavigation<AccountsViewModel>();
+                    break;
+                default:
+                    throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");
+            }
         }
 
         public void Receive(NavigationRequestedMessage message)

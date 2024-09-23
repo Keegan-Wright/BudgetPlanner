@@ -22,7 +22,7 @@
 		IsPaneOpen="{Binding SideMenuExpanded}"
 			CompactPaneLength="45"
 			DisplayMode="CompactInline"
-			OpenPaneLength="300">
+			OpenPaneLength="190">
 		<SplitView.Pane>
 
 			<StackPanel Orientation="Vertical"
@@ -48,18 +48,15 @@
 					</ToggleSwitch.OffContent>
 				</ToggleSwitch>
 
-				<TreeView Margin="0,10">
-					<TreeView.Items>
 
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToDashboard}">Dashboard</Button>
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToProviderSetup}">Provider Setup</Button>
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToHouseholdMembers}">Household Members</Button>
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToBudgetCategories}">Budget Categories</Button>
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToDebts}">Debts</Button>
-						<Button Theme="{DynamicResource BorderlessButton}" Command="{Binding NavigateToAccounts}">Accounts</Button>
-
-					</TreeView.Items>
+				<TreeView Margin="0 10" ItemsSource="{Binding NavigationItems}" SelectedItem="{Binding SelectedNavigationItem}">
+					<TreeView.ItemTemplate>
+						<TreeDataTemplate>
+							<TextBlock Text="{Binding DisplayName}" />
+						</TreeDataTemplate>
+					</TreeView.ItemTemplate>
 				</TreeView>
+				
 
 				<ToggleSwitch
                         Grid.Column="1"

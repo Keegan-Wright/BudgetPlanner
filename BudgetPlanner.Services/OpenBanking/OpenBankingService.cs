@@ -260,6 +260,7 @@ namespace BudgetPlanner.Services.OpenBanking
                     progress?.Report($"Processing your {provider.Name} banking information...");
                     await BulkLoadProvider(provider.OpenBankingProviderId, syncFlags);
                 }
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
         }
 
@@ -316,6 +317,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
 
                     await BulkLoadProvider(externalProvider.Provider.ProviderId);
+                    await _budgetPlannerDbContext.SaveChangesAsync();
 
                 }
                 catch (Exception e)
@@ -410,7 +412,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 OpenBankingProviderId = providerId,
                 OpenBankingAccountId = accountId
             });
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
         private async Task<bool> ShouldResync(SyncTypes syncType, string providerId, string accountId)
@@ -498,7 +500,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 };
 
                 await _budgetPlannerDbContext.AddAsync(accessToken);
-                await _budgetPlannerDbContext.SaveChangesAsync();
+                //await _budgetPlannerDbContext.SaveChangesAsync();
             }
         }
 
@@ -525,7 +527,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await _budgetPlannerDbContext.AddAsync(newAccountBalance);
             }
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
         private async Task UpdateOrCreateAccountTransaction(ExternalOpenBankingAccountTransaction transaction, string accountId, bool isPendingTransaction)
@@ -589,7 +591,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await _budgetPlannerDbContext.AddAsync(newAccount);
             }
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
         private async Task UpdateOrCreateAccountStandingOrder(ExternalOpenBankingAccountStandingOrder standingOrder, string accountId)
@@ -633,7 +635,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await _budgetPlannerDbContext.AddAsync(newStandingOrder);
             }
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
         private async Task UpdateOrCreateAccountDirectDebit(ExternalOpenBankingDirectDebit directDebit, string accountId)
         {
@@ -666,7 +668,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await _budgetPlannerDbContext.AddAsync(newStandingOrder);
             }
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
 

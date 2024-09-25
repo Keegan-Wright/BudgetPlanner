@@ -68,6 +68,8 @@ namespace BudgetPlanner.ViewModels
 
         partial void OnSelectedNavigationItemChanged(NavigationItemViewModel value)
         {
+            SideMenuExpanded = false;
+
             switch (value.RouteType)
             {
                 case AppRoutes.Dashboard:

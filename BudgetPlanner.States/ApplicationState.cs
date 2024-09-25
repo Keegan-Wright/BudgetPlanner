@@ -1,4 +1,5 @@
 ﻿using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 namespace BudgetPlanner.States
 {
@@ -8,16 +9,37 @@ namespace BudgetPlanner.States
 
         private static bool CheckConnection()
         {
-            var all = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
-            foreach (var item in all)
+
+            var exclusionList = new List<string>()
+            {
+                // Windows 
+                "virtual", 
+
+                // Android
+                "rmnet_data2",
+                "epdg2",
+                "dummy0"
+            };
+
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var item in networkInterfaces)
             {
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Loopback)
                     continue;
-                if (item.Name.ToLower().Contains("virtual") || item.Description.ToLower().Contains("virtual"))
-                    continue; //Exclude virtual networks set up by VMWare and others
+
+                var containsExclusion = false;
+                foreach (var exclusion in exclusionList)
+                {
+                    if(!containsExclusion)
+                        containsExclusion = item.Name.ToLower().Contains(exclusion.ToLower()) || item.Description.ToLower().Contains(exclusion.ToLower());
+                }
+
+                if (containsExclusion)
+                    continue;
+
+
                 if (item.OperationalStatus == OperationalStatus.Up)
                 {
-                    var b = item.GetPhysicalAddress();
                     return true;
                 }
             }

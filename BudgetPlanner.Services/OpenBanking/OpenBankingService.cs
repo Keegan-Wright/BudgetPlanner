@@ -178,11 +178,11 @@ namespace BudgetPlanner.Services.OpenBanking
 
 
             var providerAccounts = new ConcurrentBag<ExternalOpenBankingAccount>();
-            var providerBalances = new ConcurrentDictionary<string, ExternalOpenBankingAccountBalance>();
-            var providerTransactions = new ConcurrentDictionary<string, ExternalOpenBankingAccountTransaction>();
-            var providerPendingTransactions = new ConcurrentDictionary<string, ExternalOpenBankingAccountTransaction>();
-            var providerStandingOrders = new ConcurrentDictionary<string, ExternalOpenBankingAccountStandingOrder>();
-            var providerDirectDebits = new ConcurrentDictionary<string, ExternalOpenBankingDirectDebit>();
+            var providerBalances = new ConcurrentBag<(string AccountId, ExternalOpenBankingAccountBalance Balances)>();
+            var providerTransactions = new ConcurrentBag<(string AccountId, ExternalOpenBankingAccountTransaction Transactions)>();
+            var providerPendingTransactions = new ConcurrentBag<(string AccountId , ExternalOpenBankingAccountTransaction Transactions)>();
+            var providerStandingOrders = new ConcurrentBag<(string AccountId, ExternalOpenBankingAccountStandingOrder StandingOrders)>();
+            var providerDirectDebits = new ConcurrentBag<(string AccountId , ExternalOpenBankingDirectDebit DirectDebits)>();
             var performedSyncs = new ConcurrentBag<OpenBankingSynronisation>();
 
             await Parallel.ForEachAsync(accountsResponse.Results, async (account, cts) =>
@@ -226,27 +226,27 @@ namespace BudgetPlanner.Services.OpenBanking
 
             await foreach (var balance in providerBalances.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountBalance(balance.Value, balance.Key);
+                await UpdateOrCreateAccountBalance(balance.Balances, balance.AccountId);
             }
 
             await foreach (var standingOrder in providerStandingOrders.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountStandingOrder(standingOrder.Value, standingOrder.Key);
+                await UpdateOrCreateAccountStandingOrder(standingOrder.StandingOrders, standingOrder.AccountId);
             }
 
             await foreach (var directDebit in providerDirectDebits.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountDirectDebit(directDebit.Value, directDebit.Key);
+                await UpdateOrCreateAccountDirectDebit(directDebit.DirectDebits, directDebit.AccountId);
             }
 
             await foreach (var transaction in providerTransactions.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountTransaction(transaction.Value, transaction.Key, false, provider.Id);
+                await UpdateOrCreateAccountTransaction(transaction.Transactions, transaction.AccountId, false, provider.Id);
             }
 
             await foreach (var transaction in providerPendingTransactions.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountTransaction(transaction.Value, transaction.Key, true, provider.Id);
+                await UpdateOrCreateAccountTransaction(transaction.Transactions, transaction.AccountId, true, provider.Id);
             }
 
             await _budgetPlannerDbContext.AddRangeAsync(performedSyncs);
@@ -254,7 +254,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         }
 
-        private async Task CollateAccountPendingTransactionsAsync(ExternalOpenBankingAccountTransactionsResponseModel? pendingTransactionsResults, string accountId, ConcurrentDictionary<string, ExternalOpenBankingAccountTransaction> providerPendingTransactions)
+        private async Task CollateAccountPendingTransactionsAsync(ExternalOpenBankingAccountTransactionsResponseModel? pendingTransactionsResults, string accountId, ConcurrentBag<(string, ExternalOpenBankingAccountTransaction)> providerPendingTransactions)
         {
             if (pendingTransactionsResults == null)
             {
@@ -265,13 +265,13 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await foreach (var pendingTransaction in pendingTransactionsResults.Results)
                 {
-                    providerPendingTransactions.TryAdd(accountId, pendingTransaction);
+                    providerPendingTransactions.Add((accountId, pendingTransaction));
                 }
 
             }
         }
 
-        private async Task CollateAccountTransactionsAsync(ExternalOpenBankingAccountTransactionsResponseModel? transactionsResults, string accountId, ConcurrentDictionary<string, ExternalOpenBankingAccountTransaction> providerTransactions)
+        private async Task CollateAccountTransactionsAsync(ExternalOpenBankingAccountTransactionsResponseModel? transactionsResults, string accountId, ConcurrentBag<(string, ExternalOpenBankingAccountTransaction)> providerTransactions)
         {
             if (transactionsResults == null)
             {
@@ -281,12 +281,12 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 await foreach (var transaction in transactionsResults.Results)
                 {
-                    providerTransactions.TryAdd(accountId, transaction);
+                    providerTransactions.Add((accountId, transaction));
                 }
             }
         }
 
-        private async Task CollateAccountBalanceAsync(ExternalOpenBankingGetAccountBalanceResponseModel? balanceResults, string accountId, ConcurrentDictionary<string, ExternalOpenBankingAccountBalance> providerBalances)
+        private async Task CollateAccountBalanceAsync(ExternalOpenBankingGetAccountBalanceResponseModel? balanceResults, string accountId, ConcurrentBag<(string, ExternalOpenBankingAccountBalance)> providerBalances)
         {
             if (balanceResults == null)
             {
@@ -296,12 +296,12 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 await foreach (var accountBalance in balanceResults.Results)
                 {
-                    providerBalances.TryAdd(accountId, accountBalance);
+                    providerBalances.Add((accountId, accountBalance));
                 }
             }
         }
 
-        private async Task CollateAccountDirectDebitsAsync(ExternalOpenBankingAccountDirectDebitsResponseModel? directDebitsResults, string accountId, ConcurrentDictionary<string, ExternalOpenBankingDirectDebit> providerDirectDebits)
+        private async Task CollateAccountDirectDebitsAsync(ExternalOpenBankingAccountDirectDebitsResponseModel? directDebitsResults, string accountId, ConcurrentBag<(string AccountId, ExternalOpenBankingDirectDebit DirectDebits)> providerDirectDebits)
         {
             if (directDebitsResults == null)
             {
@@ -311,12 +311,12 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 await foreach (var directDebit in directDebitsResults.Results)
                 {
-                    providerDirectDebits.TryAdd(accountId, directDebit);
+                    providerDirectDebits.Add((accountId, directDebit));
                 }
             }
         }
 
-        private async Task CollateAccountStandingOrdersAsync(ExternalOpenBankingAccountStandingOrdersResponseModel? standingOrdersResults, string accountId, ConcurrentDictionary<string, ExternalOpenBankingAccountStandingOrder> providerStandingOrders)
+        private async Task CollateAccountStandingOrdersAsync(ExternalOpenBankingAccountStandingOrdersResponseModel? standingOrdersResults, string accountId, ConcurrentBag<(string AccountId, ExternalOpenBankingAccountStandingOrder StandingOrders)> providerStandingOrders)
         {
             if (standingOrdersResults == null)
             {
@@ -326,7 +326,7 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 await foreach (var standingOrder in standingOrdersResults.Results)
                 {
-                    providerStandingOrders.TryAdd(accountId, standingOrder);
+                    providerStandingOrders.Add((accountId, standingOrder));
                 }
 
             }
@@ -413,7 +413,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         private static bool ShouldSynchronise(SyncTypes syncFlags, IEnumerable<OpenBankingSynronisation> relevantSyncs, SyncTypes typeToCheck)
         {
-            return (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(typeToCheck)) && relevantSyncs.Any(x => x.SyncronisationType == (int)typeToCheck);
+            return (syncFlags.HasFlag(SyncTypes.All) || syncFlags.HasFlag(typeToCheck)) && !relevantSyncs.Any(x => x.SyncronisationType == (int)typeToCheck);
         }
 
         private async Task<string> GetAccessTokenAsync(OpenBankingProvider provider)

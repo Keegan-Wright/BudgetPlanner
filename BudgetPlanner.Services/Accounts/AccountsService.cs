@@ -32,7 +32,7 @@ namespace BudgetPlanner.Services.Accounts
                                             .Take(transactionsToReturn)
                                             .ToListAsync();
 
-                var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstOrDefaultAsync(x => x.OpenBankingProviderId == account.OpenBankingProviderId);
+                var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstOrDefaultAsync(x => x.Id == account.ProviderId);
 
                 var response = new AccountAndTransactionsResponse()
                 {

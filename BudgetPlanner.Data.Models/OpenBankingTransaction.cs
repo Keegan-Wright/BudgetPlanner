@@ -12,5 +12,6 @@ namespace BudgetPlanner.Data.Models
         public required string TransactionId { get; set; }
         public required DateTime TransactionTime { get; set; }
         public required bool Pending { get; set; }
+        public required Guid ProviderId { get; set; }
     }
 }

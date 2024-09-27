@@ -25,7 +25,6 @@ namespace BudgetPlanner.ViewModels
         private async void InitialiseAsync()
         {
             SetLoading(true, "Loading Dashboard Data...");
-
             await LoadUpcomingPayments();
             await LoadSpendingPeriods();
             SetLoading(false);

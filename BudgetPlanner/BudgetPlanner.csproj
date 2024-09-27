@@ -45,6 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj" />

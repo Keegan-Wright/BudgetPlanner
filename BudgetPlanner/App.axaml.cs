@@ -15,6 +15,10 @@ using Microsoft.Extensions.Configuration;
 using BudgetPlanner.Models.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
+using Sentry;
+using System.Diagnostics;
+using BudgetPlanner.Handlers;
 
 namespace BudgetPlanner
 {
@@ -40,8 +44,9 @@ namespace BudgetPlanner
             {
                 db.Database.Migrate();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorHandler.HandleError(ex);
                 _ = db.Database.EnsureCreated();
             }
 
@@ -65,6 +70,20 @@ namespace BudgetPlanner
             }
 
             base.OnFrameworkInitializationCompleted();
+
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+        {
+            ErrorHandler.HandleError(e.Exception);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            ErrorHandler.HandleError(e.ExceptionObject as Exception);
         }
 
         private static ServiceCollection BuildServices()
@@ -89,10 +108,22 @@ namespace BudgetPlanner
 
             services.AddSingleton(config);
 
+
+            SentrySdk.Init(options =>
+            {
+                options.Dsn = config["Sentry:Dsn"];
+                options.Debug = true;
+                options.AutoSessionTracking = true;
+                options.TracesSampleRate = 1.0;
+                options.ProfilesSampleRate = 1.0;
+                options.Release = "0.0.1";
+            });
+
             var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
 
             config.GetSection("OpenBanking:TrueLayer").Bind(trueLayerConfig);
             services.AddSingleton(trueLayerConfig);
+
 
             services.AddWindows();
             services.AddViews();

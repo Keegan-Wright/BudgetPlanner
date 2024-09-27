@@ -4,10 +4,12 @@ using BudgetPlanner.Enums;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.External.Services.Models.OpenBanking;
 using BudgetPlanner.External.Services.OpenBanking;
+using BudgetPlanner.Handlers;
 using BudgetPlanner.Models.Request.OpenBanking;
 using BudgetPlanner.States;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Json.Internal;
+using Sentry;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Security.Principal;
@@ -77,12 +79,19 @@ namespace BudgetPlanner.Services.OpenBanking
             if (ApplicationState.HasInternetConnection)
             {
 
-                await foreach (var provider in GetOpenBankingProvidersAsync())
+                try
                 {
-                    progress?.Report($"Processing your {provider.Name} banking information...");
-                    await BulkLoadProviderAsync(provider, syncFlags);
+                    await foreach (var provider in GetOpenBankingProvidersAsync())
+                    {
+                        progress?.Report($"Processing your {provider.Name} banking information...");
+                        await BulkLoadProviderAsync(provider, syncFlags);
+                    }
+                    await _budgetPlannerDbContext.SaveChangesAsync();
+
                 }
-                await _budgetPlannerDbContext.SaveChangesAsync();
+                catch (Exception ex) { 
+                    ErrorHandler.HandleError(ex);
+                }
             }
         }
 
@@ -141,9 +150,9 @@ namespace BudgetPlanner.Services.OpenBanking
                     await BulkLoadProviderAsync(provider);
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    var a = 1;
+                    ErrorHandler.HandleError(ex);
                 }
             }
         }

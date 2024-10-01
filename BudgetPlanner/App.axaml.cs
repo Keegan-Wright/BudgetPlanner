@@ -117,6 +117,9 @@ namespace BudgetPlanner
                 options.TracesSampleRate = 1.0;
                 options.ProfilesSampleRate = 1.0;
                 options.Release = "0.0.1";
+                options.CaptureFailedRequests = true;
+
+                options.AddEntityFramework();
             });
 
             var trueLayerConfig = new TrueLayerOpenBankingConfiguration();

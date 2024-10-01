@@ -45,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Enums", "BudgetPlanner.Enums\BudgetPlanner.Enums.csproj", "{72E6DED5-1EC3-4545-B3C1-6BFA6E114276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Handlers", "BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj", "{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Handlers", "BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj", "{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Services.Base", "BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

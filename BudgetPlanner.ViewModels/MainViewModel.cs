@@ -9,16 +9,20 @@ using System.Collections.ObjectModel;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>, IDisposable
+    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>, IRecipient<LoadingMessageChangedMessage>, IRecipient<LoadingStateChangedMessage>, IRecipient<ErrorOccuredMessage>, IDisposable
     {
 
         private readonly INavigationService _navigationService;
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+
             SetupNavigationItems();
 
-            WeakReferenceMessenger.Default.Register(this);
+            WeakReferenceMessenger.Default.Register<NavigationRequestedMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoadingMessageChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoadingStateChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<ErrorOccuredMessage>(this);
         }
 
         private void SetupNavigationItems()
@@ -39,6 +43,14 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private bool _sideMenuExpanded = true;
 
+        [ObservableProperty]
+        private bool _loading;
+
+        [ObservableProperty]
+        private string? _loadingMessage;
+
+        [ObservableProperty]
+        private bool _errorOccured;
 
         [ObservableProperty]
         private ObservableCollection<NavigationItemViewModel> _navigationItems;
@@ -122,6 +134,21 @@ namespace BudgetPlanner.ViewModels
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public void Receive(LoadingMessageChangedMessage message)
+        {
+            LoadingMessage = message.Value;
+        }
+
+        public void Receive(LoadingStateChangedMessage message)
+        {
+            Loading = message.Value;
+        }
+
+        public void Receive(ErrorOccuredMessage message)
+        {
+            ErrorOccured = message.Value;
         }
     }
 }

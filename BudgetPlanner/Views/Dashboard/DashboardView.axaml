@@ -9,9 +9,7 @@
              x:DataType="vm:DashboardViewModel"
 			 >
 	<Panel>
-		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
 		<ScrollViewer>
-
 			<StackPanel>
 
 				<Grid>

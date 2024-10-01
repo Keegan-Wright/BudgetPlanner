@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class SetupProviderViewModel : ViewModelBase
+    public partial class SetupProviderViewModel : PageViewModel
     {
         private readonly IOpenBankingService _openBankingService;
         public SetupProviderViewModel(IOpenBankingService openBankingService)

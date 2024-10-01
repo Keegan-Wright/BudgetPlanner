@@ -9,12 +9,6 @@
              x:DataType="vm:AccountsViewModel">
 
 	<Panel>
-
-		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
-
-		<!--https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-tabs
-		Tabs per provider, list of accounts within; TO DO-->
 		<controls:OpenBankingAccounts Accounts="{Binding Accounts}"/>
-
 	</Panel>
 </UserControl>

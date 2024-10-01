@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class AddHouseholdMemberViewModel : ViewModelBase
+    public partial class AddHouseholdMemberViewModel : PageViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IHouseholdMembersService _householdMembersService;

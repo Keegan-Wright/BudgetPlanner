@@ -12,7 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class DashboardViewModel : ViewModelBase
+    public partial class DashboardViewModel : PageViewModel
     {
         private readonly IDashboardService _dashboardService;
 

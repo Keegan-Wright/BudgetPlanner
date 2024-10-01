@@ -10,7 +10,7 @@ using System.Drawing.Imaging;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class AccountsViewModel : ViewModelBase
+    public partial class AccountsViewModel : PageViewModel
     {
         private readonly IAccountsService _accountsService;
         public AccountsViewModel(IAccountsService accountsService)

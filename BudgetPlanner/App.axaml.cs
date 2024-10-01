@@ -119,6 +119,7 @@ namespace BudgetPlanner
                 options.Release = "0.0.1";
                 options.CaptureFailedRequests = true;
 
+                options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
             });
 

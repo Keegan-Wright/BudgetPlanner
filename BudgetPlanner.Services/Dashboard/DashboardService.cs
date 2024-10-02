@@ -35,6 +35,7 @@ namespace BudgetPlanner.Services.Dashboard
             var upcomingPayments = new List<UpcomingPaymentsResponse>();
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingStandingOrders
+                .AsNoTracking()
                 .Where(x => x.NextPaymentDate > DateTime.Now)
                 .Select(x => new UpcomingPaymentsResponse()
                 {
@@ -46,6 +47,7 @@ namespace BudgetPlanner.Services.Dashboard
 
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingDirectDebits
+                .AsNoTracking()
                 .Where(x => x.PreviousPaymentAmount != 0)
                 .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now)
                 .Select(x => new UpcomingPaymentsResponse()
@@ -68,7 +70,7 @@ namespace BudgetPlanner.Services.Dashboard
 
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
-            var query = _budgetPlannerDbContext.OpenBankingTransactions.Where(x => (x.TransactionTime >= from && x.TransactionTime <= to) && x.TransactionCategory != "TRANSFER");
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from && x.TransactionTime <= to) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 
             return new SpentInTimePeriodResponse()

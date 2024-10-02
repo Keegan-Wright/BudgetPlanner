@@ -33,7 +33,7 @@ namespace BudgetPlanner.Services.OpenBanking
 
         public async IAsyncEnumerable<OpenBankingProvider> GetOpenBankingProvidersAsync()
         {
-            await foreach (var provider in _budgetPlannerDbContext.OpenBankingProviders.AsAsyncEnumerable())
+            await foreach (var provider in _budgetPlannerDbContext.OpenBankingProviders.AsNoTracking().AsAsyncEnumerable())
             {
                 yield return provider;
             }
@@ -164,14 +164,17 @@ namespace BudgetPlanner.Services.OpenBanking
                 return;
 
             var providerScopes = await _budgetPlannerDbContext.OpenBankingProviderScopes
+                .AsNoTracking()
                 .Where(x => x.ProviderId == provider.Id).ToListAsync();
 
             var providerSyncs = await _budgetPlannerDbContext.OpenBankingSyncronisations
+                                    .AsNoTracking()
                                    .Where(x => x.SyncronisationTime > DateTime.Now.AddMinutes(-_syncMins)
                                     && x.ProviderId == provider.Id)
                                    .OrderByDescending(x => x.SyncronisationTime).ToListAsync();
 
             var transactionsForProvider = await _budgetPlannerDbContext.OpenBankingTransactions
+                .AsNoTracking()
                 .Where(x => x.ProviderId == provider.Id)
                 .OrderByDescending(x => x.TransactionTime)
                 .GroupBy(x => x.OpenBankingAccountId)
@@ -430,7 +433,11 @@ namespace BudgetPlanner.Services.OpenBanking
 
             if (ApplicationState.HasInternetConnection)
             {
-                var accessToken = await _budgetPlannerDbContext.OpenBankingAccessTokens.Where(x => x.ProviderId == provider.Id).OrderByDescending(x => x.Created).FirstOrDefaultAsync();
+                var accessToken = await _budgetPlannerDbContext.OpenBankingAccessTokens
+                    .AsNoTracking()
+                    .Where(x => x.ProviderId == provider.Id)
+                    .OrderByDescending(x => x.Created)
+                    .FirstOrDefaultAsync();
 
                 if (accessToken.Created.AddSeconds(accessToken.ExpiresIn) > DateTime.Now)
                 {
@@ -461,7 +468,10 @@ namespace BudgetPlanner.Services.OpenBanking
         private async Task EnsureAuthenticatedAsync(OpenBankingProvider provider)
         {
             // User hasn't authenticated yet
-            if (await _budgetPlannerDbContext.OpenBankingAccessTokens.Where(x => x.ProviderId == provider.Id).CountAsync() == 0)
+            if (await _budgetPlannerDbContext.OpenBankingAccessTokens
+                .AsNoTracking()
+                .Where(x => x.ProviderId == provider.Id)
+                .CountAsync() == 0)
             {
                 var response = await _openBankingApiService.ExchangeCodeForAccessTokenAsync(provider.AccessCode);
 
@@ -475,7 +485,6 @@ namespace BudgetPlanner.Services.OpenBanking
                 };
 
                 await _budgetPlannerDbContext.AddAsync(accessToken);
-                //await _budgetPlannerDbContext.SaveChangesAsync();
             }
         }
 

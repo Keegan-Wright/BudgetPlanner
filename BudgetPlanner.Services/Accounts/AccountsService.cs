@@ -18,13 +18,13 @@ namespace BudgetPlanner.Services.Accounts
             _openBankingService = openBankingService;
         }
 
-        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn,SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null)
+        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null)
         {
 
             var transaction = GetSentryTransaction(nameof(GetAccountsAndMostRecentTransactionsAsync), "Loading");
 
 
-            var syncSpan = GetTransactionChild(transaction ,"Open Banking Sync", $"Syncronise open banking data for all providers with the following scopes {syncFlags}");
+            var syncSpan = GetTransactionChild(transaction, "Open Banking Sync", $"Syncronise open banking data for all providers with the following scopes {syncFlags}");
 
             await _openBankingService.PerformSyncAsync(syncFlags, progress);
 
@@ -32,18 +32,23 @@ namespace BudgetPlanner.Services.Accounts
 
             var dataProcessingSpan = GetTransactionChild(transaction, "Open Banking Build For Client", "Loading internal data for the client");
 
-            await foreach (var account in _budgetPlannerDbContext.OpenBankingAccounts.AsAsyncEnumerable())
+            await foreach (var account in _budgetPlannerDbContext.OpenBankingAccounts.AsNoTracking().AsAsyncEnumerable())
             {
-                var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);
+                var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);
 
 
                 var transactions = await _budgetPlannerDbContext.OpenBankingTransactions
+                                            .AsNoTracking()
                                             .Where(x => x.OpenBankingAccountId == account.OpenBankingAccountId)
                                             .OrderByDescending(x => x.TransactionTime)
                                             .Take(transactionsToReturn)
                                             .ToListAsync();
 
-                var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstOrDefaultAsync(x => x.Id == account.ProviderId);
+                var provider = await _budgetPlannerDbContext.OpenBankingProviders
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == account.ProviderId);
 
                 var response = new AccountAndTransactionsResponse()
                 {

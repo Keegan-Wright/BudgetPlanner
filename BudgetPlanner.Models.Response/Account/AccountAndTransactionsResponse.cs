@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgetPlanner.Models.Response
+namespace BudgetPlanner.Models.Response.Account
 {
     public class AccountAndTransactionsResponse
     {

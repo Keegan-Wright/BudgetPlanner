@@ -1,5 +1,5 @@
 ﻿using BudgetPlanner.Enums;
-using BudgetPlanner.Models.Response;
+using BudgetPlanner.Models.Response.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;

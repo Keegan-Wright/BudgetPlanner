@@ -1,6 +1,6 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Enums;
-using BudgetPlanner.Models.Response;
+using BudgetPlanner.Models.Response.Account;
 using BudgetPlanner.Services.Base;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;

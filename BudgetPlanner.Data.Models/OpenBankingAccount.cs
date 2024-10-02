@@ -6,6 +6,6 @@
         public required string AccountType { get; set; }
         public required string DisplayName { get; set; }
         public required string Currency { get; set; }
-        public required string OpenBankingProviderId { get; set; }
+        public required Guid ProviderId { get; set; }
     }
 }

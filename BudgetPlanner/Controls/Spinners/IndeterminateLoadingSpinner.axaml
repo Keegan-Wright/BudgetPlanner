@@ -13,18 +13,35 @@
 	<ControlTheme x:Key="{x:Type controls:IndeterminateLoadingSpinner}" TargetType="controls:IndeterminateLoadingSpinner">
 		<Setter Property="Template">
 			<ControlTemplate>
-				<StackPanel IsVisible="{TemplateBinding Loading}"
-							Spacing="10"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center">
-					<ProgressBar
-						IsIndeterminate="True"
-						Value="{TemplateBinding Loading}"
-						Width="100"
-						Height="100"
-						Theme="{DynamicResource ProgressRing}"/>
-					<TextBlock Text="{TemplateBinding LoadingMessage}"></TextBlock>
-				</StackPanel>
+
+				<Panel
+					IsVisible="{TemplateBinding Loading}">
+					<Border
+						Background="{DynamicResource BorderCardBackground}"
+						Opacity="0.2">
+					</Border>
+
+					<Border
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						MinHeight="100"
+						MinWidth="100"
+						Theme="{StaticResource CardBorder}">
+						<StackPanel
+		Spacing="10">
+							<ProgressBar
+								IsIndeterminate="True"
+								Value="{TemplateBinding Loading}"
+								Width="100"
+								Height="100"
+								Theme="{DynamicResource ProgressRing}"/>
+							<TextBlock Text="{TemplateBinding LoadingMessage}"></TextBlock>
+						</StackPanel>
+
+					</Border>
+
+
+				</Panel>
 			</ControlTemplate>
 		</Setter>
 	</ControlTheme>

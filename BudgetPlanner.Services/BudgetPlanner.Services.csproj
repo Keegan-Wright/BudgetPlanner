@@ -12,6 +12,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Sentry" Version="4.11.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>
 
@@ -19,6 +20,7 @@
 	<ItemGroup>
     <ProjectReference Include="..\BudgetPlanner.Enums\BudgetPlanner.Enums.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Extensions\BudgetPlanner.Extensions.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
     <ProjectReference Include="..\BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj" />
@@ -27,6 +29,7 @@
     <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj" />
     <ProjectReference Include="..\BudgetPlanner.States\BudgetPlanner.States.csproj" />
     <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
   </ItemGroup>

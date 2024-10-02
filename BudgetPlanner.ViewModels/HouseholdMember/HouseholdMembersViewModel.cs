@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class HouseholdMembersViewModel : ViewModelBase, IRecipient<HouseholdMembersChangedMessage>
+    public partial class HouseholdMembersViewModel : PageViewModel, IRecipient<HouseholdMembersChangedMessage>
     {
         private readonly INavigationService _navigationService;
         private readonly IHouseholdMembersService _householdMembersService;

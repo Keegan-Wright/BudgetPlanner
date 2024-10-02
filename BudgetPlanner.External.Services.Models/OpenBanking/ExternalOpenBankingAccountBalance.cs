@@ -11,5 +11,4 @@ namespace BudgetPlanner.External.Services.Models.OpenBanking
         [JsonPropertyName("update_timestamp ")]
         public DateTime UpdateTimestamp { get; set; }
     }
-
 }

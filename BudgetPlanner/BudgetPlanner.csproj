@@ -39,12 +39,15 @@
 		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.1.0.3" />
 		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.1.0.3" />
 		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10" />
+		<PackageReference Include="Sentry.DiagnosticSource" Version="4.11.0" />
+		<PackageReference Include="Sentry.EntityFramework" Version="4.11.0" />
 
 
 		<PackageReference Include="SQLite" Version="3.13.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj" />
@@ -68,6 +71,9 @@
 		</Compile>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
+		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Account\AccountsView.axaml.cs">
 		  <DependentUpon>AccountsView.axaml</DependentUpon>

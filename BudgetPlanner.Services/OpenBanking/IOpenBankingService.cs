@@ -14,14 +14,6 @@ namespace BudgetPlanner.Services.OpenBanking
 {
     public interface IOpenBankingService
     {
-        IAsyncEnumerable<OpenBankingProvider> GetOpenBankingProvidersAsync();
-        IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync(string openBankingProviderId);
-        IAsyncEnumerable<ExternalOpenBankingAccount> GetOpenBankingAccountsAsync();
-        IAsyncEnumerable<ExternalOpenBankingAccountBalance> GetOpenBankingAccountBalanceAsync(string openBankingProviderId, string accountId);
-        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null);
-        IAsyncEnumerable<ExternalOpenBankingAccountTransaction> GetOpenBankingAccountPendingTransactionsAsync(string openBankingProviderId, string accountId, DateTime? transactionsStartingDate = null);
-        IAsyncEnumerable<ExternalOpenBankingAccountStandingOrder> GetOpenBankingAccountStandingOrdersAsync(string openBankingProviderId, string accountId);
-        IAsyncEnumerable<ExternalOpenBankingDirectDebit> GetOpenBankingAccountDirectDebitsAsync(string openBankingProviderId, string accountId);
         IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
         string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
         Task<bool> AddVendorViaAccessCodeAsync(string accessCode);

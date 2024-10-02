@@ -164,8 +164,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OpenBankingProviderId")
-                        .IsRequired()
+                    b.Property<Guid>("ProviderId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Updated")
@@ -377,8 +376,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OpenBankingProviderId")
-                        .IsRequired()
+                    b.Property<Guid>("ProviderId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("SyncronisationTime")
@@ -421,6 +419,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.Property<bool>("Pending")
                         .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TransactionCategory")
                         .IsRequired()

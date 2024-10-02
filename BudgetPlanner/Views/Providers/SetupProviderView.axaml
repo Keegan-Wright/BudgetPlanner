@@ -7,10 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Views.SetupProviderView"
              x:DataType="vm:SetupProviderViewModel">
-	<StackPanel>
-
-		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
-
+	<StackPanel Spacing="10">
 		<TextBlock>Provider Selection</TextBlock>
 		<Grid>
 			<Grid.RowDefinitions>
@@ -26,7 +23,9 @@
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal">
-									<CheckBox IsChecked="{Binding Checked}"><TextBlock Text="{Binding Name}"/></CheckBox>
+									<CheckBox IsChecked="{Binding Checked}">
+										<TextBlock Text="{Binding Name}"/>
+									</CheckBox>
 								</StackPanel>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
@@ -42,7 +41,7 @@
 				</StackPanel>
 			</ScrollViewer>
 
-			
+
 			<Button Grid.Row="1" Command="{Binding BuildAuthenticationUrlCommand}">Confirm Selection</Button>
 
 
@@ -59,7 +58,7 @@
 
 
 		</Grid>
-		
-		
+
 	</StackPanel>
+
 </UserControl>

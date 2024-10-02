@@ -48,9 +48,4 @@ namespace BudgetPlanner.Data.Db
         public DbSet<OpenBankingDirectDebit> OpenBankingDirectDebits { get; set; }
 
     }
-
-    public class DatabaseConfiguration
-    {
-        public string ConnectionString { get; set; }
-    }
 }

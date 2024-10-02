@@ -1,15 +1,15 @@
-﻿using BudgetPlanner.Messages;
+﻿using BudgetPlanner.Enums;
+using BudgetPlanner.Messages;
 using BudgetPlanner.Services;
-using BudgetPlanner.States;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Net.NetworkInformation;
+using System.Collections.ObjectModel;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>, IDisposable
+    public partial class MainViewModel : ViewModelBase, IRecipient<NavigationRequestedMessage>, IRecipient<LoadingMessageChangedMessage>, IRecipient<LoadingStateChangedMessage>, IRecipient<ErrorOccuredMessage>, IDisposable
     {
 
         private readonly INavigationService _navigationService;
@@ -17,27 +17,59 @@ namespace BudgetPlanner.ViewModels
         {
             _navigationService = navigationService;
 
-            WeakReferenceMessenger.Default.Register(this);
+            SetupNavigationItems();
 
-            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
+            WeakReferenceMessenger.Default.Register<NavigationRequestedMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoadingMessageChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoadingStateChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<ErrorOccuredMessage>(this);
         }
 
-
-        private void NetworkChange_NetworkAvailabilityChanged(object? sender, NetworkAvailabilityEventArgs e)
+        private void SetupNavigationItems()
         {
-            ApplicationState.HasInternetConnection = e.IsAvailable;
+            NavigationItems =
+            [
+                new NavigationItemViewModel() { DisplayName = "Dashboard", RouteType = Enums.AppRoutes.Dashboard},
+                new NavigationItemViewModel() { DisplayName = "Provider Setup", RouteType = Enums.AppRoutes.ProviderSetup},
+                new NavigationItemViewModel() { DisplayName = "Household Members", RouteType = Enums.AppRoutes.HouseholdMembers},
+                new NavigationItemViewModel() { DisplayName = "Budget Categories", RouteType = Enums.AppRoutes.BudgetCategories},
+                new NavigationItemViewModel() { DisplayName = "Debts", RouteType = Enums.AppRoutes.Debts},
+                new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = Enums.AppRoutes.Accounts},
+            ];
+
+            SelectedNavigationItem = NavigationItems[0];
         }
 
         [ObservableProperty]
         private bool _sideMenuExpanded = true;
 
+        [ObservableProperty]
+        private bool _loading;
 
         [ObservableProperty]
-        private string _greeting = "Welcome to Avalonia!";
+        private string? _loadingMessage;
 
         [ObservableProperty]
+        private bool _errorOccured;
+
+        [ObservableProperty]
+        private ObservableCollection<NavigationItemViewModel> _navigationItems;
+
+
+        [ObservableProperty]
+        private NavigationItemViewModel _selectedNavigationItem;
+
+
+        public NavigationItemViewModel electedNavigationItem;
+
+        [ObservableProperty]
+
         private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
+
+
         private bool disposedValue;
+
+
 
         [RelayCommand]
         public void TogglePane()
@@ -45,41 +77,34 @@ namespace BudgetPlanner.ViewModels
             SideMenuExpanded = !SideMenuExpanded;
         }
 
-        [RelayCommand]
-        public void NavigateToDebts()
-        {
-            _navigationService.RequestNavigation<DebtViewModel>();
-        }
 
-        [RelayCommand]
-        public void NavigateToBudgetCategories()
+        partial void OnSelectedNavigationItemChanged(NavigationItemViewModel value)
         {
-            _navigationService.RequestNavigation<BudgetCategoriesViewModel>();
+            SideMenuExpanded = false;
 
-        }
-
-        [RelayCommand]
-        public void NavigateToHouseholdMembers()
-        {
-            _navigationService.RequestNavigation<HouseholdMembersViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToDashboard()
-        {
-            _navigationService.RequestNavigation<DashboardViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToProviderSetup()
-        {
-            _navigationService.RequestNavigation<SetupProviderViewModel>();
-        }
-
-        [RelayCommand]
-        public void NavigateToAccounts()
-        {
-            _navigationService.RequestNavigation<AccountsViewModel>();
+            switch (value.RouteType)
+            {
+                case AppRoutes.Dashboard:
+                    _navigationService.RequestNavigation<DashboardViewModel>();
+                    break;
+                case AppRoutes.ProviderSetup:
+                    _navigationService.RequestNavigation<SetupProviderViewModel>();
+                    break;
+                case AppRoutes.HouseholdMembers:
+                    _navigationService.RequestNavigation<HouseholdMembersViewModel>();
+                    break;
+                case AppRoutes.BudgetCategories:
+                    _navigationService.RequestNavigation<BudgetCategoriesViewModel>();
+                    break;
+                case AppRoutes.Debts:
+                    _navigationService.RequestNavigation<DebtViewModel>();
+                    break;
+                case AppRoutes.Accounts:
+                    _navigationService.RequestNavigation<AccountsViewModel>();
+                    break;
+                default:
+                    throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");
+            }
         }
 
         public void Receive(NavigationRequestedMessage message)
@@ -99,7 +124,6 @@ namespace BudgetPlanner.ViewModels
             {
                 if (disposing)
                 {
-                    NetworkChange.NetworkAvailabilityChanged -= NetworkChange_NetworkAvailabilityChanged;
                 }
 
                 disposedValue = true;
@@ -110,6 +134,30 @@ namespace BudgetPlanner.ViewModels
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public void Receive(LoadingMessageChangedMessage message)
+        {
+            LoadingMessage = message.Value;
+        }
+
+        public void Receive(LoadingStateChangedMessage message)
+        {
+            Loading = message.Value;
+        }
+
+        public async void Receive(ErrorOccuredMessage message)
+        {
+            ErrorOccured = message.Value;
+
+            RemoveError();
+
+        }
+
+        private async void RemoveError()
+        {
+            await Task.Delay(1000 * 10);
+            ErrorOccured = false;
         }
     }
 }

@@ -9,10 +9,6 @@
              x:DataType="vm:AccountsViewModel">
 
 	<Panel>
-
-		<controls:IndeterminateLoadingSpinner Loading="{Binding Loading}" LoadingMessage="{Binding LoadingMessage}"/>
-
 		<controls:OpenBankingAccounts Accounts="{Binding Accounts}"/>
-
 	</Panel>
 </UserControl>

@@ -1,30 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Reflection.Emit;
 
 namespace BudgetPlanner.ViewModels
 {
     public partial class ViewModelBase : ObservableObject
     {
-        [ObservableProperty]
-        private bool _loading;
-
-        [ObservableProperty]
-        private string? _loadingMessage;
-
-
-
-
-        public void SetLoading(bool loading, string? loadingMessage = "")
+        public async Task RunOnBackgroundThreadAsync(Action action)
         {
-            Loading = loading;
-            LoadingMessage = loadingMessage;
+            await Task.Run(action.Invoke);
         }
-
-        public void SetLoadingMessage(string? loadingMessage)
+        public async Task RunOnBackgroundThreadAsync(Task taskToRun)
         {
-            if (Loading)
+            await Task.Run(async () =>
             {
-                LoadingMessage = loadingMessage;
-            }
+                await taskToRun;
+            });
         }
     }
 }

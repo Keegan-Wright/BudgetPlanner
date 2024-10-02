@@ -25,9 +25,10 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayments.axaml"/>
-				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPayment.axaml"/>
+				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayments.axaml"/>
+				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayment.axaml"/>
 				<MergeResourceInclude Source="/Controls/Spinners/IndeterminateLoadingSpinner.axaml"/>
+				<MergeResourceInclude Source="/Controls/Widgets/MoneyWidget/SpentInTimePeriod.axaml"/>
 				
 				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccounts.axaml"/>
 				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccount.axaml"/>

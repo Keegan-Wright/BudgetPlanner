@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Encodings.Web;
+using Sentry;
 
 namespace BudgetPlanner.External.Services.OpenBanking
 {
@@ -87,7 +88,6 @@ namespace BudgetPlanner.External.Services.OpenBanking
         public async Task<ExternalOpenBankingGetAccountBalanceResponseModel> GetAccountBalanceAsync(string accountId, string authToken)
         {
             using var httpClient = await BuildHttpClient(_trueLayerConfiguration.BaseDataUrl, authToken);
-
             var response = await httpClient.GetAsync($"v1/accounts/{accountId}/balance");
 
             var responseBody = await response.Content.ReadFromJsonAsync<ExternalOpenBankingGetAccountBalanceResponseModel>();
@@ -195,7 +195,8 @@ namespace BudgetPlanner.External.Services.OpenBanking
 
         private async Task<HttpClient> BuildHttpClient(string baseUrl, string? authHeader = null)
         {
-            var httpClient = new HttpClient();
+            var httpHandler = new SentryHttpMessageHandler();
+            var httpClient = new HttpClient(httpHandler);
             httpClient.BaseAddress = new Uri(baseUrl);
 
             if (!string.IsNullOrEmpty(authHeader))

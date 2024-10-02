@@ -10,6 +10,11 @@
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+    <RunAOTCompilation>False</RunAOTCompilation>
+    <PublishTrimmed>False</PublishTrimmed>
+  </PropertyGroup>
 
   <ItemGroup>
     <AndroidResource Include="Icon.png">
@@ -23,6 +28,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Sentry.Android.AssemblyReader" Version="4.11.0" />
+    <PackageReference Include="Sentry.Bindings.Android" Version="4.11.0" />
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.11" />
   </ItemGroup>
 

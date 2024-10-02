@@ -1,17 +1,21 @@
 ﻿using BudgetPlanner.Data.Db;
+using BudgetPlanner.Enums;
 using BudgetPlanner.Models.Response;
+using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BudgetPlanner.Services.Dashboard
 {
     public class DashboardService : IDashboardService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
+        private readonly IOpenBankingService _openBankingService;
 
-        public DashboardService(BudgetPlannerDbContext budgetPlannerDbContext)
+
+        public DashboardService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
+            _openBankingService = openBankingService;
         }
 
         public async Task<SpentInTimePeriodResponse> GetSpentInTimePeriod(DateTime from, DateTime to)

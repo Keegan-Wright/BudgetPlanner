@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using BudgetPlanner.Enums;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Services.Accounts;
@@ -22,10 +23,19 @@ namespace BudgetPlanner.ViewModels
 
         private async void InitaliseAsync()
         {
-            SetLoading(true);
+            await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
+        }
+
+        [ObservableProperty]
+        private ObservableCollection<AccountItemViewModel> _accounts = [];
+
+        private async Task LoadDataAsync()
+        {
             var progress = new Progress<string>(s => SetLoadingMessage(s));
 
             var syncFlags = SyncTypes.Account | SyncTypes.Balance | SyncTypes.Transactions | SyncTypes.PendingTransactions;
+
+            SetLoading(true);
 
             await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
             {
@@ -55,10 +65,9 @@ namespace BudgetPlanner.ViewModels
                 Accounts.Add(accountToAdd);
 
             }
-            SetLoading(false);
-        }
 
-        [ObservableProperty]
-        private ObservableCollection<AccountItemViewModel> _accounts = [];
+            SetLoading(false);
+
+        }
     }
 }

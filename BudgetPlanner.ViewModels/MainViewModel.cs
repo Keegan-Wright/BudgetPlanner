@@ -146,9 +146,18 @@ namespace BudgetPlanner.ViewModels
             Loading = message.Value;
         }
 
-        public void Receive(ErrorOccuredMessage message)
+        public async void Receive(ErrorOccuredMessage message)
         {
             ErrorOccured = message.Value;
+
+            RemoveError();
+
+        }
+
+        private async void RemoveError()
+        {
+            await Task.Delay(1000 * 10);
+            ErrorOccured = false;
         }
     }
 }

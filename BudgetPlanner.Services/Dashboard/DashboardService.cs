@@ -68,7 +68,7 @@ namespace BudgetPlanner.Services.Dashboard
 
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
-            var query = _budgetPlannerDbContext.OpenBankingTransactions.Where(x => x.TransactionTime >= from && x.TransactionTime <= to);
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.Where(x => (x.TransactionTime >= from && x.TransactionTime <= to) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 
             return new SpentInTimePeriodResponse()

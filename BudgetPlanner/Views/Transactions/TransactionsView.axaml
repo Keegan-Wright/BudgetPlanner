@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+			 xmlns:controls="clr-namespace:BudgetPlanner.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetPlanner.Views.TransactionsView"
+             x:DataType="vm:TransactionsViewModel">
+
+	<StackPanel>
+		<controls:OpenBankingTransactionFilters
+			Accounts="{Binding AccountFilterItems}"
+			Providers="{Binding ProviderFilterItems}"
+			Categories="{Binding CategoryFilterItems}"
+			Types="{Binding TypeFilterItems}"
+			SearchTerm="{Binding SearchTerm}"/>
+		<!-- The above control has a routed event 
+		
+			FilterButtonClicked="{Binding CommonClickHandler}"
+			This needs further changes using behaviours 
+			https://github.com/AvaloniaUI/Avalonia/discussions/6171
+			
+			TODO: Fix other events to be handled the same way
+		-->		
+	</StackPanel>
+</UserControl>

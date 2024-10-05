@@ -5,6 +5,8 @@ using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
 using BudgetPlanner.Services.Base;
 using BudgetPlanner.Services.OpenBanking;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BudgetPlanner.Services.Transactions
 {
@@ -19,12 +21,26 @@ namespace BudgetPlanner.Services.Transactions
             _openBankingService = openBankingService;
         }
 
+        public async IAsyncEnumerable<TransactionAccountFilterResponse> GetAccountsForTransactionFiltersAsync(SyncTypes syncTypes = SyncTypes.Account)
+        {
+            await _openBankingService.PerformSyncAsync(syncTypes);
+            var query = _budgetPlannerDbContext.OpenBankingAccounts
+                .AsNoTracking()
+                .Select(x => new TransactionAccountFilterResponse() { AccountId = x.Id, AccountName = x.DisplayName });
+
+            var accounts = query.AsAsyncEnumerable();
+
+            await foreach (var account in accounts)
+            {
+                yield return account;
+            }
+        }
+
         public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(SyncTypes syncTypes = SyncTypes.All)
         {
             await foreach (var transaction in GetTransactionResponsesAsync(null, syncTypes))
             {
-                var transactionResponse = new TransactionResponse();
-                yield return transactionResponse;
+                yield return transaction;
             }
         }
 
@@ -32,16 +48,50 @@ namespace BudgetPlanner.Services.Transactions
         {
             await foreach (var transaction in GetTransactionResponsesAsync(filteredTransactionsRequest, syncTypes))
             {
-                var transactionResponse = new TransactionResponse();
-                yield return transactionResponse;
+                yield return transaction;
             }
         }
 
-        private async IAsyncEnumerable<OpenBankingTransaction> GetTransactionResponsesAsync(FilteredTransactionsRequest? filteredTransactionsRequest, SyncTypes syncTypes)
+        public async IAsyncEnumerable<TransactionCategoryFilterResponse> GetCategoriesForTransactionFiltersAsync()
+        {
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.Select(x => x.TransactionCategory).Distinct();
+            await foreach(var category in query.AsAsyncEnumerable())
+            {
+                yield return new TransactionCategoryFilterResponse() { TransactionCategory = category};
+            }
+        }
+
+        public async IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync()
+        {
+            var query = _budgetPlannerDbContext.OpenBankingProviders
+                .Select(x => new TransactionProviderFilterResponse() { ProviderId = x.Id, ProviderName = x.Name });
+
+            await foreach(var provider in query.AsAsyncEnumerable())
+            {
+                yield return provider;
+            }
+        }
+
+        public async IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync()
+        {
+            var query = _budgetPlannerDbContext.OpenBankingTransactions
+                .Select(x => new TransactionTypeFilterResponse() { TransactionType = x.TransactionType })
+                .Distinct();
+
+            await foreach (var type in query.AsAsyncEnumerable())
+            {
+                yield return type;
+            }
+        }
+
+
+        private async IAsyncEnumerable<TransactionResponse> GetTransactionResponsesAsync(FilteredTransactionsRequest? filteredTransactionsRequest, SyncTypes syncTypes)
         {
             if(filteredTransactionsRequest == null)
             {
-                await foreach(var entity in _budgetPlannerDbContext.OpenBankingTransactions.OrderByDescending(x => x.TransactionTime).GetPagedEntitiesAsync(10))
+                var query = _budgetPlannerDbContext.OpenBankingTransactions.OrderByDescending(x => x.TransactionTime).AsQueryable();
+
+                await foreach(var entity in GetTransactionsSelect(query).GetPagedEntitiesAsync(10))
                 {
                     yield return entity;
                 }
@@ -56,11 +106,26 @@ namespace BudgetPlanner.Services.Transactions
                 }
 
 
-                await foreach (var entity in query.GetPagedEntitiesAsync(10))
+                await foreach (var entity in GetTransactionsSelect(query).GetPagedEntitiesAsync(10))
                 {
                     yield return entity;
                 }
             }
+        }
+
+        private IQueryable<TransactionResponse> GetTransactionsSelect(IQueryable<OpenBankingTransaction> query)
+        {
+            return query.Select(transaction => new TransactionResponse()
+            {
+                Amount = transaction.Amount,
+                Currency = transaction.Currency,
+                Description = transaction.Description,
+                Pending = transaction.Pending,
+                TransactionCategory = transaction.TransactionCategory,
+                TransactionId = transaction.Id,
+                TransactionTime = transaction.TransactionTime,
+                TransactionType = transaction.TransactionType,
+            });
         }
     }
 }

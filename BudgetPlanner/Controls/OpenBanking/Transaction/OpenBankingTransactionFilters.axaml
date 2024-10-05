@@ -1,0 +1,83 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Controls">
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:OpenBankingTransactionFilters />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:OpenBankingTransactionFilters}" TargetType="controls:OpenBankingTransactionFilters">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+
+						<StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 5 0">
+							<Label>Provider</Label>
+							<ComboBox
+								HorizontalAlignment="Stretch"
+								ItemsSource="{TemplateBinding Providers}"
+								Classes="ClearButton" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="1" Margin="0 0 5 0">
+							<Label>Account</Label>
+							<ComboBox
+								HorizontalAlignment="Stretch"
+								ItemsSource="{TemplateBinding Accounts}"
+								Classes="ClearButton" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 5 0">
+							<Label>Category</Label>
+							<ComboBox
+								HorizontalAlignment="Stretch"
+								ItemsSource="{TemplateBinding Categories}"
+								Classes="ClearButton" />
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="3" Margin="0 0 5 0">
+							<Label>Type</Label>
+							<ComboBox
+								HorizontalAlignment="Stretch"
+								ItemsSource="{TemplateBinding Types}"
+								Classes="ClearButton"
+								/>
+						</StackPanel>
+
+						<StackPanel Grid.Row="1" Grid.ColumnSpan="4" Margin="0 0 5 0">
+							<Label>Search Term</Label>
+							<TextBox Text="{TemplateBinding SearchTerm}"/>
+						</StackPanel>
+
+					</Grid>
+
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

@@ -40,6 +40,8 @@
 				
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategories.axaml" />
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategory.axaml" />
+				
+				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactionFilters.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

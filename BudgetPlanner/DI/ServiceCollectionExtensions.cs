@@ -4,6 +4,7 @@ using BudgetPlanner.Services.Accounts;
 using BudgetPlanner.Services.Budget;
 using BudgetPlanner.Services.Dashboard;
 using BudgetPlanner.Services.OpenBanking;
+using BudgetPlanner.Services.Transactions;
 using BudgetPlanner.ViewModels;
 using BudgetPlanner.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace BudgetPlanner.DI
 
             services.AddTransient<DashboardViewModel>();
             services.AddTransient<AccountsViewModel>();
+            services.AddTransient<TransactionsViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -64,6 +66,8 @@ namespace BudgetPlanner.DI
             services.AddSingleton<IOpenBankingService, OpenBankingService>();
             services.AddSingleton<IAccountsService,  AccountsService>();
             services.AddSingleton<IDashboardService,  DashboardService>();
+            services.AddSingleton<ITransactionsService, TransactionsService>();
+
         }
 
         public static void AddExternalServices(this IServiceCollection services)

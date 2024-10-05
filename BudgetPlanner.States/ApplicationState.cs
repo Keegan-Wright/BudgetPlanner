@@ -7,6 +7,8 @@ namespace BudgetPlanner.States
     {
         public static bool HasInternetConnection => CheckConnection();
 
+        public static bool? IsDesktopBasedLifetime = null;
+
         private static bool CheckConnection()
         {
 

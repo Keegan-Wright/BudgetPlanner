@@ -83,7 +83,7 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.AccountId is not null)
             {
-                transactionsQuery.Where(x => x.OpenBankingAccountId == filteredTransactionsRequest.AccountId);
+                transactionsQuery.Where(x => x.Account.OpenBankingAccountId == filteredTransactionsRequest.AccountId);
             }
 
             if (filteredTransactionsRequest.Type is not null)
@@ -99,7 +99,7 @@ namespace BudgetPlanner.Services.Transactions
             if (filteredTransactionsRequest.ProviderId is not null)
             {
                 transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
-                    transaction => transaction.OpenBankingAccountId,
+                    transaction => transaction.Account.OpenBankingAccountId,
                     account => account.OpenBankingAccountId,
                     (transaction, account) => new
                     {

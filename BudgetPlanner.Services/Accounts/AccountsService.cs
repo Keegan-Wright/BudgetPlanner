@@ -36,12 +36,12 @@ namespace BudgetPlanner.Services.Accounts
             {
                 var accountBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.OpenBankingAccountId == account.OpenBankingAccountId);
+                    .FirstOrDefaultAsync(x => x.Account.OpenBankingAccountId == account.OpenBankingAccountId);
 
 
                 var transactions = await _budgetPlannerDbContext.OpenBankingTransactions
                                             .AsNoTracking()
-                                            .Where(x => x.OpenBankingAccountId == account.OpenBankingAccountId)
+                                            .Where(x => x.Account.OpenBankingAccountId == account.OpenBankingAccountId)
                                             .OrderByDescending(x => x.TransactionTime)
                                             .Take(transactionsToReturn)
                                             .ToListAsync();

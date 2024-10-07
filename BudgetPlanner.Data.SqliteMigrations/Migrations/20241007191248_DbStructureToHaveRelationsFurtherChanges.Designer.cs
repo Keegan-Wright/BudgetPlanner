@@ -3,6 +3,7 @@ using System;
 using BudgetPlanner.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 {
     [DbContext(typeof(BudgetPlannerDbContext))]
-    partial class BudgetPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007191248_DbStructureToHaveRelationsFurtherChanges")]
+    partial class DbStructureToHaveRelationsFurtherChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");

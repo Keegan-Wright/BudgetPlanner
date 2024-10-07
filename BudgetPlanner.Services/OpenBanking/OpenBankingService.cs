@@ -175,9 +175,10 @@ namespace BudgetPlanner.Services.OpenBanking
 
             var transactionsForProvider = await _budgetPlannerDbContext.OpenBankingTransactions
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Where(x => x.ProviderId == provider.Id)
                 .OrderByDescending(x => x.TransactionTime)
-                .GroupBy(x => x.OpenBankingAccountId)
+                .GroupBy(x => x.AccountId)
                 .Select(x => x.FirstOrDefault())
                 .ToListAsync();
 
@@ -208,7 +209,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 var directDebitsTask = GetOpenBankingDirectDebitsForAccountAsync(provider, syncFlags, account, authToken, performedSyncs, relevantSyncs);
                 var balanceTask = GetOpenBankingAccountBalanceAsync(provider, syncFlags, account, authToken, performedSyncs, relevantSyncs);
 
-                var latestTransactionForAccount = transactionsForProvider.FirstOrDefault(x => x?.OpenBankingAccountId == account.AccountId);
+                var latestTransactionForAccount = transactionsForProvider.FirstOrDefault(x => x?.Account.OpenBankingAccountId == account.AccountId);
 
                 var transactionsTask = GetOpenBankingTransactionsForAccountAsync(provider, syncFlags, account, authToken, performedSyncs, relevantSyncs, latestTransactionForAccount);
                 var pendingTransactionsTask = GetOpenBankingPendingTransactionsForAccountAsync(provider, syncFlags, account, authToken, performedSyncs, relevantSyncs, latestTransactionForAccount);
@@ -231,34 +232,49 @@ namespace BudgetPlanner.Services.OpenBanking
 
             });
 
+
             await foreach (var account in providerAccounts.ToAsyncEnumerable())
             {
                 await UpdateOrCreateAccount(account, provider.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
+            var accountsForProvider = await _budgetPlannerDbContext.OpenBankingAccounts.Where(x => x.ProviderId == provider.Id).ToListAsync();
 
             await foreach (var balance in providerBalances.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountBalance(balance.Balances, balance.AccountId);
+                var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == balance.AccountId);
+                await UpdateOrCreateAccountBalance(balance.Balances, accountToUse.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             await foreach (var standingOrder in providerStandingOrders.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountStandingOrder(standingOrder.StandingOrders, standingOrder.AccountId);
+                var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == standingOrder.AccountId);
+                await UpdateOrCreateAccountStandingOrder(standingOrder.StandingOrders, accountToUse.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             await foreach (var directDebit in providerDirectDebits.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountDirectDebit(directDebit.DirectDebits, directDebit.AccountId);
+                var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == directDebit.AccountId);
+                await UpdateOrCreateAccountDirectDebit(directDebit.DirectDebits, accountToUse.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             await foreach (var transaction in providerTransactions.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountTransaction(transaction.Transactions, transaction.AccountId, false, provider.Id);
+                var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == transaction.AccountId);
+                await UpdateOrCreateAccountTransaction(transaction.Transactions, accountToUse.Id, false, provider.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             await foreach (var transaction in providerPendingTransactions.ToAsyncEnumerable())
             {
-                await UpdateOrCreateAccountTransaction(transaction.Transactions, transaction.AccountId, true, provider.Id);
+                var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == transaction.AccountId);
+
+                await UpdateOrCreateAccountTransaction(transaction.Transactions, accountToUse.Id, true, provider.Id);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             await _budgetPlannerDbContext.AddRangeAsync(performedSyncs);
@@ -488,9 +504,9 @@ namespace BudgetPlanner.Services.OpenBanking
             }
         }
 
-        private async Task UpdateOrCreateAccountBalance(ExternalOpenBankingAccountBalance balance, string accountId)
+        private async Task UpdateOrCreateAccountBalance(ExternalOpenBankingAccountBalance balance, Guid accountId)
         {
-            var trackedBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.OpenBankingAccountId == accountId);
+            var trackedBalance = await _budgetPlannerDbContext.OpenBankingAccountBalances.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
             if (trackedBalance is not null)
             {
@@ -505,16 +521,15 @@ namespace BudgetPlanner.Services.OpenBanking
                     Available = balance.Available,
                     Currency = balance.Currency,
                     Current = balance.Current,
-                    OpenBankingAccountId = accountId,
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    AccountId = accountId
                 };
 
                 await _budgetPlannerDbContext.AddAsync(newAccountBalance);
             }
-            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
-        private async Task UpdateOrCreateAccountTransaction(ExternalOpenBankingAccountTransaction transaction, string accountId, bool isPendingTransaction, Guid providerId)
+        private async Task UpdateOrCreateAccountTransaction(ExternalOpenBankingAccountTransaction transaction, Guid accountId, bool isPendingTransaction, Guid providerId)
         {
             var trackedTransaction = await _budgetPlannerDbContext.OpenBankingTransactions.FirstOrDefaultAsync(x => x.TransactionId == transaction.TransactionId);
 
@@ -527,7 +542,6 @@ namespace BudgetPlanner.Services.OpenBanking
                 trackedTransaction.Amount = trackedTransaction.Amount;
                 trackedTransaction.Created = trackedTransaction.Created;
                 trackedTransaction.Description = trackedTransaction.Description;
-                trackedTransaction.OpenBankingAccountId = accountId;
                 trackedTransaction.Updated = DateTime.Now;
                 trackedTransaction.Pending = isPendingTransaction;
                 trackedTransaction.TransactionTime = transaction.Timestamp;
@@ -541,17 +555,17 @@ namespace BudgetPlanner.Services.OpenBanking
                     Currency = transaction.Currency,
                     Amount = transaction.Amount,
                     Description = transaction.Description,
-                    OpenBankingAccountId = accountId,
                     Created = DateTime.Now,
                     TransactionCategory = transaction.TransactionCategory,
                     TransactionTime = transaction.Timestamp,
                     Pending = isPendingTransaction,
-                    ProviderId = providerId
+                    ProviderId = providerId,
+                    AccountId = accountId
+
                 };
 
                 await _budgetPlannerDbContext.AddAsync(newTransaction);
             }
-            await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
         private async Task UpdateOrCreateAccount(ExternalOpenBankingAccount account, Guid providerId)
@@ -576,10 +590,10 @@ namespace BudgetPlanner.Services.OpenBanking
 
                 await _budgetPlannerDbContext.AddAsync(newAccount);
             }
-            //await _budgetPlannerDbContext.SaveChangesAsync();
+            await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
-        private async Task UpdateOrCreateAccountStandingOrder(ExternalOpenBankingAccountStandingOrder standingOrder, string accountId)
+        private async Task UpdateOrCreateAccountStandingOrder(ExternalOpenBankingAccountStandingOrder standingOrder, Guid accountId)
         {
             var trackedStandingOrder = await _budgetPlannerDbContext.OpenBankingStandingOrders.FirstOrDefaultAsync(x => x.Reference == standingOrder.Reference && x.Payee == standingOrder.Payee);
 
@@ -615,14 +629,14 @@ namespace BudgetPlanner.Services.OpenBanking
                     Reference = standingOrder.Reference,
                     Status = standingOrder.Status,
                     Timestamp = standingOrder.Timestamp,
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    AccountId = accountId
                 };
 
                 await _budgetPlannerDbContext.AddAsync(newStandingOrder);
             }
-            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
-        private async Task UpdateOrCreateAccountDirectDebit(ExternalOpenBankingDirectDebit directDebit, string accountId)
+        private async Task UpdateOrCreateAccountDirectDebit(ExternalOpenBankingDirectDebit directDebit, Guid accountId)
         {
             var trackedDirectDebit = await _budgetPlannerDbContext.OpenBankingDirectDebits.FirstOrDefaultAsync(x => x.OpenBankingDirectDebitId == directDebit.DirectDebitId);
 
@@ -648,12 +662,12 @@ namespace BudgetPlanner.Services.OpenBanking
                     PreviousPaymentTimeStamp = directDebit.PreviousPaymentTimestamp,
                     Status = directDebit.Status,
                     TimeStamp = directDebit.Timestamp,
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    AccountId = accountId
                 };
 
                 await _budgetPlannerDbContext.AddAsync(newStandingOrder);
             }
-            //await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
 

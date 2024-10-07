@@ -8,6 +8,6 @@
         public required string OpenBankingAccountId { get; set; }
 
         public Guid AccountId { get; set; }
-        public OpenBankingAccount Provider { get; set; }
+        public OpenBankingAccount Account { get; set; }
     }
 }

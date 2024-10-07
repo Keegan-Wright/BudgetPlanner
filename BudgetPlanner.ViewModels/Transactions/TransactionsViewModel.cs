@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using BudgetPlanner.Enums;
+using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
 using BudgetPlanner.Services.Transactions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -41,23 +43,6 @@ namespace BudgetPlanner.ViewModels
         private string _searchTerm = string.Empty;
 
 
-        public void CommonClickHandler(object sender, RoutedEventArgs e)
-        {
-            var source = e.Source as Control;
-            switch (source.Name)
-            {
-                case "YesButton":
-                    // do something here ...
-                    break;
-                case "NoButton":
-                    // do something ...
-                    break;
-                case "CancelButton":
-                    // do something ...
-                    break;
-            }
-            e.Handled = true;
-        }
 
         private async void InitaliseAsync()
         {
@@ -73,7 +58,12 @@ namespace BudgetPlanner.ViewModels
         private async Task LoadTransactionsAsync()
         {
             SetLoading(true, "Loading Transactions");
-            await foreach (var transaction in _transactionsService.GetAllTransactionsAsync())
+
+
+            var transactionRequest = new FilteredTransactionsRequest();
+            // BuildObject 
+
+            await foreach (var transaction in _transactionsService.GetAllTransactionsAsync(transactionRequest, SyncTypes.Transactions | SyncTypes.PendingTransactions))
             {
                 var viewModel = new TransactionItemViewModel()
                 {

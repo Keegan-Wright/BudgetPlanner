@@ -12,9 +12,7 @@ namespace BudgetPlanner.Services.Transactions
 {
     public interface ITransactionsService
     {
-        IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(SyncTypes syncTypes = SyncTypes.All);
         IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes = SyncTypes.All);
-
         IAsyncEnumerable<TransactionAccountFilterResponse> GetAccountsForTransactionFiltersAsync(SyncTypes syncTypes = SyncTypes.Account);
         IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync();
         IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync();

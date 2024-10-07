@@ -12,11 +12,12 @@ namespace BudgetPlanner.Data.Models
         public required DateTime TransactionTime { get; set; }
         public required bool Pending { get; set; }
 
-
         public Guid ProviderId { get; set; }
         public OpenBankingProvider Provider { get; set; }
 
         public Guid AccountId { get; set; }
         public OpenBankingAccount Account { get; set; }
+
+        public ICollection<OpenBankingTransactionClassifications> Classifications { get; set; }
     }
 }

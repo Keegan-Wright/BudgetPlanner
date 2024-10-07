@@ -236,7 +236,6 @@ namespace BudgetPlanner.Services.OpenBanking
             await foreach (var account in providerAccounts.ToAsyncEnumerable())
             {
                 await UpdateOrCreateAccount(account, provider.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
 
             var accountsForProvider = await _budgetPlannerDbContext.OpenBankingAccounts.Where(x => x.ProviderId == provider.Id).ToListAsync();
@@ -245,37 +244,36 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == balance.AccountId);
                 await UpdateOrCreateAccountBalance(balance.Balances, accountToUse.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
 
             await foreach (var standingOrder in providerStandingOrders.ToAsyncEnumerable())
             {
                 var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == standingOrder.AccountId);
                 await UpdateOrCreateAccountStandingOrder(standingOrder.StandingOrders, accountToUse.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
 
             await foreach (var directDebit in providerDirectDebits.ToAsyncEnumerable())
             {
                 var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == directDebit.AccountId);
                 await UpdateOrCreateAccountDirectDebit(directDebit.DirectDebits, accountToUse.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
 
             await foreach (var transaction in providerTransactions.ToAsyncEnumerable())
             {
                 var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == transaction.AccountId);
                 await UpdateOrCreateAccountTransaction(transaction.Transactions, accountToUse.Id, false, provider.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
 
             await foreach (var transaction in providerPendingTransactions.ToAsyncEnumerable())
             {
                 var accountToUse = accountsForProvider.FirstOrDefault(x => x.OpenBankingAccountId == transaction.AccountId);
-
                 await UpdateOrCreateAccountTransaction(transaction.Transactions, accountToUse.Id, true, provider.Id);
-                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
 
             await _budgetPlannerDbContext.AddRangeAsync(performedSyncs);
             await _budgetPlannerDbContext.SaveChangesAsync();
@@ -565,6 +563,14 @@ namespace BudgetPlanner.Services.OpenBanking
                 };
 
                 await _budgetPlannerDbContext.AddAsync(newTransaction);
+
+                var newClassifications = new List<OpenBankingTransactionClassifications>();
+                await foreach (var classification in transaction.TransactionClassification)
+                {
+                    newClassifications.Add(new OpenBankingTransactionClassifications() { Classification = classification, TransactionId = newTransaction.Id });
+                }
+
+                await _budgetPlannerDbContext.AddRangeAsync(newClassifications);
             }
         }
 

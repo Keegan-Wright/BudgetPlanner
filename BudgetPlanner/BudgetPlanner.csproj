@@ -70,11 +70,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AvaloniaXaml Update="Controls\OpenBanking\Transaction\OpenBankingTransaction.axaml">
+	    <SubType>Designer</SubType>
+	  </AvaloniaXaml>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccounts.axaml.cs">
 		  <DependentUpon>OpenBankingAccounts.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransaction.axaml.cs">
+		  <SubType>Code</SubType>
+		  <DependentUpon>OpenBankingTransaction.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingTransactions.axaml</DependentUpon>

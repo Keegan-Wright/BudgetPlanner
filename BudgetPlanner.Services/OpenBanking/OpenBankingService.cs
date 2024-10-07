@@ -201,7 +201,7 @@ namespace BudgetPlanner.Services.OpenBanking
             {
                 providerAccounts.Add(account);
 
-                var relevantSyncs = providerSyncs.Where(x => x.OpenBankingAccountId == account.AccountId);
+                var relevantSyncs = providerSyncs.Where(x => x.AccountId == account.AccountId);
 
 
                 var standingOrdersTask = GetOpenBankingStandingOrdersForAccountAsync(provider, syncFlags, account, authToken, performedSyncs, relevantSyncs);
@@ -419,7 +419,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 SyncronisationTime = DateTime.Now,
                 SyncronisationType = (int)syncType,
                 ProviderId = providerId,
-                OpenBankingAccountId = accountId
+                AccountId = accountId
             };
         }
 

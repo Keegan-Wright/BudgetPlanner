@@ -59,11 +59,11 @@
 		<ProjectReference Include="..\BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 	  <EmbeddedResource Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>
-	</ItemGroup>
+	</ItemGroup>-->
 
 	<ItemGroup>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccounts.axaml.cs">

@@ -23,5 +23,8 @@
 			
 			TODO: Fix other events to be handled the same way
 		-->		
+		
+		<controls:OpenBankingTransactions Transactions="{Binding Transactions}"/>
+		
 	</StackPanel>
 </UserControl>

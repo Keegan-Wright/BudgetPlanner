@@ -10,6 +10,14 @@
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <AvaloniaXaml Remove="Controls\BaseUI\**" />
+	  <Compile Remove="Controls\BaseUI\**" />
+	  <EmbeddedResource Remove="Controls\BaseUI\**" />
+	  <EntityDeploy Remove="Controls\BaseUI\**" />
+	  <None Remove="Controls\BaseUI\**" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.2.0-beta1" />
@@ -68,6 +76,9 @@
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactions.axaml.cs">
+		  <DependentUpon>OpenBankingTransactions.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactionFilters.axaml.cs">
 		  <DependentUpon>OpenBankingTransactionFilters.axaml</DependentUpon>
 		</Compile>
@@ -101,9 +112,5 @@
 		<Compile Update="Views\Transactions\TransactionsView.axaml.cs">
 		  <DependentUpon>TransactionsView.axaml</DependentUpon>
 		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controls\BaseUI\" />
 	</ItemGroup>
 </Project>

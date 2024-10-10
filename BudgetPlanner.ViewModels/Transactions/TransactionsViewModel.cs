@@ -1,10 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using BudgetPlanner.Enums;
+using BudgetPlanner.Handlers;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
 using BudgetPlanner.Services.Transactions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,7 +44,11 @@ namespace BudgetPlanner.ViewModels
         [ObservableProperty]
         private string _searchTerm = string.Empty;
 
-
+        [RelayCommand]
+        public async Task SearchTransactionsAsync(FilteredTransactionsRequest searchCriteria)
+        {
+            await RunOnBackgroundThreadAsync(async () => await LoadTransactionsAsync(searchCriteria));
+        }
 
         private async void InitaliseAsync()
         {
@@ -51,34 +57,37 @@ namespace BudgetPlanner.ViewModels
             await RunOnBackgroundThreadAsync(async () => await LoadFilterItemsAsync());
 
             SetLoading(false);
-
-            await LoadTransactionsAsync();
         }
 
-        private async Task LoadTransactionsAsync()
+        private async Task LoadTransactionsAsync(FilteredTransactionsRequest searchCriteria)
         {
             SetLoading(true, "Loading Transactions");
-
-
-            var transactionRequest = new FilteredTransactionsRequest();
-            // BuildObject 
-
-            await foreach (var transaction in _transactionsService.GetAllTransactionsAsync(transactionRequest, SyncTypes.Transactions | SyncTypes.PendingTransactions))
+            Transactions.Clear();
+            try
             {
-                var viewModel = new TransactionItemViewModel()
+                await foreach (var transaction in _transactionsService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
                 {
-                    Amount = transaction.Amount,
-                    Currency = transaction.Currency,
-                    Description = transaction.Description,
-                    Pending = transaction.Pending,
-                    TransactionCategory = transaction.TransactionCategory,
-                    TransactionId = transaction.TransactionId,
-                    TransactionTime = transaction.TransactionTime,
-                    TransactionType = transaction.TransactionType,
-                };
+                    var viewModel = new TransactionItemViewModel()
+                    {
+                        Amount = transaction.Amount,
+                        Currency = transaction.Currency,
+                        Description = transaction.Description,
+                        Pending = transaction.Pending,
+                        TransactionCategory = transaction.TransactionCategory,
+                        TransactionId = transaction.TransactionId,
+                        TransactionTime = transaction.TransactionTime,
+                        TransactionType = transaction.TransactionType,
+                    };
 
-                Transactions.Add(viewModel);
+                    Transactions.Add(viewModel);
+                }
             }
+            catch(Exception ex)
+            {
+                ErrorHandler.HandleError(ex);
+            }
+
+
             SetLoading(false);
         }
 

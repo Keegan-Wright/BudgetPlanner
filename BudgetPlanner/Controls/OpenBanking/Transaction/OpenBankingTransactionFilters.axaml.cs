@@ -1,9 +1,13 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace BudgetPlanner.Controls;
 
@@ -53,30 +57,104 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IEnumerable<Trans
         set => SetAndRaise(TypesProperty, ref _types, value);
     }
 
-    public static readonly DirectProperty<OpenBankingTransactionFilters, string> SearchTermProperty =
-AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string>(nameof(SearchTerm), p => p.SearchTerm, (p, v) => p.SearchTerm= v);
+    public static readonly DirectProperty<OpenBankingTransactionFilters, ICommand?> SearchCommandProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, ICommand?>(nameof(SearchCommand), p => p.SearchCommand, (p, v) => p.SearchCommand = v);
 
-    private string _searchTerm = "";
-    public string SearchTerm
+    private ICommand? _searchCommand;
+    public ICommand? SearchCommand
+    {
+        get => _searchCommand;
+        set => SetAndRaise(SearchCommandProperty, ref _searchCommand, value);
+    }
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters,FilteredTransactionsRequest> CommandParameterProperty =
+    AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, FilteredTransactionsRequest>(nameof(CommandParameter), p => p.CommandParameter, (p,v) => p.CommandParameter = v);
+
+    internal FilteredTransactionsRequest _commandParameter = new();
+    internal FilteredTransactionsRequest CommandParameter
+    {
+        get => _commandParameter;
+        set => SetAndRaise(CommandParameterProperty, ref _commandParameter, value);
+    }
+
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionProviderFilterViewModel?> SelectedProviderProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionProviderFilterViewModel?>(nameof(SelectedProvider), p => p.SelectedProvider, (p, v) => p.SelectedProvider = v);
+
+    internal TransactionProviderFilterViewModel? _selectedProvider;
+    internal TransactionProviderFilterViewModel? SelectedProvider
+    {
+        get => _selectedProvider;
+        set => SetAndRaise(SelectedProviderProperty, ref _selectedProvider, value);
+    }
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionAccountFilterViewModel?> SelectedAccountProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionAccountFilterViewModel?>(nameof(SelectedAccount), p => p.SelectedAccount, (p, v) => p.SelectedAccount = v);
+
+    internal TransactionAccountFilterViewModel? _selectedAccount;
+    internal TransactionAccountFilterViewModel? SelectedAccount
+    {
+        get => _selectedAccount;
+        set => SetAndRaise(SelectedAccountProperty, ref _selectedAccount, value);
+    }
+
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionCategoryFilterViewModel?> SelectedCategoryProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionCategoryFilterViewModel?>(nameof(SelectedCategory), p => p.SelectedCategory, (p, v) => p.SelectedCategory = v);
+
+    internal TransactionCategoryFilterViewModel? _selectedCategory;
+    internal TransactionCategoryFilterViewModel? SelectedCategory
+    {
+        get => _selectedCategory;
+        set => SetAndRaise(SelectedCategoryProperty, ref _selectedCategory, value);
+    }
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionTypeFilterViewModel?> SelectedTypeProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionTypeFilterViewModel?>(nameof(SelectedType), p => p.SelectedType, (p, v) => p.SelectedType = v);
+
+    internal TransactionTypeFilterViewModel? _selectedType;
+    internal TransactionTypeFilterViewModel? SelectedType
+    {
+        get => _selectedType;
+        set => SetAndRaise(SelectedTypeProperty, ref _selectedType, value);
+    }
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, string?> SearchTermProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(SearchTerm), p => p.SearchTerm, (p, v) => p.SearchTerm = v);
+
+    private string? _searchTerm;
+    public string? SearchTerm
     {
         get => _searchTerm;
         set => SetAndRaise(SearchTermProperty, ref _searchTerm, value);
     }
 
-
-    public static readonly RoutedEvent<RoutedEventArgs> FilterButtonClickedEvent =
-    RoutedEvent.Register<OpenBankingTransactionFilters, RoutedEventArgs>(nameof(FilterButtonClicked), RoutingStrategies.Direct);
-
-    public event EventHandler<RoutedEventArgs> FilterButtonClicked
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        add => AddHandler(FilterButtonClickedEvent, value);
-        remove => RemoveHandler(FilterButtonClickedEvent, value);
-    }
+        base.OnPropertyChanged(change);
 
-    protected virtual void OnValueChanged()
-    {
-        RoutedEventArgs args = new RoutedEventArgs(FilterButtonClickedEvent);
-        RaiseEvent(args);
-    }
 
+        if (change.Property == SelectedProviderProperty)
+        {
+            CommandParameter.ProviderId = change.GetNewValue<TransactionProviderFilterViewModel?>()?.ProviderId;
+        }
+
+        if (change.Property == SelectedAccountProperty)
+        {
+            CommandParameter.AccountId = change.GetNewValue<TransactionAccountFilterViewModel?>()?.AccountId;
+        }
+        if (change.Property == SelectedCategoryProperty)
+        {
+            CommandParameter.Category = change.GetNewValue<TransactionCategoryFilterViewModel?>()?.TransactionCategory;
+        }
+        if (change.Property == SelectedTypeProperty)
+        {
+            CommandParameter.Type = change.GetNewValue<TransactionTypeFilterViewModel?>()?.TransactionType;
+        }
+        if (change.Property == SearchTermProperty)
+        {
+            CommandParameter.SearchTerm = change.GetNewValue<string?>();
+        }
+
+    }
 }

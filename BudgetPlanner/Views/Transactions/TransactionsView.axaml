@@ -14,15 +14,7 @@
 			Providers="{Binding ProviderFilterItems}"
 			Categories="{Binding CategoryFilterItems}"
 			Types="{Binding TypeFilterItems}"
-			SearchTerm="{Binding SearchTerm}"/>
-		<!-- The above control has a routed event 
-		
-			FilterButtonClicked="{Binding CommonClickHandler}"
-			This needs further changes using behaviours 
-			https://github.com/AvaloniaUI/Avalonia/discussions/6171
-			
-			TODO: Fix other events to be handled the same way
-		-->		
+			SearchCommand="{Binding SearchTransactionsAsync}"/>
 		
 		<controls:OpenBankingTransactions Transactions="{Binding Transactions}"/>
 		

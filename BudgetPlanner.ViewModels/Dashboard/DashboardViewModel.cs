@@ -30,7 +30,7 @@ namespace BudgetPlanner.ViewModels
             await LoadSpendingPeriods();
             SetLoading(false);
         }
-
+  
         private async Task LoadSpendingPeriods()
         {
             var today = DateTime.Today;

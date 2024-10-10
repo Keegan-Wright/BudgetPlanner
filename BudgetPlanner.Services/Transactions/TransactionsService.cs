@@ -38,6 +38,7 @@ namespace BudgetPlanner.Services.Transactions
 
         public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes = SyncTypes.All)
         {
+
             await foreach (var transaction in GetTransactionResponsesAsync(filteredTransactionsRequest, syncTypes))
             {
                 yield return transaction;
@@ -83,22 +84,22 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.AccountId is not null)
             {
-                transactionsQuery.Where(x => x.Account.OpenBankingAccountId == filteredTransactionsRequest.AccountId);
+                transactionsQuery = transactionsQuery.Where(x => x.Account.Id == filteredTransactionsRequest.AccountId);
             }
 
             if (filteredTransactionsRequest.Type is not null)
             {
-                transactionsQuery.Where(x => x.TransactionType == filteredTransactionsRequest.Type);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionType == filteredTransactionsRequest.Type);
             }
 
             if (filteredTransactionsRequest.Category is not null)
             {
-                transactionsQuery.Where(x => x.TransactionCategory == filteredTransactionsRequest.Category);
+                transactionsQuery =  transactionsQuery.Where(x => x.TransactionCategory == filteredTransactionsRequest.Category);
             }
 
             if (filteredTransactionsRequest.ProviderId is not null)
             {
-                transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
+                transactionsQuery =  transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
                     transaction => transaction.Account.OpenBankingAccountId,
                     account => account.OpenBankingAccountId,
                     (transaction, account) => new
@@ -121,18 +122,18 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.SearchTerm is not null)
             {
-                transactionsQuery.Where(x => x.Description.Contains(filteredTransactionsRequest.SearchTerm));
+                transactionsQuery = transactionsQuery.Where(x => EF.Functions.Like(x.Description, $"%{filteredTransactionsRequest.SearchTerm}%"));
 
             }
 
             if (filteredTransactionsRequest.FromDate is not null)
             {
-                transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.FromDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.FromDate);
             }
 
             if (filteredTransactionsRequest.ToDate is not null)
             {
-                transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
             }
 
             await foreach (var entity in GetTransactionsSelect(transactionsQuery).GetPagedEntitiesAsync(10))

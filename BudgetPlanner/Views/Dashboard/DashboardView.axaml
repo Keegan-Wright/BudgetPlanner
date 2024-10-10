@@ -11,9 +11,9 @@
 	<Panel>
 		<ScrollViewer>
 			<StackPanel>
-
+			
 				<Grid>
-					<!-- https://github.com/AvaloniaUI/Avalonia.Samples/issues/53 make the UI responsive per platform -->
+					 <!--https://github.com/AvaloniaUI/Avalonia.Samples/issues/53 make the UI responsive per platform--> 
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="*"/>

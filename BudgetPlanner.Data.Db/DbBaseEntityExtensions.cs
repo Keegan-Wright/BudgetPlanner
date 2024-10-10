@@ -10,7 +10,7 @@ namespace BudgetPlanner.Data.Db
             var totalCount = await entities.CountAsync();
             var pagesToRun = totalCount / (currentPage + 1 * pageSize);
 
-            while (pagesToRun > currentPage + 1)
+            while (Math.Max(1,pagesToRun) >= currentPage + 1)
             {
                 if (currentPage >= maxPages)
                 {

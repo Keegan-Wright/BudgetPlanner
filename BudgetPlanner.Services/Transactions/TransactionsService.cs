@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.Enums;
+using BudgetPlanner.Extensions;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
 using BudgetPlanner.Services.Base;
@@ -82,6 +83,18 @@ namespace BudgetPlanner.Services.Transactions
         {
             var transactionsQuery = _budgetPlannerDbContext.OpenBankingTransactions.AsQueryable();
 
+            transactionsQuery = ApplyTransactionRequestFiltering(filteredTransactionsRequest, transactionsQuery);
+
+
+            await foreach (var entity in GetTransactionsSelect(transactionsQuery).GetPagedEntitiesAsync(10))
+            {
+                yield return entity;
+            }
+
+        }
+
+        private IQueryable<OpenBankingTransaction> ApplyTransactionRequestFiltering(FilteredTransactionsRequest filteredTransactionsRequest, IQueryable<OpenBankingTransaction> transactionsQuery)
+        {
             if (filteredTransactionsRequest.AccountId is not null)
             {
                 transactionsQuery = transactionsQuery.Where(x => x.Account.Id == filteredTransactionsRequest.AccountId);
@@ -94,12 +107,12 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.Category is not null)
             {
-                transactionsQuery =  transactionsQuery.Where(x => x.TransactionCategory == filteredTransactionsRequest.Category);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionCategory == filteredTransactionsRequest.Category);
             }
 
             if (filteredTransactionsRequest.ProviderId is not null)
             {
-                transactionsQuery =  transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
+                transactionsQuery = transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
                     transaction => transaction.Account.OpenBankingAccountId,
                     account => account.OpenBankingAccountId,
                     (transaction, account) => new
@@ -136,18 +149,15 @@ namespace BudgetPlanner.Services.Transactions
                 transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
             }
 
-            transactionsQuery =  transactionsQuery.OrderByDescending(x => x.TransactionTime);
 
-            await foreach (var entity in GetTransactionsSelect(transactionsQuery).GetPagedEntitiesAsync(10))
-            {
-                yield return entity;
-            }
 
+            return transactionsQuery;
         }
 
         private IQueryable<TransactionResponse> GetTransactionsSelect(IQueryable<OpenBankingTransaction> query)
         {
-            return query.Select(transaction => new TransactionResponse()
+            
+            return query.Include(x => x.Classifications).Select(transaction => new TransactionResponse()
             {
                 Amount = transaction.Amount,
                 Currency = transaction.Currency,
@@ -157,6 +167,7 @@ namespace BudgetPlanner.Services.Transactions
                 TransactionId = transaction.Id,
                 TransactionTime = transaction.TransactionTime,
                 TransactionType = transaction.TransactionType,
+                Tags = transaction.Classifications.Select(x => x.Classification)
             });
         }
     }

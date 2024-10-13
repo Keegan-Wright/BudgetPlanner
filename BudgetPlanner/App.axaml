@@ -43,7 +43,6 @@
 				
 				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactionFilters.axaml"/>
 				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactions.axaml"/>
-				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransaction.axaml"/>
 
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

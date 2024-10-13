@@ -23,12 +23,16 @@ namespace BudgetPlanner.ViewModels
         private string _currency;
 
         [ObservableProperty]
-        private DateTime _transactionTime;
+        private DateOnly _transactionDate;
 
         [ObservableProperty]
         private bool _pending;
 
+        [ObservableProperty]
+        private IEnumerable<TransactionTagViewModel> _tags;
+
     }
 
-    
+
+
 }

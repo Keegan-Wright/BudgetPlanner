@@ -16,5 +16,6 @@ namespace BudgetPlanner.Models.Response.Transaction
         public required string Currency { get; set; }
         public required DateTime TransactionTime { get; set; }
         public required bool Pending { get; set; }
+        public IEnumerable<string> Tags { get; set; }
     }
 }

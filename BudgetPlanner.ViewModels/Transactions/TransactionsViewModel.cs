@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using BudgetPlanner.Enums;
 using BudgetPlanner.Handlers;
 using BudgetPlanner.Models.Request.Transaction;
@@ -47,6 +48,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task SearchTransactionsAsync(FilteredTransactionsRequest searchCriteria)
         {
+;
             await RunOnBackgroundThreadAsync(async () => await LoadTransactionsAsync(searchCriteria));
         }
 
@@ -62,9 +64,10 @@ namespace BudgetPlanner.ViewModels
         private async Task LoadTransactionsAsync(FilteredTransactionsRequest searchCriteria)
         {
             SetLoading(true, "Loading Transactions");
-            Transactions.Clear();
             try
             {
+                Dispatcher.UIThread.Invoke(Transactions.Clear);
+
                 await foreach (var transaction in _transactionsService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
                 {
                     var viewModel = new TransactionItemViewModel()
@@ -75,11 +78,15 @@ namespace BudgetPlanner.ViewModels
                         Pending = transaction.Pending,
                         TransactionCategory = transaction.TransactionCategory,
                         TransactionId = transaction.TransactionId,
-                        TransactionTime = transaction.TransactionTime,
+                        TransactionDate = DateOnly.FromDateTime(transaction.TransactionTime),
                         TransactionType = transaction.TransactionType,
+                        Tags = transaction.Tags.Select(tag => new TransactionTagViewModel
+                        {
+                            Tag = tag
+                        })
                     };
 
-                    Transactions.Add(viewModel);
+                    Dispatcher.UIThread.Invoke(() => Transactions.Add(viewModel));
                 }
             }
             catch(Exception ex)

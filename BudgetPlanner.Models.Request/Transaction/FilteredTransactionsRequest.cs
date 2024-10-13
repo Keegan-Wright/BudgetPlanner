@@ -13,9 +13,7 @@ namespace BudgetPlanner.Models.Request.Transaction
         public string? Category { get; set; }
         public string? Type { get; set; }
         public string? SearchTerm { get; set; }
-
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
-
     }
 }

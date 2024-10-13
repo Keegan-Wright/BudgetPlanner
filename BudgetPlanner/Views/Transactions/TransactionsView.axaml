@@ -8,15 +8,24 @@
              x:Class="BudgetPlanner.Views.TransactionsView"
              x:DataType="vm:TransactionsViewModel">
 
-	<StackPanel>
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		
 		<controls:OpenBankingTransactionFilters
+			Grid.Row="0"
 			Accounts="{Binding AccountFilterItems}"
 			Providers="{Binding ProviderFilterItems}"
 			Categories="{Binding CategoryFilterItems}"
 			Types="{Binding TypeFilterItems}"
 			SearchCommand="{Binding SearchTransactionsAsync}"/>
 		
-		<controls:OpenBankingTransactions Transactions="{Binding Transactions}"/>
+		<controls:OpenBankingTransactions
+			Grid.Row="1"
+			Transactions="{Binding Transactions}"/>
 		
-	</StackPanel>
+	</Grid>
 </UserControl>

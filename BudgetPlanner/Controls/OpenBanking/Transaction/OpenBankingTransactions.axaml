@@ -1,6 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:BudgetPlanner.Controls">
+        xmlns:controls="using:BudgetPlanner.Controls"
+					        xmlns:vm="clr-namespace:BudgetPlanner.ViewModels;assembly=BudgetPlanner.ViewModels"
+>
 
 	<!--
     Additional resources 
@@ -22,42 +24,84 @@
 		<Setter Property="Template">
 			<ControlTemplate>
 				<Border Theme="{StaticResource CardBorder}">
-					<StackPanel Spacing="10">
-						
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
-							
-							<Label Grid.Column="0">Description</Label>
-							<Label Grid.Column="1">Amount</Label>
-							<Label Grid.Column="2">Category</Label>
-							<Label Grid.Column="3">Type</Label>
-							<Label Grid.Column="4">Time</Label>
-						</Grid>
+					<DataGrid
+						CanUserReorderColumns="True"
+						CanUserResizeColumns="True"
+						CanUserSortColumns="True"
+						GridLinesVisibility="None"
+						IsReadOnly="True"
+						ScrollViewer.AllowAutoHide="True"
+						ItemsSource="{TemplateBinding Transactions}"
+							>
+						<DataGrid.Columns>
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Description"
+								MinWidth="100"
+								Width="2*"
+								Binding="{Binding Description}"/>
 
-						<ScrollViewer AllowAutoHide="True" Height="600">
-							<ItemsControl ItemsSource="{TemplateBinding Transactions}">
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<controls:OpenBankingTransaction Margin="0, 10, 0, 0" Transaction="{Binding }"/>
+
+							<DataGridTemplateColumn
+								Header="Amount"
+								MinWidth="100"
+								Width="Auto">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate x:DataType="vm:TransactionItemViewModel">
+										<TextBlock Text="{Binding Amount}"
+										Foreground="{Binding Amount, Converter={StaticResource NegativeToColourConverter}}"/>
 									</DataTemplate>
-								</ItemsControl.ItemTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
 
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Category"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionCategory}"/>
 
-								<ItemsControl.ItemsPanel>
-									<ItemsPanelTemplate>
-										<VirtualizingStackPanel/>
-									</ItemsPanelTemplate>
-								</ItemsControl.ItemsPanel>
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Type"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionType}"/>
 
-							</ItemsControl>
-						</ScrollViewer>
-					</StackPanel>
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Time"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionDate}"/>
+
+							<DataGridTemplateColumn
+								Header="Tags"
+								MinWidth="100"
+								Width="*">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate x:DataType="vm:TransactionItemViewModel">
+										<ItemsControl ItemsSource="{Binding Tags}">
+											<ItemsControl.ItemsPanel>
+												<ItemsPanelTemplate>
+													<VirtualizingStackPanel  Orientation="Horizontal"/>
+												</ItemsPanelTemplate>
+											</ItemsControl.ItemsPanel>
+											<ItemsControl.ItemTemplate>
+												<DataTemplate x:DataType="vm:TransactionTagViewModel">
+													<Label Classes="Solid White"
+														   Theme="{StaticResource TagLabel}"
+														   Content="{Binding Tag}"
+														   Margin="0 0 10 0"></Label>
+												</DataTemplate>
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+						</DataGrid.Columns>
+					</DataGrid>
 
 				</Border>
 			</ControlTemplate>

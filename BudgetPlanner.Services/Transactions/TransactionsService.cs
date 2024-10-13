@@ -136,6 +136,8 @@ namespace BudgetPlanner.Services.Transactions
                 transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
             }
 
+            transactionsQuery =  transactionsQuery.OrderByDescending(x => x.TransactionTime);
+
             await foreach (var entity in GetTransactionsSelect(transactionsQuery).GetPagedEntitiesAsync(10))
             {
                 yield return entity;

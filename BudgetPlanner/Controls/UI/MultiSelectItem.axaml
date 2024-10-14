@@ -1,0 +1,75 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Controls">
+		<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+  
+  <Design.PreviewWith>
+    <StackPanel Width="400" Spacing="10">      
+        <StackPanel Background="{DynamicResource SystemRegionBrush}">
+          <controls:MultiSelectItem />
+        </StackPanel>
+    </StackPanel>
+  </Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:MultiSelectItem}" TargetType="controls:MultiSelectItem">
+		<Setter Property="Foreground" Value="{DynamicResource MultiSelectItemForeground}" />
+		<Setter Property="Background" Value="{DynamicResource MultiSelectItemBackground}" />
+		<Setter Property="Padding" Value="{DynamicResource MultiSelectItemDefaultPadding}" />
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="Template">
+			<ControlTemplate TargetType="controls:MultiSelectItem">
+				<ContentPresenter
+                    Name="PART_ContentPresenter"
+                    Padding="{TemplateBinding Padding}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Foreground="{TemplateBinding Foreground}" />
+			</ControlTemplate>
+		</Setter>
+
+		<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Foreground" Value="{DynamicResource MultiSelectItemPointeroverForeground}" />
+			<Setter Property="Background" Value="{DynamicResource MultiSelectItemPointeroverBackground}" />
+		</Style>
+
+		<Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Foreground" Value="{DynamicResource MultiSelectItemFocusForeground}" />
+			<Setter Property="Background" Value="{DynamicResource MultiSelectItemFocusBackground}" />
+		</Style>
+
+		<Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource MultiSelectItemDisabledBackground}" />
+		</Style>
+
+		<Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Foreground" Value="{DynamicResource MultiSelectItemPressedForeground}" />
+			<Setter Property="Background" Value="{DynamicResource MultiSelectItemPressedBackground}" />
+		</Style>
+
+		<Style Selector="^:selected">
+			<Setter Property="Foreground" Value="{DynamicResource MultiSelectItemSelectedForeground}" />
+			<Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="{DynamicResource MultiSelectItemSelectedBackground}" />
+			</Style>
+			<Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="{DynamicResource MultiSelectItemSelectedDisabledBackground}" />
+			</Style>
+			<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="{DynamicResource MultiSelectItemSelectedPointeroverBackground}" />
+			</Style>
+		</Style>
+
+	</ControlTheme>
+</ResourceDictionary>

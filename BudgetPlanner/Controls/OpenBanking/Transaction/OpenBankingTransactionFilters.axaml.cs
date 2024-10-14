@@ -1,11 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Selection;
 using Avalonia.Interactivity;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -78,45 +81,46 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, ICommand?>(nameof
     }
 
 
-    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionProviderFilterViewModel?> SelectedProviderProperty =
-AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionProviderFilterViewModel?>(nameof(SelectedProvider), p => p.SelectedProvider, (p, v) => p.SelectedProvider = v);
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, IList?> SelectedProvidersProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(SelectedProviders), p => p.SelectedProviders, (p, v) => p.SelectedProviders = v);
 
-    internal TransactionProviderFilterViewModel? _selectedProvider;
-    internal TransactionProviderFilterViewModel? SelectedProvider
+    internal IList? _selectedProviders;
+    internal IList? SelectedProviders
     {
-        get => _selectedProvider;
-        set => SetAndRaise(SelectedProviderProperty, ref _selectedProvider, value);
-    }
-
-    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionAccountFilterViewModel?> SelectedAccountProperty =
-AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionAccountFilterViewModel?>(nameof(SelectedAccount), p => p.SelectedAccount, (p, v) => p.SelectedAccount = v);
-
-    internal TransactionAccountFilterViewModel? _selectedAccount;
-    internal TransactionAccountFilterViewModel? SelectedAccount
-    {
-        get => _selectedAccount;
-        set => SetAndRaise(SelectedAccountProperty, ref _selectedAccount, value);
+        get => _selectedProviders;
+        set => SetAndRaise(SelectedProvidersProperty, ref _selectedProviders, value);
     }
 
 
-    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionCategoryFilterViewModel?> SelectedCategoryProperty =
-AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionCategoryFilterViewModel?>(nameof(SelectedCategory), p => p.SelectedCategory, (p, v) => p.SelectedCategory = v);
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, IList?> SelectedAccountsProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(SelectedAccounts), p => p.SelectedAccounts, (p, v) => p.SelectedAccounts = v);
 
-    internal TransactionCategoryFilterViewModel? _selectedCategory;
-    internal TransactionCategoryFilterViewModel? SelectedCategory
+    internal IList? _selectedAccounts;
+    internal IList? SelectedAccounts
     {
-        get => _selectedCategory;
-        set => SetAndRaise(SelectedCategoryProperty, ref _selectedCategory, value);
+        get => _selectedAccounts;
+        set => SetAndRaise(SelectedAccountsProperty, ref _selectedAccounts, value);
     }
 
-    internal static readonly DirectProperty<OpenBankingTransactionFilters, TransactionTypeFilterViewModel?> SelectedTypeProperty =
-AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, TransactionTypeFilterViewModel?>(nameof(SelectedType), p => p.SelectedType, (p, v) => p.SelectedType = v);
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, IList?> SelectedCategoriesProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(SelectedCategories), p => p.SelectedCategories, (p, v) => p.SelectedCategories = v);
 
-    internal TransactionTypeFilterViewModel? _selectedType;
-    internal TransactionTypeFilterViewModel? SelectedType
+    internal IList? _selectedCategories;
+    internal IList? SelectedCategories
     {
-        get => _selectedType;
-        set => SetAndRaise(SelectedTypeProperty, ref _selectedType, value);
+        get => _selectedCategories;
+        set => SetAndRaise(SelectedCategoriesProperty, ref _selectedCategories, value);
+    }
+
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, IList?> SelectedTypesProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(SelectedTypes), p => p.SelectedTypes, (p, v) => p.SelectedTypes = v);
+
+    internal IList? _selectedTypes;
+    internal IList? SelectedTypes
+    {
+        get => _selectedTypes;
+        set => SetAndRaise(SelectedTypesProperty, ref _selectedTypes, value);
     }
 
     internal static readonly DirectProperty<OpenBankingTransactionFilters, string?> SearchTermProperty =
@@ -133,24 +137,57 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(S
     {
         base.OnPropertyChanged(change);
 
-
-        if (change.Property == SelectedProviderProperty)
+        if (change.Property == SelectedProvidersProperty)
         {
-            CommandParameter.ProviderId = change.GetNewValue<TransactionProviderFilterViewModel?>()?.ProviderId;
+            var items = change.GetNewValue<IList?>();
+            CommandParameter.ProviderIds.Clear();
+            if (items is null)
+                return;
+            foreach (var item in items)
+            {
+                CommandParameter.ProviderIds.Add((item as TransactionProviderFilterViewModel).ProviderId);
+            }
         }
 
-        if (change.Property == SelectedAccountProperty)
+        if (change.Property == SelectedAccountsProperty)
         {
-            CommandParameter.AccountId = change.GetNewValue<TransactionAccountFilterViewModel?>()?.AccountId;
+            var items = change.GetNewValue<IList?>();
+            CommandParameter.AccountIds.Clear();
+
+
+            if (items is null)
+                return;
+            foreach (var item in items)
+            {
+                CommandParameter.AccountIds.Add((item as TransactionAccountFilterViewModel).AccountId);
+            }
         }
-        if (change.Property == SelectedCategoryProperty)
+
+        if (change.Property == SelectedCategoriesProperty)
         {
-            CommandParameter.Category = change.GetNewValue<TransactionCategoryFilterViewModel?>()?.TransactionCategory;
+            var items = change.GetNewValue<IList?>();
+            CommandParameter.Categories.Clear();
+            if (items is null)
+                return;
+            foreach (var item in items)
+            {
+                CommandParameter.Categories.Add((item as TransactionCategoryFilterViewModel).TransactionCategory);
+            }
         }
-        if (change.Property == SelectedTypeProperty)
+
+        if (change.Property == SelectedTypesProperty)
         {
-            CommandParameter.Type = change.GetNewValue<TransactionTypeFilterViewModel?>()?.TransactionType;
+            var items = change.GetNewValue<IList?>();
+            CommandParameter.Types.Clear();
+            if (items is null)
+                return;
+            foreach (var item in items)
+            {
+                CommandParameter.Types.Add((item as TransactionTypeFilterViewModel).TransactionType);
+            }
         }
+
+
         if (change.Property == SearchTermProperty)
         {
             CommandParameter.SearchTerm = change.GetNewValue<string?>();

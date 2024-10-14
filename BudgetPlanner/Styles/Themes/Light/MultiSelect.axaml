@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<SolidColorBrush x:Key="MultiSelectSelectorBackground" Opacity="0.05" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorPointeroverBackground" Opacity="0.09" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorFocusBackground" Opacity="0.09" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorPressedBackground" Opacity="0.13" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorDisabledBackground" Opacity="0.02" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorDisabledBorderBrush" Opacity="0.02" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderBrush" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorPointeroverBorderBrush" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorFocusBorderBrush" Color="#0077FA" />
+	<SolidColorBrush x:Key="MultiSelectSelectorPressedBorderBrush" Color="#0077FA" />
+
+	<SolidColorBrush x:Key="MultiSelectIconDefaultForeground" Opacity="0.62" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectIconPointeroverForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectIconPressedForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectIconDisabledForeground" Opacity="0.35" Color="#1C1F23" />
+
+	<SolidColorBrush x:Key="MultiSelectDisabledForeground" Opacity="0.35" Color="#1C1F23" />
+
+	<BoxShadows x:Key="MultiSelectPopupBoxShadow">0 0 8 0 #1A000000</BoxShadows>
+	<SolidColorBrush x:Key="MultiSelectPopupBackground" Color="White" />
+	<SolidColorBrush x:Key="MultiSelectPopupBorderBrush" Opacity="0.08" Color="#1C1F23" />
+
+	<SolidColorBrush x:Key="MultiSelectItemForeground" Color="#1C1F23" />
+
+	<SolidColorBrush x:Key="MultiSelectItemBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectItemPointeroverForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectItemPointeroverBackground" Opacity="0.05" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectItemFocusForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectItemFocusBackground" Opacity="0.05" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectItemPressedForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectItemPressedBackground" Opacity="0.09" Color="#2E3238" />
+	<SolidColorBrush x:Key="MultiSelectItemSelectedForeground" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectItemSelectedBackground" Color="#EAF5FF" />
+	<SolidColorBrush x:Key="MultiSelectItemSelectedPointeroverBackground" Color="#CBE7FE" />
+
+	<SolidColorBrush x:Key="MultiSelectItemDisabledBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectItemSelectedDisabledBackground" Opacity="0.02" Color="#2E3238" />
+
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedBorderBrush" Opacity="0.08" Color="#1C1F23" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedPointeroverBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedPointeroverBorderBrush" Color="#0062D6" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedFocusBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedFocusBorderBrush" Color="#0062D6" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedPressedBackground" Color="Transparent" />
+	<SolidColorBrush x:Key="MultiSelectSelectorBorderedPressedBorderBrush" Color="#004FB3" />
+</ResourceDictionary>

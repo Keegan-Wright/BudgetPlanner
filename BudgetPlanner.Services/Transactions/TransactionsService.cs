@@ -95,22 +95,22 @@ namespace BudgetPlanner.Services.Transactions
 
         private IQueryable<OpenBankingTransaction> ApplyTransactionRequestFiltering(FilteredTransactionsRequest filteredTransactionsRequest, IQueryable<OpenBankingTransaction> transactionsQuery)
         {
-            if (filteredTransactionsRequest.AccountId is not null)
+            if (filteredTransactionsRequest.AccountIds is not null && filteredTransactionsRequest.AccountIds.Any())
             {
-                transactionsQuery = transactionsQuery.Where(x => x.Account.Id == filteredTransactionsRequest.AccountId);
+                transactionsQuery = transactionsQuery.Where(x => filteredTransactionsRequest.AccountIds.Contains(x.Account.Id));
             }
 
-            if (filteredTransactionsRequest.Type is not null)
+            if (filteredTransactionsRequest.Types is not null && filteredTransactionsRequest.Types.Any())
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionType == filteredTransactionsRequest.Type);
+                transactionsQuery = transactionsQuery.Where(x => filteredTransactionsRequest.Types.Contains(x.TransactionType));
             }
 
-            if (filteredTransactionsRequest.Category is not null)
+            if (filteredTransactionsRequest.Categories is not null && filteredTransactionsRequest.Categories.Any())
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionCategory == filteredTransactionsRequest.Category);
+                transactionsQuery = transactionsQuery.Where(x => filteredTransactionsRequest.Categories.Contains(x.TransactionCategory));
             }
 
-            if (filteredTransactionsRequest.ProviderId is not null)
+            if (filteredTransactionsRequest.ProviderIds is not null && filteredTransactionsRequest.ProviderIds.Any())
             {
                 transactionsQuery = transactionsQuery.Join(_budgetPlannerDbContext.OpenBankingAccounts,
                     transaction => transaction.Account.OpenBankingAccountId,
@@ -129,7 +129,7 @@ namespace BudgetPlanner.Services.Transactions
                         Provider = p
                     }
                     )
-                    .Where(x => x.Provider.Id == filteredTransactionsRequest.ProviderId)
+                    .Where(x => filteredTransactionsRequest.ProviderIds.Contains(x.Provider.Id))
                     .Select(x => x.Transaction);
             }
 

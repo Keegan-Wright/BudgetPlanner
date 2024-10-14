@@ -41,63 +41,59 @@
 
 						<StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 5 0">
 							<Label>Provider</Label>
-							<ComboBox
-								HorizontalAlignment="Stretch"
+							<controls:MultiSelect 
 								ItemsSource="{TemplateBinding Providers}"
-								SelectedItem="{TemplateBinding SelectedProvider, Mode=TwoWay}"
-								Classes="ClearButton">
-								<ComboBox.ItemTemplate>
+								HorizontalAlignment="Stretch"
+								ItemsSelected="{TemplateBinding SelectedProviders, Mode=TwoWay}">
+								<controls:MultiSelect.ItemTemplate>
 									<DataTemplate x:DataType="vm:TransactionProviderFilterViewModel">
-										<TextBlock Text="{Binding ProviderName}"/>
+										<controls:MultiSelectItem Content="{Binding ProviderName}"/>
 									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
+								</controls:MultiSelect.ItemTemplate>
+							</controls:MultiSelect>
+
 						</StackPanel>
 
 						<StackPanel Grid.Row="0" Grid.Column="1" Margin="0 0 5 0">
 							<Label>Account</Label>
-							<ComboBox
-								HorizontalAlignment="Stretch"
-								ItemsSource="{TemplateBinding Accounts}"
-								SelectedItem="{TemplateBinding SelectedAccount, Mode=TwoWay}"
-								Classes="ClearButton">
-								<ComboBox.ItemTemplate>
+							<controls:MultiSelect
+										ItemsSource="{TemplateBinding Accounts}"
+										HorizontalAlignment="Stretch"
+										ItemsSelected="{TemplateBinding SelectedAccounts, Mode=TwoWay}">
+								<controls:MultiSelect.ItemTemplate>
 									<DataTemplate x:DataType="vm:TransactionAccountFilterViewModel">
-										<TextBlock Text="{Binding AccountName}"/>
+										<controls:MultiSelectItem Content="{Binding AccountName}"/>
 									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
+								</controls:MultiSelect.ItemTemplate>
+							</controls:MultiSelect>
 						</StackPanel>
 
 						<StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 5 0">
 							<Label>Category</Label>
-							<ComboBox
-								HorizontalAlignment="Stretch"
-								ItemsSource="{TemplateBinding Categories}"
-								SelectedItem="{TemplateBinding SelectedCategory, Mode=TwoWay}"
-								Classes="ClearButton">
-								<ComboBox.ItemTemplate>
+							<controls:MultiSelect
+										ItemsSource="{TemplateBinding Categories}"
+										HorizontalAlignment="Stretch"
+										ItemsSelected="{TemplateBinding SelectedCategories, Mode=TwoWay}">
+								<controls:MultiSelect.ItemTemplate>
 									<DataTemplate x:DataType="vm:TransactionCategoryFilterViewModel">
-										<TextBlock Text="{Binding TransactionCategory}"/>
+										<controls:MultiSelectItem Content="{Binding TransactionCategory}"/>
 									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
+								</controls:MultiSelect.ItemTemplate>
+							</controls:MultiSelect>
 						</StackPanel>
 
 						<StackPanel Grid.Row="0" Grid.Column="3" Margin="0 0 5 0">
 							<Label>Type</Label>
-							<ComboBox
-								HorizontalAlignment="Stretch"
-								ItemsSource="{TemplateBinding Types}"
-								SelectedItem="{TemplateBinding SelectedType, Mode=TwoWay}"
-								Classes="ClearButton"
-								>
-								<ComboBox.ItemTemplate>
+							<controls:MultiSelect
+									ItemsSource="{TemplateBinding Types}"
+									HorizontalAlignment="Stretch"
+									ItemsSelected="{TemplateBinding SelectedTypes, Mode=TwoWay}">
+								<controls:MultiSelect.ItemTemplate>
 									<DataTemplate x:DataType="vm:TransactionTypeFilterViewModel">
-										<TextBlock Text="{Binding TransactionType}"/>
+										<controls:MultiSelectItem Content="{Binding TransactionType}"/>
 									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
+								</controls:MultiSelect.ItemTemplate>
+							</controls:MultiSelect>
 						</StackPanel>
 
 						<StackPanel Grid.Row="1" Grid.ColumnSpan="4" Margin="0 0 5 0">

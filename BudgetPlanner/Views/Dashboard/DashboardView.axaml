@@ -29,8 +29,7 @@
 						<controls:SpentInTimePeriod Title="Spent This Year" TotalIn="{Binding SpentThisYear.TotalIn}" TotalOut="{Binding SpentThisYear.TotalOut}" Normalised="{Binding SpentThisYear.Normalised}" />
 
 					</StackPanel>
-
-				</Grid>
+				</Grid>				
 			</StackPanel>
 		</ScrollViewer>
 

@@ -8,10 +8,10 @@ namespace BudgetPlanner.Models.Request.Transaction
 {
     public class FilteredTransactionsRequest
     {
-        public Guid? AccountId { get; set; }
-        public Guid? ProviderId { get; set; }
-        public string? Category { get; set; }
-        public string? Type { get; set; }
+        public IList<Guid>? AccountIds { get; set; } = [];
+        public IList<Guid>? ProviderIds { get; set; } = [];
+        public IList<string>? Categories { get; set; } = [];
+        public IList<string>? Types { get; set; } = [];
         public string? SearchTerm { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }

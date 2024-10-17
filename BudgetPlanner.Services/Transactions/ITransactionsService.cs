@@ -17,6 +17,6 @@ namespace BudgetPlanner.Services.Transactions
         IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync();
         IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync();
         IAsyncEnumerable<TransactionCategoryFilterResponse> GetCategoriesForTransactionFiltersAsync();
-
+        IAsyncEnumerable<TransactionTagFilterResponse> GetTagsForTransactionFiltersAsync();
     }
 }

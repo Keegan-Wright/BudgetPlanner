@@ -20,6 +20,7 @@
 			Accounts="{Binding AccountFilterItems}"
 			Providers="{Binding ProviderFilterItems}"
 			Categories="{Binding CategoryFilterItems}"
+			Tags="{Binding TagFilterItems}"
 			Types="{Binding TypeFilterItems}"
 			SearchCommand="{Binding SearchTransactionsAsync}"/>
 		

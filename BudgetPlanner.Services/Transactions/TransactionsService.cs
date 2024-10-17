@@ -8,6 +8,7 @@ using BudgetPlanner.Services.Base;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.VisualBasic;
 
 namespace BudgetPlanner.Services.Transactions
 {
@@ -78,10 +79,22 @@ namespace BudgetPlanner.Services.Transactions
             }
         }
 
+        public async IAsyncEnumerable<TransactionTagFilterResponse> GetTagsForTransactionFiltersAsync()
+        {
+            var query = _budgetPlannerDbContext.OpenBankingTransactionClassifications
+                .Select(x => new TransactionTagFilterResponse() { Tag = x.Classification })
+                .Distinct();
+
+            await foreach (var type in query.AsAsyncEnumerable())
+            {
+                yield return type;
+            }
+        }
 
         private async IAsyncEnumerable<TransactionResponse> GetTransactionResponsesAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes)
         {
             var transactionsQuery = _budgetPlannerDbContext.OpenBankingTransactions.AsQueryable();
+            transactionsQuery = transactionsQuery.Include(x => x.Classifications);
 
             transactionsQuery = ApplyTransactionRequestFiltering(filteredTransactionsRequest, transactionsQuery);
 
@@ -108,6 +121,11 @@ namespace BudgetPlanner.Services.Transactions
             if (filteredTransactionsRequest.Categories is not null && filteredTransactionsRequest.Categories.Any())
             {
                 transactionsQuery = transactionsQuery.Where(x => filteredTransactionsRequest.Categories.Contains(x.TransactionCategory));
+            }
+
+            if (filteredTransactionsRequest.Tags is not null && filteredTransactionsRequest.Tags.Any())
+            {
+                transactionsQuery = transactionsQuery.Where(x => filteredTransactionsRequest.Tags.Any(y => x.Classifications.Any(c => c.Classification == y)));
             }
 
             if (filteredTransactionsRequest.ProviderIds is not null && filteredTransactionsRequest.ProviderIds.Any())
@@ -157,7 +175,7 @@ namespace BudgetPlanner.Services.Transactions
         private IQueryable<TransactionResponse> GetTransactionsSelect(IQueryable<OpenBankingTransaction> query)
         {
             
-            return query.Include(x => x.Classifications).Select(transaction => new TransactionResponse()
+            return query.Select(transaction => new TransactionResponse()
             {
                 Amount = transaction.Amount,
                 Currency = transaction.Currency,

@@ -5,6 +5,7 @@ using Avalonia.Controls.Selection;
 using Avalonia.Interactivity;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.ViewModels;
+using HarfBuzzSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,6 +59,16 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IEnumerable<Trans
     {
         get => _types;
         set => SetAndRaise(TypesProperty, ref _types, value);
+    }
+
+    public static readonly DirectProperty<OpenBankingTransactionFilters, IEnumerable<TransactionTagFilterViewModel>> TagsProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IEnumerable<TransactionTagFilterViewModel>>(nameof(Tags), p => p.Tags, (p, v) => p.Tags = v);
+
+    private IEnumerable<TransactionTagFilterViewModel> _tags = new List<TransactionTagFilterViewModel>();
+    public IEnumerable<TransactionTagFilterViewModel> Tags
+    {
+        get => _tags;
+        set => SetAndRaise(TagsProperty, ref _tags, value);
     }
 
     public static readonly DirectProperty<OpenBankingTransactionFilters, ICommand?> SearchCommandProperty =
@@ -123,6 +134,16 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(Se
         set => SetAndRaise(SelectedTypesProperty, ref _selectedTypes, value);
     }
 
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, IList?> SelectedTagsProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, IList?>(nameof(SelectedTags), p => p.SelectedTags, (p, v) => p.SelectedTags = v);
+
+    internal IList? _selectedTags;
+    internal IList? SelectedTags
+    {
+        get => _selectedTypes;
+        set => SetAndRaise(SelectedTagsProperty, ref _selectedTags, value);
+    }
+
     internal static readonly DirectProperty<OpenBankingTransactionFilters, string?> SearchTermProperty =
 AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(SearchTerm), p => p.SearchTerm, (p, v) => p.SearchTerm = v);
 
@@ -184,6 +205,18 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(S
             foreach (var item in items)
             {
                 CommandParameter.Types.Add((item as TransactionTypeFilterViewModel).TransactionType);
+            }
+        }
+
+        if (change.Property == SelectedTagsProperty)
+        {
+            var items = change.GetNewValue<IList?>();
+            CommandParameter.Tags.Clear();
+            if (items is null)
+                return;
+            foreach (var item in items)
+            {
+                CommandParameter.Tags.Add((item as TransactionTagFilterViewModel).Tag);
             }
         }
 

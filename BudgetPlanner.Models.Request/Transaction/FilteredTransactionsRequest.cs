@@ -15,5 +15,6 @@ namespace BudgetPlanner.Models.Request.Transaction
         public string? SearchTerm { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public IList<string>? Tags { get; set; } = [];
     }
 }

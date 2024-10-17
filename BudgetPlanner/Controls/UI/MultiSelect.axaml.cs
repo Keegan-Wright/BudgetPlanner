@@ -355,6 +355,7 @@ AvaloniaProperty.RegisterDirect<MultiSelect, IList?>(nameof(ItemsSelected), p =>
 
                     ItemsSelected = null;
                     ItemsSelected = SelectedItems;
+                    
 
                     UpdateSelectionBoxItem($"{Selection.SelectedItems.Count()} Items selected");
                 }

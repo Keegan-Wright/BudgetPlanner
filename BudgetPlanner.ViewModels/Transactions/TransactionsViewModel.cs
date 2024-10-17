@@ -43,7 +43,8 @@ namespace BudgetPlanner.ViewModels
         private ObservableCollection<TransactionTypeFilterViewModel> _typeFilterItems = [];
 
         [ObservableProperty]
-        private string _searchTerm = string.Empty;
+        private ObservableCollection<TransactionTagFilterViewModel> _tagFilterItems = [];
+
 
         [RelayCommand]
         public async Task SearchTransactionsAsync(FilteredTransactionsRequest searchCriteria)
@@ -80,7 +81,7 @@ namespace BudgetPlanner.ViewModels
                         TransactionId = transaction.TransactionId,
                         TransactionDate = DateOnly.FromDateTime(transaction.TransactionTime),
                         TransactionType = transaction.TransactionType,
-                        Tags = transaction.Tags.Select(tag => new TransactionTagViewModel
+                        Tags = transaction.Tags.Select(tag => new TransactionTagFilterViewModel
                         {
                             Tag = tag
                         })
@@ -139,6 +140,15 @@ namespace BudgetPlanner.ViewModels
                     TransactionCategory = category.TransactionCategory
                 };
                 CategoryFilterItems.Add(viewModel);
+            }
+
+            await foreach(var tag in _transactionsService.GetTagsForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionTagFilterViewModel()
+                {
+                    Tag = tag.Tag
+                };
+                TagFilterItems.Add(viewModel);
             }
         }
     }

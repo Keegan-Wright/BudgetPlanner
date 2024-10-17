@@ -29,7 +29,7 @@ namespace BudgetPlanner.ViewModels
         private bool _pending;
 
         [ObservableProperty]
-        private IEnumerable<TransactionTagViewModel> _tags;
+        private IEnumerable<TransactionTagFilterViewModel> _tags;
 
     }
 

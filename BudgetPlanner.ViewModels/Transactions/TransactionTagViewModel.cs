@@ -2,7 +2,7 @@
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class TransactionTagViewModel : ViewModelBase
+    public partial class TransactionTagFilterViewModel : ViewModelBase
     {
         [ObservableProperty]
         private string? _tag;

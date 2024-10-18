@@ -99,7 +99,7 @@ namespace BudgetPlanner.Services.Transactions
             transactionsQuery = ApplyTransactionRequestFiltering(filteredTransactionsRequest, transactionsQuery);
 
 
-            await foreach (var entity in GetTransactionsSelect(transactionsQuery).GetPagedEntitiesAsync(10))
+            await foreach (var entity in GetTransactionsSelect(transactionsQuery).OrderByDescending(x => x.TransactionTime).GetPagedEntitiesAsync(10))
             {
                 yield return entity;
             }
@@ -159,12 +159,12 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.FromDate is not null)
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.FromDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.FromDate);
             }
 
             if (filteredTransactionsRequest.ToDate is not null)
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.ToDate);
             }
 
 

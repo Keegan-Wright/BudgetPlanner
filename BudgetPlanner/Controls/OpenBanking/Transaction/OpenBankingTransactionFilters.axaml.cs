@@ -154,6 +154,26 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(S
         set => SetAndRaise(SearchTermProperty, ref _searchTerm, value);
     }
 
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, DateTime?> DateFromProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, DateTime?>(nameof(DateFrom), p => p.DateFrom, (p, v) => p.DateFrom = v);
+
+    private DateTime? _dateFrom;
+    public DateTime? DateFrom
+    {
+        get => _dateFrom;
+        set => SetAndRaise(DateFromProperty, ref _dateFrom, value);
+    }
+
+    internal static readonly DirectProperty<OpenBankingTransactionFilters, DateTime?> DateToProperty =
+AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, DateTime?>(nameof(DateTo), p => p.DateTo, (p, v) => p.DateTo = v);
+
+    private DateTime? _dateTo;
+    public DateTime? DateTo
+    {
+        get => _dateTo;
+        set => SetAndRaise(DateToProperty, ref _dateTo, value);
+    }
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
@@ -224,6 +244,16 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, string?>(nameof(S
         if (change.Property == SearchTermProperty)
         {
             CommandParameter.SearchTerm = change.GetNewValue<string?>();
+        }
+
+        if (change.Property == DateToProperty)
+        {
+            CommandParameter.ToDate = change.GetNewValue<DateTime?>();
+        }
+
+        if (change.Property == DateFromProperty)
+        {
+            CommandParameter.FromDate = change.GetNewValue<DateTime?>();
         }
 
     }

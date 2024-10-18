@@ -37,6 +37,7 @@
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 
 						<StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 5 0">
@@ -110,7 +111,25 @@
 							</controls:MultiSelect>
 						</StackPanel>
 
-						<StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0 0 5 0">
+						<StackPanel Grid.Row="1" Grid.Column="1" Margin="0 0 5 0">
+							<Label>Date From</Label>
+							<CalendarDatePicker
+								Watermark=" "
+								HorizontalAlignment="Stretch"
+								SelectedDate="{TemplateBinding DateFrom, Mode=TwoWay}"/>
+						</StackPanel>
+
+
+						<StackPanel Grid.Row="1" Grid.Column="2" Margin="0 0 5 0">
+							<Label>Date To</Label>
+							<CalendarDatePicker 
+								Watermark=" "
+								HorizontalAlignment="Stretch"
+								SelectedDate="{TemplateBinding DateTo, Mode=TwoWay}"/>
+						</StackPanel>
+
+						
+						<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 0 5 0">
 							<Label>Search Term</Label>
 							<TextBox Text="{TemplateBinding SearchTerm, Mode=TwoWay}"/>
 						</StackPanel>
@@ -118,12 +137,12 @@
 						<Button
 							Margin="0 5 0 0"
 							HorizontalAlignment="Left"
-							Grid.Row="2"
+							Grid.Row="3"
 							Command="{TemplateBinding SearchCommand}"
 							CommandParameter="{TemplateBinding CommandParameter}"
 							>Search</Button>
-
 					</Grid>
+					
 
 				</Border>
 			</ControlTemplate>

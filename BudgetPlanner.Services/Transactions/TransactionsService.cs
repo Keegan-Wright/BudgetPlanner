@@ -159,12 +159,12 @@ namespace BudgetPlanner.Services.Transactions
 
             if (filteredTransactionsRequest.FromDate is not null)
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.FromDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.FromDate);
             }
 
             if (filteredTransactionsRequest.ToDate is not null)
             {
-                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime >= filteredTransactionsRequest.ToDate);
+                transactionsQuery = transactionsQuery.Where(x => x.TransactionTime <= filteredTransactionsRequest.ToDate);
             }
 
 

@@ -7,6 +7,7 @@
         HouseholdMembers,
         BudgetCategories,
         Debts,
-        Accounts
+        Accounts,
+        Transactions
     }
 }

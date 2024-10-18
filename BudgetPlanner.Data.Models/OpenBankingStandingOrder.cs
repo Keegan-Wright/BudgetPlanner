@@ -14,5 +14,8 @@
         public required string Reference { get; set; }
         public required string Payee { get; set; }
         public required DateTime Timestamp { get; set; }
+
+        public Guid AccountId { get; set; }
+        public OpenBankingAccount Account { get; set; }
     }
 }

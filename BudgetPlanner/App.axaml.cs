@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Sentry;
 using System.Diagnostics;
 using BudgetPlanner.Handlers;
+using BudgetPlanner.States;
 
 namespace BudgetPlanner
 {
@@ -58,10 +59,12 @@ namespace BudgetPlanner
 
                 desktop.MainWindow = Ioc.Default.GetRequiredService<MainWindow>();
                 desktop.MainWindow.DataContext = Ioc.Default.GetRequiredService<MainViewModel>();
-
+                ApplicationState.IsDesktopBasedLifetime = true;
             }
             else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             {
+                ApplicationState.IsDesktopBasedLifetime = false;
+
                 singleViewPlatform.MainView = new MainView
                 {
                     DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>())
@@ -91,7 +94,7 @@ namespace BudgetPlanner
 
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            var DbPath = System.IO.Path.Join(path, "BudgetPlanner.db");
+            var DbPath = Path.Join(path, "BudgetPlanner.db");
 
             var assembly = Assembly.GetExecutingAssembly();
             var appSettingPath = $"{assembly.GetName().Name}.appsettings.json";

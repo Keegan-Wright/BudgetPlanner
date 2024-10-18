@@ -1,4 +1,4 @@
-﻿namespace BudgetPlanner.Models.Response
+﻿namespace BudgetPlanner.Models.Response.Account
 {
     public class AccountTransactionResponse
     {

@@ -4,7 +4,10 @@
     {
         public required int SyncronisationType { get; set; }
         public required DateTime SyncronisationTime { get; set; }
-        public required Guid ProviderId { get; set; }
-        public required string OpenBankingAccountId { get; set; }
+
+        public Guid ProviderId { get; set; }
+        public OpenBankingProvider Provider { get; set; }
+
+        public string AccountId { get; set; }
     }
 }

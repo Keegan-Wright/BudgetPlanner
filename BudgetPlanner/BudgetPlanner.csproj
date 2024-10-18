@@ -11,7 +11,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="appsettings.json" />
+	  <AvaloniaXaml Remove="Controls\BaseUI\**" />
+	  <Compile Remove="Controls\BaseUI\**" />
+	  <EmbeddedResource Remove="Controls\BaseUI\**" />
+	  <EntityDeploy Remove="Controls\BaseUI\**" />
+	  <None Remove="Controls\BaseUI\**" />
 	</ItemGroup>
 
 
@@ -21,26 +25,26 @@
 		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.0-beta1" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0-beta1" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
 
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
 
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Semi.Avalonia" Version="11.2.0-beta1" />
-		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.1.0.3" />
-		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.1.0.3" />
+		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.1.0.4" />
+		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.1.0.4" />
 		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10" />
-		<PackageReference Include="Sentry.DiagnosticSource" Version="4.11.0" />
-		<PackageReference Include="Sentry.EntityFramework" Version="4.11.0" />
+		<PackageReference Include="Sentry.DiagnosticSource" Version="4.12.1" />
+		<PackageReference Include="Sentry.EntityFramework" Version="4.12.1" />
 
 
 		<PackageReference Include="SQLite" Version="3.13.0" />
@@ -72,6 +76,12 @@
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccountTransactions.axaml.cs">
 		  <DependentUpon>OpenBankingAccountTransactions.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactions.axaml.cs">
+		  <DependentUpon>OpenBankingTransactions.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactionFilters.axaml.cs">
+		  <DependentUpon>OpenBankingTransactionFilters.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
 		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
 		</Compile>
@@ -98,6 +108,9 @@
 		</Compile>
 		<Compile Update="Views\HouseholdMembers\HouseholdMembersView.axaml.cs">
 		  <DependentUpon>HouseholdMembersView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Transactions\TransactionsView.axaml.cs">
+		  <DependentUpon>TransactionsView.axaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 </Project>

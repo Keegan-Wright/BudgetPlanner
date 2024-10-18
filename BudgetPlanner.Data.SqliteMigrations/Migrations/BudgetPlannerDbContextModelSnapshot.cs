@@ -172,6 +172,8 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProviderId");
+
                     b.ToTable("OpenBankingAccounts");
                 });
 
@@ -179,6 +181,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Available")
@@ -194,14 +199,13 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.Property<decimal>("Current")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OpenBankingAccountId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId")
+                        .IsUnique();
 
                     b.ToTable("OpenBankingAccountBalances");
                 });
@@ -210,6 +214,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
@@ -244,6 +251,8 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("OpenBankingDirectDebits");
                 });
@@ -302,6 +311,8 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProviderId");
+
                     b.ToTable("OpenBankingProviderScopes");
                 });
 
@@ -309,6 +320,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
@@ -360,6 +374,8 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("OpenBankingStandingOrders");
                 });
 
@@ -369,11 +385,14 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OpenBankingAccountId")
-                        .IsRequired()
+                    b.Property<Guid?>("OpenBankingAccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ProviderId")
@@ -390,6 +409,10 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OpenBankingAccountId");
+
+                    b.HasIndex("ProviderId");
+
                     b.ToTable("OpenBankingSyncronisations");
                 });
 
@@ -397,6 +420,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Amount")
@@ -410,10 +436,6 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("OpenBankingAccountId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -443,7 +465,37 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ProviderId");
+
                     b.ToTable("OpenBankingTransactions");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingTransactionClassifications", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Classification")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("OpenBankingTransactionClassifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
@@ -461,6 +513,135 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DataProtectionKeys");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccount", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingProvider", "Provider")
+                        .WithMany("Accounts")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccountBalance", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", "Account")
+                        .WithOne("AccountBalance")
+                        .HasForeignKey("BudgetPlanner.Data.Models.OpenBankingAccountBalance", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingDirectDebit", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", "Account")
+                        .WithMany("DirectDebits")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingProviderScopes", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingProvider", "Provider")
+                        .WithMany("Scopes")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingStandingOrder", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", "Account")
+                        .WithMany("StandingOrders")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingSynronisation", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", null)
+                        .WithMany("Syncronisations")
+                        .HasForeignKey("OpenBankingAccountId");
+
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingProvider", "Provider")
+                        .WithMany("Syncronisations")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingTransaction", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", "Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingProvider", "Provider")
+                        .WithMany("Transactions")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingTransactionClassifications", b =>
+                {
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingTransaction", "Transaction")
+                        .WithMany("Classifications")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transaction");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccount", b =>
+                {
+                    b.Navigation("AccountBalance");
+
+                    b.Navigation("DirectDebits");
+
+                    b.Navigation("StandingOrders");
+
+                    b.Navigation("Syncronisations");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingProvider", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("Scopes");
+
+                    b.Navigation("Syncronisations");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingTransaction", b =>
+                {
+                    b.Navigation("Classifications");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Enums;
 using BudgetPlanner.Messages;
 using BudgetPlanner.Services;
+using BudgetPlanner.States;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -29,12 +30,13 @@ namespace BudgetPlanner.ViewModels
         {
             NavigationItems =
             [
-                new NavigationItemViewModel() { DisplayName = "Dashboard", RouteType = Enums.AppRoutes.Dashboard},
-                new NavigationItemViewModel() { DisplayName = "Provider Setup", RouteType = Enums.AppRoutes.ProviderSetup},
-                new NavigationItemViewModel() { DisplayName = "Household Members", RouteType = Enums.AppRoutes.HouseholdMembers},
-                new NavigationItemViewModel() { DisplayName = "Budget Categories", RouteType = Enums.AppRoutes.BudgetCategories},
-                new NavigationItemViewModel() { DisplayName = "Debts", RouteType = Enums.AppRoutes.Debts},
-                new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = Enums.AppRoutes.Accounts},
+                new NavigationItemViewModel() { DisplayName = "Dashboard", RouteType = AppRoutes.Dashboard},
+                new NavigationItemViewModel() { DisplayName = "Provider Setup", RouteType = AppRoutes.ProviderSetup},
+                new NavigationItemViewModel() { DisplayName = "Household Members", RouteType = AppRoutes.HouseholdMembers},
+                new NavigationItemViewModel() { DisplayName = "Budget Categories", RouteType = AppRoutes.BudgetCategories},
+                new NavigationItemViewModel() { DisplayName = "Debts", RouteType = AppRoutes.Debts},
+                new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = AppRoutes.Accounts},
+                new NavigationItemViewModel() { DisplayName = "Transactions", RouteType = AppRoutes.Transactions},
             ];
 
             SelectedNavigationItem = NavigationItems[0];
@@ -60,7 +62,6 @@ namespace BudgetPlanner.ViewModels
         private NavigationItemViewModel _selectedNavigationItem;
 
 
-        public NavigationItemViewModel electedNavigationItem;
 
         [ObservableProperty]
 
@@ -80,7 +81,8 @@ namespace BudgetPlanner.ViewModels
 
         partial void OnSelectedNavigationItemChanged(NavigationItemViewModel value)
         {
-            SideMenuExpanded = false;
+            if(ApplicationState.IsDesktopBasedLifetime.HasValue && !ApplicationState.IsDesktopBasedLifetime.Value)
+                SideMenuExpanded = false;
 
             switch (value.RouteType)
             {
@@ -101,6 +103,9 @@ namespace BudgetPlanner.ViewModels
                     break;
                 case AppRoutes.Accounts:
                     _navigationService.RequestNavigation<AccountsViewModel>();
+                    break;
+                case AppRoutes.Transactions:
+                    _navigationService.RequestNavigation<TransactionsViewModel>();
                     break;
                 default:
                     throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");

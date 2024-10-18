@@ -3,6 +3,9 @@
     public class OpenBankingProviderScopes : BaseEntity
     {
         public required string Scope { get; set; }
-        public required Guid ProviderId { get; set; }
+       
+        public Guid ProviderId { get; set; }
+        public OpenBankingProvider Provider { get; set; }
+
     }
 }

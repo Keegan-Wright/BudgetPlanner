@@ -15,10 +15,11 @@
 
 
     <Application.Styles>
-		<semi:SemiTheme Locale="en-GB" />
+		<semi:SemiTheme Locale="en-US" />
 		<StyleInclude Source="avares://Semi.Avalonia.DataGrid/Index.axaml" />
 		<StyleInclude Source="avares://Semi.Avalonia.TreeDataGrid/Index.axaml" />
 		<StyleInclude Source="avares://Semi.Avalonia.ColorPicker/Index.axaml" />
+		<StyleInclude Source="avares://BudgetPlanner/Styles/ControlStyles.axaml"/>	
 	</Application.Styles>
 
 
@@ -40,6 +41,13 @@
 				
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategories.axaml" />
 				<MergeResourceInclude Source="/Controls/Budget/BudgetCategory.axaml" />
+				
+				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactionFilters.axaml"/>
+				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactions.axaml"/>
+				
+				<MergeResourceInclude Source="/Controls/UI/MultiSelect.axaml"/>
+				<MergeResourceInclude Source="/Controls/UI/MultiSelectItem.axaml"/>
+
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

@@ -9,5 +9,8 @@
         public required decimal PreviousPaymentAmount { get; set; }
         public required string Currency { get; set; }
         public required DateTime TimeStamp { get; set; }
+
+        public Guid AccountId { get; set; }
+        public OpenBankingAccount Account { get; set; }
     }
 }

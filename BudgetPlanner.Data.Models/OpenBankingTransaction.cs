@@ -3,7 +3,6 @@ namespace BudgetPlanner.Data.Models
 {
     public class OpenBankingTransaction : BaseEntity
     {
-        public required string OpenBankingAccountId { get; set; }
         public required string Description { get; set; }
         public required string TransactionType { get; set; }
         public required string TransactionCategory { get; set; }
@@ -12,6 +11,13 @@ namespace BudgetPlanner.Data.Models
         public required string TransactionId { get; set; }
         public required DateTime TransactionTime { get; set; }
         public required bool Pending { get; set; }
-        public required Guid ProviderId { get; set; }
+
+        public Guid ProviderId { get; set; }
+        public OpenBankingProvider Provider { get; set; }
+
+        public Guid AccountId { get; set; }
+        public OpenBankingAccount Account { get; set; }
+
+        public ICollection<OpenBankingTransactionClassifications> Classifications { get; set; }
     }
 }

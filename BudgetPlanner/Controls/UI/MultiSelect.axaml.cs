@@ -388,7 +388,6 @@ AvaloniaProperty.RegisterDirect<MultiSelect, IList?>(nameof(ItemsSelected), p =>
     /// <inheritdoc/>
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        Debug.WriteLine(change.Property);
         if (change.Property == IsDropDownOpenProperty)
         {
             PseudoClasses.Set(pcDropdownOpen, change.GetNewValue<bool>());

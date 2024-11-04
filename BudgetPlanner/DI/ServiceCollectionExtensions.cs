@@ -2,6 +2,7 @@
 using BudgetPlanner.Services;
 using BudgetPlanner.Services.Accounts;
 using BudgetPlanner.Services.Budget;
+using BudgetPlanner.Services.Classifications;
 using BudgetPlanner.Services.Dashboard;
 using BudgetPlanner.Services.OpenBanking;
 using BudgetPlanner.Services.Transactions;
@@ -31,6 +32,7 @@ namespace BudgetPlanner.DI
             services.AddTransient<DashboardViewModel>();
             services.AddTransient<AccountsViewModel>();
             services.AddTransient<TransactionsViewModel>();
+            services.AddTransient<ClassificationSettingsViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -54,6 +56,7 @@ namespace BudgetPlanner.DI
             services.AddTransient<DashboardView>();
 
             services.AddTransient<AccountsView>();
+            services.AddTransient<ClassificationSettingsView>();
 
 
         }
@@ -67,6 +70,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<IAccountsService,  AccountsService>();
             services.AddSingleton<IDashboardService,  DashboardService>();
             services.AddSingleton<ITransactionsService, TransactionsService>();
+            services.AddSingleton<IClassificationService, ClassificationService>();
 
         }
 

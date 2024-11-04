@@ -111,6 +111,9 @@ namespace BudgetPlanner.ViewModels
                 case AppRoutes.Transactions:
                     _navigationService.RequestNavigation<TransactionsViewModel>();
                     break;
+                case AppRoutes.SettingsClassifications:
+                    _navigationService.RequestNavigation<ClassificationSettingsViewModel>();
+                    break;
                 default:
                     throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");
             }

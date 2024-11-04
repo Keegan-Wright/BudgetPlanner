@@ -121,6 +121,9 @@
 		<Compile Update="Views\Settings\Classifications\ClassificationSettingsView.axaml.cs">
 		  <DependentUpon>ClassificationSettingsView.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\Transactions\AddCustomClassificationsToTransactionView.axaml.cs">
+		  <DependentUpon>AddCustomClassificationsToTransactionView.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Transactions\TransactionsView.axaml.cs">
 		  <DependentUpon>TransactionsView.axaml</DependentUpon>
 		</Compile>

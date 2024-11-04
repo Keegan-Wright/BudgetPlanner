@@ -9,5 +9,6 @@ namespace BudgetPlanner.Models.Response.Classifications
     public class ClassificationsResponse
     {
         public string? Tag { get; set; }
+        public Guid ClassificationId { get; set; }
     }
 }

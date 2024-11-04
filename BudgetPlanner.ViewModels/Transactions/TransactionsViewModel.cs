@@ -5,6 +5,7 @@ using BudgetPlanner.Enums;
 using BudgetPlanner.Handlers;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
+using BudgetPlanner.Services;
 using BudgetPlanner.Services.Transactions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -20,11 +21,13 @@ namespace BudgetPlanner.ViewModels
     public partial class TransactionsViewModel : PageViewModel
     {
         private readonly ITransactionsService _transactionsService;
-        public TransactionsViewModel(ITransactionsService transactionsService)
+        private readonly INavigationService _navigationService;
+        public TransactionsViewModel(ITransactionsService transactionsService, INavigationService navigationService)
         {
             _transactionsService = transactionsService;
-
+            _navigationService = navigationService;
             InitaliseAsync();
+
         }
 
         [ObservableProperty]
@@ -51,6 +54,12 @@ namespace BudgetPlanner.ViewModels
         {
 ;
             await RunOnBackgroundThreadAsync(async () => await LoadTransactionsAsync(searchCriteria));
+        }
+
+        [RelayCommand]
+        public void NavigateToAddCustomClassificationToTransaction(TransactionItemViewModel transactionItemViewModel)
+        {
+            _navigationService.RequestNavigation<AddCustomClassificationsToTransactionViewModel>(transactionItemViewModel);
         }
 
         private async void InitaliseAsync()

@@ -6,6 +6,9 @@ namespace BudgetPlanner.ViewModels
 {
     public partial class ViewModelBase : ObservableObject
     {
+        [ObservableProperty]
+        private object? _navigationData;
+
         public async Task RunOnBackgroundThreadAsync(Action action)
         {
             await Task.Run(action.Invoke);

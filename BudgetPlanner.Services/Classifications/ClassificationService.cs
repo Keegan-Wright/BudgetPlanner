@@ -19,7 +19,7 @@ namespace BudgetPlanner.Services.Classifications
             var newClassification = new CustomClassification() { Tag = classification.Tag };
 
             using var transaction = _budgetPlannerDbContext.Database.BeginTransaction();
-            
+
             await _budgetPlannerDbContext.CustomClassifications.AddAsync(newClassification);
             await _budgetPlannerDbContext.SaveChangesAsync();
 
@@ -58,7 +58,8 @@ namespace BudgetPlanner.Services.Classifications
         {
             return query.Select(x => new ClassificationsResponse()
             {
-                Tag = x.Tag
+                Tag = x.Tag,
+                ClassificationId = x.Id
             });
         }
 
@@ -68,5 +69,26 @@ namespace BudgetPlanner.Services.Classifications
                 .AsNoTracking().AsQueryable();
         }
 
+        public async Task AddCustomClassificationsToTransaction(AddCustomClassificationsToTransactionRequest requestModel)
+        {
+            var transaction = await _budgetPlannerDbContext.OpenBankingTransactions.FirstOrDefaultAsync(x => x.Id == requestModel.TransactionId);
+            var classifications = await _budgetPlannerDbContext.CustomClassifications.Where(x => requestModel.Classifications.Select(x => x.ClassificationId).Contains(x.Id)).ToListAsync();
+
+            var newClassifications = new List<OpenBankingTransactionClassifications>();
+            foreach (var classification in classifications)
+            {
+                var newClassification = new OpenBankingTransactionClassifications()
+                {
+                    Transaction = transaction,
+                    TransactionId = transaction.Id,
+                    Classification = classification.Tag,
+                    IsCustomClassification = true
+                };
+                newClassifications.Add(newClassification);
+            }
+
+            await _budgetPlannerDbContext.AddRangeAsync(newClassifications);
+            await _budgetPlannerDbContext.SaveChangesAsync();
+        }
     }
 }

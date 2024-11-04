@@ -7,10 +7,11 @@ namespace BudgetPlanner.Services
 {
     public class NavigationService : INavigationService
     {
-        public void RequestNavigation<TViewModel>()
+        public void RequestNavigation<TViewModel>(object? navigationData = null)
             where TViewModel : ViewModelBase
         {
             var viewModel = Ioc.Default.GetRequiredService<TViewModel>();
+            viewModel.NavigationData = navigationData;
             WeakReferenceMessenger.Default.Send(new NavigationRequestedMessage(viewModel));
         }
     }

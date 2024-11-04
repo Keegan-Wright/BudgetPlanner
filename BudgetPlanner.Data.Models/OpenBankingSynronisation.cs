@@ -9,5 +9,8 @@
         public OpenBankingProvider Provider { get; set; }
 
         public string AccountId { get; set; }
+
+        public OpenBankingAccount Account { get; set; }
+        public Guid OpenBankingAccountId { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BudgetPlanner.Data.Db;
-using BudgetPlanner.Enums;
 using BudgetPlanner.Models.Response;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +59,7 @@ namespace BudgetPlanner.Services.Dashboard
 
 
             await foreach (var upcomingPayment in upcomingPayments
+                .Where(x => x.PaymentDate > DateTime.Now)
                 .OrderBy(x => x.PaymentDate)
                 .Take(numberToFetch)
                 .ToAsyncEnumerable())

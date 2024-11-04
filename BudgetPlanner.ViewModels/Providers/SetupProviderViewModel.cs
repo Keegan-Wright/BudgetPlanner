@@ -4,6 +4,7 @@ using BudgetPlanner.Services.OpenBanking;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
 
 namespace BudgetPlanner.ViewModels
 {
@@ -78,6 +79,18 @@ namespace BudgetPlanner.ViewModels
             SetLoading(true, "Adding Provider");
             await _openBankingService.AddVendorViaAccessCodeAsync(OpenBankingCode);
             SetLoading(false);
+        }
+
+        private void ResetSelections()
+        {
+
+            OpenBankingAuthUrl = string.Empty;
+            OpenBankingCode = string.Empty;
+            var providers = OpenBankingProviders.Where(x => x.Checked);
+            foreach (var provider in providers)
+            {
+                provider.Checked = false;
+            }
         }
 
 

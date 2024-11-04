@@ -37,6 +37,7 @@ namespace BudgetPlanner.ViewModels
                 new NavigationItemViewModel() { DisplayName = "Debts", RouteType = AppRoutes.Debts},
                 new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = AppRoutes.Accounts},
                 new NavigationItemViewModel() { DisplayName = "Transactions", RouteType = AppRoutes.Transactions},
+                new NavigationItemViewModel() { DisplayName = "Settings", SubItems = [ new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications } ]}
             ];
 
             SelectedNavigationItem = NavigationItems[0];
@@ -81,8 +82,11 @@ namespace BudgetPlanner.ViewModels
 
         partial void OnSelectedNavigationItemChanged(NavigationItemViewModel value)
         {
-            if(ApplicationState.IsDesktopBasedLifetime.HasValue && !ApplicationState.IsDesktopBasedLifetime.Value)
+            if (ApplicationState.IsDesktopBasedLifetime.HasValue && !ApplicationState.IsDesktopBasedLifetime.Value)
                 SideMenuExpanded = false;
+
+            if (value.RouteType == null)
+                return;
 
             switch (value.RouteType)
             {

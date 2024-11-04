@@ -7,7 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="11.2.0-beta1" />
+		<PackageReference Include="Avalonia" Version="11.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
 		  <PrivateAssets>all</PrivateAssets>
@@ -23,6 +23,10 @@
 	  <ProjectReference Include="..\BudgetPlanner.Services\BudgetPlanner.Services.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.States\BudgetPlanner.States.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Settings\" />
 	</ItemGroup>
 
 </Project>

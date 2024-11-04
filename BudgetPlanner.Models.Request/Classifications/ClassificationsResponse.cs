@@ -8,5 +8,6 @@ namespace BudgetPlanner.Models.Request.Classifications
 {
     public class AddClassificationsRequest
     {
+        public required string Tag { get; set; }
     }
 }

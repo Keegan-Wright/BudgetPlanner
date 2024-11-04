@@ -1,5 +1,8 @@
-﻿using BudgetPlanner.Services.Classifications;
+﻿using Avalonia.Threading;
+using BudgetPlanner.Services;
+using BudgetPlanner.Services.Classifications;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,16 +15,25 @@ namespace BudgetPlanner.ViewModels
     public partial class ClassificationSettingsViewModel : PageViewModel
     {
         private readonly IClassificationService _classificationService;
+        private readonly INavigationService _navigationService;
 
-        public ClassificationSettingsViewModel(IClassificationService classificationService)
+        public ClassificationSettingsViewModel(IClassificationService classificationService, INavigationService navigationService)
         {
             _classificationService = classificationService;
+            _navigationService = navigationService;
 
             InitaliseAsync();
         }
 
         [ObservableProperty]
         private ObservableCollection<ClassificationItemViewModel> _customClassifications = [];
+
+
+        [RelayCommand]
+        public void NavigateToAddCustomClassification()
+        {
+            _navigationService.RequestNavigation<AddCustomClassificationViewModel>();
+        }
 
         private async void InitaliseAsync()
         {
@@ -30,20 +42,14 @@ namespace BudgetPlanner.ViewModels
 
         private async Task LoadDataAsync()
         {
+            SetLoading(true, "Loading Custom Classifications");
             await foreach (var item in _classificationService.GetAllCustomClassificationsAsync())
             {
-
+                Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new() { Classification = item.Tag }));
             }
+            SetLoading(false);
         }
-    }
 
-    public partial class ClassificationItemViewModel : ViewModelBase
-    {
-        [ObservableProperty]
-        private string _classification;
-
-        [ObservableProperty]
-        private bool _isCustomClassification;
         
     }
 }

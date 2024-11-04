@@ -8,9 +8,7 @@ namespace BudgetPlanner.Services.Classifications
 {
     public interface IClassificationService
     {
-        IAsyncEnumerable<ClassificationsResponse> GetAllClassificationsAsync();
         IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync();
-        IAsyncEnumerable<ClassificationsResponse> GetAllExternalClassificationsAsync();
         Task<GetClassificationResponse> GetClassificationAsync(Guid id);
         Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification);
     }

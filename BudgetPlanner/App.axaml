@@ -47,6 +47,8 @@
 				
 				<MergeResourceInclude Source="/Controls/UI/MultiSelect.axaml"/>
 				<MergeResourceInclude Source="/Controls/UI/MultiSelectItem.axaml"/>
+				
+				<MergeResourceInclude Source="/Controls/Settings/Classifications/CustomClassifications.axaml"/>
 
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

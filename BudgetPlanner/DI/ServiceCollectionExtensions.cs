@@ -33,6 +33,7 @@ namespace BudgetPlanner.DI
             services.AddTransient<AccountsViewModel>();
             services.AddTransient<TransactionsViewModel>();
             services.AddTransient<ClassificationSettingsViewModel>();
+            services.AddTransient<AddCustomClassificationViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -57,6 +58,7 @@ namespace BudgetPlanner.DI
 
             services.AddTransient<AccountsView>();
             services.AddTransient<ClassificationSettingsView>();
+            services.AddTransient<AddCustomClassificationView>();
 
 
         }

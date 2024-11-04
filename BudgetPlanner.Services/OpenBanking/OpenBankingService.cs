@@ -79,7 +79,7 @@ namespace BudgetPlanner.Services.OpenBanking
                 {
                     await foreach (var provider in GetOpenBankingProvidersAsync())
                     {
-                        progress?.Report($"Processing your {provider.Name} banking information...");
+                        progress?.Report($"Processing your {provider.Name} banking information");
                         await BulkLoadProviderAsync(provider, syncFlags);
                     }
                     await _budgetPlannerDbContext.SaveChangesAsync();

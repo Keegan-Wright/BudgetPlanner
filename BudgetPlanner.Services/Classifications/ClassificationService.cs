@@ -14,40 +14,28 @@ namespace BudgetPlanner.Services.Classifications
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }
 
-        public Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification)
+        public async Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification)
         {
-            throw new NotImplementedException();
-        }
+            var newClassification = new CustomClassification() { Tag = classification.Tag };
 
-        public async IAsyncEnumerable<ClassificationsResponse> GetAllClassificationsAsync()
-        {
-            IQueryable<OpenBankingTransactionClassifications> query = GetMainClassificationQuery();
+            using var transaction = _budgetPlannerDbContext.Database.BeginTransaction();
+            
+            await _budgetPlannerDbContext.CustomClassifications.AddAsync(newClassification);
+            await _budgetPlannerDbContext.SaveChangesAsync();
 
-            var classifications = GetMainClassificationsSelect(query).AsAsyncEnumerable();
+            await transaction.CommitAsync();
 
-            await foreach (var classification in classifications)
+            return new ClassificationsResponse()
             {
-                yield return classification;
-            }
+                Tag = classification.Tag,
+            };
+
         }
 
 
         public async IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync()
         {
-            IQueryable<OpenBankingTransactionClassifications> query = GetMainClassificationQuery();
-            query = query.Where(x => x.IsCustomClassification == true);
-            var classifications = GetMainClassificationsSelect(query).AsAsyncEnumerable();
-
-            await foreach (var classification in classifications)
-            {
-                yield return classification;
-            }
-        }
-
-        public async IAsyncEnumerable<ClassificationsResponse> GetAllExternalClassificationsAsync()
-        {
-            IQueryable<OpenBankingTransactionClassifications> query = GetMainClassificationQuery();
-            query = query.Where(x => x.IsCustomClassification != true);
+            var query = GetMainClassificationQuery();
             var classifications = GetMainClassificationsSelect(query).AsAsyncEnumerable();
 
             await foreach (var classification in classifications)
@@ -58,28 +46,26 @@ namespace BudgetPlanner.Services.Classifications
 
         public async Task<GetClassificationResponse> GetClassificationAsync(Guid id)
         {
-            var item = await _budgetPlannerDbContext.OpenBankingTransactionClassifications.FirstAsync(x => x.Id == id);
+            var item = await _budgetPlannerDbContext.CustomClassifications.FirstAsync(x => x.Id == id);
             return new GetClassificationResponse()
             {
                 ClassificationId = item.Id,
-                Classification = item.Classification
+                Tag = item.Tag
             };
         }
 
-        private IQueryable<ClassificationsResponse> GetMainClassificationsSelect(IQueryable<OpenBankingTransactionClassifications> query)
+        private IQueryable<ClassificationsResponse> GetMainClassificationsSelect(IQueryable<CustomClassification> query)
         {
             return query.Select(x => new ClassificationsResponse()
             {
-                Classification = x.Classification,
-                IsCustomClassification = x.IsCustomClassification
+                Tag = x.Tag
             });
         }
 
-        private IQueryable<OpenBankingTransactionClassifications> GetMainClassificationQuery()
+        private IQueryable<CustomClassification> GetMainClassificationQuery()
         {
-            return _budgetPlannerDbContext.OpenBankingTransactionClassifications
-                .AsNoTracking()
-                .DistinctBy(x => x.Classification).AsQueryable();
+            return _budgetPlannerDbContext.CustomClassifications
+                .AsNoTracking().AsQueryable();
         }
 
     }

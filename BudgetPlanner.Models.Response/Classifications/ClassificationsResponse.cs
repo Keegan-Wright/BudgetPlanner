@@ -8,7 +8,6 @@ namespace BudgetPlanner.Models.Response.Classifications
 {
     public class ClassificationsResponse
     {
-        public bool IsCustomClassification { get; set; }
-        public string Classification { get; set; }
+        public string? Tag { get; set; }
     }
 }

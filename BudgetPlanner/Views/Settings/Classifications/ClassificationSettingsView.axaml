@@ -8,7 +8,22 @@
              x:Class="BudgetPlanner.Views.ClassificationSettingsView"
              x:DataType="vm:ClassificationSettingsViewModel">
 
-	<Panel>
-<TextBlock>Classifications</TextBlock>
-	</Panel>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition  Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		
+		<Button
+			Grid.Row="0"
+			HorizontalAlignment="Right"
+			Margin="0 0 10 0"
+			Command="{Binding NavigateToAddCustomClassificationCommand}">Add Classification</Button>
+
+		<controls:CustomClassifications
+			Grid.Row="1"
+			Classifications="{Binding CustomClassifications}"/>
+
+	</Grid>
+
 </UserControl>

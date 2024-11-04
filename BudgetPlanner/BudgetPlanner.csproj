@@ -85,6 +85,9 @@
 		<Compile Update="Controls\OpenBanking\Transaction\OpenBankingTransactionFilters.axaml.cs">
 		  <DependentUpon>OpenBankingTransactionFilters.axaml</DependentUpon>
 		</Compile>
+		<Compile Update="Controls\Settings\Classifications\CustomClassifications.axaml.cs">
+		  <DependentUpon>CustomClassifications.axaml</DependentUpon>
+		</Compile>
 		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
 		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
 		</Compile>
@@ -111,6 +114,9 @@
 		</Compile>
 		<Compile Update="Views\HouseholdMembers\HouseholdMembersView.axaml.cs">
 		  <DependentUpon>HouseholdMembersView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Settings\Classifications\AddCustomClassification.axaml.cs">
+		  <DependentUpon>AddCustomClassification.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Settings\Classifications\ClassificationSettingsView.axaml.cs">
 		  <DependentUpon>ClassificationSettingsView.axaml</DependentUpon>

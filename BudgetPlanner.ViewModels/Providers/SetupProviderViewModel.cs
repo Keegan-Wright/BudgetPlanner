@@ -32,7 +32,7 @@ namespace BudgetPlanner.ViewModels
 
         private async void InitaliseAsync()
         {
-            SetLoading(true, "Loading Providers...");
+            SetLoading(true, "Loading Providers");
 
             await foreach (var provider in _openBankingService.GetOpenBankingProvidersForClientAsync()) 
             {

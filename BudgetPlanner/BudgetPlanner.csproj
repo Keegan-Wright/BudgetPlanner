@@ -73,6 +73,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AvaloniaXaml Update="Styles\ButtonStyles.axaml">
+	    <SubType>Designer</SubType>
+	  </AvaloniaXaml>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Update="Controls\OpenBanking\Account\OpenBankingAccounts.axaml.cs">
 		  <DependentUpon>OpenBankingAccounts.axaml</DependentUpon>
 		</Compile>
@@ -87,6 +93,12 @@
 		</Compile>
 		<Compile Update="Controls\Settings\Classifications\CustomClassifications.axaml.cs">
 		  <DependentUpon>CustomClassifications.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\UI\Validation\ValidationContainerItem.axaml.cs">
+		  <DependentUpon>ValidationContainerItem.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\UI\Validation\ValidationContainer.axaml.cs">
+		  <DependentUpon>ValidationContainer.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
 		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>

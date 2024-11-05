@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Controls">
+		<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+	
+	<Design.PreviewWith>
+		<StackPanel Margin="20">
+			<MultiSelectItem>Hello World</MultiSelectItem>
+			<MultiSelectItem>Hello World</MultiSelectItem>
+			<MultiSelectItem IsSelected="True">Hello World</MultiSelectItem>
+
+			<controls:MultiSelect>
+				<MultiSelectItem>Hello World</MultiSelectItem>
+				<MultiSelectItem>Hello World</MultiSelectItem>
+				<MultiSelectItem IsSelected="True">Hello World</MultiSelectItem>
+			</controls:MultiSelect>
+			
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:ValidationContainerItem}" TargetType="controls:ValidationContainerItem">
+		<Setter Property="Template">
+			<ControlTemplate TargetType="controls:ValidationContainerItem">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Classes="Danger" Text="{TemplateBinding ValidationError}"></TextBlock>
+					<Button
+						Name="ClearButton"
+						Margin="5 0"
+						Classes="Danger"
+						Command="{Binding $parent[controls:ValidationContainer].RemoveValidationItem}"
+						CommandParameter="{TemplateBinding ValidationError}"
+						Content="{DynamicResource IconButtonClearData}"
+						Focusable="False"
+						Theme="{DynamicResource InlineRemoveButton}" />
+				</StackPanel>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

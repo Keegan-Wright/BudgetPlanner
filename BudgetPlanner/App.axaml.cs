@@ -139,6 +139,7 @@ namespace BudgetPlanner
             services.AddViewModels();
             services.AddServices();
             services.AddExternalServices();
+            services.AddValidators();
 
             services.AddSingleton(new DatabaseConfiguration()
             {

@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Enums", "Budg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Handlers", "BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj", "{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Services.Base", "BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Services.Base", "BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

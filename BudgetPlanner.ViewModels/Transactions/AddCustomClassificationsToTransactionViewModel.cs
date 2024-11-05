@@ -1,26 +1,27 @@
 ﻿using Avalonia.Threading;
+using BudgetPlanner.Handlers;
 using BudgetPlanner.Models.Request.Classifications;
 using BudgetPlanner.Services;
 using BudgetPlanner.Services.Classifications;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FluentValidation;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class AddCustomClassificationsToTransactionViewModel : PageViewModel
+    public partial class AddCustomClassificationsToTransactionViewModel : ValidateablePageViewModel<AddCustomClassificationsToTransactionViewModel>
     {
         private readonly IClassificationService _classificationService;
         private readonly INavigationService _navigationService;
 
-        public AddCustomClassificationsToTransactionViewModel(IClassificationService classificationService, INavigationService navigationService)
+        public AddCustomClassificationsToTransactionViewModel(IClassificationService classificationService, INavigationService navigationService, IValidator<AddCustomClassificationsToTransactionViewModel> validator) : base(validator)
         {
             _classificationService = classificationService;
             _navigationService = navigationService;
 
             InitaliseAsync();
-
         }
 
         private async void InitaliseAsync()
@@ -60,18 +61,29 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task AddCustomTagsToTransaction()
         {
-            SetLoading(true,"Adding Custom Classifications");
-            await RunOnBackgroundThreadAsync(async () =>
+            try
             {
-                var selectedClassifications = CustomClassifications.Where(x => x.Checked).Select(x => new SelectedCustomClassificationsRequest() { ClassificationId = x.ClassificationId});
-                var selectedTransaction = NavigationData as TransactionItemViewModel;
+                await ValidateAndExecute(this, async () =>
+                {
+                    SetLoading(true, "Adding Custom Classifications");
+                    await RunOnBackgroundThreadAsync(async () =>
+                    {
+                        var selectedClassifications = CustomClassifications.Where(x => x.Checked).Select(x => new SelectedCustomClassificationsRequest() { ClassificationId = x.ClassificationId });
+                        var selectedTransaction = NavigationData as TransactionItemViewModel;
 
-                var requestModel = new AddCustomClassificationsToTransactionRequest() { TransactionId = selectedTransaction.TransactionId, Classifications = selectedClassifications };
+                        var requestModel = new AddCustomClassificationsToTransactionRequest() { TransactionId = selectedTransaction.TransactionId, Classifications = selectedClassifications };
 
-                await _classificationService.AddCustomClassificationsToTransaction(requestModel);
-            });
-            SetLoading(false);
-            NavigateBackToTransactions();
+                        await _classificationService.AddCustomClassificationsToTransaction(requestModel);
+                    });
+                    SetLoading(false);
+                    NavigateBackToTransactions();
+                });
+
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleError(ex);
+            }
         }
 
         private void NavigateBackToTransactions()

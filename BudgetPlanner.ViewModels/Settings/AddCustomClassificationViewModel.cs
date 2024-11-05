@@ -4,15 +4,17 @@ using BudgetPlanner.Services;
 using BudgetPlanner.Services.Classifications;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FluentValidation;
+using Microsoft.Extensions.Options;
 
 namespace BudgetPlanner.ViewModels
 {
-    public partial class AddCustomClassificationViewModel : PageViewModel
+    public partial class AddCustomClassificationViewModel : ValidateablePageViewModel<AddCustomClassificationViewModel>
     {
         private readonly IClassificationService _classificationService;
         private readonly INavigationService _navigationService;
 
-        public AddCustomClassificationViewModel(IClassificationService classificationService, INavigationService navigationService)
+        public AddCustomClassificationViewModel(IClassificationService classificationService, INavigationService navigationService, IValidator<AddCustomClassificationViewModel> validator) : base(validator)
         {
             _classificationService = classificationService;
             _navigationService = navigationService;
@@ -33,11 +35,14 @@ namespace BudgetPlanner.ViewModels
         {
             try
             {
-                SetLoading(true, "Adding Custom Classification");
-                await _classificationService.AddCustomClassificationAsync(new AddClassificationsRequest() { Tag = CustomTag });
-                SetLoading(false);
-                NavigateBackToCustomClassificationSettings();
+                await ValidateAndExecute(this, async () =>
+                {
+                    SetLoading(true, "Adding Custom Classification");
+                    await _classificationService.AddCustomClassificationAsync(new AddClassificationsRequest() { Tag = CustomTag });
+                    SetLoading(false);
+                    NavigateBackToCustomClassificationSettings();
 
+                });
             }
             catch (Exception ex)
             {

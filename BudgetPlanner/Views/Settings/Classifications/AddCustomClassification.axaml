@@ -11,6 +11,7 @@
 	<StackPanel>
 		<TextBlock Margin="0 5">Classification</TextBlock>
 		<TextBox  Watermark="Classification" Text="{Binding CustomTag}"/>
+		<controls:ValidationContainer ValidationErrors="{Binding Errors}" ScrollViewerHeight="100" ScrollViewerMaxHeight="500"/>
 
 		<Grid Margin="0 5 0 0">
 			<Grid.ColumnDefinitions>

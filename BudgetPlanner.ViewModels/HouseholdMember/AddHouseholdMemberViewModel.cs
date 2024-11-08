@@ -33,7 +33,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task AddHouseholdMemberAsync()
         {
-            SetLoading(true, "Adding Household Member...");
+            SetLoading(true, "Adding Household Member");
 
             var householdMemberToAdd = new AddHouseholdMemberRequest() {
                 FirstName = FirstName,

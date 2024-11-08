@@ -50,7 +50,7 @@
 				<SelectableTextBlock TextWrapping="Wrap" Text="{Binding OpenBankingAuthUrl}"></SelectableTextBlock>
 			</StackPanel>
 
-			<StackPanel Grid.Row="3">
+			<StackPanel Grid.Row="3" Spacing="10">
 				<Label>Enter your code below</Label>
 				<TextBox Text="{Binding OpenBankingCode}"/>
 				<Button Command="{Binding AddProviderCommand}">Add Provider</Button>

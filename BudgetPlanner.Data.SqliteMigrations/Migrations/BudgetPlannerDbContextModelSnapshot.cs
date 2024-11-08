@@ -15,7 +15,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
             modelBuilder.Entity("BudgetPlanner.Data.Models.BudgetCategory", b =>
                 {
@@ -48,6 +48,27 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BudgetCategories");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Data.Models.CustomClassification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomClassifications");
                 });
 
             modelBuilder.Entity("BudgetPlanner.Data.Models.Debt", b =>
@@ -385,14 +406,14 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("OpenBankingAccountId")
+                    b.Property<string>("OpenBankingAccountId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ProviderId")
@@ -409,7 +430,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OpenBankingAccountId");
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("ProviderId");
 
@@ -484,6 +505,9 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCustomClassification")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("TransactionId")
                         .HasColumnType("TEXT");
@@ -572,15 +596,19 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 
             modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingSynronisation", b =>
                 {
-                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", null)
+                    b.HasOne("BudgetPlanner.Data.Models.OpenBankingAccount", "Account")
                         .WithMany("Syncronisations")
-                        .HasForeignKey("OpenBankingAccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BudgetPlanner.Data.Models.OpenBankingProvider", "Provider")
                         .WithMany("Syncronisations")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Account");
 
                     b.Navigation("Provider");
                 });

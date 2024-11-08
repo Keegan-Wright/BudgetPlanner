@@ -71,7 +71,7 @@
 
 						<TreeView Margin="0 10" ItemsSource="{Binding NavigationItems}" SelectedItem="{Binding SelectedNavigationItem}">
 							<TreeView.ItemTemplate>
-								<TreeDataTemplate>
+								<TreeDataTemplate ItemsSource="{Binding SubItems}">
 									<TextBlock Text="{Binding DisplayName}" />
 								</TreeDataTemplate>
 							</TreeView.ItemTemplate>

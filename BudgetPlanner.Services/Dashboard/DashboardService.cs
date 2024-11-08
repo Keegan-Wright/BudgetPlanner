@@ -1,5 +1,4 @@
 ﻿using BudgetPlanner.Data.Db;
-using BudgetPlanner.Enums;
 using BudgetPlanner.Models.Response;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +59,7 @@ namespace BudgetPlanner.Services.Dashboard
 
 
             await foreach (var upcomingPayment in upcomingPayments
+                .Where(x => x.PaymentDate > DateTime.Now)
                 .OrderBy(x => x.PaymentDate)
                 .Take(numberToFetch)
                 .ToAsyncEnumerable())
@@ -70,7 +70,7 @@ namespace BudgetPlanner.Services.Dashboard
 
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
-            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from && x.TransactionTime <= to) && x.TransactionCategory != "TRANSFER");
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1) && x.TransactionTime <= to.AddDays(1)) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 
             return new SpentInTimePeriodResponse()

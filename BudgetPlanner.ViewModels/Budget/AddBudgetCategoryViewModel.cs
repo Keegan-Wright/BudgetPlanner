@@ -38,7 +38,7 @@ namespace BudgetPlanner.ViewModels
         [RelayCommand]
         public async Task AddBudgetCategoryAsync()
         {
-            SetLoading(true, "Adding Category...");
+            SetLoading(true, "Adding Category");
 
             var categoryToAdd = new AddBudgetCategoryRequest() {
                 Name = Name,

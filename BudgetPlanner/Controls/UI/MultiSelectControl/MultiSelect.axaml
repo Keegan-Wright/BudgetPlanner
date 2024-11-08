@@ -11,14 +11,14 @@
 	
 	<Design.PreviewWith>
 		<StackPanel Margin="20">
-			<MultiSelectItem>Hello World</MultiSelectItem>
-			<MultiSelectItem>Hello World</MultiSelectItem>
-			<MultiSelectItem IsSelected="True">Hello World</MultiSelectItem>
+			<controls:MultiSelectItem>Hello World</controls:MultiSelectItem>
+			<controls:MultiSelectItem>Hello World</controls:MultiSelectItem>
+			<controls:MultiSelectItem IsSelected="True">Hello World</controls:MultiSelectItem>
 
 			<controls:MultiSelect>
-				<MultiSelectItem>Hello World</MultiSelectItem>
-				<MultiSelectItem>Hello World</MultiSelectItem>
-				<MultiSelectItem IsSelected="True">Hello World</MultiSelectItem>
+				<controls:MultiSelectItem>Hello World</controls:MultiSelectItem>
+				<controls:MultiSelectItem>Hello World</controls:MultiSelectItem>
+				<controls:MultiSelectItem IsSelected="True">Hello World</controls:MultiSelectItem>
 			</controls:MultiSelect>
 			
 		</StackPanel>

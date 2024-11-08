@@ -8,6 +8,7 @@
         BudgetCategories,
         Debts,
         Accounts,
-        Transactions
+        Transactions,
+        SettingsClassifications
     }
 }

@@ -42,7 +42,7 @@ namespace BudgetPlanner.ViewModels
 
         private async Task LoadCategoriesAsync()
         {
-            SetLoading(true, "Loading Categories...");
+            SetLoading(true, "Loading Categories");
 
             BudgetCategories.Clear(); 
 

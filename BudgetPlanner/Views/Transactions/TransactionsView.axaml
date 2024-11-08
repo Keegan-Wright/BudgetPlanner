@@ -26,7 +26,8 @@
 		
 		<controls:OpenBankingTransactions
 			Grid.Row="1"
-			Transactions="{Binding Transactions}"/>
+			Transactions="{Binding Transactions}"
+			AddCustomClassificationCommand="{Binding NavigateToAddCustomClassificationToTransaction}"/>
 		
 	</Grid>
 </UserControl>

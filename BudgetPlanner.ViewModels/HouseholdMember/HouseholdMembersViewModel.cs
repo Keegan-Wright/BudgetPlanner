@@ -42,7 +42,7 @@ namespace BudgetPlanner.ViewModels
 
         private async Task LoadHouseholdMembersAsync()
         {
-            SetLoading(true, "Loading Categories...");
+            SetLoading(true, "Loading Categories");
 
             HouseholdMembers.Clear(); 
 

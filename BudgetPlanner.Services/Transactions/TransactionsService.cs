@@ -1,14 +1,11 @@
 ﻿using BudgetPlanner.Data.Db;
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.Enums;
-using BudgetPlanner.Extensions;
 using BudgetPlanner.Models.Request.Transaction;
 using BudgetPlanner.Models.Response.Transaction;
 using BudgetPlanner.Services.Base;
 using BudgetPlanner.Services.OpenBanking;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.VisualBasic;
 
 namespace BudgetPlanner.Services.Transactions
 {
@@ -40,7 +37,7 @@ namespace BudgetPlanner.Services.Transactions
 
         public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes = SyncTypes.All)
         {
-
+            await _openBankingService.PerformSyncAsync(syncTypes);
             await foreach (var transaction in GetTransactionResponsesAsync(filteredTransactionsRequest, syncTypes))
             {
                 yield return transaction;

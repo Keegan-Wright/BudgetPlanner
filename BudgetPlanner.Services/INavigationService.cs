@@ -4,6 +4,6 @@ namespace BudgetPlanner.Services
 {
     public interface INavigationService
     {
-        void RequestNavigation<TViewModel>() where TViewModel : ViewModelBase;
+        void RequestNavigation<TViewModel>(object? navigationData = null) where TViewModel : ViewModelBase;
     }
 }

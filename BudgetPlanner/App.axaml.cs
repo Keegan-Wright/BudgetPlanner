@@ -1,4 +1,4 @@
-using Avalonia;
+ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -92,6 +92,8 @@ namespace BudgetPlanner
         private static ServiceCollection BuildServices()
         {
 
+            SQLitePCL.Batteries.Init();
+
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
             var DbPath = Path.Join(path, "BudgetPlanner.db");
@@ -137,6 +139,7 @@ namespace BudgetPlanner
             services.AddViewModels();
             services.AddServices();
             services.AddExternalServices();
+            services.AddValidators();
 
             services.AddSingleton(new DatabaseConfiguration()
             {

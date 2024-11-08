@@ -8,6 +8,8 @@
         public Guid ProviderId { get; set; }
         public OpenBankingProvider Provider { get; set; }
 
-        public string AccountId { get; set; }
+        public Guid AccountId { get; set; }
+        public OpenBankingAccount Account { get; set; }
+        public string OpenBankingAccountId { get; set; }
     }
 }

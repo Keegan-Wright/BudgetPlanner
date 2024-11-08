@@ -6,5 +6,8 @@
 
         public Guid TransactionId { get; set; }
         public OpenBankingTransaction Transaction { get; set; }
+
+        public bool IsCustomClassification { get; set; }
+
     }
 }

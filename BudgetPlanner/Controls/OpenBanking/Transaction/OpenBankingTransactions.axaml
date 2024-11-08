@@ -32,6 +32,7 @@
 						IsReadOnly="True"
 						ScrollViewer.AllowAutoHide="True"
 						ItemsSource="{TemplateBinding Transactions}"
+						SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}"
 							>
 						<DataGrid.Columns>
 							<DataGridTextColumn
@@ -101,6 +102,11 @@
 							</DataGridTemplateColumn>
 
 						</DataGrid.Columns>
+						<DataGrid.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Add Custom Classification" Command="{TemplateBinding AddCustomClassificationCommand}" CommandParameter="{TemplateBinding SelectedItem}"></MenuItem>
+							</ContextMenu>
+						</DataGrid.ContextMenu>
 					</DataGrid>
 
 				</Border>

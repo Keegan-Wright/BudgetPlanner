@@ -9,6 +9,12 @@ namespace BudgetPlanner.ViewModels
         private string _displayName;
 
         [ObservableProperty]
-        private AppRoutes _RouteType;
+        private AppRoutes? _routeType;
+
+        [ObservableProperty]
+        private string _iconCode;
+
+        [ObservableProperty]
+        private ICollection<NavigationItemViewModel> _subItems;
     }
 }

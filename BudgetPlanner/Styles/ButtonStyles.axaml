@@ -1,0 +1,27 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:CompileBindings="True">
+	<ControlTheme x:Key="InlineRemoveButton" TargetType="Button">
+		<Setter Property="Foreground" Value="{DynamicResource TextBlockDangerForeground}" />
+		<Setter Property="Cursor" Value="Hand" />
+		<Setter Property="Template">
+			<ControlTemplate TargetType="Button">
+				<ContentControl Background="Transparent">
+					<PathIcon
+                        Width="16"
+                        Height="16"
+                        Margin="{TemplateBinding Padding}"
+                        Data="{TemplateBinding Content}"
+                        Foreground="{TemplateBinding Foreground}" />
+				</ContentControl>
+			</ControlTemplate>
+		</Setter>
+		<Style Selector="^:pointerover">
+			<Setter Property="Foreground" Value="{DynamicResource TextBlockDangerForeground}" />
+		</Style>
+		<Style Selector="^:pressed">
+			<Setter Property="Foreground" Value="{DynamicResource TextBlockDangerForeground}" />
+		</Style>
+	</ControlTheme>
+</ResourceDictionary>

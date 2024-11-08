@@ -32,6 +32,7 @@
 						IsReadOnly="True"
 						ScrollViewer.AllowAutoHide="True"
 						ItemsSource="{TemplateBinding Classifications}"
+						SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}"
 							>
 						<DataGrid.Columns>
 							<DataGridTextColumn
@@ -41,6 +42,11 @@
 								Width="2*"
 								Binding="{Binding Classification}"/>
 						</DataGrid.Columns>
+						<DataGrid.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Delete Classification" Command="{TemplateBinding DeleteCustomClassificationCommand}" CommandParameter="{TemplateBinding SelectedItem}"></MenuItem>
+							</ContextMenu>
+						</DataGrid.ContextMenu>
 					</DataGrid>
 
 				</Border>

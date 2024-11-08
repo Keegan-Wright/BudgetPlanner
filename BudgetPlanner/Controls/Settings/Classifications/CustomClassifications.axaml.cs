@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using BudgetPlanner.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace BudgetPlanner.Controls;
 
@@ -19,4 +20,26 @@ AvaloniaProperty.RegisterDirect<CustomClassifications, IEnumerable<Classificatio
         get => _classifications;
         set => SetAndRaise(ClassificationsProperty, ref _classifications, value);
     }
+    
+    public static readonly DirectProperty<CustomClassifications, ClassificationItemViewModel?> SelectedItemProperty =
+        AvaloniaProperty.RegisterDirect<CustomClassifications, ClassificationItemViewModel?>(nameof(SelectedItem), p => p.SelectedItem, (p, v) => p.SelectedItem = v);
+
+    private ClassificationItemViewModel? _selectedItem;
+    public ClassificationItemViewModel? SelectedItem
+    {
+        get => _selectedItem;
+        set => SetAndRaise(SelectedItemProperty, ref _selectedItem, value);
+    }
+    
+    public static readonly DirectProperty<CustomClassifications, ICommand?> DeleteCustomClassificationCommandProperty =
+        AvaloniaProperty.RegisterDirect<CustomClassifications, ICommand?>(nameof(DeleteCustomClassificationCommand), p => p.DeleteCustomClassificationCommand, (p, v) => p.DeleteCustomClassificationCommand = v);
+
+    private ICommand? _deleteCustomClassificationCommand;
+    public ICommand? DeleteCustomClassificationCommand
+    {
+        get => _deleteCustomClassificationCommand;
+        set => SetAndRaise(DeleteCustomClassificationCommandProperty, ref _deleteCustomClassificationCommand, value);
+    }
+
+
 }

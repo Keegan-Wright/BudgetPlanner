@@ -22,7 +22,9 @@
 
 		<controls:CustomClassifications
 			Grid.Row="1"
-			Classifications="{Binding CustomClassifications}"/>
+			Classifications="{Binding CustomClassifications}"
+			DeleteCustomClassificationCommand="{Binding DeleteCustomClassificationAsync}"
+			/>
 
 	</Grid>
 

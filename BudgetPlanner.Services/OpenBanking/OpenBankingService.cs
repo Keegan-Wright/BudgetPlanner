@@ -48,7 +48,7 @@ namespace BudgetPlanner.Services.OpenBanking
         {
             if (ApplicationState.HasInternetConnection)
             {
-                await foreach (var provider in _openBankingApiService.GetAvailableProvidersAsync())
+                await foreach (var provider in _openBankingApiService.GetAvailableProvidersAsync().OrderBy(x => x.DisplayName))
                 {
                     yield return provider;
                 }

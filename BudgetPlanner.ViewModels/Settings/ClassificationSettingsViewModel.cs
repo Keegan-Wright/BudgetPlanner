@@ -35,6 +35,14 @@ namespace BudgetPlanner.ViewModels
             _navigationService.RequestNavigation<AddCustomClassificationViewModel>();
         }
 
+        [RelayCommand]
+        public async Task DeleteCustomClassificationAsync(ClassificationItemViewModel item)
+        {
+            SetLoading(true, "Deleting Custom Classification");
+            await _classificationService.RemoveCustomClassificationAsync(item.ClassificationId);
+            
+            await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
+        }
         private async void InitaliseAsync()
         {
             await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
@@ -43,9 +51,11 @@ namespace BudgetPlanner.ViewModels
         private async Task LoadDataAsync()
         {
             SetLoading(true, "Loading Custom Classifications");
+
+            Dispatcher.UIThread.Invoke(() => CustomClassifications.Clear());
             await foreach (var item in _classificationService.GetAllCustomClassificationsAsync())
             {
-                Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new() { Classification = item.Tag }));
+                Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new() { Classification = item.Tag, ClassificationId = item.ClassificationId }));
             }
             SetLoading(false);
         }

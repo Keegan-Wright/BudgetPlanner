@@ -2,6 +2,7 @@
 using BudgetPlanner.Data.Models;
 using BudgetPlanner.Models.Request.Classifications;
 using BudgetPlanner.Models.Response.Classifications;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Services.Classifications
@@ -69,7 +70,7 @@ namespace BudgetPlanner.Services.Classifications
                 .AsNoTracking().AsQueryable();
         }
 
-        public async Task AddCustomClassificationsToTransaction(AddCustomClassificationsToTransactionRequest requestModel)
+        public async Task AddCustomClassificationsToTransactionAsync(AddCustomClassificationsToTransactionRequest requestModel)
         {
             var transaction = await _budgetPlannerDbContext.OpenBankingTransactions.FirstOrDefaultAsync(x => x.Id == requestModel.TransactionId);
             var classifications = await _budgetPlannerDbContext.CustomClassifications.Where(x => requestModel.Classifications.Select(x => x.ClassificationId).Contains(x.Id)).ToListAsync();
@@ -89,6 +90,20 @@ namespace BudgetPlanner.Services.Classifications
 
             await _budgetPlannerDbContext.AddRangeAsync(newClassifications);
             await _budgetPlannerDbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveCustomClassificationAsync(Guid id)
+        {
+            using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
+
+            var classificationToRemove = await _budgetPlannerDbContext.CustomClassifications.FirstAsync(x => x.Id == id);
+            var transactionClassifications = await _budgetPlannerDbContext.OpenBankingTransactionClassifications.Where(x => x.IsCustomClassification == true && x.Classification == classificationToRemove.Tag).ToListAsync();
+            
+            await _budgetPlannerDbContext.BulkDeleteAsync(transactionClassifications);
+            await _budgetPlannerDbContext.BulkDeleteAsync([classificationToRemove]);
+
+            await transaction.CommitAsync();
+
         }
     }
 }

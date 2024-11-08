@@ -11,6 +11,7 @@ namespace BudgetPlanner.Services.Classifications
         IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync();
         Task<GetClassificationResponse> GetClassificationAsync(Guid id);
         Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification);
-        Task AddCustomClassificationsToTransaction(AddCustomClassificationsToTransactionRequest requestModel);
+        Task AddCustomClassificationsToTransactionAsync (AddCustomClassificationsToTransactionRequest requestModel);
+        Task RemoveCustomClassificationAsync(Guid id);
     }
 }

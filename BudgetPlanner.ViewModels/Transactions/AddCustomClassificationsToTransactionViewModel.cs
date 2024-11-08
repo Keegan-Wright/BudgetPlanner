@@ -73,7 +73,7 @@ namespace BudgetPlanner.ViewModels
 
                         var requestModel = new AddCustomClassificationsToTransactionRequest() { TransactionId = selectedTransaction.TransactionId, Classifications = selectedClassifications };
 
-                        await _classificationService.AddCustomClassificationsToTransaction(requestModel);
+                        await _classificationService.AddCustomClassificationsToTransactionAsync(requestModel);
                     });
                     SetLoading(false);
                     NavigateBackToTransactions();

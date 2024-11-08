@@ -57,11 +57,8 @@
 
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-	</Application.Resources>
-
-
-	<Application.Resources>
 		<converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
 		<converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
+
 	</Application.Resources>
 </Application>

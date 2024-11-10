@@ -9,6 +9,7 @@
         Debts,
         Accounts,
         Transactions,
-        SettingsClassifications
+        SettingsClassifications,
+        Calendar
     }
 }

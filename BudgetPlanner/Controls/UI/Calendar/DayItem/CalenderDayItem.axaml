@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:BudgetPlanner.Controls">
+
+    <Design.PreviewWith>
+        <controls:CalenderDayItem />
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:CalenderDayItem}" TargetType="controls:CalenderDayItem">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Day -->
+                    <TextBlock Grid.Row="0" Text="01"></TextBlock>
+                    <!-- Events -->
+                    <Expander Grid.Row="1">
+                        <Expander.Header>Events</Expander.Header>
+                    </Expander>
+                    
+                    <!-- Goals -->
+                    <Expander Grid.Row="2">
+                        <Expander.Header>Goals</Expander.Header>
+                    </Expander>                    
+                    <!-- Transactions -->
+                    <Expander Grid.Row="3">
+                        <Expander.Header>Transactions</Expander.Header>
+                    </Expander>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

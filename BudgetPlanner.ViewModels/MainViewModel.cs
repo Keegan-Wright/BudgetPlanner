@@ -37,6 +37,7 @@ namespace BudgetPlanner.ViewModels
                 new NavigationItemViewModel() { DisplayName = "Debts", RouteType = AppRoutes.Debts},
                 new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = AppRoutes.Accounts},
                 new NavigationItemViewModel() { DisplayName = "Transactions", RouteType = AppRoutes.Transactions},
+                new NavigationItemViewModel() { DisplayName = "Calendar", RouteType = AppRoutes.Calendar},
                 new NavigationItemViewModel() { DisplayName = "Settings", SubItems = [ new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications } ]}
             ];
 
@@ -110,6 +111,9 @@ namespace BudgetPlanner.ViewModels
                     break;
                 case AppRoutes.Transactions:
                     _navigationService.RequestNavigation<TransactionsViewModel>();
+                    break;
+                case AppRoutes.Calendar:
+                    _navigationService.RequestNavigation<CalendarViewModel>();
                     break;
                 case AppRoutes.SettingsClassifications:
                     _navigationService.RequestNavigation<ClassificationSettingsViewModel>();

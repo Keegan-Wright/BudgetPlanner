@@ -140,4 +140,10 @@
 		  <DependentUpon>TransactionsView.axaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="Resources\Styles\Themes\Dark\MultiSelect.axaml" />
+	  <AdditionalFiles Include="Resources\Styles\Themes\Light\MultiSelect.axaml" />
+	  <AdditionalFiles Include="Resources\Styles\Themes\Shared\MultiSelect.axaml" />
+	</ItemGroup>
 </Project>

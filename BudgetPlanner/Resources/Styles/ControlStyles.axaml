@@ -3,11 +3,11 @@
 	<Styles.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude Source="/Styles/Themes/Shared/MultiSelect.axaml"/>
+				<ResourceInclude Source="/Resources/Styles/Themes/Shared/MultiSelect.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<ResourceDictionary.ThemeDictionaries>
-				<ResourceInclude x:Key="Dark" Source="/Styles/Themes/Dark/MultiSelect.axaml"/>
-				<ResourceInclude x:Key="Default" Source="/Styles/Themes/Light/MultiSelect.axaml"/>
+				<ResourceInclude x:Key="Dark" Source="/Resources/Styles/Themes/Dark/MultiSelect.axaml"/>
+				<ResourceInclude x:Key="Default" Source="/Resources/Styles/Themes/Light/MultiSelect.axaml"/>
 			</ResourceDictionary.ThemeDictionaries>
 		</ResourceDictionary>
 	</Styles.Resources>

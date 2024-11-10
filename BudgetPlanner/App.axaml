@@ -19,46 +19,16 @@
 		<StyleInclude Source="avares://Semi.Avalonia.DataGrid/Index.axaml" />
 		<StyleInclude Source="avares://Semi.Avalonia.TreeDataGrid/Index.axaml" />
 		<StyleInclude Source="avares://Semi.Avalonia.ColorPicker/Index.axaml" />
-		<StyleInclude Source="avares://BudgetPlanner/Styles/ControlStyles.axaml"/>
+		<StyleInclude Source="avares://BudgetPlanner/Resources/Styles/ControlStyles.axaml"/>
 	</Application.Styles>
 
 
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-
-				<MergeResourceInclude Source="avares://BudgetPlanner/Styles/ButtonStyles.axaml"/>
-				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayments.axaml"/>
-				<MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayment.axaml"/>
-				<MergeResourceInclude Source="/Controls/Spinners/IndeterminateLoadingSpinner.axaml"/>
-				<MergeResourceInclude Source="/Controls/Widgets/MoneyWidget/SpentInTimePeriod.axaml"/>
-				
-				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccounts.axaml"/>
-				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccount.axaml"/>
-				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransactions.axaml"/>
-				<MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransaction.axaml"/>
-				
-				<MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMembers.axaml" />
-				<MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMember.axaml" />
-				
-				<MergeResourceInclude Source="/Controls/Budget/BudgetCategories.axaml" />
-				<MergeResourceInclude Source="/Controls/Budget/BudgetCategory.axaml" />
-				
-				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactionFilters.axaml"/>
-				<MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactions.axaml"/>
-				
-				<MergeResourceInclude Source="/Controls/UI/MultiSelectControl/MultiSelect.axaml"/>
-				<MergeResourceInclude Source="/Controls/UI/MultiSelectControl/MultiSelectItem.axaml"/>
-				
-				<MergeResourceInclude Source="/Controls/UI/Validation/ValidationContainer.axaml"/>
-				<MergeResourceInclude Source="/Controls/UI/Validation/ValidationContainerItem.axaml"/>
-				
-				<MergeResourceInclude Source="/Controls/Settings/Classifications/CustomClassifications.axaml"/>
-
+				<MergeResourceInclude Source="/Resources/CustomControls.axaml"></MergeResourceInclude>
+				<MergeResourceInclude Source="/Resources/Converters.axaml"></MergeResourceInclude>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-		<converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
-		<converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
-
 	</Application.Resources>
 </Application>

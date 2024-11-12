@@ -22,7 +22,7 @@ namespace BudgetPlanner.ViewModels
             _classificationService = classificationService;
             _navigationService = navigationService;
 
-            InitaliseAsync();
+            InitialiseAsync();
         }
 
         [ObservableProperty]
@@ -43,7 +43,7 @@ namespace BudgetPlanner.ViewModels
             
             await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
         }
-        private async void InitaliseAsync()
+        private async void InitialiseAsync()
         {
             await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
         }

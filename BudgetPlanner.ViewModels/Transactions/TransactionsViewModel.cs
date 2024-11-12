@@ -26,7 +26,7 @@ namespace BudgetPlanner.ViewModels
         {
             _transactionsService = transactionsService;
             _navigationService = navigationService;
-            InitaliseAsync();
+            InitialiseAsync();
 
         }
 
@@ -62,7 +62,7 @@ namespace BudgetPlanner.ViewModels
             _navigationService.RequestNavigation<AddCustomClassificationsToTransactionViewModel>(transactionItemViewModel);
         }
 
-        private async void InitaliseAsync()
+        private async void InitialiseAsync()
         {
             SetLoading(true, "Loading filter items");
 

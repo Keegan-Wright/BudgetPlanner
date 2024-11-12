@@ -9,7 +9,18 @@
     <ControlTheme x:Key="{x:Type controls:Calendar}" TargetType="controls:Calendar">
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid></Grid>
+                <Border Theme="{StaticResource CardBorder}">
+                    <Grid>
+                        <ItemsControl>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:CalenderMonthItem/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+
             </ControlTemplate>
         </Setter>
     </ControlTheme>

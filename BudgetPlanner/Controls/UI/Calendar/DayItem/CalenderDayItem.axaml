@@ -9,30 +9,49 @@
     <ControlTheme x:Key="{x:Type controls:CalenderDayItem}" TargetType="controls:CalenderDayItem">
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
+                <Border Theme="{StaticResource CardBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
                     
-                    <!-- Day -->
-                    <TextBlock Grid.Row="0" Text="01"></TextBlock>
-                    <!-- Events -->
-                    <Expander Grid.Row="1">
-                        <Expander.Header>Events</Expander.Header>
-                    </Expander>
+                        <!-- Day -->
+                        <TextBlock Grid.Row="0" Text="01"></TextBlock>
+                        <!-- Events -->
+                        <Expander Grid.Row="1">
+                            <Expander.Header>
+                                Events
+                            </Expander.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0">Add Event</Button>
+                                <TextBlock Grid.Row="1">Events to go here</TextBlock>
+                            </Grid>
+                        </Expander>
                     
-                    <!-- Goals -->
-                    <Expander Grid.Row="2">
-                        <Expander.Header>Goals</Expander.Header>
-                    </Expander>                    
-                    <!-- Transactions -->
-                    <Expander Grid.Row="3">
-                        <Expander.Header>Transactions</Expander.Header>
-                    </Expander>
-                </Grid>
+                        <!-- Goals -->
+                        <Expander Grid.Row="2">
+                            <Expander.Header>Goals</Expander.Header>
+                            <StackPanel>
+                                <TextBlock>Goals to go here</TextBlock>
+                            </StackPanel>
+                        </Expander>                    
+                        <!-- Transactions -->
+                        <Expander Grid.Row="3">
+                            <Expander.Header>Transactions</Expander.Header>
+                            <StackPanel>
+                                <TextBlock>Transactions to go here</TextBlock>
+                            </StackPanel>
+                        </Expander>
+                    </Grid>
+
+                </Border>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

@@ -14,8 +14,8 @@ namespace BudgetPlanner.ViewModels
         private string _logo;
 
         [ObservableProperty]
-        private string _name;
-
+        private string _displayName;
+        
         [ObservableProperty]
         private bool _checked;
     }

@@ -15,7 +15,7 @@ namespace BudgetPlanner.ViewModels
         {
             _openBankingService = openBankingService;
 
-            InitaliseAsync();
+            InitialiseAsync();
         }
 
         [ObservableProperty]
@@ -30,7 +30,7 @@ namespace BudgetPlanner.ViewModels
 
 
 
-        private async void InitaliseAsync()
+        private async void InitialiseAsync()
         {
             SetLoading(true, "Loading Providers");
 
@@ -49,7 +49,7 @@ namespace BudgetPlanner.ViewModels
 
                 OpenBankingProviders.Add(new OpenBankingProviderViewModel()
                 {
-                    Name = provider.DisplayName,
+                    DisplayName = $"{provider.DisplayName} - {provider.Country}",
                     Logo = provider.LogoUrl,
                     Scopes = scopes,
                     ProviderId = provider.ProviderId,

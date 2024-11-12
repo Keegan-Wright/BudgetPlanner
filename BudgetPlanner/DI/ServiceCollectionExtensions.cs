@@ -2,6 +2,7 @@
 using BudgetPlanner.Services;
 using BudgetPlanner.Services.Accounts;
 using BudgetPlanner.Services.Budget;
+using BudgetPlanner.Services.Calendar;
 using BudgetPlanner.Services.Classifications;
 using BudgetPlanner.Services.Dashboard;
 using BudgetPlanner.Services.OpenBanking;
@@ -69,6 +70,7 @@ namespace BudgetPlanner.DI
             services.AddSingleton<IDashboardService,  DashboardService>();
             services.AddSingleton<ITransactionsService, TransactionsService>();
             services.AddSingleton<IClassificationService, ClassificationService>();
+            services.AddSingleton<ICalendarService, CalendarService>();
 
         }
 

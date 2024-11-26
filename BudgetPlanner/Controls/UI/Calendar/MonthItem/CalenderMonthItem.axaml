@@ -10,15 +10,15 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
-                    <Grid>
-                        <ItemsControl>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <controls:CalenderWeekItem/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Grid>
+                        <Grid>
+                            <ItemsControl ItemsSource="{TemplateBinding WeeksInMonth}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:CalenderWeekItem WeekItems="{Binding }"></controls:CalenderWeekItem>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>

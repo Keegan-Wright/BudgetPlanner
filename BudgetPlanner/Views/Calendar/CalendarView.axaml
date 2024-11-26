@@ -8,7 +8,6 @@
              x:Class="BudgetPlanner.Views.CalendarView"
              x:DataType="vm:CalendarViewModel">
     <StackPanel>
-        <TextBlock Text="Calendar coming soon"></TextBlock>
-        <controls:CalenderWeekItem></controls:CalenderWeekItem>
+        <controls:CalenderMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalenderMonthItem>
     </StackPanel>
 </UserControl>

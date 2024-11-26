@@ -11,10 +11,10 @@
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
                     <Grid>
-                        <ItemsControl>
+                        <ItemsControl ItemsSource="{TemplateBinding WeekItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <controls:CalenderDayItem/>
+                                    <TextBlock Text="Week Item"></TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

@@ -10,15 +10,18 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
-                    <Grid>
                         <ItemsControl ItemsSource="{TemplateBinding WeekItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="Week Item"></TextBlock>
+                                        <controls:CalenderDayItem Day="{Binding }"></controls:CalenderDayItem>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                    </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>

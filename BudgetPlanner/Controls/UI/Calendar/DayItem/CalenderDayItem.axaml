@@ -19,7 +19,7 @@
                         </Grid.RowDefinitions>
                     
                         <!-- Day -->
-                        <TextBlock Grid.Row="0" Text="01"></TextBlock>
+                        <TextBlock Grid.Row="0" Text="{Binding Day.Date.Day, RelativeSource={RelativeSource TemplatedParent}}"></TextBlock>
                         <!-- Events -->
                         <Expander Grid.Row="1">
                             <Expander.Header>
@@ -31,23 +31,37 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Button Grid.Row="0">Add Event</Button>
-                                <TextBlock Grid.Row="1">Events to go here</TextBlock>
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding Day.Events, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>Event </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                         </Expander>
                     
                         <!-- Goals -->
                         <Expander Grid.Row="2">
                             <Expander.Header>Goals</Expander.Header>
-                            <StackPanel>
-                                <TextBlock>Goals to go here</TextBlock>
-                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Day.Goals, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>Goal </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Expander>                    
                         <!-- Transactions -->
                         <Expander Grid.Row="3">
                             <Expander.Header>Transactions</Expander.Header>
-                            <StackPanel>
-                                <TextBlock>Transactions to go here</TextBlock>
-                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Day.Transactions, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>Transaction </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Expander>
                     </Grid>
 

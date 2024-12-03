@@ -7,7 +7,10 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Views.CalendarView"
              x:DataType="vm:CalendarViewModel">
-    <StackPanel>
-        <controls:CalenderMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalenderMonthItem>
-    </StackPanel>
+    <Grid>
+        <ScrollViewer>
+            <controls:CalenderMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalenderMonthItem>
+
+        </ScrollViewer>
+    </Grid>
 </UserControl>

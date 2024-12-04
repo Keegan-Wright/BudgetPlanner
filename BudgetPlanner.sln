@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Handlers", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Services.Base", "BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{1D738108-ADB9-47D3-B7FC-02040F7AC3BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Host.AppHost", "BudgetPlanner.Host.AppHost\BudgetPlanner.Host.AppHost.csproj", "{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +151,10 @@ Global
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +164,7 @@ Global
 		{4A29407C-456D-497D-AB6F-D823E4A2ED7B} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
 		{36B5CA83-3343-4113-856E-401E9957EADA} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
 		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD} = {1D738108-ADB9-47D3-B7FC-02040F7AC3BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27901178-8D95-4CDB-AF34-7284161AC83D}

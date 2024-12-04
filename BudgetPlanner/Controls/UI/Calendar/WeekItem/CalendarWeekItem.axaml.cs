@@ -6,11 +6,11 @@ using BudgetPlanner.ViewModels;
 
 namespace BudgetPlanner.Controls;
 
-public class CalenderWeekItem : TemplatedControl
+public class CalendarWeekItem : TemplatedControl
 {
     
-    public static readonly DirectProperty<CalenderWeekItem, IEnumerable<CalendarItemViewModel>> WeekItemsProperty =
-        AvaloniaProperty.RegisterDirect<CalenderWeekItem, IEnumerable<CalendarItemViewModel>>(nameof(WeekItems),
+    public static readonly DirectProperty<CalendarWeekItem, IEnumerable<CalendarItemViewModel>> WeekItemsProperty =
+        AvaloniaProperty.RegisterDirect<CalendarWeekItem, IEnumerable<CalendarItemViewModel>>(nameof(WeekItems),
             p => p.WeekItems, (p, v) => p.WeekItems = v);
     
     private IEnumerable<CalendarItemViewModel> _weekItems = new List<CalendarItemViewModel>();

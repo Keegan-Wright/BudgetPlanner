@@ -9,7 +9,7 @@
              x:DataType="vm:CalendarViewModel">
     <Grid>
         <ScrollViewer>
-            <controls:CalenderMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalenderMonthItem>
+            <controls:CalendarMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalendarMonthItem>
 
         </ScrollViewer>
     </Grid>

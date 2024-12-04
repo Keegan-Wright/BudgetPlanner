@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:BudgetPlanner.Controls">
+
+    <Design.PreviewWith>
+        <controls:CalendarDayItemEvent />
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:CalendarDayItemEvent}" TargetType="controls:CalendarDayItemEvent">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock Text="{Binding Event.Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

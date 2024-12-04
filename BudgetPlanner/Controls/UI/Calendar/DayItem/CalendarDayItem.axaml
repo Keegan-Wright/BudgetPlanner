@@ -3,10 +3,10 @@
                     xmlns:controls="using:BudgetPlanner.Controls">
 
     <Design.PreviewWith>
-        <controls:CalenderDayItem />
+        <controls:CalendarDayItem />
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type controls:CalenderDayItem}" TargetType="controls:CalenderDayItem">
+    <ControlTheme x:Key="{x:Type controls:CalendarDayItem}" TargetType="controls:CalendarDayItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
@@ -34,7 +34,7 @@
                                 <ItemsControl Grid.Row="1" ItemsSource="{Binding Day.Events, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock>Event </TextBlock>
+                                            <controls:CalendarDayItemEvent Event="{Binding}"></controls:CalendarDayItemEvent>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -47,7 +47,7 @@
                             <ItemsControl ItemsSource="{Binding Day.Goals, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock>Goal </TextBlock>
+                                        <controls:CalendarDayItemGoal Goal="{Binding}"></controls:CalendarDayItemGoal>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -58,7 +58,7 @@
                             <ItemsControl ItemsSource="{Binding Day.Transactions, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock>Transaction </TextBlock>
+                                        <controls:CalendarDayItemTransaction Transaction="{Binding}"></controls:CalendarDayItemTransaction>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

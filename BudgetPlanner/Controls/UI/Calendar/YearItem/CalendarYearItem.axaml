@@ -3,26 +3,24 @@
                     xmlns:controls="using:BudgetPlanner.Controls">
 
     <Design.PreviewWith>
-        <controls:CalenderWeekItem />
+        <controls:Calendar />
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type controls:CalenderWeekItem}" TargetType="controls:CalenderWeekItem">
+    <ControlTheme x:Key="{x:Type controls:Calendar}" TargetType="controls:Calendar">
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
-                        <ItemsControl ItemsSource="{TemplateBinding WeekItems}">
+                    <Grid>
+                        <ItemsControl>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                        <controls:CalenderDayItem Day="{Binding }"></controls:CalenderDayItem>
+                                    <controls:CalendarMonthItem/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
                         </ItemsControl>
+                    </Grid>
                 </Border>
+
             </ControlTemplate>
         </Setter>
     </ControlTheme>

@@ -6,10 +6,10 @@ using BudgetPlanner.ViewModels;
 
 namespace BudgetPlanner.Controls;
 
-public class CalenderDayItem : TemplatedControl
+public class CalendarDayItem : TemplatedControl
 {
-    public static readonly DirectProperty<CalenderDayItem, CalendarItemViewModel> DayProperty =
-        AvaloniaProperty.RegisterDirect<CalenderDayItem, CalendarItemViewModel>(nameof(Day),
+    public static readonly DirectProperty<CalendarDayItem, CalendarItemViewModel> DayProperty =
+        AvaloniaProperty.RegisterDirect<CalendarDayItem, CalendarItemViewModel>(nameof(Day),
             p => p.Day, (p, v) => p.Day = v);
     
     private CalendarItemViewModel _day = new CalendarItemViewModel();

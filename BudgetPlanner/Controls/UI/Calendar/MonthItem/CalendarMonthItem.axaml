@@ -3,10 +3,10 @@
                     xmlns:controls="using:BudgetPlanner.Controls">
 
     <Design.PreviewWith>
-        <controls:CalenderMonthItem />
+        <controls:CalendarMonthItem />
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type controls:CalenderMonthItem}" TargetType="controls:CalenderMonthItem">
+    <ControlTheme x:Key="{x:Type controls:CalendarMonthItem}" TargetType="controls:CalendarMonthItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Theme="{StaticResource CardBorder}">
@@ -14,7 +14,7 @@
                             <ItemsControl ItemsSource="{TemplateBinding WeeksInMonth}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <controls:CalenderWeekItem WeekItems="{Binding }"></controls:CalenderWeekItem>
+                                        <controls:CalendarWeekItem WeekItems="{Binding }"></controls:CalendarWeekItem>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

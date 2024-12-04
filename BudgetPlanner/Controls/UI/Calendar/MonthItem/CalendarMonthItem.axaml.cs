@@ -9,10 +9,10 @@ using BudgetPlanner.ViewModels;
 
 namespace BudgetPlanner.Controls;
 
-public class CalenderMonthItem : TemplatedControl
+public class CalendarMonthItem : TemplatedControl
 {
-    public static readonly DirectProperty<CalenderMonthItem, IEnumerable<IEnumerable<CalendarItemViewModel>>> WeeksInMonthProperty =
-        AvaloniaProperty.RegisterDirect<CalenderMonthItem, IEnumerable<IEnumerable<CalendarItemViewModel>>>(nameof(WeeksInMonth),
+    public static readonly DirectProperty<CalendarMonthItem, IEnumerable<IEnumerable<CalendarItemViewModel>>> WeeksInMonthProperty =
+        AvaloniaProperty.RegisterDirect<CalendarMonthItem, IEnumerable<IEnumerable<CalendarItemViewModel>>>(nameof(WeeksInMonth),
             p => p.WeeksInMonth, (p, v) => p.WeeksInMonth = v);
     
     private IEnumerable<IEnumerable<CalendarItemViewModel>> _weeksInMonth = new List<IEnumerable<CalendarItemViewModel>>();

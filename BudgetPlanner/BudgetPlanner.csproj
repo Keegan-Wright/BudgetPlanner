@@ -16,6 +16,21 @@
 	  <EmbeddedResource Remove="Controls\BaseUI\**" />
 	  <EntityDeploy Remove="Controls\BaseUI\**" />
 	  <None Remove="Controls\BaseUI\**" />
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemTransaction.axaml.cs">
+	    <DependentUpon>CalenderDayItem.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemEvent.axaml.cs">
+	    <DependentUpon>CalenderDayItemEvent.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemGoal.axaml.cs">
+	    <DependentUpon>CalenderDayItemGoalaxaml.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItem\CalendarDayItem.axaml.cs">
+	    <DependentUpon>CalenderDayItem.axaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 

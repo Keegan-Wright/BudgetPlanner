@@ -31,10 +31,13 @@
 
         <MergeResourceInclude Source="/Controls/Settings/Classifications/CustomClassifications.axaml" />
         
-        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItem/CalenderDayItem.axaml" />
-        <MergeResourceInclude Source="/Controls/UI/Calendar/WeekItem/CalenderWeekItem.axaml" />
-        <MergeResourceInclude Source="/Controls/UI/Calendar/MonthItem/CalenderMonthItem.axaml" />
-        <MergeResourceInclude Source="/Controls/UI/Calendar/YearItem/CalenderYearItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItem/CalendarDayItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/WeekItem/CalendarWeekItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/MonthItem/CalendarMonthItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/YearItem/CalendarYearItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemTransaction.axaml"/>
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemEvent.axaml"/>
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemGoal.axaml"/>
         
 
     </ResourceDictionary.MergedDictionaries>

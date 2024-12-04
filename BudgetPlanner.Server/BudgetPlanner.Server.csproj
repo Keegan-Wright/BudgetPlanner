@@ -15,4 +15,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BudgetPlanner.Host.AppHost.ServiceDefaults\BudgetPlanner.Host.AppHost.ServiceDefaults.csproj" />
+    </ItemGroup>
+
 </Project>

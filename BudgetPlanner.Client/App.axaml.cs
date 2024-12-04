@@ -20,6 +20,7 @@ using System.Diagnostics;
 using BudgetPlanner.Client.Views;
 using BudgetPlanner.Client.Handlers;
 using BudgetPlanner.Client.States;
+using Microsoft.Extensions.Hosting;
 
 namespace BudgetPlanner.Client
 {
@@ -109,8 +110,22 @@ namespace BudgetPlanner.Client
 
             
             
+            
             var services = new ServiceCollection();
 
+            services.AddServiceDefaults();
+            
+            services.AddServiceDiscovery();
+
+            services.ConfigureHttpClientDefaults(http =>
+            {
+                // Turn on resilience by default
+                http.AddStandardResilienceHandler();
+
+                // Turn on service discovery by default
+                http.AddServiceDiscovery();
+            });
+            
             services.AddSingleton(config);
 
 
@@ -148,6 +163,9 @@ namespace BudgetPlanner.Client
 
             services.AddDbContext<BudgetPlannerDbContext>();
 
+            
+            services.AddDbContext<BudgetPlannerDbContext>();
+            
             return services;
         }
     }

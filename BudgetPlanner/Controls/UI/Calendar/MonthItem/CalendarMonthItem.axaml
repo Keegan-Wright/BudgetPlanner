@@ -9,7 +9,6 @@
     <ControlTheme x:Key="{x:Type controls:CalendarMonthItem}" TargetType="controls:CalendarMonthItem">
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Theme="{StaticResource CardBorder}">
                         <StackPanel>
                             <ItemsControl ItemsSource="{TemplateBinding WeeksInMonth}">
                                 <ItemsControl.ItemTemplate>
@@ -19,7 +18,6 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                </Border>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

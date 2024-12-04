@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using BudgetPlanner.Models.Response.Calendar;
 using BudgetPlanner.Services.Calendar;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.ViewModels;
 
@@ -14,22 +15,34 @@ public partial class CalendarViewModel : PageViewModel
         InitialiseAsync();
     }
 
-    [ObservableProperty] private ObservableCollection<IEnumerable<CalendarItemViewModel>> _calendarMonthItems = [];
+    [ObservableProperty]
+    private DateTimeOffset? _selectedDate;
     
+    [ObservableProperty]
+    private ObservableCollection<IEnumerable<CalendarItemViewModel>> _calendarMonthItems = [];
+
+    [RelayCommand]
+    public async Task RefreshCalendarAsync()
+    {
+        SetLoading(true, "Loading selected month");
+        await RunOnBackgroundThreadAsync(async () => await LoadSelectedCalendarMonthAsync());
+        SetLoading(false);
+    }
     
     private async void InitialiseAsync()
     {
         SetLoading(true, "Loading current month");
-
-        await RunOnBackgroundThreadAsync(async () => await LoadCurrentMonthAsync());
+        SelectedDate = DateTimeOffset.Now;
+        await RunOnBackgroundThreadAsync(async () => await LoadSelectedCalendarMonthAsync());
 
         SetLoading(false);
     }
 
-    private async Task LoadCurrentMonthAsync()
+    private async Task LoadSelectedCalendarMonthAsync()
     {
         var calenderItems = new List<CalendarItemViewModel>();
-        await foreach (var item in _calenderService.GetMonthItemsAsync(DateTime.Now.Month, DateTime.Now.Year))
+        CalendarMonthItems.Clear();
+        await foreach (var item in _calenderService.GetMonthItemsAsync(SelectedDate!.Value.Month, SelectedDate!.Value.Year))
         {
             var calenderItem = new CalendarItemViewModel
             {
@@ -72,8 +85,5 @@ public partial class CalendarViewModel : PageViewModel
         {
             CalendarMonthItems.Add(item);
         }
-
-        
-
     }
 }

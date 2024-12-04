@@ -9,8 +9,13 @@
              x:DataType="vm:CalendarViewModel">
     <Grid>
         <ScrollViewer>
-            <controls:CalendarMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalendarMonthItem>
-
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <DatePicker DayVisible="False" SelectedDate="{Binding SelectedDate}"></DatePicker>
+                    <Button Command="{Binding RefreshCalendarAsync}">Update</Button>
+                </StackPanel>
+                <controls:CalendarMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalendarMonthItem>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

@@ -23,9 +23,9 @@ namespace BudgetPlanner.Data.Db
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"Data Source={_databaseConfiguration?.ConnectionString ?? "BudgetPlanner.db"}", sqliteOptions =>
+            options.UseSqlite($"Data Source={_databaseConfiguration?.ConnectionString ?? "BudgetPlanner.Client.db"}", sqliteOptions =>
             {
-                sqliteOptions.MigrationsAssembly("BudgetPlanner.Data.SqliteMigrations");
+                sqliteOptions.MigrationsAssembly("BudgetPlanner.Client.Data.SqliteMigrations");
             });
 
         }

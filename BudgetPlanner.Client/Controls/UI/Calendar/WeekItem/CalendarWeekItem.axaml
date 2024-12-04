@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:BudgetPlanner.Client.Controls">
+
+    <Design.PreviewWith>
+        <controls:CalendarWeekItem />
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:CalendarWeekItem}" TargetType="controls:CalendarWeekItem">
+        <Setter Property="Template">
+            <ControlTemplate>
+                        <ItemsControl ItemsSource="{TemplateBinding WeekItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                        <controls:CalendarDayItem Day="{Binding }"></controls:CalendarDayItem>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

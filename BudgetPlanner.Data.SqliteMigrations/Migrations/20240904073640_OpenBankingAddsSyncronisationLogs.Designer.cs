@@ -20,7 +20,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.BudgetCategory", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.BudgetCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("BudgetCategories");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.Debt", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.Debt", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("Debts");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.HouseholdMember", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.HouseholdMember", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("HouseholdMembers");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccessToken", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingAccessToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingAccessTokens");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccount", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,7 +179,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingAccounts");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingAccountBalance", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingAccountBalance", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,7 +210,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingAccountBalances");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingDirectDebit", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingDirectDebit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingDirectDebits");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingProvider", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingProvider", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,7 +285,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingProviders");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingProviderScopes", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingProviderScopes", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,7 +309,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingProviderScopes");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingStandingOrder", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingStandingOrder", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -367,7 +367,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingStandingOrders");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingSynronisation", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingSynronisation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -394,7 +394,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("OpenBankingSyncronisations");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.OpenBankingTransaction", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.OpenBankingTransaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

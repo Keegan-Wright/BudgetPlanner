@@ -20,7 +20,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.BudgetCategory", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.BudgetCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("BudgetCategories");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.Debt", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.Debt", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace BudgetPlanner.Data.SqliteMigrations.Migrations
                     b.ToTable("Debts");
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Data.Models.HouseholdMember", b =>
+            modelBuilder.Entity("BudgetPlanner.Client.Data.Models.HouseholdMember", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

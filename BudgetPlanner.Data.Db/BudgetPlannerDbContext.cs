@@ -25,7 +25,7 @@ namespace BudgetPlanner.Data.Db
         {
             options.UseSqlite($"Data Source={_databaseConfiguration?.ConnectionString ?? "BudgetPlanner.Client.db"}", sqliteOptions =>
             {
-                sqliteOptions.MigrationsAssembly("BudgetPlanner.Client.Data.SqliteMigrations");
+                sqliteOptions.MigrationsAssembly("BudgetPlanner.Data.SqliteMigrations");
             });
 
         }

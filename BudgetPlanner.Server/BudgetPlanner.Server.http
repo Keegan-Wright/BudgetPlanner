@@ -1,0 +1,11 @@
+@BudgetPlanner.Server_HostAddress = http://localhost:5043
+
+GET {{BudgetPlanner.Server_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{BudgetPlanner.Server_HostAddress}}/todos/1
+Accept: application/json
+
+###

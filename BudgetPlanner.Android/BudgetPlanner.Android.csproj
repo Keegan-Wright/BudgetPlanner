@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0-android</TargetFramework>
+    <TargetFramework>net9.0-android</TargetFramework>
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ApplicationId>com.CompanyName.BudgetPlanner</ApplicationId>
@@ -9,6 +9,7 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
@@ -23,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Android" Version="11.2.0" />
+    <PackageReference Include="Avalonia.Android" Version="11.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Sentry.Android.AssemblyReader" Version="4.12.2" />
-    <PackageReference Include="Sentry.Bindings.Android" Version="4.12.2" />
-    <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.12" />
+    <PackageReference Include="Sentry.Android.AssemblyReader" Version="4.13.0" />
+    <PackageReference Include="Sentry.Bindings.Android" Version="4.13.0" />
+    <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.13" />
   </ItemGroup>
 
   <ItemGroup>

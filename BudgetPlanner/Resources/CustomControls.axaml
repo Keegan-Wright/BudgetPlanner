@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <MergeResourceInclude Source="/Resources/Styles/ButtonStyles.axaml" />
+        <MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayments.axaml" />
+        <MergeResourceInclude Source="/Controls/Widgets/UpcomingPaymentsWidget/UpcomingPayment.axaml" />
+        <MergeResourceInclude Source="/Controls/Spinners/IndeterminateLoadingSpinner.axaml" />
+        <MergeResourceInclude Source="/Controls/Widgets/MoneyWidget/SpentInTimePeriod.axaml" />
+
+        <MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccounts.axaml" />
+        <MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccount.axaml" />
+        <MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransactions.axaml" />
+        <MergeResourceInclude Source="/Controls/OpenBanking/Account/OpenBankingAccountTransaction.axaml" />
+
+        <MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMembers.axaml" />
+        <MergeResourceInclude Source="/Controls/HouseholdMembers/HouseholdMember.axaml" />
+
+        <MergeResourceInclude Source="/Controls/Budget/BudgetCategories.axaml" />
+        <MergeResourceInclude Source="/Controls/Budget/BudgetCategory.axaml" />
+
+        <MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactionFilters.axaml" />
+        <MergeResourceInclude Source="/Controls/OpenBanking/Transaction/OpenBankingTransactions.axaml" />
+
+        <MergeResourceInclude Source="/Controls/UI/MultiSelectControl/MultiSelect.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/MultiSelectControl/MultiSelectItem.axaml" />
+
+        <MergeResourceInclude Source="/Controls/UI/Validation/ValidationContainer.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Validation/ValidationContainerItem.axaml" />
+
+        <MergeResourceInclude Source="/Controls/Settings/Classifications/CustomClassifications.axaml" />
+        
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItem/CalendarDayItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/WeekItem/CalendarWeekItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/MonthItem/CalendarMonthItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/YearItem/CalendarYearItem.axaml" />
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemTransaction.axaml"/>
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemEvent.axaml"/>
+        <MergeResourceInclude Source="/Controls/UI/Calendar/DayItemSubDisplays/CalendarDayItemGoal.axaml"/>
+        
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

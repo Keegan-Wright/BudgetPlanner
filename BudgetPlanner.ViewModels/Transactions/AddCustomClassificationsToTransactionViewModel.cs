@@ -21,10 +21,10 @@ namespace BudgetPlanner.ViewModels
             _classificationService = classificationService;
             _navigationService = navigationService;
 
-            InitaliseAsync();
+            InitialiseAsync();
         }
 
-        private async void InitaliseAsync()
+        private async void InitialiseAsync()
         {
             SetLoading(true, "Loading Classifications");
 

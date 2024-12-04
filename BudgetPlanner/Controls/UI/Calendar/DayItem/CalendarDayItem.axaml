@@ -1,0 +1,72 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:BudgetPlanner.Controls">
+
+    <Design.PreviewWith>
+        <controls:CalendarDayItem />
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:CalendarDayItem}" TargetType="controls:CalendarDayItem">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Theme="{StaticResource CardBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                    
+                        <!-- Day -->
+                        <TextBlock Grid.Row="0" Text="{Binding Day.Date.Day, RelativeSource={RelativeSource TemplatedParent}}"></TextBlock>
+                        <!-- Events -->
+                        <Expander Grid.Row="1">
+                            <Expander.Header>
+                                Events
+                            </Expander.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0">Add Event</Button>
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding Day.Events, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <controls:CalendarDayItemEvent Event="{Binding}"></controls:CalendarDayItemEvent>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Expander>
+                    
+                        <!-- Goals -->
+                        <Expander Grid.Row="2">
+                            <Expander.Header>Goals</Expander.Header>
+                            <ItemsControl ItemsSource="{Binding Day.Goals, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:CalendarDayItemGoal Goal="{Binding}"></controls:CalendarDayItemGoal>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>                    
+                        <!-- Transactions -->
+                        <Expander Grid.Row="3">
+                            <Expander.Header>Transactions</Expander.Header>
+                            <ItemsControl ItemsSource="{Binding Day.Transactions, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:CalendarDayItemTransaction Transaction="{Binding}"></controls:CalendarDayItemTransaction>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </Grid>
+
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

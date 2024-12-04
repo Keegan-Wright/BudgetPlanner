@@ -18,10 +18,10 @@ namespace BudgetPlanner.ViewModels
         {
             _accountsService = accountsService;
 
-            InitaliseAsync();
+            InitialiseAsync();
         }
 
-        private async void InitaliseAsync()
+        private async void InitialiseAsync()
         {
             await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
         }

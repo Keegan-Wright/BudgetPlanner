@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -16,35 +16,50 @@
 	  <EmbeddedResource Remove="Controls\BaseUI\**" />
 	  <EntityDeploy Remove="Controls\BaseUI\**" />
 	  <None Remove="Controls\BaseUI\**" />
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemTransaction.axaml.cs">
+	    <DependentUpon>CalenderDayItem.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemEvent.axaml.cs">
+	    <DependentUpon>CalenderDayItemEvent.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItemSubDisplays\CalendarDayItemGoal.axaml.cs">
+	    <DependentUpon>CalenderDayItemGoalaxaml.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Controls\UI\Calendar\DayItem\CalendarDayItem.axaml.cs">
+	    <DependentUpon>CalenderDayItem.axaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="11.2.0" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.0" />
-		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.0" />
+		<PackageReference Include="Avalonia" Version="11.2.2" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.2" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
 
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Semi.Avalonia" Version="11.2.0" />
-		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.2.0" />
-		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.2.0" />
-		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10" />
-		<PackageReference Include="Sentry.DiagnosticSource" Version="4.12.2" />
-		<PackageReference Include="Sentry.EntityFramework" Version="4.12.2" />
+		<PackageReference Include="Semi.Avalonia" Version="11.2.1.1" />
+		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.2.1.1" />
+		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.2.1.1" />
+		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10.1" />
+		<PackageReference Include="Sentry.DiagnosticSource" Version="4.13.0" />
+		<PackageReference Include="Sentry.EntityFramework" Version="4.13.0" />
 
 
 		<PackageReference Include="SQLite" Version="3.13.0" />
@@ -139,5 +154,11 @@
 		<Compile Update="Views\Transactions\TransactionsView.axaml.cs">
 		  <DependentUpon>TransactionsView.axaml</DependentUpon>
 		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="Resources\Styles\Themes\Dark\MultiSelect.axaml" />
+	  <AdditionalFiles Include="Resources\Styles\Themes\Light\MultiSelect.axaml" />
+	  <AdditionalFiles Include="Resources\Styles\Themes\Shared\MultiSelect.axaml" />
 	</ItemGroup>
 </Project>

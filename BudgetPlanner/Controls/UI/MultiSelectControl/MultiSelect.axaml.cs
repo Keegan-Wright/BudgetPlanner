@@ -67,6 +67,7 @@ public class MultiSelect : SelectingItemsControl
     public static readonly StyledProperty<string?> PlaceholderTextProperty =
         AvaloniaProperty.Register<MultiSelect, string?>(nameof(PlaceholderText));
 
+
     /// <summary>
     /// Defines the <see cref="PlaceholderForeground"/> property.
     /// </summary>

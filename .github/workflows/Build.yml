@@ -39,6 +39,9 @@ jobs:
         url: https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json
 
 
+    - name: Restore workloads
+      run: dotnet workload restore
+
 
     - name: Execute unit tests
       run: dotnet test

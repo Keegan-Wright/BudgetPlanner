@@ -33,9 +33,6 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
-
     - name: Add community toolset nuget
       uses: deitry/add-nuget-source-action@v2
       with:
@@ -47,9 +44,7 @@ jobs:
       run: dotnet test
 
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      run: dotnet restore $env:Solution_Name
 
     - name: Build Solution
       run: dotnet build -c=release

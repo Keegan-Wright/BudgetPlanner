@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using BudgetPlanner.Client.Messages.Budget;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.Services.BugetCategories;
@@ -31,7 +32,7 @@ namespace BudgetPlanner.Client.ViewModels
 
 
         [ObservableProperty]
-        private ICollection<BudgetCategoryListItemViewModel> _budgetCategories = [];
+        private ObservableCollection<BudgetCategoryListItemViewModel> _budgetCategories = [];
 
 
         [RelayCommand]

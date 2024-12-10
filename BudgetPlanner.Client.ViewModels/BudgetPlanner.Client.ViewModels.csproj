@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BudgetPlanner.Client.Enums\BudgetPlanner.Client.Enums.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Shared.Enums\BudgetPlanner.Shared.Enums.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Shared.Extensions\BudgetPlanner.Shared.Extensions.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Client.Messages\BudgetPlanner.Client.Messages.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Client.Services\BudgetPlanner.Client.Services.csproj" />

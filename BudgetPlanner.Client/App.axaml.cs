@@ -5,7 +5,7 @@ using Avalonia.Markup.Xaml;
 using BudgetPlanner.Client.DI;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.ViewModels;
-using BudgetPlanner.Data.Db;
+using BudgetPlanner.Client.Data.Db;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -161,9 +161,6 @@ namespace BudgetPlanner.Client
                 ConnectionString = DbPath
             });
 
-            services.AddDbContext<BudgetPlannerDbContext>();
-
-            
             services.AddDbContext<BudgetPlannerDbContext>();
             
             return services;

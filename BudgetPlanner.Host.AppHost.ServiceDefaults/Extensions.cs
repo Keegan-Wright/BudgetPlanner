@@ -7,6 +7,7 @@ using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Sentry;
 
 namespace Microsoft.Extensions.Hosting;
 
@@ -31,7 +32,7 @@ public static class Extensions
             // Turn on service discovery by default
             http.AddServiceDiscovery();
         });
-
+        
         // Uncomment the following to restrict the allowed schemes for service discovery.
         // builder.Services.Configure<ServiceDiscoveryOptions>(options =>
         // {

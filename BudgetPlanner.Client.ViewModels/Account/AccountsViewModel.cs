@@ -1,13 +1,7 @@
 ﻿using Avalonia.Media.Imaging;
-using Avalonia.Threading;
-using BudgetPlanner.Enums;
-using BudgetPlanner.Shared.Extensions;
-using BudgetPlanner.Client.Services.Accounts;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Svg;
 using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
-using System.Drawing.Imaging;
+using BudgetPlanner.Shared.Enums;
 
 namespace BudgetPlanner.Client.ViewModels
 {

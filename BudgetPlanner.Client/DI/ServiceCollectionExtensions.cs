@@ -1,13 +1,6 @@
 ﻿using BudgetPlanner.Client.Views;
 using BudgetPlanner.Server.External.Services.OpenBanking;
 using BudgetPlanner.Client.Services;
-using BudgetPlanner.Client.Services.Accounts;
-using BudgetPlanner.Client.Services.Budget;
-using BudgetPlanner.Client.Services.Calendar;
-using BudgetPlanner.Client.Services.Classifications;
-using BudgetPlanner.Client.Services.Dashboard;
-using BudgetPlanner.Client.Services.OpenBanking;
-using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
 using FluentValidation;
@@ -63,15 +56,6 @@ namespace BudgetPlanner.Client.DI
         public static void AddServices(this IServiceCollection services)
         {
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<IBudgetCategoriesService, BudgetCategoriesService>();
-            services.AddSingleton<IHouseholdMembersService,  HouseholdMembersService>();
-            services.AddSingleton<IOpenBankingService, OpenBankingService>();
-            services.AddSingleton<IAccountsService,  AccountsService>();
-            services.AddSingleton<IDashboardService,  DashboardService>();
-            services.AddSingleton<ITransactionsService, TransactionsService>();
-            services.AddSingleton<IClassificationService, ClassificationService>();
-            services.AddSingleton<ICalendarService, CalendarService>();
-
         }
 
         public static void AddValidators(this IServiceCollection services)

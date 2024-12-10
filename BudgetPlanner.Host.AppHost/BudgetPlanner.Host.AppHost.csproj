@@ -13,11 +13,12 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0"/>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj" />
-      <ProjectReference Include="..\BudgetPlanner.Client\BudgetPlanner.Client.csproj" />
+      <!-- ProjectReference Include="..\BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj" /> -->
+      <!-- ProjectReference Include="..\BudgetPlanner.Client\BudgetPlanner.Client.csproj" /> -->
       <ProjectReference Include="..\BudgetPlanner.Server\BudgetPlanner.Server.csproj" />
     </ItemGroup>
 

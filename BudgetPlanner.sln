@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.ViewMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.ViewModels", "BudgetPlanner.Client.ViewModels\BudgetPlanner.Client.ViewModels.csproj", "{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.Models", "BudgetPlanner.Data.Models\BudgetPlanner.Data.Models.csproj", "{2BF6B739-A01E-4875-9DD9-35C90F2B0AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.Models", "BudgetPlanner.Client.Data.Models\BudgetPlanner.Client.Data.Models.csproj", "{2BF6B739-A01E-4875-9DD9-35C90F2B0AD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.Db", "BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj", "{B8A4EC40-A6A3-4DCC-93C1-A69142D57A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.Db", "BudgetPlanner.Client.Data.Db\BudgetPlanner.Client.Data.Db.csproj", "{B8A4EC40-A6A3-4DCC-93C1-A69142D57A3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.SqliteMigrations", "BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj", "{2A4C6B69-30E5-433F-A9B3-A062FA1765E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.SqliteMigrations", "BudgetPlanner.Client.Data.SqliteMigrations\BudgetPlanner.Client.Data.SqliteMigrations.csproj", "{2A4C6B69-30E5-433F-A9B3-A062FA1765E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Shared.Models.Request", "BudgetPlanner.Shared.Models.Request\BudgetPlanner.Shared.Models.Request.csproj", "{18C6775F-D7DE-49AA-842E-AC698A71012C}"
 EndProject
@@ -69,6 +69,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Host.AppHost.ServiceDefaults", "BudgetPlanner.Host.AppHost.ServiceDefaults\BudgetPlanner.Host.AppHost.ServiceDefaults.csproj", "{08A90AAE-CD11-4362-895E-1B497A10B2E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Services", "BudgetPlanner.Server.Services\BudgetPlanner.Server.Services.csproj", "{80A1C4E3-F567-433C-B20F-D91BB5160BDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Shared.Enums", "BudgetPlanner.Shared.Enums\BudgetPlanner.Shared.Enums.csproj", "{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DE338BFF-796B-47DB-9CEA-3315E86DB48D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Data.Db", "BudgetPlanner.Server.Data.Db\BudgetPlanner.Server.Data.Db.csproj", "{A0003239-A0AC-41B5-A330-EA951E1A0584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Data.Models", "BudgetPlanner.Server.Data.Models\BudgetPlanner.Server.Data.Models.csproj", "{611E2CCB-67DC-4A80-8268-B774C3AECEE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +190,22 @@ Global
 		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,6 +237,12 @@ Global
 		{B8528A12-4986-4099-82F4-CD33E9429719} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
 		{EC06B5F1-4316-4A0E-94C8-FE55083A64E5} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
 		{08A90AAE-CD11-4362-895E-1B497A10B2E4} = {1D738108-ADB9-47D3-B7FC-02040F7AC3BC}
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{67B77722-1DED-462F-AD00-B52E936FDDBE} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{DE338BFF-796B-47DB-9CEA-3315E86DB48D} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{A0003239-A0AC-41B5-A330-EA951E1A0584} = {DE338BFF-796B-47DB-9CEA-3315E86DB48D}
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9} = {DE338BFF-796B-47DB-9CEA-3315E86DB48D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27901178-8D95-4CDB-AF34-7284161AC83D}

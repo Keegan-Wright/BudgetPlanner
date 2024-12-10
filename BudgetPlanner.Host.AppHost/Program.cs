@@ -1,3 +1,5 @@
+using Aspire.Hosting;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 //ar username = builder.AddParameter("username", value: "budgetPlanner", secret: false);

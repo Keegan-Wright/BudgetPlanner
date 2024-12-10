@@ -1,3 +1,5 @@
+using Aspire.Hosting;
+using Aspire.Hosting.ApplicationModel;
 using Microsoft.Extensions.Configuration;
 
 static class BuilderExtensions

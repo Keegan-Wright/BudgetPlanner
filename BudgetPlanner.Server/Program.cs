@@ -9,7 +9,7 @@ namespace BudgetPlanner.Server;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
         builder.AddServiceDefaults();
@@ -50,13 +50,12 @@ public class Program
         var app = builder.Build();
         
         
-        EnsureDbMigrated(app);
+        EnsureDbMigratedAsync(app);
         
         MapEndPoints(app);
-        
-        
 
-        app.Run();
+
+        app.RunAsync();
         
         
     }
@@ -66,7 +65,7 @@ public class Program
         app.MapOpenBankingEndPoint();
     }
 
-    private static void EnsureDbMigrated(WebApplication app)
+    private static async Task EnsureDbMigratedAsync(WebApplication app)
     {
         using IServiceScope scope = app.Services.CreateScope();
         using BudgetPlannerDbContext? db = scope.ServiceProvider.GetService<BudgetPlannerDbContext>();
@@ -75,11 +74,11 @@ public class Program
         {
             try
             {
-                db.Database.Migrate();
+                await db.Database.MigrateAsync();
             }
             catch (Exception)
             {
-                _ = db.Database.EnsureCreated();
+                await db.Database.EnsureCreatedAsync();
             }
 
         }

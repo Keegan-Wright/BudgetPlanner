@@ -66,6 +66,7 @@ public class Program
         app.MapDashboardEndPoint();
         app.MapAccountsEndPoint();
         app.MapBudgetCategoriesEndPoint();
+        app.MapCalendarEndPoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

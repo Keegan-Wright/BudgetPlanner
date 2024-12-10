@@ -6,11 +6,15 @@ public class CalendarRequestService : BaseRequestService, ICalendarRequestServic
 {
     public CalendarRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
+        BaseRoute = "calendar";
     }
 
-    public override string BaseRoute { get; init; }
-    public IAsyncEnumerable<CalendarItemsResponse> GetMonthItemsAsync(int month, int year)
+    public sealed override string BaseRoute { get; init; }
+    public async IAsyncEnumerable<CalendarItemsResponse> GetMonthItemsAsync(int month, int year)
     {
-        throw new NotImplementedException();
+        await foreach (var calendarItem in GetAsyncEnumerable<CalendarItemsResponse>($"GetMonth/{month}/{year}"))
+        {
+            yield return calendarItem;
+        }
     }
 }

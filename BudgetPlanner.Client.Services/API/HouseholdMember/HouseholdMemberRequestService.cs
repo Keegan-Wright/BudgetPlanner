@@ -6,21 +6,25 @@ public class HouseholdMemberRequestService : BaseRequestService, IHouseholdMembe
 {
     public HouseholdMemberRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
+        BaseRoute = "householdMember";
     }
 
     public override string BaseRoute { get; init; }
-    public IAsyncEnumerable<Data.Models.HouseholdMember> GetHouseholdMembersAsync()
+    public async IAsyncEnumerable<Data.Models.HouseholdMember> GetHouseholdMembersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var householdMember in GetAsyncEnumerable<Data.Models.HouseholdMember>("GetAll"))
+        {
+            yield return householdMember;
+        }
     }
 
-    public Task<Data.Models.HouseholdMember> AddHouseholdMemberAsync(AddHouseholdMemberRequest categoryToAdd)
+    public async Task<Data.Models.HouseholdMember> AddHouseholdMemberAsync(AddHouseholdMemberRequest houseHoldMemberToAdd)
     {
-        throw new NotImplementedException();
+        return await PostAsync<AddHouseholdMemberRequest, Data.Models.HouseholdMember>("AddHouseholdMember", houseHoldMemberToAdd);
     }
 
-    public Task<bool> DeleteHouseholdMemberAsync(Guid id)
+    public async Task<bool> DeleteHouseholdMemberAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await DeleteAsync($"DeleteHouseholdMember/{id}");
     }
 }

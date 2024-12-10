@@ -1,4 +1,5 @@
 using Aspire.Hosting;
+using BudgetPlanner.Host.AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);
 

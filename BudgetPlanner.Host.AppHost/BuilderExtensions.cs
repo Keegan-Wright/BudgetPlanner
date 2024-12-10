@@ -2,6 +2,8 @@ using Aspire.Hosting;
 using Aspire.Hosting.ApplicationModel;
 using Microsoft.Extensions.Configuration;
 
+namespace BudgetPlanner.Host.AppHost;
+
 static class BuilderExtensions
 {
     public static IResourceBuilder<T> AddSentry<T>(this IResourceBuilder<T> resourceBuilder,

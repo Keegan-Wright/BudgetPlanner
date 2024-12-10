@@ -59,7 +59,7 @@ namespace BudgetPlanner.Client.ViewModels
         }
 
         [RelayCommand]
-        public void BuildAuthenticationUrl()
+        public async void BuildAuthenticationUrl()
         {
             var selectedProviders = OpenBankingProviders.Where(x => x.Checked);
 
@@ -67,7 +67,7 @@ namespace BudgetPlanner.Client.ViewModels
             requestModel.ProviderIds = selectedProviders.Select(x => x.ProviderId);
             requestModel.Scopes = selectedProviders.SelectMany(x => x.Scopes).Where(x => x.Checked).Select(x => x.Name).Distinct();
 
-            OpenBankingAuthUrl = _openBankingRequestService.BuildAuthUrl(requestModel);
+            OpenBankingAuthUrl = (await _openBankingRequestService.BuildAuthUrl(requestModel)).AuthUrl;
         }
 
 

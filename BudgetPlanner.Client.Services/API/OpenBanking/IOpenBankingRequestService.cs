@@ -1,13 +1,15 @@
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.OpenBanking;
+using BudgetPlanner.Shared.Models.Response;
+using BudgetPlanner.Shared.Models.Response.OpenBanking;
 
 namespace BudgetPlanner.Client.Services.OpenBanking;
 
 public interface IOpenBankingRequestService
 {
     IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
-    string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
-    Task<bool> AddVendorViaAccessCodeAsync(string accessCode);
+    Task<AuthUrlResponse> BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
+    Task<GenericSuccessResponse> AddVendorViaAccessCodeAsync(string accessCode);
     Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null);
 }

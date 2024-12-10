@@ -1,6 +1,8 @@
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.OpenBanking;
+using BudgetPlanner.Shared.Models.Response;
+using BudgetPlanner.Shared.Models.Response.OpenBanking;
 
 namespace BudgetPlanner.Client.Services.OpenBanking;
 
@@ -8,26 +10,30 @@ public class OpenBankingRequestService : BaseRequestService, IOpenBankingRequest
 {
     public OpenBankingRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
+        BaseRoute = "OpenBanking";
     }
 
     public override string BaseRoute { get; init; }
-    public IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync()
+    public async IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var provider in GetAsyncEnumerable<ExternalOpenBankingProvider>("GetProviders"))
+        {
+            yield return provider;
+        }
     }
 
-    public string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel)
+    public async Task<AuthUrlResponse> BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel)
     {
-        throw new NotImplementedException();
+        return await PostAsync<GetProviderSetupUrlRequestModel, AuthUrlResponse>("GetAuthUrl", setupProviderRequestModel);
     }
 
-    public Task<bool> AddVendorViaAccessCodeAsync(string accessCode)
+    public async Task<GenericSuccessResponse> AddVendorViaAccessCodeAsync(string accessCode)
     {
-        throw new NotImplementedException();
+        return await PostAsync<string, GenericSuccessResponse>("AddVendor", accessCode);
     }
 
-    public Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
+    public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
     {
-        throw new NotImplementedException();
+        await PostAsync("Sync", syncFlags);
     }
 }

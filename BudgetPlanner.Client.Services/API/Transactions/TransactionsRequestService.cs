@@ -8,38 +8,58 @@ public class TransactionsRequestService : BaseRequestService,ITransactionsReques
 {
     public TransactionsRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
+        BaseRoute = "Transactions";
     }
 
     public override string BaseRoute { get; init; }
 
-    public IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest,
+    public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest,
         SyncTypes syncTypes = SyncTypes.All)
     {
-        throw new NotImplementedException();
+        filteredTransactionsRequest.SyncType = syncTypes; // hack for now
+        await foreach(var transaction in PostAsyncEnumerableAsync<FilteredTransactionsRequest, TransactionResponse>("GetTransactions", filteredTransactionsRequest))
+        {
+            yield return transaction;
+        }
     }
 
-    public IAsyncEnumerable<TransactionAccountFilterResponse> GetAccountsForTransactionFiltersAsync(SyncTypes syncTypes = SyncTypes.Account)
+    public async IAsyncEnumerable<TransactionAccountFilterResponse> GetAccountsForTransactionFiltersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var account in GetAsyncEnumerable<TransactionAccountFilterResponse>("AccountFilters"))
+        {
+            yield return account;
+        }
     }
 
-    public IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync()
+    public async IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var provider in GetAsyncEnumerable<TransactionProviderFilterResponse>("ProviderFilters"))
+        {
+            yield return provider;
+        }
     }
 
-    public IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync()
+    public async IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var transactionType in GetAsyncEnumerable<TransactionTypeFilterResponse>("TypeFilters"))
+        {
+            yield return transactionType;
+        }
     }
 
-    public IAsyncEnumerable<TransactionCategoryFilterResponse> GetCategoriesForTransactionFiltersAsync()
+    public async IAsyncEnumerable<TransactionCategoryFilterResponse> GetCategoriesForTransactionFiltersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var category in GetAsyncEnumerable<TransactionCategoryFilterResponse>("CategoryFilters"))
+        {
+            yield return category;
+        }
     }
 
-    public IAsyncEnumerable<TransactionTagFilterResponse> GetTagsForTransactionFiltersAsync()
+    public async IAsyncEnumerable<TransactionTagFilterResponse> GetTagsForTransactionFiltersAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var filter in GetAsyncEnumerable<TransactionTagFilterResponse>("TagFilters"))
+        {
+            yield return filter;
+        }
     }
 }

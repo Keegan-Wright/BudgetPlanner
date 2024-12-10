@@ -69,6 +69,7 @@ public class Program
         app.MapCalendarEndPoint();
         app.MapClassificationEndPoint();
         app.MapHouseholdMembersEndpoint();
+        app.MapTransactionsEndPoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

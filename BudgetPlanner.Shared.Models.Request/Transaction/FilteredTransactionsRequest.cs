@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BudgetPlanner.Shared.Enums;
 
 namespace BudgetPlanner.Shared.Models.Request.Transaction
 {
@@ -16,5 +17,8 @@ namespace BudgetPlanner.Shared.Models.Request.Transaction
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public IList<string>? Tags { get; set; } = [];
+        
+        public SyncTypes SyncType { get; set; }
+        
     }
 }

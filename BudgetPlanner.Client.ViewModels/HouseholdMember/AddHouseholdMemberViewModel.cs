@@ -1,8 +1,7 @@
 ﻿using BudgetPlanner.Client.Messages.Budget;
-using BudgetPlanner.Shared.Models.Request.Budget;
 using BudgetPlanner.Shared.Models.Request.HouseholdMember;
 using BudgetPlanner.Client.Services;
-using BudgetPlanner.Client.Services.Budget;
+using BudgetPlanner.Client.Services.HouseholdMember;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -12,12 +11,12 @@ namespace BudgetPlanner.Client.ViewModels
     public partial class AddHouseholdMemberViewModel : PageViewModel
     {
         private readonly INavigationService _navigationService;
-        private readonly IHouseholdMembersService _householdMembersService;
+        private readonly IHouseholdMemberRequestService _householdMembersRequestService;
 
-        public AddHouseholdMemberViewModel(INavigationService navigationService, IHouseholdMembersService householdMembersService)
+        public AddHouseholdMemberViewModel(INavigationService navigationService, IHouseholdMemberRequestService householdMembersRequestService)
         {
             _navigationService = navigationService;
-            _householdMembersService = householdMembersService;
+            _householdMembersRequestService = householdMembersRequestService;
         }
 
         [ObservableProperty]
@@ -41,7 +40,7 @@ namespace BudgetPlanner.Client.ViewModels
                 Income = Income
             };
 
-            await _householdMembersService.AddHouseholdMemberAsync(householdMemberToAdd);
+            await _householdMembersRequestService.AddHouseholdMemberAsync(householdMemberToAdd);
 
             WeakReferenceMessenger.Default.Send(new HouseholdMembersChangedMessage(true));
 

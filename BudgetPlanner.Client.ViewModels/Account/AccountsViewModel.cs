@@ -1,16 +1,17 @@
 ﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using BudgetPlanner.Client.Services;
 using BudgetPlanner.Shared.Enums;
 
 namespace BudgetPlanner.Client.ViewModels
 {
     public partial class AccountsViewModel : PageViewModel
     {
-        private readonly IAccountsService _accountsService;
-        public AccountsViewModel(IAccountsService accountsService)
+        private readonly IAccountsRequestService _accountsRequestService;
+        public AccountsViewModel(IAccountsRequestService accountsService)
         {
-            _accountsService = accountsService;
+            _accountsRequestService = accountsService;
 
             InitialiseAsync();
         }
@@ -31,7 +32,7 @@ namespace BudgetPlanner.Client.ViewModels
 
             SetLoading(true);
 
-            await foreach (var account in _accountsService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
+            await foreach (var account in _accountsRequestService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
             {
                 using var logo = new MemoryStream(account.Logo);
 

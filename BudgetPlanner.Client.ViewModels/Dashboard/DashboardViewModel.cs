@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BudgetPlanner.Shared.Extensions;
+﻿using BudgetPlanner.Shared.Extensions;
 using BudgetPlanner.Client.Services.Dashboard;
-using BudgetPlanner.Client.Services.OpenBanking;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.Client.ViewModels
 {
     public partial class DashboardViewModel : PageViewModel
     {
-        private readonly IDashboardService _dashboardService;
+        private readonly IDashboardRequestService _dashboardRequestService;
 
-        public DashboardViewModel(IDashboardService dashboardService)
+        public DashboardViewModel(IDashboardRequestService dashboardRequestService)
         {
-            _dashboardService = dashboardService;
+            _dashboardRequestService = dashboardRequestService;
             InitialiseAsync();
         }
 
@@ -37,10 +27,10 @@ namespace BudgetPlanner.Client.ViewModels
         {
             var today = DateTime.Today;
 
-            var spentToday = await _dashboardService.GetSpentInTimePeriod(today);
-            var spentThisWeek = await _dashboardService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
-            var spentThisMonth = await _dashboardService.GetSpentInTimePeriod(today.StartOfMonth(), today);
-            var spentThisYear = await _dashboardService.GetSpentInTimePeriod(today.StartOfYear(), today);
+            var spentToday = await _dashboardRequestService.GetSpentInTimePeriod(today);
+            var spentThisWeek = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
+            var spentThisMonth = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfMonth(), today);
+            var spentThisYear = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfYear(), today);
 
             SpentToday = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentToday.TotalIn, TotalOut = spentToday.TotalOut };
             SpentThisWeek = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentThisWeek.TotalIn, TotalOut = spentThisWeek.TotalOut };
@@ -52,7 +42,7 @@ namespace BudgetPlanner.Client.ViewModels
         {
             UpcomingPayments = new UpcomingPaymentsWidgetViewModel();
 
-            await foreach (var upcomingPayment in _dashboardService.GetUpcomingPaymentsAsync(5))
+            await foreach (var upcomingPayment in _dashboardRequestService.GetUpcomingPaymentsAsync(5))
             {
                 UpcomingPayments.Payments.Add(new UpcomingPaymentViewModel()
                 {

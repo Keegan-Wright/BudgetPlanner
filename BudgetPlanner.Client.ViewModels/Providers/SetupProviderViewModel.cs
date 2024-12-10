@@ -1,19 +1,17 @@
-﻿using BudgetPlanner.Data.Models;
-using BudgetPlanner.Shared.Models.Request.OpenBanking;
+﻿using BudgetPlanner.Shared.Models.Request.OpenBanking;
 using BudgetPlanner.Client.Services.OpenBanking;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Drawing.Printing;
 
 namespace BudgetPlanner.Client.ViewModels
 {
     public partial class SetupProviderViewModel : PageViewModel
     {
-        private readonly IOpenBankingService _openBankingService;
-        public SetupProviderViewModel(IOpenBankingService openBankingService)
+        private readonly IOpenBankingRequestService _openBankingRequestService;
+        public SetupProviderViewModel(IOpenBankingRequestService openBankingRequestService)
         {
-            _openBankingService = openBankingService;
+            _openBankingRequestService = openBankingRequestService;
 
             InitialiseAsync();
         }
@@ -34,7 +32,7 @@ namespace BudgetPlanner.Client.ViewModels
         {
             SetLoading(true, "Loading Providers");
 
-            await foreach (var provider in _openBankingService.GetOpenBankingProvidersForClientAsync()) 
+            await foreach (var provider in _openBankingRequestService.GetOpenBankingProvidersForClientAsync()) 
             {
                 var scopes = new Collection<OpenBankingProviderScopeViewModel>();
 
@@ -69,7 +67,7 @@ namespace BudgetPlanner.Client.ViewModels
             requestModel.ProviderIds = selectedProviders.Select(x => x.ProviderId);
             requestModel.Scopes = selectedProviders.SelectMany(x => x.Scopes).Where(x => x.Checked).Select(x => x.Name).Distinct();
 
-            OpenBankingAuthUrl = _openBankingService.BuildAuthUrl(requestModel);
+            OpenBankingAuthUrl = _openBankingRequestService.BuildAuthUrl(requestModel);
         }
 
 
@@ -77,7 +75,7 @@ namespace BudgetPlanner.Client.ViewModels
         public async Task AddProviderCommand()
         {
             SetLoading(true, "Adding Provider");
-            await _openBankingService.AddVendorViaAccessCodeAsync(OpenBankingCode);
+            await _openBankingRequestService.AddVendorViaAccessCodeAsync(OpenBankingCode);
             ResetSelections();
             SetLoading(false);
         }

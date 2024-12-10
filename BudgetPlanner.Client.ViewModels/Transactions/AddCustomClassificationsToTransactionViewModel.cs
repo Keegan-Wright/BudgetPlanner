@@ -13,12 +13,12 @@ namespace BudgetPlanner.Client.ViewModels
 {
     public partial class AddCustomClassificationsToTransactionViewModel : ValidateablePageViewModel<AddCustomClassificationsToTransactionViewModel>
     {
-        private readonly IClassificationService _classificationService;
+        private readonly IClassificationsRequestService _classificationsRequestService;
         private readonly INavigationService _navigationService;
 
-        public AddCustomClassificationsToTransactionViewModel(IClassificationService classificationService, INavigationService navigationService, IValidator<AddCustomClassificationsToTransactionViewModel> validator) : base(validator)
+        public AddCustomClassificationsToTransactionViewModel(IClassificationsRequestService classificationsRequestService, INavigationService navigationService, IValidator<AddCustomClassificationsToTransactionViewModel> validator) : base(validator)
         {
-            _classificationService = classificationService;
+            _classificationsRequestService = classificationsRequestService;
             _navigationService = navigationService;
 
             InitialiseAsync();
@@ -38,7 +38,7 @@ namespace BudgetPlanner.Client.ViewModels
 
         private async Task LoadClassificationsAsync()
         {
-            await foreach (var classification in _classificationService.GetAllCustomClassificationsAsync())
+            await foreach (var classification in _classificationsRequestService.GetAllCustomClassificationsAsync())
             {
                 Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new CustomClassificationSelectionItemViewModel()
                 {
@@ -73,7 +73,7 @@ namespace BudgetPlanner.Client.ViewModels
 
                         var requestModel = new AddCustomClassificationsToTransactionRequest() { TransactionId = selectedTransaction.TransactionId, Classifications = selectedClassifications };
 
-                        await _classificationService.AddCustomClassificationsToTransactionAsync(requestModel);
+                        await _classificationsRequestService.AddCustomClassificationsToTransactionAsync(requestModel);
                     });
                     SetLoading(false);
                     NavigateBackToTransactions();

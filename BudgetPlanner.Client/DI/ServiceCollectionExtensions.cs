@@ -1,6 +1,13 @@
 ﻿using BudgetPlanner.Client.Views;
 using BudgetPlanner.Server.External.Services.OpenBanking;
 using BudgetPlanner.Client.Services;
+using BudgetPlanner.Client.Services.BugetCategories;
+using BudgetPlanner.Client.Services.Calendar;
+using BudgetPlanner.Client.Services.Classifications;
+using BudgetPlanner.Client.Services.Dashboard;
+using BudgetPlanner.Client.Services.HouseholdMember;
+using BudgetPlanner.Client.Services.OpenBanking;
+using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
 using FluentValidation;
@@ -53,9 +60,19 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<CalendarView>();
         }
 
-        public static void AddServices(this IServiceCollection services)
+        public static void AddClientServices(this IServiceCollection services)
         {
             services.AddSingleton<INavigationService, NavigationService>();
+            
+            services.AddSingleton<IAccountsRequestService, AccountsRequestService>();
+            services.AddSingleton<IBudgetCategoriesRequestService, BudgetCategoriesRequestService>();
+            services.AddSingleton<ICalendarRequestService, CalendarRequestService>();
+            services.AddSingleton<IClassificationsRequestService, ClassificationsRequestService>();
+            services.AddSingleton<IDashboardRequestService, DashboardRequestService>();
+            services.AddSingleton<IHouseholdMemberRequestService, HouseholdMemberRequestService>();
+            services.AddSingleton<IOpenBankingRequestService, OpenBankingRequestService>();
+            services.AddSingleton<ITransactionsRequestService, TransactionsRequestService>();
+
         }
 
         public static void AddValidators(this IServiceCollection services)

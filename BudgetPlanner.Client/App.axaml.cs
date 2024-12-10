@@ -113,6 +113,15 @@ namespace BudgetPlanner.Client
             
             var services = new ServiceCollection();
 
+            services.AddHttpClient("apiClient",client =>
+            {
+                // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+                // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+                client.BaseAddress = new("https+http://BudgetPlannerServer");
+            });
+            
+            
+            
             services.AddServiceDefaults();
             
             services.AddServiceDiscovery();
@@ -129,30 +138,25 @@ namespace BudgetPlanner.Client
             services.AddSingleton(config);
 
 
-            SentrySdk.Init(options =>
-            {
-                options.Dsn = config["Sentry:Dsn"];
-                options.Debug = true;
-                options.AutoSessionTracking = true;
-                options.TracesSampleRate = 1.0;
-                options.ProfilesSampleRate = 1.0;
-                options.Release = "0.0.1";
-                options.CaptureFailedRequests = true;
+        SentrySdk.Init(options =>
+        {
+            options.Dsn =   Environment.GetEnvironmentVariable("SENTRY_DSN");
+            options.Debug = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_DEBUG"));
+            options.AutoSessionTracking = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_AUTO_SESSION_TRACKING"));
+            options.TracesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_TRACES_SAMPLE_RATE"));
+            options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
+            options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
+            options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
 
-                options.AddDiagnosticSourceIntegration();
-                options.AddEntityFramework();
-            });
-
-            var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
-
-            config.GetSection("OpenBanking:TrueLayer").Bind(trueLayerConfig);
-            services.AddSingleton(trueLayerConfig);
+            options.AddDiagnosticSourceIntegration();
+            options.AddEntityFramework();
+        });
 
 
             services.AddWindows();
             services.AddViews();
             services.AddViewModels();
-            services.AddServices();
+            services.AddClientServices();
             services.AddExternalServices();
             services.AddValidators();
 

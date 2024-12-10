@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.Data.Db;
+﻿using BudgetPlanner.Client.Data.Db;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

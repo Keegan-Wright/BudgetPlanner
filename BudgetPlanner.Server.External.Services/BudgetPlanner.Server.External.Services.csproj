@@ -13,9 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BudgetPlanner.Server.Models.Configuration\BudgetPlanner.Server.Models.Configuration.csproj" />
     <ProjectReference Include="..\BudgetPlanner.Server.External.Services.Models\BudgetPlanner.Server.External.Services.Models.csproj" />
-    <ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
+    <ProjectReference Include="..\BudgetPlanner.Server.Models.Configuration\BudgetPlanner.Server.Models.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

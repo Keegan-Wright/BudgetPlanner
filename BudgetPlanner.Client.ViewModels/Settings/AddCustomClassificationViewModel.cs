@@ -11,12 +11,12 @@ namespace BudgetPlanner.Client.ViewModels
 {
     public partial class AddCustomClassificationViewModel : ValidateablePageViewModel<AddCustomClassificationViewModel>
     {
-        private readonly IClassificationService _classificationService;
+        private readonly IClassificationsRequestService _classificationsRequestService;
         private readonly INavigationService _navigationService;
 
-        public AddCustomClassificationViewModel(IClassificationService classificationService, INavigationService navigationService, IValidator<AddCustomClassificationViewModel> validator) : base(validator)
+        public AddCustomClassificationViewModel(IClassificationsRequestService classificationsRequestService, INavigationService navigationService, IValidator<AddCustomClassificationViewModel> validator) : base(validator)
         {
-            _classificationService = classificationService;
+            _classificationsRequestService = classificationsRequestService;
             _navigationService = navigationService;
         }
 
@@ -38,7 +38,7 @@ namespace BudgetPlanner.Client.ViewModels
                 await ValidateAndExecute(this, async () =>
                 {
                     SetLoading(true, "Adding Custom Classification");
-                    await _classificationService.AddCustomClassificationAsync(new AddClassificationsRequest() { Tag = CustomTag });
+                    await _classificationsRequestService.AddCustomClassificationAsync(new AddClassificationsRequest() { Tag = CustomTag });
                     SetLoading(false);
                     NavigateBackToCustomClassificationSettings();
 

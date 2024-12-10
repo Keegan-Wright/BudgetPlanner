@@ -1,30 +1,22 @@
-﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Threading;
-using BudgetPlanner.Enums;
+﻿using Avalonia.Threading;
 using BudgetPlanner.Client.Handlers;
 using BudgetPlanner.Shared.Models.Request.Transaction;
-using BudgetPlanner.Shared.Models.Response.Transaction;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.Services.Transactions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BudgetPlanner.Shared.Enums;
 
 namespace BudgetPlanner.Client.ViewModels
 {
     public partial class TransactionsViewModel : PageViewModel
     {
-        private readonly ITransactionsService _transactionsService;
+        private readonly ITransactionsRequestService _transactionsRequestService;
         private readonly INavigationService _navigationService;
-        public TransactionsViewModel(ITransactionsService transactionsService, INavigationService navigationService)
+        public TransactionsViewModel(ITransactionsRequestService transactionsRequestService, INavigationService navigationService)
         {
-            _transactionsService = transactionsService;
+            _transactionsRequestService = transactionsRequestService;
             _navigationService = navigationService;
             InitialiseAsync();
 
@@ -78,7 +70,7 @@ namespace BudgetPlanner.Client.ViewModels
             {
                 Dispatcher.UIThread.Invoke(Transactions.Clear);
 
-                await foreach (var transaction in _transactionsService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
+                await foreach (var transaction in _transactionsRequestService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
                 {
                     var viewModel = new TransactionItemViewModel()
                     {
@@ -110,7 +102,7 @@ namespace BudgetPlanner.Client.ViewModels
 
         private async Task LoadFilterItemsAsync()
         {
-            await foreach (var provider in _transactionsService.GetProvidersForTransactionFiltersAsync())
+            await foreach (var provider in _transactionsRequestService.GetProvidersForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionProviderFilterViewModel()
                 {
@@ -121,7 +113,7 @@ namespace BudgetPlanner.Client.ViewModels
                 ProviderFilterItems.Add(viewModel);
             }
 
-            await foreach (var account in _transactionsService.GetAccountsForTransactionFiltersAsync())
+            await foreach (var account in _transactionsRequestService.GetAccountsForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionAccountFilterViewModel()
                 {
@@ -132,7 +124,7 @@ namespace BudgetPlanner.Client.ViewModels
                 AccountFilterItems.Add(viewModel);
             }
 
-            await foreach (var type in _transactionsService.GetTypesForTransactionFiltersAsync())
+            await foreach (var type in _transactionsRequestService.GetTypesForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionTypeFilterViewModel()
                 {
@@ -142,7 +134,7 @@ namespace BudgetPlanner.Client.ViewModels
                 TypeFilterItems.Add(viewModel);
             }
 
-            await foreach (var category in _transactionsService.GetCategoriesForTransactionFiltersAsync())
+            await foreach (var category in _transactionsRequestService.GetCategoriesForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionCategoryFilterViewModel()
                 {
@@ -151,7 +143,7 @@ namespace BudgetPlanner.Client.ViewModels
                 CategoryFilterItems.Add(viewModel);
             }
 
-            await foreach(var tag in _transactionsService.GetTagsForTransactionFiltersAsync())
+            await foreach(var tag in _transactionsRequestService.GetTagsForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionTagFilterViewModel()
                 {

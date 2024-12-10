@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using BudgetPlanner.Client.Messages.Budget;
 using BudgetPlanner.Client.Services;
-using BudgetPlanner.Client.Services.Budget;
+using BudgetPlanner.Client.Services.HouseholdMember;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,11 +11,11 @@ namespace BudgetPlanner.Client.ViewModels
     public partial class HouseholdMembersViewModel : PageViewModel, IRecipient<HouseholdMembersChangedMessage>
     {
         private readonly INavigationService _navigationService;
-        private readonly IHouseholdMembersService _householdMembersService;
-        public HouseholdMembersViewModel(INavigationService navigationService, IHouseholdMembersService householdMembersService)
+        private readonly IHouseholdMemberRequestService _householdMemberRequestService;
+        public HouseholdMembersViewModel(INavigationService navigationService, IHouseholdMemberRequestService householdMemberRequestService)
         {
             _navigationService = navigationService;
-            _householdMembersService = householdMembersService;
+            _householdMemberRequestService = householdMemberRequestService;
 
             WeakReferenceMessenger.Default.Register(this);
 
@@ -46,7 +46,7 @@ namespace BudgetPlanner.Client.ViewModels
 
             HouseholdMembers.Clear(); 
 
-            await foreach (var householdMember in _householdMembersService.GetHouseholdMembersAsync())
+            await foreach (var householdMember in _householdMemberRequestService.GetHouseholdMembersAsync())
             {
                 HouseholdMembers.Add(new HouseholdMemberListItemViewModel()
                 {

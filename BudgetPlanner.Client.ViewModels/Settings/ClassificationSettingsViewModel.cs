@@ -3,23 +3,18 @@ using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.Services.Classifications;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BudgetPlanner.Client.ViewModels
 {
     public partial class ClassificationSettingsViewModel : PageViewModel
     {
-        private readonly IClassificationService _classificationService;
+        private readonly IClassificationsRequestService _classificationsRequestService;
         private readonly INavigationService _navigationService;
 
-        public ClassificationSettingsViewModel(IClassificationService classificationService, INavigationService navigationService)
+        public ClassificationSettingsViewModel(IClassificationsRequestService classificationsRequestService, INavigationService navigationService)
         {
-            _classificationService = classificationService;
+            _classificationsRequestService = classificationsRequestService;
             _navigationService = navigationService;
 
             InitialiseAsync();
@@ -39,7 +34,7 @@ namespace BudgetPlanner.Client.ViewModels
         public async Task DeleteCustomClassificationAsync(ClassificationItemViewModel item)
         {
             SetLoading(true, "Deleting Custom Classification");
-            await _classificationService.RemoveCustomClassificationAsync(item.ClassificationId);
+            await _classificationsRequestService.RemoveCustomClassificationAsync(item.ClassificationId);
             
             await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
         }
@@ -53,7 +48,7 @@ namespace BudgetPlanner.Client.ViewModels
             SetLoading(true, "Loading Custom Classifications");
 
             Dispatcher.UIThread.Invoke(() => CustomClassifications.Clear());
-            await foreach (var item in _classificationService.GetAllCustomClassificationsAsync())
+            await foreach (var item in _classificationsRequestService.GetAllCustomClassificationsAsync())
             {
                 Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new() { Classification = item.Tag, ClassificationId = item.ClassificationId }));
             }

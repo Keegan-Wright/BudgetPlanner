@@ -8,10 +8,10 @@ namespace BudgetPlanner.Client.ViewModels;
 
 public partial class CalendarViewModel : PageViewModel
 {
-    private readonly ICalendarService _calenderService;
-    public CalendarViewModel(ICalendarService calenderService)
+    private readonly ICalendarRequestService _calenderRequestService;
+    public CalendarViewModel(ICalendarRequestService calenderRequestService)
     {
-        _calenderService = calenderService;
+        _calenderRequestService = calenderRequestService;
         InitialiseAsync();
     }
 
@@ -42,7 +42,7 @@ public partial class CalendarViewModel : PageViewModel
     {
         var calenderItems = new List<CalendarItemViewModel>();
         CalendarMonthItems.Clear();
-        await foreach (var item in _calenderService.GetMonthItemsAsync(SelectedDate!.Value.Month, SelectedDate!.Value.Year))
+        await foreach (var item in _calenderRequestService.GetMonthItemsAsync(SelectedDate!.Value.Month, SelectedDate!.Value.Year))
         {
             var calenderItem = new CalendarItemViewModel
             {

@@ -71,11 +71,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\BudgetPlanner.Client.Handlers\BudgetPlanner.Client.Handlers.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Host.AppHost.ServiceDefaults\BudgetPlanner.Host.AppHost.ServiceDefaults.csproj" />
-		<ProjectReference Include="..\BudgetPlanner.Server.Models.Configuration\BudgetPlanner.Server.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.Data.SqliteMigrations\BudgetPlanner.Client.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Server.External.Services\BudgetPlanner.Server.External.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.Messages\BudgetPlanner.Client.Messages.csproj" />
-		<ProjectReference Include="..\BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.Services\BudgetPlanner.Client.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.ViewModels.Shared\BudgetPlanner.Client.ViewModels.Shared.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.ViewModels\BudgetPlanner.Client.ViewModels.csproj" />

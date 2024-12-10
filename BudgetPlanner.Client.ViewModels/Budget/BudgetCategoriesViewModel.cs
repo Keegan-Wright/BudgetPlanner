@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using BudgetPlanner.Client.Messages.Budget;
 using BudgetPlanner.Client.Services;
-using BudgetPlanner.Client.Services.Budget;
+using BudgetPlanner.Client.Services.BugetCategories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,11 +11,11 @@ namespace BudgetPlanner.Client.ViewModels
     public partial class BudgetCategoriesViewModel : PageViewModel, IRecipient<BudgetCategoriesChangedMessage>
     {
         private readonly INavigationService _navigationService;
-        private readonly IBudgetCategoriesService _budgetsService;
-        public BudgetCategoriesViewModel(INavigationService navigationService, IBudgetCategoriesService budgetsService)
+        private readonly IBudgetCategoriesRequestService _budgetCategoriesRequestService;
+        public BudgetCategoriesViewModel(INavigationService navigationService, IBudgetCategoriesRequestService budgetCategoriesRequestService)
         {
             _navigationService = navigationService;
-            _budgetsService = budgetsService;
+            _budgetCategoriesRequestService = budgetCategoriesRequestService;
 
             WeakReferenceMessenger.Default.Register(this);
 
@@ -46,7 +46,7 @@ namespace BudgetPlanner.Client.ViewModels
 
             BudgetCategories.Clear(); 
 
-            await foreach (var category in _budgetsService.GetBudgetItemsAsync())
+            await foreach (var category in _budgetCategoriesRequestService.GetBudgetItemsAsync())
             {
                 BudgetCategories.Add(new BudgetCategoryListItemViewModel()
                 {

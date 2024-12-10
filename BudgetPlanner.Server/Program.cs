@@ -55,7 +55,7 @@ public class Program
         MapEndPoints(app);
 
 
-        app.RunAsync();
+        await app.RunAsync();
         
         
     }

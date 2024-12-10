@@ -1,14 +1,9 @@
-﻿
-using BudgetPlanner.Server.Models.Configuration;
-using BudgetPlanner.Server.External.Services.Models.OpenBanking;
-using Microsoft.Extensions.Options;
+﻿using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
-using System.Text.Encodings.Web;
-using BudgetPlanner.Server.External.Services.Models.OpenBanking;
-using Sentry;
+using BudgetPlanner.Server.Models.Configuration;
 
 namespace BudgetPlanner.Server.External.Services.OpenBanking
 {

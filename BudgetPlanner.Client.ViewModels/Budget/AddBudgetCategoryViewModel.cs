@@ -1,7 +1,7 @@
 ﻿using BudgetPlanner.Client.Messages.Budget;
 using BudgetPlanner.Shared.Models.Request.Budget;
 using BudgetPlanner.Client.Services;
-using BudgetPlanner.Client.Services.Budget;
+using BudgetPlanner.Client.Services.BugetCategories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,12 +11,12 @@ namespace BudgetPlanner.Client.ViewModels
     public partial class AddBudgetCategoryViewModel : PageViewModel
     {
         private readonly INavigationService _navigationService;
-        private readonly IBudgetCategoriesService _budgetsService;
+        private readonly IBudgetCategoriesRequestService _budgetCategoriesRequestService;
 
-        public AddBudgetCategoryViewModel(INavigationService navigationService, IBudgetCategoriesService budgetsService)
+        public AddBudgetCategoryViewModel(INavigationService navigationService, IBudgetCategoriesRequestService budgetCategoriesRequestService)
         {
             _navigationService = navigationService;
-            _budgetsService = budgetsService;
+            _budgetCategoriesRequestService = budgetCategoriesRequestService;
         }
 
         [ObservableProperty]
@@ -48,7 +48,7 @@ namespace BudgetPlanner.Client.ViewModels
                 SavingsGoal = SavingsGoal
             };
 
-            await _budgetsService.AddBudgetCategoryAsync(categoryToAdd);
+            await _budgetCategoriesRequestService.AddBudgetCategoryAsync(categoryToAdd);
 
             WeakReferenceMessenger.Default.Send(new BudgetCategoriesChangedMessage(true));
 

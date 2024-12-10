@@ -1,4 +1,5 @@
 using BudgetPlanner.Shared.Enums;
+using BudgetPlanner.Shared.Models.Request.Account;
 using BudgetPlanner.Shared.Models.Response.Account;
 
 namespace BudgetPlanner.Client.Services;
@@ -12,9 +13,16 @@ public class AccountsRequestService : BaseRequestService, IAccountsRequestServic
 
     public sealed override string BaseRoute { get; init; }
 
-    public IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags,
+    public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags,
         Progress<string> progress)
     {
-        throw new NotImplementedException();
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<AccountAndTransactionsRequest, AccountAndTransactionsResponse>("AccountsAndLatestTransactions",new()
+                       {
+                           SyncTypes = syncFlags,
+                           TransactionsCount = transactionsToReturn,
+                       } ))
+        {
+            yield return accountAndTransaction;
+        }
     }
 }

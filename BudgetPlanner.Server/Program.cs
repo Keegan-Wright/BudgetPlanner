@@ -64,6 +64,7 @@ public class Program
     {
         app.MapOpenBankingEndPoint();
         app.MapDashboardEndPoint();
+        app.MapAccountsEndPoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

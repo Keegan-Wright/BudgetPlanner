@@ -25,7 +25,7 @@ public static class ClassificationEndPointExtensions
         
         classificationsGroup.MapGet("/Get/id", async (Guid id, IClassificationService classificationService) =>
         {
-            await classificationService.GetClassificationAsync(id);
+            return await classificationService.GetClassificationAsync(id);
         });
 
         classificationsGroup.MapPost("/AddClassificationsToTransaction",

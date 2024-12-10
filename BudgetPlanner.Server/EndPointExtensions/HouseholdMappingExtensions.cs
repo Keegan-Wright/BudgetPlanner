@@ -1,6 +1,7 @@
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Server.Services.Budget;
 using BudgetPlanner.Shared.Models.Request.HouseholdMember;
+using BudgetPlanner.Shared.Models.Response;
 
 namespace BudgetPlanner.Server.EndPoints;
 
@@ -28,7 +29,8 @@ public static class HouseholdMappingExtensions
         householdMembersGroup.MapDelete("/DeleteHouseholdMember/{id}",
             async (Guid id, IHouseholdMembersService budgetCategoriesService) =>
             {
-                await budgetCategoriesService.DeleteHouseholdMemberAsync(id);
+                return new GenericSuccessResponse()
+                    { Success = await budgetCategoriesService.DeleteHouseholdMemberAsync(id) };
             });
     }
 }

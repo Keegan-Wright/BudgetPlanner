@@ -31,7 +31,8 @@ public static class BudgetCategoriesEndpointExtensions
         dashboardGroup.MapDelete("/DeleteCategory/{id}",
             async (Guid id, IBudgetCategoriesService budgetCategoriesService) =>
             {
-                await budgetCategoriesService.DeleteBudgetCategoryAsync(id);
+                return new GenericSuccessResponse()
+                    { Success = await budgetCategoriesService.DeleteBudgetCategoryAsync(id) };
             });
     }
 }

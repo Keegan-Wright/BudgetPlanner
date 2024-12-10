@@ -1,4 +1,5 @@
 using BudgetPlanner.Shared.Models.Request.Classifications;
+using BudgetPlanner.Shared.Models.Response;
 using BudgetPlanner.Shared.Models.Response.Classifications;
 
 namespace BudgetPlanner.Client.Services.Classifications;
@@ -10,7 +11,7 @@ public class ClassificationsRequestService : BaseRequestService, IClassification
         BaseRoute = "classifications";
     }
 
-    public override string BaseRoute { get; init; }
+    public sealed override string BaseRoute { get; init; }
     public async IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync()
     {
         await foreach (var classification in GetAsyncEnumerable<ClassificationsResponse>("GetAll"))
@@ -36,6 +37,6 @@ public class ClassificationsRequestService : BaseRequestService, IClassification
 
     public async Task RemoveCustomClassificationAsync(Guid id)
     {
-        await DeleteAsync($"DeleteClassification/{id}");
+        await DeleteAsync<GenericSuccessResponse>($"DeleteClassification/{id}");
     }
 }

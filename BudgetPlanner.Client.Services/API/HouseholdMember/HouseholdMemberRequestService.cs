@@ -1,4 +1,5 @@
 using BudgetPlanner.Shared.Models.Request.HouseholdMember;
+using BudgetPlanner.Shared.Models.Response;
 
 namespace BudgetPlanner.Client.Services.HouseholdMember;
 
@@ -9,7 +10,7 @@ public class HouseholdMemberRequestService : BaseRequestService, IHouseholdMembe
         BaseRoute = "householdMember";
     }
 
-    public override string BaseRoute { get; init; }
+    public sealed override string BaseRoute { get; init; }
     public async IAsyncEnumerable<Data.Models.HouseholdMember> GetHouseholdMembersAsync()
     {
         await foreach (var householdMember in GetAsyncEnumerable<Data.Models.HouseholdMember>("GetAll"))
@@ -23,8 +24,8 @@ public class HouseholdMemberRequestService : BaseRequestService, IHouseholdMembe
         return await PostAsync<AddHouseholdMemberRequest, Data.Models.HouseholdMember>("AddHouseholdMember", houseHoldMemberToAdd);
     }
 
-    public async Task<bool> DeleteHouseholdMemberAsync(Guid id)
+    public async Task<GenericSuccessResponse> DeleteHouseholdMemberAsync(Guid id)
     {
-        return await DeleteAsync($"DeleteHouseholdMember/{id}");
+        return await DeleteAsync<GenericSuccessResponse>($"DeleteHouseholdMember/{id}");
     }
 }

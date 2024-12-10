@@ -13,7 +13,7 @@ public class OpenBankingRequestService : BaseRequestService, IOpenBankingRequest
         BaseRoute = "OpenBanking";
     }
 
-    public override string BaseRoute { get; init; }
+    public sealed override string BaseRoute { get; init; }
     public async IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync()
     {
         await foreach (var provider in GetAsyncEnumerable<ExternalOpenBankingProvider>("GetProviders"))

@@ -1,5 +1,6 @@
 using BudgetPlanner.Client.Data.Models;
 using BudgetPlanner.Shared.Models.Request.Budget;
+using BudgetPlanner.Shared.Models.Response;
 
 namespace BudgetPlanner.Client.Services.BugetCategories;
 
@@ -10,7 +11,7 @@ public class BudgetCategoriesRequestService : BaseRequestService, IBudgetCategor
         BaseRoute = "budgetcategories";
     }
 
-    public override string BaseRoute { get; init; }
+    public sealed override string BaseRoute { get; init; }
     public async IAsyncEnumerable<BudgetCategory> GetBudgetItemsAsync()
     {
         await foreach (var budgetCategory in GetAsyncEnumerable<BudgetCategory>("GetAll"))
@@ -24,8 +25,8 @@ public class BudgetCategoriesRequestService : BaseRequestService, IBudgetCategor
         return await PostAsync<AddBudgetCategoryRequest, BudgetCategory>("AddCategory", categoryToAdd);
     }
 
-    public async Task<bool> DeleteBudgetCategoryAsync(Guid id)
+    public async Task<GenericSuccessResponse> DeleteBudgetCategoryAsync(Guid id)
     {
-        return await DeleteAsync($"DeleteCategory/{id}");
+        return await DeleteAsync<GenericSuccessResponse>($"DeleteCategory/{id}");
     }
 }

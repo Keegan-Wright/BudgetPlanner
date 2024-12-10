@@ -11,7 +11,7 @@ public class TransactionsRequestService : BaseRequestService,ITransactionsReques
         BaseRoute = "Transactions";
     }
 
-    public override string BaseRoute { get; init; }
+    public sealed override string BaseRoute { get; init; }
 
     public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest,
         SyncTypes syncTypes = SyncTypes.All)

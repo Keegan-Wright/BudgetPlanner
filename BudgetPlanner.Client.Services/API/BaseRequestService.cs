@@ -61,4 +61,12 @@ public abstract class BaseRequestService : InstrumentedService, IBaseRequestServ
             yield return responseItem;
         }
     }
+
+    public async Task<bool> DeleteAsync(string url, CancellationToken cancellationToken = default)
+    {
+        using var client = _httpClientFactory.CreateClient("apiClient");
+        var response = await client.DeleteAsync($"{BaseRoute}/{url}", cancellationToken);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<bool>(cancellationToken: cancellationToken);
+    }
 }

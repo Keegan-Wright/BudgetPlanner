@@ -11,18 +11,21 @@ public class BudgetCategoriesRequestService : BaseRequestService, IBudgetCategor
     }
 
     public override string BaseRoute { get; init; }
-    public IAsyncEnumerable<BudgetCategory> GetBudgetItemsAsync()
+    public async IAsyncEnumerable<BudgetCategory> GetBudgetItemsAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var budgetCategory in GetAsyncEnumerable<BudgetCategory>("GetAll"))
+        {
+            yield return budgetCategory;
+        }
     }
 
-    public Task<BudgetCategory> AddBudgetCategoryAsync(AddBudgetCategoryRequest categoryToAdd)
+    public async Task<BudgetCategory> AddBudgetCategoryAsync(AddBudgetCategoryRequest categoryToAdd)
     {
-        throw new NotImplementedException();
+        return await PostAsync<AddBudgetCategoryRequest, BudgetCategory>("AddCategory", categoryToAdd);
     }
 
-    public Task<bool> DeleteBudgetCategoryAsync(Guid id)
+    public async Task<bool> DeleteBudgetCategoryAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await DeleteAsync($"DeleteCategory/{id}");
     }
 }

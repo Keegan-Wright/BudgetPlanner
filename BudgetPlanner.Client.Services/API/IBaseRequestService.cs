@@ -7,6 +7,8 @@ public interface IBaseRequestService
     
     IAsyncEnumerable<TResponse> GetAsyncEnumerable<TResponse>(string url, CancellationToken cancellationToken = default);
     IAsyncEnumerable<TResponse> PostAsyncEnumerableAsync<TRequest,TResponse>(string url, TRequest? requestBody, CancellationToken cancellationToken = default);
-    
-    
+
+    Task<bool> DeleteAsync(string url, CancellationToken cancellationToken = default);
+
+
 }

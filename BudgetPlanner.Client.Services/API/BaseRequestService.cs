@@ -35,6 +35,13 @@ public abstract class BaseRequestService : InstrumentedService, IBaseRequestServ
         return responseContent;
     }
 
+    public async Task PostAsync<TRequest>(string url, TRequest? requestBody, CancellationToken cancellationToken = default)
+    {
+        using var client = _httpClientFactory.CreateClient("apiClient");
+        var response = await client.PostAsJsonAsync<TRequest>($"{BaseRoute}/{url}",requestBody, cancellationToken);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async IAsyncEnumerable<TResponse> GetAsyncEnumerable<TResponse>(string url, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         using var client = _httpClientFactory.CreateClient("apiClient");

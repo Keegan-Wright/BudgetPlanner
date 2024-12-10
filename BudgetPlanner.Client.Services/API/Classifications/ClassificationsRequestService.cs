@@ -7,31 +7,35 @@ public class ClassificationsRequestService : BaseRequestService, IClassification
 {
     public ClassificationsRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
+        BaseRoute = "classifications";
     }
 
     public override string BaseRoute { get; init; }
-    public IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync()
+    public async IAsyncEnumerable<ClassificationsResponse> GetAllCustomClassificationsAsync()
     {
-        throw new NotImplementedException();
+        await foreach (var classification in GetAsyncEnumerable<ClassificationsResponse>("GetAll"))
+        {
+            yield return classification;
+        }
     }
 
-    public Task<GetClassificationResponse> GetClassificationAsync(Guid id)
+    public async Task<GetClassificationResponse> GetClassificationAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await GetAsync<GetClassificationResponse>($"Get/{id}");
     }
 
-    public Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification)
+    public async Task<ClassificationsResponse> AddCustomClassificationAsync(AddClassificationsRequest classification)
     {
-        throw new NotImplementedException();
+        return await PostAsync<AddClassificationsRequest, ClassificationsResponse>("AddClassification", classification);
     }
 
-    public Task AddCustomClassificationsToTransactionAsync(AddCustomClassificationsToTransactionRequest requestModel)
+    public async Task AddCustomClassificationsToTransactionAsync(AddCustomClassificationsToTransactionRequest requestModel)
     {
-        throw new NotImplementedException();
+        await PostAsync<AddCustomClassificationsToTransactionRequest>("AddClassificationsToTransaction", requestModel);
     }
 
-    public Task RemoveCustomClassificationAsync(Guid id)
+    public async Task RemoveCustomClassificationAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await DeleteAsync($"DeleteClassification/{id}");
     }
 }

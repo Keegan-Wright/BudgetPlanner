@@ -103,7 +103,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                         AccessCode = accessCode,
                         Name = externalProvider.Provider.DisplayName,
                         OpenBankingProviderId = externalProvider.Provider.ProviderId,
-                        Created = DateTime.Now,
+                        Created = DateTime.Now.ToUniversalTime(),
                         Logo = ByteArrayHelpers.ConvertSvgStreamToPngStream(ms.ToArray()).ToArray()
 
                     };
@@ -117,7 +117,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                         ProviderId = provider.Id,
                         ExpiresIn = providerAccessToken.ExpiresIn,
                         RefreshToken = providerAccessToken.RefreshToken,
-                        Created = DateTime.Now
+                        Created = DateTime.Now.ToUniversalTime()
                     };
 
                     await foreach (var scope in externalProvider.Scopes)
@@ -125,7 +125,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                         var providerScope = new OpenBankingProviderScopes()
                         {
                             Scope = scope,
-                            Created = DateTime.Now,
+                            Created = DateTime.Now.ToUniversalTime(),
                             ProviderId = provider.Id
                         };
 
@@ -155,7 +155,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
             var providerSyncs = await _budgetPlannerDbContext.OpenBankingSyncronisations
                                     .AsNoTracking()
-                                   .Where(x => x.SyncronisationTime > DateTime.Now.AddMinutes(-_syncMins)
+                                   .Where(x => x.SyncronisationTime > DateTime.Now.AddMinutes(-_syncMins).ToUniversalTime()
                                     && x.ProviderId == provider.Id)
                                    .OrderByDescending(x => x.SyncronisationTime).ToListAsync();
 
@@ -443,8 +443,8 @@ namespace BudgetPlanner.Server.Services.OpenBanking
         {
             return new OpenBankingSynronisation()
             {
-                Created = DateTime.Now,
-                SyncronisationTime = DateTime.Now,
+                Created = DateTime.Now.ToUniversalTime(),
+                SyncronisationTime = DateTime.Now.ToUniversalTime(),
                 SyncronisationType = (int)syncType,
                 ProviderId = provider.Id,
                 Provider = provider,
@@ -467,7 +467,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     .OrderByDescending(x => x.Created)
                     .FirstOrDefaultAsync();
 
-                if (accessToken.Created.AddSeconds(accessToken.ExpiresIn) > DateTime.Now)
+                if (accessToken.Created.AddSeconds(accessToken.ExpiresIn) > DateTime.Now.ToUniversalTime())
                 {
                     return accessToken.AccessToken;
                 }
@@ -481,7 +481,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                         ExpiresIn = refreshTokenResponse.ExpiresIn,
                         ProviderId = provider.Id,
                         RefreshToken = refreshTokenResponse.RefreshToken,
-                        Created = DateTime.Now
+                        Created = DateTime.Now.ToUniversalTime()
                     };
 
                     await _budgetPlannerDbContext.AddAsync(newAccessToken);
@@ -507,7 +507,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     ExpiresIn = response.ExpiresIn,
                     ProviderId = provider.Id,
                     RefreshToken = response.RefreshToken,
-                    Created = DateTime.Now
+                    Created = DateTime.Now.ToUniversalTime()
                 };
 
                 await _budgetPlannerDbContext.AddAsync(accessToken);
@@ -522,7 +522,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
             {
                 trackedBalance.Current = balance.Current;
                 trackedBalance.Available = balance.Available;
-                trackedBalance.Updated = DateTime.Now;
+                trackedBalance.Updated = DateTime.Now.ToUniversalTime();
             }
             else
             {
@@ -531,7 +531,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     Available = balance.Available,
                     Currency = balance.Currency,
                     Current = balance.Current,
-                    Created = DateTime.Now,
+                    Created = DateTime.Now.ToUniversalTime(),
                     AccountId = account.Id,
                     Account = account,
                     Id = Guid.NewGuid()
@@ -555,7 +555,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                 trackedTransaction.Amount = trackedTransaction.Amount;
                 trackedTransaction.Created = trackedTransaction.Created;
                 trackedTransaction.Description = trackedTransaction.Description;
-                trackedTransaction.Updated = DateTime.Now;
+                trackedTransaction.Updated = DateTime.Now.ToUniversalTime();
                 trackedTransaction.Pending = isPendingTransaction;
                 trackedTransaction.TransactionTime = transaction.Timestamp;
             }
@@ -568,7 +568,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     Currency = transaction.Currency,
                     Amount = transaction.Amount,
                     Description = transaction.Description,
-                    Created = DateTime.Now,
+                    Created = DateTime.Now.ToUniversalTime(),
                     TransactionCategory = transaction.TransactionCategory,
                     TransactionTime = transaction.Timestamp,
                     Pending = isPendingTransaction,
@@ -597,7 +597,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
             if (trackedAccount is not null)
             {
-                trackedAccount.Updated = DateTime.Now;
+                trackedAccount.Updated = DateTime.Now.ToUniversalTime();
             }
             else
             {
@@ -608,7 +608,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     AccountType = account.AccountType,
                     Currency = account.Currency,
                     DisplayName = account.DisplayName,
-                    Created = DateTime.Now,
+                    Created = DateTime.Now.ToUniversalTime(),
                     ProviderId = providerId
                 };
                 return newAccount;
@@ -632,7 +632,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                 trackedStandingOrder.FinalPaymentDate = standingOrder.FinalPaymentDate;
                 trackedStandingOrder.NextPaymentAmount = standingOrder.NextPaymentAmount;
                 trackedStandingOrder.Status = standingOrder.Status;
-                trackedStandingOrder.Updated = DateTime.Now;
+                trackedStandingOrder.Updated = DateTime.Now.ToUniversalTime();
                 trackedStandingOrder.Timestamp = standingOrder.Timestamp;
                 trackedStandingOrder.FirstPaymentAmount = standingOrder.FirstPaymentAmount;
             }
@@ -652,7 +652,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     Reference = standingOrder.Reference,
                     Status = standingOrder.Status,
                     Timestamp = standingOrder.Timestamp,
-                    Created = DateTime.Now,
+                    Created = DateTime.Now.ToUniversalTime(),
                     AccountId = account.Id,
                     Account = account,
                     Id = Guid.NewGuid()
@@ -674,7 +674,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                 trackedDirectDebit.PreviousPaymentTimeStamp = directDebit.PreviousPaymentTimestamp;
                 trackedDirectDebit.PreviousPaymentAmount = directDebit.PreviousPaymentAmount;
                 trackedDirectDebit.Currency = directDebit.Currency;
-                trackedDirectDebit.Updated = DateTime.Now;
+                trackedDirectDebit.Updated = DateTime.Now.ToUniversalTime();
             }
             else
             {
@@ -687,7 +687,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                     PreviousPaymentTimeStamp = directDebit.PreviousPaymentTimestamp,
                     Status = directDebit.Status,
                     TimeStamp = directDebit.Timestamp,
-                    Created = DateTime.Now,
+                    Created = DateTime.Now.ToUniversalTime(),
                     AccountId = account.Id,
                     Account = account,
                     Id = Guid.NewGuid()

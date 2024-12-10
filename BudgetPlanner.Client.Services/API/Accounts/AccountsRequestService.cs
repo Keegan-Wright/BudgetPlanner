@@ -7,7 +7,7 @@ public class AccountsRequestService : BaseRequestService, IAccountsRequestServic
 {
     public AccountsRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
     {
-        BaseRoute = "accounts/";
+        BaseRoute = "accounts";
     }
 
     public sealed override string BaseRoute { get; init; }

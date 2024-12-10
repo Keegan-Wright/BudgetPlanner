@@ -21,7 +21,7 @@ namespace BudgetPlanner.Server.Services.Budget
                 FirstName = categoryToAdd.FirstName,
                 LastName = categoryToAdd.LastName,
                 Income = categoryToAdd.Income,
-                Created = DateTime.Now
+                Created = DateTime.Now.ToUniversalTime()
             };
 
             await _budgetPlannerDbContext.HouseholdMembers.AddAsync(householdMember);

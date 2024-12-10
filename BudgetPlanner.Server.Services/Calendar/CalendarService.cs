@@ -16,8 +16,8 @@ public class CalendarService : ICalendarService
     public async IAsyncEnumerable<CalendarItemsResponse> GetMonthItemsAsync(int month, int year)
     {
         var daysInMonth = DateTime.DaysInMonth(year, month);
-        var startDate = new DateTime(year, month, 1);
-        var endDate = new DateTime(year, month, daysInMonth);
+        var startDate = new DateTime(year, month, 1).ToUniversalTime();
+        var endDate = new DateTime(year, month, daysInMonth).ToUniversalTime();
         
         var transactions = await _budgetPlannerDbContext.OpenBankingTransactions
             .Where(x => x.TransactionTime >= startDate && x.TransactionTime < endDate)

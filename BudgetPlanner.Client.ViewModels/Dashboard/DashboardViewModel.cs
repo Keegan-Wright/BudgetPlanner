@@ -27,10 +27,10 @@ namespace BudgetPlanner.Client.ViewModels
         {
             var today = DateTime.Today;
 
-            var spentToday = await _dashboardRequestService.GetSpentInTimePeriod(today);
-            var spentThisWeek = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfWeek(DayOfWeek.Monday), today);
-            var spentThisMonth = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfMonth(), today);
-            var spentThisYear = await _dashboardRequestService.GetSpentInTimePeriod(today.StartOfYear(), today);
+            var spentToday = await _dashboardRequestService.GetSpentInTimePeriodAsync(today);
+            var spentThisWeek = await _dashboardRequestService.GetSpentInTimePeriodAsync(today.StartOfWeek(DayOfWeek.Monday), today);
+            var spentThisMonth = await _dashboardRequestService.GetSpentInTimePeriodAsync(today.StartOfMonth(), today);
+            var spentThisYear = await _dashboardRequestService.GetSpentInTimePeriodAsync(today.StartOfYear(), today);
 
             SpentToday = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentToday.TotalIn, TotalOut = spentToday.TotalOut };
             SpentThisWeek = new SpentInTimePeriodWidgetViewModel() { TotalIn = spentThisWeek.TotalIn, TotalOut = spentThisWeek.TotalOut };

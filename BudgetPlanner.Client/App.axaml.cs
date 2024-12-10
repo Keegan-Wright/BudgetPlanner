@@ -117,23 +117,12 @@ namespace BudgetPlanner.Client
             {
                 // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
                 // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-                client.BaseAddress = new("https+http://BudgetPlannerServer");
+                client.BaseAddress = new(Environment.GetEnvironmentVariable("services__BudgetPlannerServer__http__0"));
             });
             
             
             
             services.AddServiceDefaults();
-            
-            services.AddServiceDiscovery();
-
-            services.ConfigureHttpClientDefaults(http =>
-            {
-                // Turn on resilience by default
-                http.AddStandardResilienceHandler();
-
-                // Turn on service discovery by default
-                http.AddServiceDiscovery();
-            });
             
             services.AddSingleton(config);
 

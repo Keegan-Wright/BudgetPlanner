@@ -5,7 +5,7 @@ namespace BudgetPlanner.Client.Services.Dashboard;
 public interface IDashboardRequestService
 {
 
-        Task<SpentInTimePeriodResponse> GetSpentInTimePeriod(DateTime from, DateTime to);
-        Task<SpentInTimePeriodResponse> GetSpentInTimePeriod(DateTime date);
+        Task<SpentInTimePeriodResponse> GetSpentInTimePeriodAsync(DateTime from, DateTime to);
+        Task<SpentInTimePeriodResponse> GetSpentInTimePeriodAsync(DateTime date);
         IAsyncEnumerable<UpcomingPaymentsResponse> GetUpcomingPaymentsAsync(int numberToFetch);
 }

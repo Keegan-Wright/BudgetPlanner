@@ -21,7 +21,7 @@ namespace BudgetPlanner.Server.Services.Budget
             {
                 Name = categoryToAdd.Name,
                 AvailableFunds = categoryToAdd.AvailableFunds,
-                Created = DateTime.Now,
+                Created = DateTime.Now.ToUniversalTime(),
                 GoalCompletionDate = categoryToAdd.GoalCompletionDate,
                 MonthlyStart = categoryToAdd.MonthlyStart,
                 SavingsGoal = categoryToAdd.SavingsGoal,

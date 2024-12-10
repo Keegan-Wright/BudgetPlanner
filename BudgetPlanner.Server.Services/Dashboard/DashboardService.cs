@@ -21,21 +21,14 @@ namespace BudgetPlanner.Server.Services.Dashboard
         {
             return await GetTotalSpendInTimePeriod(from, to);
         }
-
-        public async Task<SpentInTimePeriodResponse> GetSpentInTimePeriod(DateTime date)
-        {
-            return await GetTotalSpendInTimePeriod(date, date);
-        }
-
-
-
+        
         public async IAsyncEnumerable<UpcomingPaymentsResponse> GetUpcomingPaymentsAsync(int numberToFetch)
         {
             var upcomingPayments = new List<UpcomingPaymentsResponse>();
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingStandingOrders
                 .AsNoTracking()
-                .Where(x => x.NextPaymentDate > DateTime.Now)
+                .Where(x => x.NextPaymentDate > DateTime.Now.ToUniversalTime())
                 .Select(x => new UpcomingPaymentsResponse()
                 {
                     Amount = x.NextPaymentAmount,
@@ -48,7 +41,7 @@ namespace BudgetPlanner.Server.Services.Dashboard
             upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingDirectDebits
                 .AsNoTracking()
                 .Where(x => x.PreviousPaymentAmount != 0)
-                .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now)
+                .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now.ToUniversalTime())
                 .Select(x => new UpcomingPaymentsResponse()
                 {
                     Amount = x.PreviousPaymentAmount,
@@ -59,7 +52,7 @@ namespace BudgetPlanner.Server.Services.Dashboard
 
 
             await foreach (var upcomingPayment in upcomingPayments
-                .Where(x => x.PaymentDate > DateTime.Now)
+                .Where(x => x.PaymentDate > DateTime.Now.ToUniversalTime())
                 .OrderBy(x => x.PaymentDate)
                 .Take(numberToFetch)
                 .ToAsyncEnumerable())
@@ -70,7 +63,7 @@ namespace BudgetPlanner.Server.Services.Dashboard
 
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
-            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1) && x.TransactionTime <= to.AddDays(1)) && x.TransactionCategory != "TRANSFER");
+            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1).ToUniversalTime() && x.TransactionTime <= to.AddDays(1).ToUniversalTime()) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 
             return new SpentInTimePeriodResponse()

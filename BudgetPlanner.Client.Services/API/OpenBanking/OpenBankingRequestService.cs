@@ -27,9 +27,9 @@ public class OpenBankingRequestService : BaseRequestService, IOpenBankingRequest
         return await PostAsync<GetProviderSetupUrlRequestModel, AuthUrlResponse>("GetAuthUrl", setupProviderRequestModel);
     }
 
-    public async Task<GenericSuccessResponse> AddVendorViaAccessCodeAsync(string accessCode)
+    public async Task<GenericSuccessResponse> AddVendorViaAccessCodeAsync(AddVendorRequestModel requestModel)
     {
-        return await PostAsync<string, GenericSuccessResponse>("AddVendor", accessCode);
+        return await PostAsync<AddVendorRequestModel, GenericSuccessResponse>("AddVendor", requestModel);
     }
 
     public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)

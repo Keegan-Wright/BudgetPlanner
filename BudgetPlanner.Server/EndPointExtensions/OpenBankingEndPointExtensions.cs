@@ -25,11 +25,11 @@ public static class OpenBankingEndPointExtensions
             return OpenBankingProvidersStream();
         });
 
-        openBankingGroup.MapPost("/AddVendor", async (string accessCode, IOpenBankingService openBankingService) =>
+        openBankingGroup.MapPost("/AddVendor", async (AddVendorRequestModel request, IOpenBankingService openBankingService) =>
         {
             return new GenericSuccessResponse()
             {
-                Success = await openBankingService.AddVendorViaAccessCodeAsync(accessCode)
+                Success = await openBankingService.AddVendorViaAccessCodeAsync(request.AccessCode)
             };
         });
 

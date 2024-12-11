@@ -19,12 +19,17 @@ namespace BudgetPlanner.Server.Services.Classifications
         {
             var newClassification = new CustomClassification() { Tag = classification.Tag };
 
-            using var transaction = _budgetPlannerDbContext.Database.BeginTransaction();
+            var strategy = _budgetPlannerDbContext.Database.CreateExecutionStrategy();
 
-            await _budgetPlannerDbContext.CustomClassifications.AddAsync(newClassification);
-            await _budgetPlannerDbContext.SaveChangesAsync();
+            await strategy.ExecuteAsync(async () =>
+            {
+                using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
+                await _budgetPlannerDbContext.CustomClassifications.AddAsync(newClassification);
+                await _budgetPlannerDbContext.SaveChangesAsync();
 
-            await transaction.CommitAsync();
+                await transaction.CommitAsync();
+            });
+            
 
             return new ClassificationsResponse()
             {
@@ -94,15 +99,23 @@ namespace BudgetPlanner.Server.Services.Classifications
 
         public async Task RemoveCustomClassificationAsync(Guid id)
         {
-            using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
+            var strategy = _budgetPlannerDbContext.Database.CreateExecutionStrategy();
 
-            var classificationToRemove = await _budgetPlannerDbContext.CustomClassifications.FirstAsync(x => x.Id == id);
-            var transactionClassifications = await _budgetPlannerDbContext.OpenBankingTransactionClassifications.Where(x => x.IsCustomClassification == true && x.Classification == classificationToRemove.Tag).ToListAsync();
-            
-            await _budgetPlannerDbContext.BulkDeleteAsync(transactionClassifications);
-            await _budgetPlannerDbContext.BulkDeleteAsync([classificationToRemove]);
+            await strategy.ExecuteAsync(async () =>
+            {
+                using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
 
-            await transaction.CommitAsync();
+                var classificationToRemove =
+                    await _budgetPlannerDbContext.CustomClassifications.FirstAsync(x => x.Id == id);
+                var transactionClassifications = await _budgetPlannerDbContext.OpenBankingTransactionClassifications
+                    .Where(x => x.IsCustomClassification == true && x.Classification == classificationToRemove.Tag)
+                    .ToListAsync();
+
+                await _budgetPlannerDbContext.BulkDeleteAsync(transactionClassifications);
+                await _budgetPlannerDbContext.BulkDeleteAsync([classificationToRemove]);
+
+                await transaction.CommitAsync();
+            });
 
         }
     }

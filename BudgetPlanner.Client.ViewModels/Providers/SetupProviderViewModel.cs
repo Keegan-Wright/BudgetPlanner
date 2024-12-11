@@ -75,7 +75,11 @@ namespace BudgetPlanner.Client.ViewModels
         public async Task AddProviderCommand()
         {
             SetLoading(true, "Adding Provider");
-            await _openBankingRequestService.AddVendorViaAccessCodeAsync(OpenBankingCode);
+            var requestModel = new AddVendorRequestModel()
+            {
+                AccessCode = OpenBankingCode
+            };
+            await _openBankingRequestService.AddVendorViaAccessCodeAsync(requestModel);
             ResetSelections();
             SetLoading(false);
         }

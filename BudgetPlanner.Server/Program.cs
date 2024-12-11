@@ -13,13 +13,28 @@ public class Program
     {
         var builder = WebApplication.CreateSlimBuilder(args);
         builder.AddServiceDefaults();
-        
+        builder.WebHost.UseSentry(options =>
+        {
+
+                options.Dsn = builder.Configuration.GetValue<string>("SENTRY_DSN");
+                options.Debug = builder.Configuration.GetValue<bool>("SENTRY_DEBUG");
+                options.AutoSessionTracking = builder.Configuration.GetValue<bool>("SENTRY_AUTO_SESSION_TRACKING");;
+                options.TracesSampleRate = builder.Configuration.GetValue<double>("SENTRY_TRACES_SAMPLE_RATE");
+                options.ProfilesSampleRate = builder.Configuration.GetValue<double>("SENTRY_PROFILES_SAMPLE_RATE");
+                options.Release = builder.Configuration.GetValue<string>("SENTRY_RELEASE");
+                options.CaptureFailedRequests = builder.Configuration.GetValue<bool>("SENTRY_CAPTURE_FAILED_REQUESTS");
+
+                options.AddDiagnosticSourceIntegration();
+                options.AddEntityFramework();
+        });
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
         {
             options.DisableRetry= false;
             options.CommandTimeout = 30;  
         });
 
+
+        
         builder.Services.AddInternalServices();
         builder.Services.AddExternalServices();
         
@@ -33,21 +48,13 @@ public class Program
         
         builder.Services.AddSingleton(trueLayerConfig);
         
-        
-        SentrySdk.Init(options =>
-        {
-            options.Dsn = builder.Configuration.GetValue<string>("SENTRY_DSN");
-            options.Debug = builder.Configuration.GetValue<bool>("SENTRY_DEBUG");
-            options.AutoSessionTracking = builder.Configuration.GetValue<bool>("SENTRY_AUTO_SESSION_TRACKING");;
-            options.TracesSampleRate = builder.Configuration.GetValue<double>("SENTRY_TRACES_SAMPLE_RATE");
-            options.ProfilesSampleRate = builder.Configuration.GetValue<double>("SENTRY_PROFILES_SAMPLE_RATE");
-            options.Release = builder.Configuration.GetValue<string>("SENTRY_RELEASE");
-            options.CaptureFailedRequests = builder.Configuration.GetValue<bool>("SENTRY_CAPTURE_FAILED_REQUESTS");
-
-            options.AddDiagnosticSourceIntegration();
-            options.AddEntityFramework();
-        });
         var app = builder.Build();
+        
+        
+        app.UseExceptionHandler(exceptionHandlerApp 
+            => exceptionHandlerApp.Run(async context 
+                => await Results.Problem()
+                    .ExecuteAsync(context)));
         
         
         EnsureDbMigratedAsync(app);

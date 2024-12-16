@@ -36,7 +36,6 @@ namespace BudgetPlanner.Client.Data.Db
         public DbSet<HouseholdMember> HouseholdMembers { get; set; }
         public DbSet<BudgetCategory> BudgetCategories { get; set; }
         public DbSet<Debt> Debts { get; set; }
-
         public DbSet<OpenBankingProvider> OpenBankingProviders { get; set; }
         public DbSet<OpenBankingProviderScopes> OpenBankingProviderScopes { get; set; }
         public DbSet<OpenBankingAccount> OpenBankingAccounts { get; set; }

@@ -28,6 +28,12 @@ public static class ClassificationEndPointExtensions
             return await classificationService.GetClassificationAsync(id);
         });
 
+        classificationsGroup.MapPost("/AddClassification",
+            async (AddClassificationsRequest request, IClassificationService classificationService) =>
+            {
+                return await classificationService.AddCustomClassificationAsync(request);
+            });
+        
         classificationsGroup.MapPost("/AddClassificationsToTransaction",
             async (AddCustomClassificationsToTransactionRequest request, IClassificationService classificationService) =>
             {

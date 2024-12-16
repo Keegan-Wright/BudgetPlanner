@@ -34,6 +34,7 @@ namespace BudgetPlanner.Server.Services.Classifications
             return new ClassificationsResponse()
             {
                 Tag = classification.Tag,
+                ClassificationId = newClassification.Id
             };
 
         }

@@ -15,7 +15,6 @@ public class Program
         builder.AddServiceDefaults();
         builder.WebHost.UseSentry(options =>
         {
-
                 options.Dsn = builder.Configuration.GetValue<string>("SENTRY_DSN");
                 options.Debug = builder.Configuration.GetValue<bool>("SENTRY_DEBUG");
                 options.AutoSessionTracking = builder.Configuration.GetValue<bool>("SENTRY_AUTO_SESSION_TRACKING");;

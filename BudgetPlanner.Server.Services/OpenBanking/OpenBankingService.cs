@@ -68,21 +68,13 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
         public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
         {
-
-
-                try
-                {
-                    await foreach (var provider in GetOpenBankingProvidersAsync())
+            await foreach (var provider in GetOpenBankingProvidersAsync())
                     {
                         progress?.Report($"Processing your {provider.Name} banking information");
                         await BulkLoadProviderAsync(provider, syncFlags);
                     }
                     await _budgetPlannerDbContext.SaveChangesAsync();
-
-                }
-                catch (Exception ex) { 
-                    //ErrorHandler.HandleError(ex);
-                }
+                    
         }
 
 
@@ -90,8 +82,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
         {
             await foreach (var externalProvider in providerInformation.Results)
             {
-                try
-                {
+
                     using var logoClient = new HttpClient();
                     var providerLogo = await logoClient.GetStreamAsync(externalProvider.Provider.LogoUri);
 
@@ -138,13 +129,6 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
 
                     await BulkLoadProviderAsync(provider);
-
-                }
-                catch (Exception ex)
-                {
-                    var a = 1;
-                    //ErrorHandler.HandleError(ex);
-                }
             }
         }
 

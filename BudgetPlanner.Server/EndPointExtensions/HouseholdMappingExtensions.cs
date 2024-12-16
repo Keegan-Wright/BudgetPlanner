@@ -9,7 +9,7 @@ public static class HouseholdMappingExtensions
 {
     public static void MapHouseholdMembersEndpoint(this WebApplication app)
     {
-        var householdMembersGroup = app.MapGroup("/HouseholdMember");
+        var householdMembersGroup = app.MapGroup("/HouseholdMember").RequireAuthorization();;
 
         householdMembersGroup.MapPost("/AddHouseholdMember",
             async (AddHouseholdMemberRequest request, IHouseholdMembersService householdMembersService) => await householdMembersService.AddHouseholdMemberAsync(request));

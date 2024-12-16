@@ -8,7 +8,7 @@ public static class AccountsEndpointExtensions
 {
     public static void MapAccountsEndPoint(this WebApplication app)
     {
-        var accountsGroup = app.MapGroup("/Accounts");
+        var accountsGroup = app.MapGroup("/Accounts").RequireAuthorization();
 
         accountsGroup.MapPost("AccountsAndLatestTransactions", async (AccountAndTransactionsRequest request, IAccountsService accountsService) =>
         {

@@ -1,9 +1,12 @@
+using System.Text;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.DI;
 using BudgetPlanner.Server.EndPoints;
 using BudgetPlanner.Server.Models.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BudgetPlanner.Server;
 
@@ -26,6 +29,24 @@ public class Program
                 options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
         });
+        
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "KeeganWrightsBudgetPlanner",
+                    ValidAudience = "KeeganWrightsBudgetPlannerApp",
+                    IssuerSigningKey = new SymmetricSecurityKey("MySecretKey"u8.ToArray())
+                };
+            });
+
+        builder.Services.AddAuthorization();
+        
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
         {
             options.DisableRetry= false;
@@ -76,6 +97,7 @@ public class Program
         app.MapClassificationEndPoint();
         app.MapHouseholdMembersEndpoint();
         app.MapTransactionsEndPoint();
+        app.MapAuthEndPoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

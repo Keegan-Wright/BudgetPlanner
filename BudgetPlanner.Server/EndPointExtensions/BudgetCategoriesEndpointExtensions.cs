@@ -11,7 +11,7 @@ public static class BudgetCategoriesEndpointExtensions
 {
     public static void MapBudgetCategoriesEndPoint(this WebApplication app)
     {
-        var dashboardGroup = app.MapGroup("/BudgetCategories");
+        var dashboardGroup = app.MapGroup("/BudgetCategories").RequireAuthorization();;
 
         dashboardGroup.MapPost("/AddCategory",
             async (AddBudgetCategoryRequest request, IBudgetCategoriesService budgetCategoriesService) => await budgetCategoriesService.AddBudgetCategoryAsync(request));

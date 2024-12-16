@@ -11,7 +11,7 @@ public static class OpenBankingEndPointExtensions
 {
     public static void MapOpenBankingEndPoint(this WebApplication app)
     {
-        var openBankingGroup = app.MapGroup("/OpenBanking");
+        var openBankingGroup = app.MapGroup("/OpenBanking").RequireAuthorization();;
 
         openBankingGroup.MapGet("/GetProviders", async  (IOpenBankingService openBankingService) =>
         {

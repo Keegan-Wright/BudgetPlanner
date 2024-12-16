@@ -1,0 +1,116 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Client.Controls"
+					        xmlns:vm="clr-namespace:BudgetPlanner.Client.ViewModels;assembly=BudgetPlanner.Client.ViewModels"
+>
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:OpenBankingTransactions />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:OpenBankingTransactions}" TargetType="controls:OpenBankingTransactions">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<DataGrid
+						CanUserReorderColumns="True"
+						CanUserResizeColumns="True"
+						CanUserSortColumns="True"
+						GridLinesVisibility="None"
+						IsReadOnly="True"
+						ScrollViewer.AllowAutoHide="True"
+						ItemsSource="{TemplateBinding Transactions}"
+						SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}"
+							>
+						<DataGrid.Columns>
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Description"
+								MinWidth="100"
+								Width="2*"
+								Binding="{Binding Description}"/>
+
+
+							<DataGridTemplateColumn
+								Header="Amount"
+								MinWidth="100"
+								Width="Auto">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate x:DataType="vm:TransactionItemViewModel">
+										<TextBlock Text="{Binding Amount}"
+										Foreground="{Binding Amount, Converter={StaticResource NegativeToColourConverter}}"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Category"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionCategory}"/>
+
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Type"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionType}"/>
+
+							<DataGridTextColumn
+								x:DataType="vm:TransactionItemViewModel"
+								Header="Time"
+								MinWidth="100"
+								Width="Auto"
+								Binding="{Binding TransactionDate}"/>
+
+							<DataGridTemplateColumn
+								Header="Tags"
+								MinWidth="100"
+								Width="*">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate x:DataType="vm:TransactionItemViewModel">
+										<ItemsControl ItemsSource="{Binding Tags}">
+											<ItemsControl.ItemsPanel>
+												<ItemsPanelTemplate>
+													<VirtualizingStackPanel  Orientation="Horizontal"/>
+												</ItemsPanelTemplate>
+											</ItemsControl.ItemsPanel>
+											<ItemsControl.ItemTemplate>
+												<DataTemplate x:DataType="vm:TransactionTagFilterViewModel">
+													<Label Classes="Solid White"
+														   Theme="{StaticResource TagLabel}"
+														   Content="{Binding Tag}"
+														   Margin="0 0 10 0"></Label>
+												</DataTemplate>
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+						</DataGrid.Columns>
+						<DataGrid.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Add Custom Classification" Command="{TemplateBinding AddCustomClassificationCommand}" CommandParameter="{TemplateBinding SelectedItem}"></MenuItem>
+							</ContextMenu>
+						</DataGrid.ContextMenu>
+					</DataGrid>
+
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

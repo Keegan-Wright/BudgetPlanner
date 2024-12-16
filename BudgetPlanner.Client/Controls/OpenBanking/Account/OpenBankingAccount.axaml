@@ -1,0 +1,99 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Client.Controls">
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:OpenBankingAccount />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:OpenBankingAccount}" TargetType="controls:OpenBankingAccount">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+
+						<StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0">
+							<Image Width="50" Source="{Binding Account.Logo, RelativeSource={RelativeSource TemplatedParent}}"></Image>
+						</StackPanel>
+
+						<StackPanel
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Grid.Row="0"
+							Grid.ColumnSpan="2">
+
+							<TextBlock Text="{Binding Account.AccountDisplayName, RelativeSource={RelativeSource TemplatedParent}}"/>
+						</StackPanel>
+
+						<StackPanel Orientation="Horizontal"
+									HorizontalAlignment="Center"
+									Spacing="100"
+									Grid.Row="1"
+									Grid.ColumnSpan="2"
+									Margin="0 20">
+							<StackPanel Orientation="Vertical">
+								<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AccountBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+							</StackPanel>
+
+							<StackPanel Orientation="Vertical">
+								<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AvailableBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+							</StackPanel>
+
+						</StackPanel>
+
+						<StackPanel Orientation="Vertical" Spacing="10" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 20">
+
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="3*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+									<ColumnDefinition Width="*"></ColumnDefinition>
+								</Grid.ColumnDefinitions>
+
+								<Grid.RowDefinitions>
+									<RowDefinition	Height="*"/>
+									<RowDefinition	Height="*"/>
+								</Grid.RowDefinitions>
+
+								<TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Description"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Amount"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Time"></TextBlock>
+								<TextBlock Grid.Row="0" Grid.Column="3" FontWeight="Bold" Text="Status"></TextBlock>
+							</Grid>
+
+							
+							<controls:OpenBankingAccountTransactions Transactions="{Binding Account.Transactions, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+
+						</StackPanel>
+					</Grid>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

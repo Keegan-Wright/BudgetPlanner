@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>default</LangVersion>
+    <RootNamespace>BudgetPlanner.ViewModels</RootNamespace>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.2.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="FluentValidation" Version="11.11.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Svg" Version="3.4.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\BudgetPlanner.Client.Enums\BudgetPlanner.Client.Enums.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Shared.Enums\BudgetPlanner.Shared.Enums.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Shared.Extensions\BudgetPlanner.Shared.Extensions.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Client.Messages\BudgetPlanner.Client.Messages.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Client.Services\BudgetPlanner.Client.Services.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Client.States\BudgetPlanner.Client.States.csproj" />
+	  <ProjectReference Include="..\BudgetPlanner.Client.ViewModels.Shared\BudgetPlanner.Client.ViewModels.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Client.Controls"
+>
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:OpenBankingAccountTransaction />
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:OpenBankingAccountTransactions}" TargetType="controls:OpenBankingAccountTransactions">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<ScrollViewer Margin="0 10 0 0" AllowAutoHide="True" Grid.Row="1" Grid.ColumnSpan="4">
+					<ItemsControl  ItemsSource="{TemplateBinding Transactions}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<controls:OpenBankingAccountTransaction Transaction="{Binding }"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+
+					</ItemsControl>
+				</ScrollViewer>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+</ResourceDictionary>

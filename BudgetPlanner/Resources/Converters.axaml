@@ -1,7 +1,0 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:BudgetPlanner.Converters;assembly=BudgetPlanner">
-    <!-- Add Resources Here -->
-    <converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
-    <converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
-</ResourceDictionary>

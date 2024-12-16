@@ -3,51 +3,82 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner", "BudgetPlanner\BudgetPlanner.csproj", "{82600396-B90A-4171-A0F1-161FFDF1561E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client", "BudgetPlanner.Client\BudgetPlanner.Client.csproj", "{82600396-B90A-4171-A0F1-161FFDF1561E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Android", "BudgetPlanner.Android\BudgetPlanner.Android.csproj", "{76ED6D81-8F9C-4442-83F5-BDE3D90FD2C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Android", "BudgetPlanner.Client.Android\BudgetPlanner.Client.Android.csproj", "{76ED6D81-8F9C-4442-83F5-BDE3D90FD2C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Desktop", "BudgetPlanner.Desktop\BudgetPlanner.Desktop.csproj", "{4A29407C-456D-497D-AB6F-D823E4A2ED7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Desktop", "BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj", "{4A29407C-456D-497D-AB6F-D823E4A2ED7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.iOS", "BudgetPlanner.iOS\BudgetPlanner.iOS.csproj", "{36B5CA83-3343-4113-856E-401E9957EADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.iOS", "BudgetPlanner.Client.iOS\BudgetPlanner.Client.iOS.csproj", "{36B5CA83-3343-4113-856E-401E9957EADA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Browser", "BudgetPlanner.Browser\BudgetPlanner.Browser.csproj", "{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Browser", "BudgetPlanner.Client.Browser\BudgetPlanner.Client.Browser.csproj", "{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Services", "BudgetPlanner.Services\BudgetPlanner.Services.csproj", "{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Services", "BudgetPlanner.Client.Services\BudgetPlanner.Client.Services.csproj", "{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{91BE5C63-A7FE-492D-84D8-8D40B0CC679F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Messages", "BudgetPlanner.Messages\BudgetPlanner.Messages.csproj", "{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Messages", "BudgetPlanner.Client.Messages\BudgetPlanner.Client.Messages.csproj", "{A5133AF4-D425-4641-B7EE-8ED562D8F9E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.ViewModels.Shared", "BudgetPlanner.ViewModels.Shared\BudgetPlanner.ViewModels.Shared.csproj", "{D557DF87-A7DB-4190-935B-68510AD0DB44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.ViewModels.Shared", "BudgetPlanner.Client.ViewModels.Shared\BudgetPlanner.Client.ViewModels.Shared.csproj", "{D557DF87-A7DB-4190-935B-68510AD0DB44}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.ViewModels", "BudgetPlanner.ViewModels\BudgetPlanner.ViewModels.csproj", "{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.ViewModels", "BudgetPlanner.Client.ViewModels\BudgetPlanner.Client.ViewModels.csproj", "{3446D2A6-C474-404E-BAC9-6EAD7F2395A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.Models", "BudgetPlanner.Data.Models\BudgetPlanner.Data.Models.csproj", "{2BF6B739-A01E-4875-9DD9-35C90F2B0AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.Models", "BudgetPlanner.Client.Data.Models\BudgetPlanner.Client.Data.Models.csproj", "{2BF6B739-A01E-4875-9DD9-35C90F2B0AD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.Db", "BudgetPlanner.Data.Db\BudgetPlanner.Data.Db.csproj", "{B8A4EC40-A6A3-4DCC-93C1-A69142D57A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.Db", "BudgetPlanner.Client.Data.Db\BudgetPlanner.Client.Data.Db.csproj", "{B8A4EC40-A6A3-4DCC-93C1-A69142D57A3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Data.SqliteMigrations", "BudgetPlanner.Data.SqliteMigrations\BudgetPlanner.Data.SqliteMigrations.csproj", "{2A4C6B69-30E5-433F-A9B3-A062FA1765E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Data.SqliteMigrations", "BudgetPlanner.Client.Data.SqliteMigrations\BudgetPlanner.Client.Data.SqliteMigrations.csproj", "{2A4C6B69-30E5-433F-A9B3-A062FA1765E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Request", "BudgetPlanner.Models.Request\BudgetPlanner.Models.Request.csproj", "{18C6775F-D7DE-49AA-842E-AC698A71012C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Shared.Models.Request", "BudgetPlanner.Shared.Models.Request\BudgetPlanner.Shared.Models.Request.csproj", "{18C6775F-D7DE-49AA-842E-AC698A71012C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Configuration", "BudgetPlanner.Models.Configuration\BudgetPlanner.Models.Configuration.csproj", "{A12B7DC2-F043-4F53-854B-A792ED76C3A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Server.Models.Configuration", "BudgetPlanner.Server.Models.Configuration\BudgetPlanner.Server.Models.Configuration.csproj", "{A12B7DC2-F043-4F53-854B-A792ED76C3A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.External.Services.Models", "BudgetPlanner.External.Services.Models\BudgetPlanner.External.Services.Models.csproj", "{B8528A12-4986-4099-82F4-CD33E9429719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Server.External.Services.Models", "BudgetPlanner.Server.External.Services.Models\BudgetPlanner.Server.External.Services.Models.csproj", "{B8528A12-4986-4099-82F4-CD33E9429719}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.External.Services", "BudgetPlanner.External.Services\BudgetPlanner.External.Services.csproj", "{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Server.External.Services", "BudgetPlanner.Server.External.Services\BudgetPlanner.Server.External.Services.csproj", "{2F62668E-7067-4D70-A8AD-73BA9E35AE3F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.States", "BudgetPlanner.States\BudgetPlanner.States.csproj", "{8D05E995-6E99-4060-8840-12C81A43C8F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.States", "BudgetPlanner.Client.States\BudgetPlanner.Client.States.csproj", "{8D05E995-6E99-4060-8840-12C81A43C8F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Models.Response", "BudgetPlanner.Models.Response\BudgetPlanner.Models.Response.csproj", "{D7741D68-9DB7-4130-8A40-1320C9D4AAED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Shared.Models.Response", "BudgetPlanner.Shared.Models.Response\BudgetPlanner.Shared.Models.Response.csproj", "{D7741D68-9DB7-4130-8A40-1320C9D4AAED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Extensions", "BudgetPlanner.Extensions\BudgetPlanner.Extensions.csproj", "{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Shared.Extensions", "BudgetPlanner.Shared.Extensions\BudgetPlanner.Shared.Extensions.csproj", "{66D3F3AB-C716-4069-B229-78CCA3FEFF4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Enums", "BudgetPlanner.Enums\BudgetPlanner.Enums.csproj", "{72E6DED5-1EC3-4545-B3C1-6BFA6E114276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Enums", "BudgetPlanner.Client.Enums\BudgetPlanner.Client.Enums.csproj", "{72E6DED5-1EC3-4545-B3C1-6BFA6E114276}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Handlers", "BudgetPlanner.Handlers\BudgetPlanner.Handlers.csproj", "{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Client.Handlers", "BudgetPlanner.Client.Handlers\BudgetPlanner.Client.Handlers.csproj", "{EC06B5F1-4316-4A0E-94C8-FE55083A64E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Services.Base", "BudgetPlanner.Services.Base\BudgetPlanner.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlanner.Shared.Services.Base", "BudgetPlanner.Shared.Services.Base\BudgetPlanner.Shared.Services.Base.csproj", "{45295AE4-29D6-4B41-A8CB-ED520CA13B08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{1D738108-ADB9-47D3-B7FC-02040F7AC3BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Host.AppHost", "BudgetPlanner.Host.AppHost\BudgetPlanner.Host.AppHost.csproj", "{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{8FF09BB8-F212-4970-9A6F-1D6B9278B46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server", "BudgetPlanner.Server\BudgetPlanner.Server.csproj", "{F05578EA-C605-467C-8121-7CA5761B5911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D7C1C47A-7E77-4E00-957D-ED947DF8E7F6}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{67B77722-1DED-462F-AD00-B52E936FDDBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{7AEF4A31-5474-433B-AB75-6E7700FB0852}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Host.AppHost.ServiceDefaults", "BudgetPlanner.Host.AppHost.ServiceDefaults\BudgetPlanner.Host.AppHost.ServiceDefaults.csproj", "{08A90AAE-CD11-4362-895E-1B497A10B2E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Services", "BudgetPlanner.Server.Services\BudgetPlanner.Server.Services.csproj", "{80A1C4E3-F567-433C-B20F-D91BB5160BDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Shared.Enums", "BudgetPlanner.Shared.Enums\BudgetPlanner.Shared.Enums.csproj", "{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DE338BFF-796B-47DB-9CEA-3315E86DB48D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Data.Db", "BudgetPlanner.Server.Data.Db\BudgetPlanner.Server.Data.Db.csproj", "{A0003239-A0AC-41B5-A330-EA951E1A0584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server.Data.Models", "BudgetPlanner.Server.Data.Models\BudgetPlanner.Server.Data.Models.csproj", "{611E2CCB-67DC-4A80-8268-B774C3AECEE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +178,34 @@ Global
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45295AE4-29D6-4B41-A8CB-ED520CA13B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F05578EA-C605-467C-8121-7CA5761B5911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05578EA-C605-467C-8121-7CA5761B5911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F05578EA-C605-467C-8121-7CA5761B5911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F05578EA-C605-467C-8121-7CA5761B5911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A90AAE-CD11-4362-895E-1B497A10B2E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0003239-A0AC-41B5-A330-EA951E1A0584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +215,34 @@ Global
 		{4A29407C-456D-497D-AB6F-D823E4A2ED7B} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
 		{36B5CA83-3343-4113-856E-401E9957EADA} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
 		{0BE08D2F-3388-4CBD-B4B3-CFDF382F5527} = {91BE5C63-A7FE-492D-84D8-8D40B0CC679F}
+		{6EA03216-CF1A-4A72-80A7-20CC1CB270AD} = {1D738108-ADB9-47D3-B7FC-02040F7AC3BC}
+		{F05578EA-C605-467C-8121-7CA5761B5911} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{B8A4EC40-A6A3-4DCC-93C1-A69142D57A3B} = {67B77722-1DED-462F-AD00-B52E936FDDBE}
+		{2BF6B739-A01E-4875-9DD9-35C90F2B0AD4} = {67B77722-1DED-462F-AD00-B52E936FDDBE}
+		{2A4C6B69-30E5-433F-A9B3-A062FA1765E5} = {67B77722-1DED-462F-AD00-B52E936FDDBE}
+		{82600396-B90A-4171-A0F1-161FFDF1561E} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{91BE5C63-A7FE-492D-84D8-8D40B0CC679F} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{3446D2A6-C474-404E-BAC9-6EAD7F2395A9} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{D557DF87-A7DB-4190-935B-68510AD0DB44} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{18C6775F-D7DE-49AA-842E-AC698A71012C} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{D7741D68-9DB7-4130-8A40-1320C9D4AAED} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{C6A8151B-EE7B-4C28-B8E2-106F9EAECA54} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{72E6DED5-1EC3-4545-B3C1-6BFA6E114276} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{45295AE4-29D6-4B41-A8CB-ED520CA13B08} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{8D05E995-6E99-4060-8840-12C81A43C8F5} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{2F62668E-7067-4D70-A8AD-73BA9E35AE3F} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{66D3F3AB-C716-4069-B229-78CCA3FEFF4B} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{A5133AF4-D425-4641-B7EE-8ED562D8F9E3} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{A12B7DC2-F043-4F53-854B-A792ED76C3A7} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{B8528A12-4986-4099-82F4-CD33E9429719} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{EC06B5F1-4316-4A0E-94C8-FE55083A64E5} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{08A90AAE-CD11-4362-895E-1B497A10B2E4} = {1D738108-ADB9-47D3-B7FC-02040F7AC3BC}
+		{80A1C4E3-F567-433C-B20F-D91BB5160BDF} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{2264845A-B3E9-4D89-9E39-8DB8571EEE2F} = {EB4CDE93-F060-432A-BFA1-241A8A6C4AB8}
+		{67B77722-1DED-462F-AD00-B52E936FDDBE} = {7AEF4A31-5474-433B-AB75-6E7700FB0852}
+		{DE338BFF-796B-47DB-9CEA-3315E86DB48D} = {8FF09BB8-F212-4970-9A6F-1D6B9278B46E}
+		{A0003239-A0AC-41B5-A330-EA951E1A0584} = {DE338BFF-796B-47DB-9CEA-3315E86DB48D}
+		{611E2CCB-67DC-4A80-8268-B774C3AECEE9} = {DE338BFF-796B-47DB-9CEA-3315E86DB48D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27901178-8D95-4CDB-AF34-7284161AC83D}

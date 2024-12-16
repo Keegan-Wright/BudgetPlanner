@@ -66,11 +66,10 @@ namespace BudgetPlanner.Server.Services.OpenBanking
             return true;
         }
 
-        public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
+        public async Task PerformSyncAsync(SyncTypes syncFlags)
         {
             await foreach (var provider in GetOpenBankingProvidersAsync())
                     {
-                        progress?.Report($"Processing your {provider.Name} banking information");
                         await BulkLoadProviderAsync(provider, syncFlags);
                     }
                     await _budgetPlannerDbContext.SaveChangesAsync();

@@ -32,7 +32,7 @@ public class OpenBankingRequestService : BaseRequestService, IOpenBankingRequest
         return await PostAsync<AddVendorRequestModel, GenericSuccessResponse>("AddVendor", requestModel);
     }
 
-    public async Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null)
+    public async Task PerformSyncAsync(SyncTypes syncFlags)
     {
         await PostAsync("Sync", syncFlags);
     }

@@ -11,5 +11,5 @@ public interface IOpenBankingRequestService
     IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
     Task<AuthUrlResponse> BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
     Task<GenericSuccessResponse> AddVendorViaAccessCodeAsync(AddVendorRequestModel requestModel);
-    Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null);
+    Task PerformSyncAsync(SyncTypes syncFlags);
 }

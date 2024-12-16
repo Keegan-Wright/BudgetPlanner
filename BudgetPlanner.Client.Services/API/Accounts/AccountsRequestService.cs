@@ -13,8 +13,7 @@ public class AccountsRequestService : BaseRequestService, IAccountsRequestServic
 
     public sealed override string BaseRoute { get; init; }
 
-    public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags,
-        Progress<string> progress)
+    public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags)
     {
         await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<AccountAndTransactionsRequest, AccountAndTransactionsResponse>("AccountsAndLatestTransactions",new()
                        {

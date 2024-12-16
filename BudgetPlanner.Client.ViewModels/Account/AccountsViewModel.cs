@@ -25,14 +25,11 @@ namespace BudgetPlanner.Client.ViewModels
         private ObservableCollection<AccountItemViewModel> _accounts = [];
 
         private async Task LoadDataAsync()
-        {
-            var progress = new Progress<string>(s => SetLoadingMessage(s));
+        { var syncFlags = SyncTypes.Account | SyncTypes.Balance | SyncTypes.Transactions | SyncTypes.PendingTransactions;
 
-            var syncFlags = SyncTypes.Account | SyncTypes.Balance | SyncTypes.Transactions | SyncTypes.PendingTransactions;
+            SetLoading(true, "Loading Accounts");
 
-            SetLoading(true);
-
-            await foreach (var account in _accountsRequestService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags, progress))
+            await foreach (var account in _accountsRequestService.GetAccountsAndMostRecentTransactionsAsync(5, syncFlags))
             {
                 using var logo = new MemoryStream(account.Logo);
 

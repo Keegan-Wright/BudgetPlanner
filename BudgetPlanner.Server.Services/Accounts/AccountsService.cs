@@ -18,7 +18,7 @@ namespace BudgetPlanner.Server.Services.Accounts
             _openBankingService = openBankingService;
         }
 
-        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null)
+        public async IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All)
         {
 
             var transaction = GetSentryTransaction(nameof(GetAccountsAndMostRecentTransactionsAsync), "Loading");
@@ -26,7 +26,7 @@ namespace BudgetPlanner.Server.Services.Accounts
 
             var syncSpan = GetTransactionChild(transaction, "Open Banking Sync", $"Syncronise open banking data for all providers with the following scopes {syncFlags}");
 
-            await _openBankingService.PerformSyncAsync(syncFlags, progress);
+            await _openBankingService.PerformSyncAsync(syncFlags);
 
             FinishTransactionChildTrace(syncSpan);
 

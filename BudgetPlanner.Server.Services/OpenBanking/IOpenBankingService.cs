@@ -9,6 +9,6 @@ namespace BudgetPlanner.Server.Services.OpenBanking
         IAsyncEnumerable<ExternalOpenBankingProvider> GetOpenBankingProvidersForClientAsync();
         string BuildAuthUrl(GetProviderSetupUrlRequestModel setupProviderRequestModel);
         Task<bool> AddVendorViaAccessCodeAsync(string accessCode);
-        Task PerformSyncAsync(SyncTypes syncFlags, IProgress<string>? progress = null);
+        Task PerformSyncAsync(SyncTypes syncFlags);
     }
 }

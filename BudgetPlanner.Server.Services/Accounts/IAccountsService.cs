@@ -5,7 +5,7 @@ namespace BudgetPlanner.Server.Services.Accounts
 {
     public interface IAccountsService
     {
-        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All, IProgress<string>? progress = null);
+        IAsyncEnumerable<AccountAndTransactionsResponse> GetAccountsAndMostRecentTransactionsAsync(int transactionsToReturn, SyncTypes syncFlags = SyncTypes.All);
     }
 
 }

@@ -3,6 +3,7 @@ using System;
 using BudgetPlanner.Server.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BudgetPlanner.Server.Data.Db.Migrations
 {
     [DbContext(typeof(BudgetPlannerDbContext))]
-    partial class BudgetPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250107082918_AddsUserModels")]
+    partial class AddsUserModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,14 +89,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -145,9 +140,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("AvailableFunds")
                         .HasColumnType("numeric");
 
@@ -172,8 +164,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("BudgetCategories");
                 });
 
@@ -181,9 +171,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
@@ -198,8 +185,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("CustomClassifications");
                 });
 
@@ -207,9 +192,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
@@ -233,8 +215,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("Debts");
                 });
 
@@ -242,9 +222,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
@@ -265,8 +242,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("HouseholdMembers");
                 });
@@ -312,9 +287,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -337,8 +309,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProviderId");
 
@@ -808,40 +778,8 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.BudgetCategory", b =>
-                {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("BudgetCategories")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.CustomClassification", b =>
-                {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("CustomClassifications")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.Debt", b =>
-                {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("Debts")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.HouseholdMember", b =>
-                {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("HouseholdMembers")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingAccount", b =>
                 {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("BudgetPlanner.Server.Data.Models.OpenBankingProvider", "Provider")
                         .WithMany("Accounts")
                         .HasForeignKey("ProviderId")
@@ -993,19 +931,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Accounts");
-
-                    b.Navigation("BudgetCategories");
-
-                    b.Navigation("CustomClassifications");
-
-                    b.Navigation("Debts");
-
-                    b.Navigation("HouseholdMembers");
                 });
 
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingAccount", b =>

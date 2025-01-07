@@ -1,9 +1,12 @@
 using System.Text;
+using System.Text.Unicode;
 using BudgetPlanner.Server.Data.Db;
+using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Server.DI;
 using BudgetPlanner.Server.EndPoints;
 using BudgetPlanner.Server.Models.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -29,8 +32,19 @@ public class Program
                 options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
         });
+
+        builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+            })
+            .AddEntityFrameworkStores<BudgetPlannerDbContext>()
+            .AddDefaultTokenProviders();
         
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -39,12 +53,13 @@ public class Program
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "KeeganWrightsBudgetPlanner",
-                    ValidAudience = "KeeganWrightsBudgetPlannerApp",
-                    IssuerSigningKey = new SymmetricSecurityKey("MySecretKey"u8.ToArray())
+                    ValidIssuer = builder.Configuration.GetValue<string>("AUTH_ISSUER"),
+                    ValidAudience = builder.Configuration.GetValue<string>("AUTH_AUDIENCE"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(builder.Configuration.GetValue<string>("AUTH_SIGNING_KEY")))),
                 };
             });
 
+        builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
         
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
@@ -69,7 +84,10 @@ public class Program
         builder.Services.AddSingleton(trueLayerConfig);
         
         var app = builder.Build();
-        
+
+        app.UseAuthentication();
+        app.UseRouting();
+        app.UseAuthorization();
         
         app.UseExceptionHandler(exceptionHandlerApp 
             => exceptionHandlerApp.Run(async context 
@@ -77,7 +95,7 @@ public class Program
                     .ExecuteAsync(context)));
         
         
-        EnsureDbMigratedAsync(app);
+        await EnsureDbMigratedAsync(app);
         
         MapEndPoints(app);
 
@@ -111,7 +129,7 @@ public class Program
             {
                 await db.Database.MigrateAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await db.Database.EnsureCreatedAsync();
             }

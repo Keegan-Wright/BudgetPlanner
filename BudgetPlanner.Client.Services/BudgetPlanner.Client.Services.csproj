@@ -41,7 +41,7 @@
 	
 	<ItemGroup>
 	  <Reference Include="Microsoft.Extensions.Http">
-	    <HintPath>..\..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.0\Microsoft.Extensions.Http.dll</HintPath>
+	    <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.1\Microsoft.Extensions.Http.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

@@ -25,10 +25,10 @@ var server = builder.AddProject<Projects.BudgetPlanner_Server>("BudgetPlannerSer
     .WaitFor(postgresDb);
 
 
-//var desktopClient = builder.AddProject<Projects.BudgetPlanner_Client_Desktop>("BudgetPlannerClientDesktop")
-//    .AddSentry(sentryConfig)
-//    .WithReference(server)
-//    .WaitFor(server);
+var desktopClient = builder.AddProject<Projects.BudgetPlanner_Client_Desktop>("BudgetPlannerClientDesktop")
+    .AddSentry(sentryConfig)
+    .WithReference(server)
+    .WaitFor(server);
 
 
 builder.Build().Run();

@@ -6,16 +6,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore">
-        <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.dataprotection.entityframeworkcore\9.0.0\lib\net9.0\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.EntityFrameworkCore">
-        <HintPath>..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\9.0.0\lib\net8.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
@@ -27,6 +17,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BudgetPlanner.Server.Data.Models\BudgetPlanner.Server.Data.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore">
+        <HintPath>..\..\..\.nuget\packages\microsoft.aspnetcore.dataprotection.entityframeworkcore\9.0.0\lib\net9.0\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

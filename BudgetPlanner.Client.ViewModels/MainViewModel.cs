@@ -41,7 +41,7 @@ namespace BudgetPlanner.Client.ViewModels
                 new NavigationItemViewModel() { DisplayName = "Settings", SubItems = [ new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications } ]}
             ];
 
-            SelectedNavigationItem = NavigationItems[0];
+            //SelectedNavigationItem = NavigationItems[0];
         }
 
         [ObservableProperty]
@@ -67,7 +67,7 @@ namespace BudgetPlanner.Client.ViewModels
 
         [ObservableProperty]
 
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<LoginViewModel>();
 
 
         private bool disposedValue;

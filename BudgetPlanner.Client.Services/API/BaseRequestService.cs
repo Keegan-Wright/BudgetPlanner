@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using BudgetPlanner.Shared.Services.Base;
@@ -19,6 +20,8 @@ public abstract class BaseRequestService : InstrumentedService, IBaseRequestServ
         using var client = _httpClientFactory.CreateClient("apiClient");
         
         var response = await client.GetAsync($"{BaseRoute}/{url}", cancellationToken);
+
+        
         response.EnsureSuccessStatusCode();
         var responseContent = await response.Content.ReadFromJsonAsync<TResponse>(cancellationToken: cancellationToken);
         

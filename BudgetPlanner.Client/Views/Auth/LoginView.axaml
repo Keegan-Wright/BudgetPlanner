@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetPlanner.Client.ViewModels;assembly=BudgetPlanner.Client.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetPlanner.Client.Views.LoginView"
+             x:DataType="vm:LoginViewModel"
+             >
+    <Border Theme="{StaticResource CardBorder}">
+        <StackPanel Spacing="10" HorizontalAlignment="Center">
+            
+            <Label>Login to track your finances</Label>
+            
+            <StackPanel>
+                <Label>Username</Label>
+                <TextBox Text="{Binding Username}"/>
+            </StackPanel>
+            
+            
+            <StackPanel>
+                <Label>Password</Label>
+                <TextBox Text="{Binding Password}" PasswordChar="*" Classes="ClearButton RevealPasswordButton"/>
+            </StackPanel>
+            
+            <Button Command="{Binding LoginAsync}">Login</Button>
+            
+        </StackPanel>
+    </Border>
+
+</UserControl>

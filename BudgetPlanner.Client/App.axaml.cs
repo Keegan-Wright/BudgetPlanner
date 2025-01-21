@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Sentry;
 using System.Diagnostics;
+using Avalonia.Controls;
 using BudgetPlanner.Client.Views;
 using BudgetPlanner.Client.Handlers;
 using BudgetPlanner.Client.States;
@@ -126,22 +127,23 @@ namespace BudgetPlanner.Client
             
             services.AddSingleton(config);
 
+            if (!Design.IsDesignMode)
+            {
+                SentrySdk.Init(options =>
+                {
+                    options.Dsn =   Environment.GetEnvironmentVariable("SENTRY_DSN");
+                    options.Debug = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_DEBUG"));
+                    options.AutoSessionTracking = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_AUTO_SESSION_TRACKING"));
+                    options.TracesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_TRACES_SAMPLE_RATE"));
+                    options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
+                    options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
+                    options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
 
-        SentrySdk.Init(options =>
-        {
-            options.Dsn =   Environment.GetEnvironmentVariable("SENTRY_DSN");
-            options.Debug = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_DEBUG"));
-            options.AutoSessionTracking = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_AUTO_SESSION_TRACKING"));
-            options.TracesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_TRACES_SAMPLE_RATE"));
-            options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
-            options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
-            options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
-
-            options.AddDiagnosticSourceIntegration();
-            options.AddEntityFramework();
-        });
-
-
+                    options.AddDiagnosticSourceIntegration();
+                    options.AddEntityFramework();
+                });
+            }
+            
             services.AddWindows();
             services.AddViews();
             services.AddViewModels();

@@ -63,6 +63,10 @@ public static class AuthEndPointExtensions
                 FirstName = request.FirstName,
                 LastName = request.LastName
             };
+
+            if (request.Password != request.ConfirmPassword)
+                return new GenericSuccessResponse { Success = false };
+            
             
             var userResult = await userManager.CreateAsync(newUser, request.Password);
 

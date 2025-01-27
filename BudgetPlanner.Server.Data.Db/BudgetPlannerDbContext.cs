@@ -24,7 +24,6 @@ namespace BudgetPlanner.Server.Data.Db
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<AccessToken> AccessTokens { get; set; }
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
         
         

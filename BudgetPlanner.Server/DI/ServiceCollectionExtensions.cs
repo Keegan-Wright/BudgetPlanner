@@ -1,5 +1,6 @@
 using BudgetPlanner.Server.External.Services.OpenBanking;
 using BudgetPlanner.Server.Services.Accounts;
+using BudgetPlanner.Server.Services.Auth;
 using BudgetPlanner.Server.Services.Budget;
 using BudgetPlanner.Server.Services.Calendar;
 using BudgetPlanner.Server.Services.Classifications;
@@ -21,6 +22,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITransactionsService, TransactionsService>();
         services.AddScoped<IClassificationService, ClassificationService>();
         services.AddScoped<ICalendarService, CalendarService>();
+        services.AddScoped<IAuthService, AuthService>();
     }
     
     public static void AddExternalServices(this IServiceCollection services)

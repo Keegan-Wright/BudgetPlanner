@@ -18,15 +18,15 @@ public static class AuthEndPointExtensions
         var authGroup = app.MapGroup("/Auth");
 
 
-        authGroup.MapPost("/Login", async (AuthService authService ,LoginRequest request) =>
+        authGroup.MapPost("/Login", async (IAuthService authService ,LoginRequest request) =>
         {
-            await authService.LoginAsync(request);
+            return await authService.LoginAsync(request);
         });
 
         
         authGroup.MapPost("/Register", async (IAuthService authService, RegisterRequest request) =>
         {
-            await authService.RegisterAsync(request);
+            return await authService.RegisterAsync(request);
         });
 
         authGroup.MapPost("/Logout", async (IAuthService authService, HttpContext context) =>
@@ -36,7 +36,7 @@ public static class AuthEndPointExtensions
 
         authGroup.MapPost("/Token", async (IAuthService authService, TokenRequest request, HttpContext context) =>
         {
-            await authService.ProcessRefreshTokenAsync(request, context.User);
+            return await authService.ProcessRefreshTokenAsync(request, context.User);
         });
     }
 }

@@ -15,13 +15,11 @@ namespace BudgetPlanner.Server.Services.Auth;
 public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IAuthService _authService;
     private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IAuthService authService, UserManager<ApplicationUser> userManager, BudgetPlannerDbContext budgetPlannerDbContext, IConfiguration configuration)
+    public AuthService(UserManager<ApplicationUser> userManager, BudgetPlannerDbContext budgetPlannerDbContext, IConfiguration configuration)
     {
-        _authService = authService;
         _userManager = userManager;
         _budgetPlannerDbContext = budgetPlannerDbContext;
         _configuration = configuration;
@@ -87,8 +85,8 @@ public class AuthService : IAuthService
         var refreshToken = await _budgetPlannerDbContext.RefreshTokens.FindAsync(request.RefreshToken);
         var user = await _budgetPlannerDbContext.ApplicationUsers.FindAsync(refreshToken.UserId);
 
-        if (refreshToken.UserId == user.Id && user.UserName == contextUser.Identity.Name)
-        {
+        //if (refreshToken.UserId == user.Id && user.UserName == contextUser.Identity.Name)
+        //{
             refreshToken.Consumed = true;
             await _budgetPlannerDbContext.SaveChangesAsync();
             
@@ -100,7 +98,7 @@ public class AuthService : IAuthService
                 AccessToken = accessToken,
                 RefreshToken = newRefreshToken.Id,
             };
-        }
+        //}
         return null;
     }
     
@@ -129,7 +127,6 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Surname, user.LastName),
             new Claim(ClaimTypes.NameIdentifier, user.UserName),
         };
-        
         
         var authIssuer = _configuration["AUTH_ISSUER"];
         var authAudience = _configuration["AUTH_AUDIENCE"];

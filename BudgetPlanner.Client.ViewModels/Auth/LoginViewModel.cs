@@ -29,17 +29,17 @@ public partial class LoginViewModel : ValidateablePageViewModel<LoginViewModel>
     {
         await ValidateAndExecute(this, async () =>
         {
-            SetLoading(true, "Registering");
+            SetLoading(true, "Logging in");
             var loginResponse = await _authenticationService.LoginAsync(new LoginRequest()
             {
                 Password = Password,
                 Username = Username
             });
 
-            //if (registerResponse.Success)
-            //{
-                _navigationService.RequestNavigation<LoginViewModel>();
-            //}
+            if (loginResponse.Success)
+            {
+                _navigationService.RequestNavigation<DashboardViewModel>();
+            }
             
             SetLoading(false);
         });

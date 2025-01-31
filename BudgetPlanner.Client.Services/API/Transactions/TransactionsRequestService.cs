@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.Transaction;
 using BudgetPlanner.Shared.Models.Response.Transaction;
@@ -6,7 +7,7 @@ namespace BudgetPlanner.Client.Services.Transactions;
 
 public class TransactionsRequestService : BaseRequestService,ITransactionsRequestService
 {
-    public TransactionsRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public TransactionsRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "Transactions";
     }

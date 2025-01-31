@@ -67,7 +67,7 @@ namespace BudgetPlanner.Client.ViewModels
 
         [ObservableProperty]
 
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<LoginViewModel>();
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
 
 
         private bool disposedValue;

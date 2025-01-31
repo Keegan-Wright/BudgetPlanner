@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Shared.Models.Request.HouseholdMember;
 using BudgetPlanner.Shared.Models.Response;
 
@@ -5,7 +6,7 @@ namespace BudgetPlanner.Client.Services.HouseholdMember;
 
 public class HouseholdMemberRequestService : BaseRequestService, IHouseholdMemberRequestService
 {
-    public HouseholdMemberRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public HouseholdMemberRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "householdMember";
     }

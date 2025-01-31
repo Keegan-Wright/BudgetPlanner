@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Client.Data.Models;
 using BudgetPlanner.Shared.Models.Request.Budget;
 using BudgetPlanner.Shared.Models.Response;
@@ -6,7 +7,7 @@ namespace BudgetPlanner.Client.Services.BugetCategories;
 
 public class BudgetCategoriesRequestService : BaseRequestService, IBudgetCategoriesRequestService
 {
-    public BudgetCategoriesRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public BudgetCategoriesRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "budgetcategories";
     }

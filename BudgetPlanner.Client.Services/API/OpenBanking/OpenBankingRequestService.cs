@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.OpenBanking;
@@ -8,7 +9,7 @@ namespace BudgetPlanner.Client.Services.OpenBanking;
 
 public class OpenBankingRequestService : BaseRequestService, IOpenBankingRequestService
 {
-    public OpenBankingRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public OpenBankingRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "OpenBanking";
     }

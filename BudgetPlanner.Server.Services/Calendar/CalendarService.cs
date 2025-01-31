@@ -1,14 +1,15 @@
+using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Shared.Models.Response.Calendar;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Calendar;
 
-public class CalendarService : ICalendarService
+public class CalendarService : BaseService, ICalendarService
 {
     private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
     
-    public CalendarService(BudgetPlannerDbContext budgetPlannerDbContext)
+    public CalendarService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
     {
         _budgetPlannerDbContext = budgetPlannerDbContext;
     }

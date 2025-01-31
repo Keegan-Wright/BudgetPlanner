@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Server.Services.OpenBanking;
+﻿using System.Security.Claims;
+using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Shared.Enums;
@@ -9,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Transactions
 {
-    public class TransactionsService : InstrumentedService, ITransactionsService
+    public class TransactionsService : BaseService, ITransactionsService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
         private readonly IOpenBankingService _openBankingService;
 
-        public TransactionsService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService)
+        public TransactionsService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
             _openBankingService = openBankingService;

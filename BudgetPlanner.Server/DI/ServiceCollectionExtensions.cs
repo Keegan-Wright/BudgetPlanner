@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using BudgetPlanner.Server.External.Services.OpenBanking;
 using BudgetPlanner.Server.Services.Accounts;
 using BudgetPlanner.Server.Services.Auth;
@@ -28,5 +29,12 @@ public static class ServiceCollectionExtensions
     public static void AddExternalServices(this IServiceCollection services)
     {
         services.AddSingleton<IOpenBankingApiService, TrueLayerOpenBankingApiService>();
+    }
+
+    public static void AddClaimsPrincipalServices(this IServiceCollection services)
+    {
+        services.AddHttpContextAccessor();
+        //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<ClaimsPrincipal>(s => s.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
     }
 }

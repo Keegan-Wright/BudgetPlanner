@@ -1,15 +1,16 @@
-﻿using BudgetPlanner.Server.Data.Db;
+﻿using System.Security.Claims;
+using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Shared.Models.Request.HouseholdMember;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Budget
 {
-    public class HouseholdMembersService : IHouseholdMembersService
+    public class HouseholdMembersService : BaseService, IHouseholdMembersService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
 
-        public HouseholdMembersService(BudgetPlannerDbContext budgetPlannerDbContext)
+        public HouseholdMembersService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }

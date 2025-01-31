@@ -1,17 +1,18 @@
-﻿using BudgetPlanner.Server.Data.Db;
+﻿using System.Security.Claims;
+using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Shared.Models.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Dashboard
 {
-    public class DashboardService : IDashboardService
+    public class DashboardService : BaseService, IDashboardService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
         private readonly IOpenBankingService _openBankingService;
 
 
-        public DashboardService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService)
+        public DashboardService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
             _openBankingService = openBankingService;

@@ -126,6 +126,7 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Surname, user.LastName),
             new Claim(ClaimTypes.NameIdentifier, user.UserName),
+            new Claim(ClaimTypes.Sid, user.Id.ToString()),
         };
         
         var authIssuer = _configuration["AUTH_ISSUER"];

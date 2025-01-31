@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Server.Services.OpenBanking;
+﻿using System.Security.Claims;
+using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Response.Account;
@@ -7,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Accounts
 {
-    public class AccountsService : InstrumentedService, IAccountsService
+    public class AccountsService : BaseService, IAccountsService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
         private readonly IOpenBankingService _openBankingService;
 
-        public AccountsService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService)
+        public AccountsService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingService openBankingService, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
             _openBankingService = openBankingService;
@@ -25,7 +26,7 @@ namespace BudgetPlanner.Server.Services.Accounts
 
 
             var syncSpan = GetTransactionChild(transaction, "Open Banking Sync", $"Syncronise open banking data for all providers with the following scopes {syncFlags}");
-
+           
             await _openBankingService.PerformSyncAsync(syncFlags);
 
             FinishTransactionChildTrace(syncSpan);

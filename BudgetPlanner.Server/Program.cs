@@ -72,7 +72,7 @@ public class Program
         
         builder.Services.AddInternalServices();
         builder.Services.AddExternalServices();
-        
+        builder.Services.AddClaimsPrincipalServices();
         
         var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
         trueLayerConfig.BaseAuthUrl = builder.Configuration.GetValue<string>("OPEN_BANKING_TRUELAYER_BASE_AUTH_URL");

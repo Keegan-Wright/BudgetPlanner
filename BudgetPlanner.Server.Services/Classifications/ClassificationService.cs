@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Server.Data.Db;
+﻿using System.Security.Claims;
+using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Shared.Models.Request.Classifications;
 using BudgetPlanner.Shared.Models.Response.Classifications;
@@ -7,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Classifications
 {
-    public class ClassificationService : IClassificationService
+    public class ClassificationService : BaseService, IClassificationService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
-        public ClassificationService(BudgetPlannerDbContext budgetPlannerDbContext)
+        public ClassificationService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }

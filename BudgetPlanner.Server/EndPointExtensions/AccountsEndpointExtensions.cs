@@ -11,7 +11,7 @@ public static class AccountsEndpointExtensions
         var accountsGroup = app.MapGroup("/Accounts").RequireAuthorization();
 
         accountsGroup.MapPost("AccountsAndLatestTransactions",
-            async (AccountAndTransactionsRequest request, IAccountsService accountsService, HttpContext context) =>
+            (AccountAndTransactionsRequest request, IAccountsService accountsService, HttpContext context) =>
             {
                 async IAsyncEnumerable<AccountAndTransactionsResponse> AccountsAndLatestTransactionsStream()
                 {

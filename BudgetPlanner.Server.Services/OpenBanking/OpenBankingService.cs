@@ -2,6 +2,7 @@
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Shared.Models.Request.OpenBanking;
 using System.Collections.Concurrent;
+using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Server.External.Services.OpenBanking;
@@ -11,13 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.OpenBanking
 {
-    public class OpenBankingService : IOpenBankingService
+    public class OpenBankingService : BaseService, IOpenBankingService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
         private readonly IOpenBankingApiService _openBankingApiService;
         private readonly int _syncMins = 5;
 
-        public OpenBankingService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingApiService openBankingApiService)
+        public OpenBankingService(BudgetPlannerDbContext budgetPlannerDbContext, IOpenBankingApiService openBankingApiService, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
             _openBankingApiService = openBankingApiService;

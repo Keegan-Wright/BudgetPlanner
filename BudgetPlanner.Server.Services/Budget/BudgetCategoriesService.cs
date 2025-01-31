@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Shared.Models.Request.Budget;
@@ -6,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Budget
 {
-    public class BudgetCategoriesService : IBudgetCategoriesService
+    public class BudgetCategoriesService : BaseService, IBudgetCategoriesService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
 
-        public BudgetCategoriesService(BudgetPlannerDbContext budgetPlannerDbContext)
+        public BudgetCategoriesService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }

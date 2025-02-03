@@ -89,8 +89,8 @@ namespace BudgetPlanner.Server.Services.Classifications
             
             
             var transaction = await query
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions).ThenInclude(x => x.Classifications)
-                .SelectMany(x =>  x.Accounts.SelectMany(c => c.Transactions))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions).ThenInclude(x => x.Classifications)
+                .SelectMany(x =>  x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions))
                 .FirstOrDefaultAsync(x => x.Id == requestModel.TransactionId);
             
             var classifications = await query
@@ -136,10 +136,12 @@ namespace BudgetPlanner.Server.Services.Classifications
                         .FirstAsync(x => x.Id == id);
                 
                 
-                var transactionClassifications = await query.Include(x => x.Accounts)
+                var transactionClassifications = await query
+                    .Include(x => x.Providers)
+                    .ThenInclude(x => x.Accounts)
                     .ThenInclude(x => x.Transactions)
                     .ThenInclude(x => x.Classifications)
-                    .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions).SelectMany(x => x.Classifications))
+                    .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions).SelectMany(x => x.Classifications))
                     .Where(x => x.IsCustomClassification == true && x.Classification == classificationToRemove.Tag)
                     .ToListAsync();
 

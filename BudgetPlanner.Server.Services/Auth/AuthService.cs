@@ -27,13 +27,16 @@ public class AuthService : IAuthService
 
     public async Task<LoginResponse> LoginAsync(LoginRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await _budgetPlannerDbContext.Users
+            .Include(x => x.RefreshTokens)
+            .FirstOrDefaultAsync(x => x.UserName == request.Username);
+        
         var passwordIsCorrect = await _userManager.CheckPasswordAsync(user, request.Password);
         if (passwordIsCorrect)
         {
             var accessToken = GenerateAccessToken(user);
             var refreshToken = await GenerateRefreshTokenAsync(user);
-
+            
             return new LoginResponse()
             {
                 AccessToken = accessToken,
@@ -82,8 +85,8 @@ public class AuthService : IAuthService
 
     public async Task<TokenResponse> ProcessRefreshTokenAsync(TokenRequest request, ClaimsPrincipal contextUser)
     {
-        var refreshToken = await _budgetPlannerDbContext.RefreshTokens.FindAsync(request.RefreshToken);
-        var user = await _budgetPlannerDbContext.ApplicationUsers.FindAsync(refreshToken.UserId);
+        var refreshToken = await _budgetPlannerDbContext.RefreshTokens.FirstOrDefaultAsync(x => x.Id == request.RefreshToken);
+        var user = await _budgetPlannerDbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == refreshToken.UserId);
 
         //if (refreshToken.UserId == user.Id && user.UserName == contextUser.Identity.Name)
         //{
@@ -113,7 +116,9 @@ public class AuthService : IAuthService
             Revoked = false,
             Consumed = false
         };
-        await _budgetPlannerDbContext.RefreshTokens.AddAsync(refreshToken);
+     
+        user.RefreshTokens.Add(refreshToken);
+        
         await _budgetPlannerDbContext.SaveChangesAsync();
         return refreshToken;
     }

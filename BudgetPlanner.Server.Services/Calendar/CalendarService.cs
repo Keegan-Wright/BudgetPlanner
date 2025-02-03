@@ -23,8 +23,8 @@ public class CalendarService : BaseService, ICalendarService
         
         
         var transactions = await _budgetPlannerDbContext.IsolateToUser(UserId)
-            .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
-            .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+            .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+            .SelectMany(x => x.Providers.SelectMany(c => c.Accounts.SelectMany(c => c.Transactions)))
             .Where(x => x.TransactionTime >= startDate && x.TransactionTime < endDate)
             .Select(x => new CalendarTransactionItemResponse(){ Description = x.Description, Amount = x.Amount, TransactionType = x.TransactionType, TransactionTime = x.TransactionTime })
             .GroupBy(x => x.TransactionTime)

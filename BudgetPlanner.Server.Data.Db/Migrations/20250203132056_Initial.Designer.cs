@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BudgetPlanner.Server.Data.Db.Migrations
 {
     [DbContext(typeof(BudgetPlannerDbContext))]
-    [Migration("20250127133932_UpdatesRefreshToken")]
-    partial class UpdatesRefreshToken
+    [Migration("20250203132056_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,9 +298,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -323,8 +320,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProviderId");
 
@@ -421,6 +416,9 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -440,6 +438,8 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("OpenBankingProviders");
                 });
@@ -661,6 +661,9 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("Consumed")
                         .HasColumnType("boolean");
 
@@ -683,6 +686,8 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -839,10 +844,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
 
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingAccount", b =>
                 {
-                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("BudgetPlanner.Server.Data.Models.OpenBankingProvider", "Provider")
                         .WithMany("Accounts")
                         .HasForeignKey("ProviderId")
@@ -872,6 +873,13 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingProvider", b =>
+                {
+                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
+                        .WithMany("Providers")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingProviderScopes", b =>
@@ -945,6 +953,13 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                     b.Navigation("Transaction");
                 });
 
+            modelBuilder.Entity("BudgetPlanner.Server.Data.Models.RefreshToken", b =>
+                {
+                    b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationUser", null)
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("BudgetPlanner.Server.Data.Models.ApplicationRole", null)
@@ -998,8 +1013,6 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
 
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Accounts");
-
                     b.Navigation("BudgetCategories");
 
                     b.Navigation("CustomClassifications");
@@ -1007,6 +1020,10 @@ namespace BudgetPlanner.Server.Data.Db.Migrations
                     b.Navigation("Debts");
 
                     b.Navigation("HouseholdMembers");
+
+                    b.Navigation("Providers");
+
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("BudgetPlanner.Server.Data.Models.OpenBankingAccount", b =>

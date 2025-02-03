@@ -28,8 +28,8 @@ namespace BudgetPlanner.Server.Services.Dashboard
             var upcomingPayments = new List<UpcomingPaymentsResponse>();
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.StandingOrders)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.StandingOrders))
+                .Include(x=> x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.StandingOrders)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.StandingOrders))
                 .AsNoTracking()
                 .Where(x => x.NextPaymentDate > DateTime.Now.ToUniversalTime())
                 .Select(x => new UpcomingPaymentsResponse()
@@ -42,8 +42,8 @@ namespace BudgetPlanner.Server.Services.Dashboard
 
 
             upcomingPayments.AddRange(await _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.DirectDebits)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.DirectDebits))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.DirectDebits)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.DirectDebits))
                 .AsNoTracking()
                 .Where(x => x.PreviousPaymentAmount != 0)
                 .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now.ToUniversalTime())
@@ -69,8 +69,8 @@ namespace BudgetPlanner.Server.Services.Dashboard
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
             var query = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions))
                 .AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1).ToUniversalTime() && x.TransactionTime <= to.AddDays(1).ToUniversalTime()) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 

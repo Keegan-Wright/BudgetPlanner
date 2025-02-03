@@ -23,9 +23,9 @@ namespace BudgetPlanner.Server.Services.Transactions
 
         public async IAsyncEnumerable<TransactionAccountFilterResponse> GetAccountsForTransactionFiltersAsync(SyncTypes syncTypes = SyncTypes.Account)
         {
-            await _openBankingService.PerformSyncAsync(syncTypes, UserId);
-            var query = _budgetPlannerDbContext.IsolateToUser(UserId).Include(x => x.Accounts)
-                .SelectMany(x => x.Accounts)
+            await _openBankingService.PerformSyncAsync(syncTypes);
+            var query = _budgetPlannerDbContext.IsolateToUser(UserId).Include(x => x.Providers).ThenInclude(x => x.Accounts)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts))
                 .AsNoTracking()
                 .Select(x => new TransactionAccountFilterResponse() { AccountId = x.Id, AccountName = x.DisplayName });
 
@@ -39,7 +39,7 @@ namespace BudgetPlanner.Server.Services.Transactions
 
         public async IAsyncEnumerable<TransactionResponse> GetAllTransactionsAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes = SyncTypes.All)
         {
-            await _openBankingService.PerformSyncAsync(syncTypes, UserId);
+            await _openBankingService.PerformSyncAsync(syncTypes);
             await foreach (var transaction in GetTransactionResponsesAsync(filteredTransactionsRequest, syncTypes))
             {
                 yield return transaction;
@@ -49,8 +49,8 @@ namespace BudgetPlanner.Server.Services.Transactions
         public async IAsyncEnumerable<TransactionCategoryFilterResponse> GetCategoriesForTransactionFiltersAsync()
         {
             var query = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions))
                 .Select(x => x.TransactionCategory).Distinct();
             
             await foreach (var category in query.AsAsyncEnumerable())
@@ -62,8 +62,8 @@ namespace BudgetPlanner.Server.Services.Transactions
         public async IAsyncEnumerable<TransactionProviderFilterResponse> GetProvidersForTransactionFiltersAsync()
         {
             var query = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Provider)
-                .SelectMany(x => x.Accounts.Select(c => c.Provider))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts)
+                .SelectMany(x => x.Providers)
                 .Select(x => new TransactionProviderFilterResponse() { ProviderId = x.Id, ProviderName = x.Name }).Distinct();
 
             await foreach (var provider in query.AsAsyncEnumerable())
@@ -75,8 +75,8 @@ namespace BudgetPlanner.Server.Services.Transactions
         public async IAsyncEnumerable<TransactionTypeFilterResponse> GetTypesForTransactionFiltersAsync()
         {
             var query = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+                .SelectMany(x => x.Providers.SelectMany(x => x.Accounts).SelectMany(c => c.Transactions))
                 .Select(x => new TransactionTypeFilterResponse() { TransactionType = x.TransactionType })
                 .Distinct();
 
@@ -89,8 +89,8 @@ namespace BudgetPlanner.Server.Services.Transactions
         public async IAsyncEnumerable<TransactionTagFilterResponse> GetTagsForTransactionFiltersAsync()
         {
             var query = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions). ThenInclude(x => x.Classifications)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions).SelectMany(r => r.Classifications))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions). ThenInclude(x => x.Classifications)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions).SelectMany(t => t.Classifications))
                 .Select(x => new TransactionTagFilterResponse() { Tag = x.Classification })
                 .Distinct();
 
@@ -103,9 +103,8 @@ namespace BudgetPlanner.Server.Services.Transactions
         private async IAsyncEnumerable<TransactionResponse> GetTransactionResponsesAsync(FilteredTransactionsRequest filteredTransactionsRequest, SyncTypes syncTypes)
         {
             var transactionsQuery = _budgetPlannerDbContext.IsolateToUser(UserId)
-                .Include(x => x.Accounts).ThenInclude(x => x.Transactions).ThenInclude(x => x.Classifications)
-                .Include(x => x.Accounts).ThenInclude(x => x.Provider)
-                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions).ThenInclude(x => x.Classifications)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts).SelectMany(r => r.Transactions))
                 .AsQueryable();
             
             transactionsQuery = ApplyTransactionRequestFiltering(filteredTransactionsRequest, transactionsQuery);

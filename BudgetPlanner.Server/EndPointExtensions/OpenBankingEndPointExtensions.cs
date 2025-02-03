@@ -34,9 +34,9 @@ public static class OpenBankingEndPointExtensions
             };
         });
 
-        openBankingGroup.MapPost("/Sync", async (SyncTypes syncTypes, IOpenBankingService openBankingService, ClaimsPrincipal principal) =>
+        openBankingGroup.MapPost("/Sync", async (SyncTypes syncTypes, IOpenBankingService openBankingService) =>
         {
-            await openBankingService.PerformSyncAsync(syncTypes, Guid.Parse(principal.Claims.First(x => x.Type == ClaimTypes.Sid).Value));
+            await openBankingService.PerformSyncAsync(syncTypes);
         });
 
         openBankingGroup.MapPost("/GetAuthUrl",

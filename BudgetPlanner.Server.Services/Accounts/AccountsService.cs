@@ -27,17 +27,24 @@ namespace BudgetPlanner.Server.Services.Accounts
 
             var syncSpan = GetTransactionChild(transaction, "Open Banking Sync", $"Syncronise open banking data for all providers with the following scopes {syncFlags}");
            
-            await _openBankingService.PerformSyncAsync(syncFlags, UserId);
+            await _openBankingService.PerformSyncAsync(syncFlags);
 
             FinishTransactionChildTrace(syncSpan);
+
+            var a = _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.Providers).ThenInclude(a => a.Accounts).ThenInclude(x => x.AccountBalance)
+                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+                .SelectMany(x => x.Providers.SelectMany(c => c.Accounts))
+                .AsNoTracking()
+                .ToQueryString();
             
             var dataProcessingSpan = GetTransactionChild(transaction, "Open Banking Build For Client", "Loading internal data for the client");
             
             await foreach (var account in _budgetPlannerDbContext.IsolateToUser(UserId)
-                               .Include(a => a.Accounts).ThenInclude(x => x.AccountBalance)
-                               .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
-                               .Include(x => x.Accounts).ThenInclude(x => x.Provider)
-                               .SelectMany(x => x.Accounts)
+                               .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Provider)
+                               .Include(x => x.Providers).ThenInclude(a => a.Accounts).ThenInclude(x => x.AccountBalance)
+                               .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+                               .SelectMany(x => x.Providers.SelectMany(c => c.Accounts))
                                .AsNoTracking()
                                .AsAsyncEnumerable())
             {

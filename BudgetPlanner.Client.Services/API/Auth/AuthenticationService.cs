@@ -34,6 +34,7 @@ public class AuthenticationService : BaseRequestService, IAuthenticationService
                 AccessToken = response.AccessToken,
                 Created = DateTime.UtcNow
             };
+            await _budgetPlannerDbContext.AuthState.ExecuteDeleteAsync();
                 await _budgetPlannerDbContext.AuthState.AddAsync(authState);
             await _budgetPlannerDbContext.SaveChangesAsync();
         }

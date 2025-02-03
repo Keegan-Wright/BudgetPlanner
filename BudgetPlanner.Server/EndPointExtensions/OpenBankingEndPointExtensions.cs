@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Shared.Enums;
@@ -33,9 +34,9 @@ public static class OpenBankingEndPointExtensions
             };
         });
 
-        openBankingGroup.MapPost("/Sync", async (SyncTypes syncTypes, IOpenBankingService openBankingService) =>
+        openBankingGroup.MapPost("/Sync", async (SyncTypes syncTypes, IOpenBankingService openBankingService, ClaimsPrincipal principal) =>
         {
-            await openBankingService.PerformSyncAsync(syncTypes);
+            await openBankingService.PerformSyncAsync(syncTypes, Guid.Parse(principal.Claims.First(x => x.Type == ClaimTypes.Sid).Value));
         });
 
         openBankingGroup.MapPost("/GetAuthUrl",

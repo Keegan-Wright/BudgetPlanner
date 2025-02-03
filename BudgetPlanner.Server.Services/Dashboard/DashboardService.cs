@@ -27,7 +27,9 @@ namespace BudgetPlanner.Server.Services.Dashboard
         {
             var upcomingPayments = new List<UpcomingPaymentsResponse>();
 
-            upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingStandingOrders
+            upcomingPayments.AddRange(await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.Accounts).ThenInclude(x => x.StandingOrders)
+                .SelectMany(x => x.Accounts.SelectMany(c => c.StandingOrders))
                 .AsNoTracking()
                 .Where(x => x.NextPaymentDate > DateTime.Now.ToUniversalTime())
                 .Select(x => new UpcomingPaymentsResponse()
@@ -39,7 +41,9 @@ namespace BudgetPlanner.Server.Services.Dashboard
                 }).ToListAsync());
 
 
-            upcomingPayments.AddRange(await _budgetPlannerDbContext.OpenBankingDirectDebits
+            upcomingPayments.AddRange(await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.Accounts).ThenInclude(x => x.DirectDebits)
+                .SelectMany(x => x.Accounts.SelectMany(c => c.DirectDebits))
                 .AsNoTracking()
                 .Where(x => x.PreviousPaymentAmount != 0)
                 .Where(x => x.PreviousPaymentTimeStamp < DateTime.Now.ToUniversalTime())
@@ -64,7 +68,10 @@ namespace BudgetPlanner.Server.Services.Dashboard
 
         private async Task<SpentInTimePeriodResponse> GetTotalSpendInTimePeriod(DateTime from, DateTime to)
         {
-            var query = _budgetPlannerDbContext.OpenBankingTransactions.AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1).ToUniversalTime() && x.TransactionTime <= to.AddDays(1).ToUniversalTime()) && x.TransactionCategory != "TRANSFER");
+            var query = _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.Accounts).ThenInclude(x => x.Transactions)
+                .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions))
+                .AsNoTracking().Where(x => (x.TransactionTime >= from.AddDays(-1).ToUniversalTime() && x.TransactionTime <= to.AddDays(1).ToUniversalTime()) && x.TransactionCategory != "TRANSFER");
             var items = await query.Select(x => x.Amount).ToListAsync();
 
             return new SpentInTimePeriodResponse()

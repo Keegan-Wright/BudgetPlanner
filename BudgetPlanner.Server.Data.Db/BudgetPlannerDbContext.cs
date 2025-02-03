@@ -50,5 +50,10 @@ namespace BudgetPlanner.Server.Data.Db
 
             return new BudgetPlannerDbContext(optionsBuilder.Options);
         }
+
+        public IQueryable<ApplicationUser> IsolateToUser(Guid userId)
+        {
+            return ApplicationUsers.Where(x => x.Id == userId);
+        }
     }
 }

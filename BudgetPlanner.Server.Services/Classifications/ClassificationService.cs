@@ -25,7 +25,11 @@ namespace BudgetPlanner.Server.Services.Classifications
             await strategy.ExecuteAsync(async () =>
             {
                 using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
-                await _budgetPlannerDbContext.CustomClassifications.AddAsync(newClassification);
+
+                var user = await _budgetPlannerDbContext.IsolateToUser(UserId).Include(x => x.CustomClassifications).FirstAsync();
+                
+                user.CustomClassifications.Add(newClassification);
+                
                 await _budgetPlannerDbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
@@ -73,14 +77,27 @@ namespace BudgetPlanner.Server.Services.Classifications
 
         private IQueryable<CustomClassification> GetMainClassificationQuery()
         {
-            return _budgetPlannerDbContext.CustomClassifications
+            return _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.CustomClassifications)
+                .SelectMany(x => x.CustomClassifications)
                 .AsNoTracking().AsQueryable();
         }
 
         public async Task AddCustomClassificationsToTransactionAsync(AddCustomClassificationsToTransactionRequest requestModel)
         {
-            var transaction = await _budgetPlannerDbContext.OpenBankingTransactions.FirstOrDefaultAsync(x => x.Id == requestModel.TransactionId);
-            var classifications = await _budgetPlannerDbContext.CustomClassifications.Where(x => requestModel.Classifications.Select(x => x.ClassificationId).Contains(x.Id)).ToListAsync();
+            var query = _budgetPlannerDbContext.IsolateToUser(UserId);
+            
+            
+            var transaction = await query
+                .Include(x => x.Accounts).ThenInclude(x => x.Transactions).ThenInclude(x => x.Classifications)
+                .SelectMany(x =>  x.Accounts.SelectMany(c => c.Transactions))
+                .FirstOrDefaultAsync(x => x.Id == requestModel.TransactionId);
+            
+            var classifications = await query
+                .Include(x => x.CustomClassifications)
+                .SelectMany(x => x.CustomClassifications)
+                .Where(x => requestModel.Classifications.Select(c => c.ClassificationId).Contains(x.Id))
+                .ToListAsync();
 
             var newClassifications = new List<OpenBankingTransactionClassifications>();
             foreach (var classification in classifications)
@@ -95,7 +112,10 @@ namespace BudgetPlanner.Server.Services.Classifications
                 newClassifications.Add(newClassification);
             }
 
-            await _budgetPlannerDbContext.AddRangeAsync(newClassifications);
+            foreach (var classification in newClassifications)
+            {
+                transaction.Classifications.Add(classification);
+            }
             await _budgetPlannerDbContext.SaveChangesAsync();
         }
 
@@ -106,10 +126,20 @@ namespace BudgetPlanner.Server.Services.Classifications
             await strategy.ExecuteAsync(async () =>
             {
                 using var transaction = await _budgetPlannerDbContext.Database.BeginTransactionAsync();
-
+                
+                var query = _budgetPlannerDbContext.IsolateToUser(UserId);
+                
+                
                 var classificationToRemove =
-                    await _budgetPlannerDbContext.CustomClassifications.FirstAsync(x => x.Id == id);
-                var transactionClassifications = await _budgetPlannerDbContext.OpenBankingTransactionClassifications
+                    await query.Include(x => x.CustomClassifications)
+                        .SelectMany(x => x.CustomClassifications)
+                        .FirstAsync(x => x.Id == id);
+                
+                
+                var transactionClassifications = await query.Include(x => x.Accounts)
+                    .ThenInclude(x => x.Transactions)
+                    .ThenInclude(x => x.Classifications)
+                    .SelectMany(x => x.Accounts.SelectMany(c => c.Transactions).SelectMany(x => x.Classifications))
                     .Where(x => x.IsCustomClassification == true && x.Classification == classificationToRemove.Tag)
                     .ToListAsync();
 

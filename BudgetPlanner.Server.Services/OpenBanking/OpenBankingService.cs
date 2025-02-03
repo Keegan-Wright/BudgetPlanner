@@ -28,7 +28,9 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
         public async IAsyncEnumerable<OpenBankingProvider> GetOpenBankingProvidersAsync()
         {
-            await foreach (var provider in _budgetPlannerDbContext.OpenBankingProviders.AsNoTracking().AsAsyncEnumerable())
+            await foreach (var provider in _budgetPlannerDbContext.IsolateToUser(UserId)
+                               .Include(x => x.Accounts).ThenInclude(x => x.Provider)
+                               .SelectMany(x => x.Accounts.Select(c => c.Provider)).AsNoTracking().AsAsyncEnumerable())
             {
                 yield return provider;
             }
@@ -36,7 +38,11 @@ namespace BudgetPlanner.Server.Services.OpenBanking
 
         public async Task<OpenBankingProvider> GetOpenBankingProviderByIdAsync(string providerId)
         {
-            var provider = await _budgetPlannerDbContext.OpenBankingProviders.FirstAsync(x => x.OpenBankingProviderId == providerId);
+            var provider = await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.Accounts).ThenInclude(x => x.Provider)
+                .SelectMany(x => x.Accounts.Select(c => c.Provider))
+                .Where(x => x.OpenBankingProviderId == providerId)
+                .FirstOrDefaultAsync();
 
             return provider;
         }
@@ -67,7 +73,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
             return true;
         }
 
-        public async Task PerformSyncAsync(SyncTypes syncFlags)
+        public async Task PerformSyncAsync(SyncTypes syncFlags, Guid userId)
         {
             await foreach (var provider in GetOpenBankingProvidersAsync())
                     {

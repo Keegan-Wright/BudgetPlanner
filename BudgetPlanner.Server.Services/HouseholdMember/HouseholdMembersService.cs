@@ -17,6 +17,9 @@ namespace BudgetPlanner.Server.Services.Budget
 
         public async Task<HouseholdMember> AddHouseholdMemberAsync(AddHouseholdMemberRequest categoryToAdd)
         {
+            var user = await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.HouseholdMembers).FirstOrDefaultAsync();
+            
             var householdMember = new HouseholdMember()
             {
                 FirstName = categoryToAdd.FirstName,
@@ -25,7 +28,7 @@ namespace BudgetPlanner.Server.Services.Budget
                 Created = DateTime.Now.ToUniversalTime()
             };
 
-            await _budgetPlannerDbContext.HouseholdMembers.AddAsync(householdMember);
+            user.HouseholdMembers.Add(householdMember);
             await _budgetPlannerDbContext.SaveChangesAsync();
 
             return householdMember;
@@ -33,22 +36,28 @@ namespace BudgetPlanner.Server.Services.Budget
 
         public async Task<bool> DeleteHouseholdMemberAsync(Guid id)
         {
-            var householdMemberToDelete = await _budgetPlannerDbContext.BudgetCategories.FindAsync(id);
+            var user = await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.HouseholdMembers).FirstAsync();
+            
+            var householdMember = user.HouseholdMembers.FirstOrDefault(x => x.Id == id);
 
-            if (householdMemberToDelete is null)
+            if (householdMember != null)
             {
-                _budgetPlannerDbContext.BudgetCategories.Remove(householdMemberToDelete!);
-
-                return await _budgetPlannerDbContext.SaveChangesAsync() > 0;
+                _budgetPlannerDbContext.HouseholdMembers.Remove(householdMember);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
             return false;
         }
 
         public async IAsyncEnumerable<HouseholdMember> GetHouseholdMembersAsync()
         {
-            await foreach(var category in _budgetPlannerDbContext.HouseholdMembers.AsAsyncEnumerable())
+            await foreach(var householdMember in _budgetPlannerDbContext.IsolateToUser(UserId)
+                              .Include(x => x.HouseholdMembers)
+                              .SelectMany(x => x.HouseholdMembers)
+                              .AsAsyncEnumerable())
             {
-                yield return category;
+                yield return householdMember;
             }
         }
     }

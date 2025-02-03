@@ -59,4 +59,11 @@ public class AuthenticationService : BaseRequestService, IAuthenticationService
         
         return response;
     }
+
+    public async Task<bool> HasAuthenticated()
+    {
+        var authState = await  _budgetPlannerDbContext.AuthState.FirstOrDefaultAsync();
+        
+        return authState is not null;
+    }
 }

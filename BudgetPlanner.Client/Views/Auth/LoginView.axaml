@@ -25,6 +25,9 @@
             
             <Button Command="{Binding LoginAsync}">Login</Button>
             
+            
+            <Button Margin="0 15 0 0" Command="{Binding NavigateToRegisterAsync}">New Here?</Button>
+            
         </StackPanel>
     </Border>
 

@@ -45,4 +45,10 @@ public partial class LoginViewModel : ValidateablePageViewModel<LoginViewModel>
         });
     }
 
+    [RelayCommand]
+    public void NavigateToRegisterAsync()
+    {
+        _navigationService.RequestNavigation<RegisterViewModel>();
+    }
+
 }

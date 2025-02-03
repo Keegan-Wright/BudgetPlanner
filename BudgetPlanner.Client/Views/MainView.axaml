@@ -8,8 +8,6 @@
              x:Class="BudgetPlanner.Client.Views.MainView"
              x:DataType="vm:MainViewModel">
 	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainViewModel />
 	</Design.DataContext>
 
@@ -69,7 +67,7 @@
 						</ToggleSwitch>
 
 
-						<TreeView Margin="0 10" ItemsSource="{Binding NavigationItems}" SelectedItem="{Binding SelectedNavigationItem}">
+						<TreeView IsVisible="{Binding ShowSideMenu}" Margin="0 10" ItemsSource="{Binding NavigationItems}" SelectedItem="{Binding SelectedNavigationItem}">
 							<TreeView.ItemTemplate>
 								<TreeDataTemplate ItemsSource="{Binding SubItems}">
 									<TextBlock Text="{Binding DisplayName}" />

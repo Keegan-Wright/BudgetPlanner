@@ -45,6 +45,8 @@
             
             <Button Command="{Binding RegisterAsync}">Register</Button>
             
+            <Button Margin="0 15 0 0" Command="{Binding NavigateToLoginAsync}">Already a user?</Button>
+            
         </StackPanel>
     </Border>
 </UserControl>

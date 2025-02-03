@@ -60,4 +60,10 @@ public partial class RegisterViewModel : ValidateablePageViewModel<RegisterViewM
             SetLoading(false);
         });
     }
+
+    [RelayCommand]
+    public void NavigateToLoginAsync()
+    {
+        _navigationService.RequestNavigation<LoginViewModel>();
+    }
 }

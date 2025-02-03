@@ -20,6 +20,7 @@ using System.Diagnostics;
 using Avalonia.Controls;
 using BudgetPlanner.Client.Views;
 using BudgetPlanner.Client.Handlers;
+using BudgetPlanner.Client.Services.Auth;
 using BudgetPlanner.Client.States;
 using Microsoft.Extensions.Hosting;
 
@@ -69,7 +70,7 @@ namespace BudgetPlanner.Client
 
                 singleViewPlatform.MainView = new MainView
                 {
-                    DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>())
+                    DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>(), Ioc.Default.GetRequiredService<IAuthenticationService>())
                 };
 
             }

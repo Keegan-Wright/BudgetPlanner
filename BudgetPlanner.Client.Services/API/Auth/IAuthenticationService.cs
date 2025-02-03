@@ -11,4 +11,5 @@ public interface IAuthenticationService
     
     Task LogoutAsync();
     Task<TokenResponse> RefreshTokenAsync(TokenRequest request);
+    Task<bool> HasAuthenticated();
 }

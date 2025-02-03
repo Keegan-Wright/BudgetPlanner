@@ -38,6 +38,7 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<CalendarViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
+            services.AddTransient<LandingPageViewModel>();
 
         }
 
@@ -64,6 +65,7 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<CalendarView>();
             services.AddTransient<LoginView>();
             services.AddTransient<RegisterView>();
+            services.AddTransient<LandingPageView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)

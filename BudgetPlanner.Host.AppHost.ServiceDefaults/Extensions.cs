@@ -7,7 +7,7 @@ using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using Sentry;
+using Sentry.OpenTelemetry;
 
 namespace Microsoft.Extensions.Hosting;
 
@@ -43,6 +43,7 @@ public static class Extensions
     }
     public static IServiceCollection AddServiceDefaults(this IServiceCollection services)
     {
+       
         services.ConfigureOpenTelemetry();
 
         services.AddServiceDiscovery();
@@ -63,6 +64,7 @@ public static class Extensions
     {
         builder.Logging.AddOpenTelemetry(logging =>
         {
+            logging.IncludeScopes = true;
             logging.IncludeFormattedMessage = true;
             logging.IncludeScopes = true;
         });
@@ -72,7 +74,8 @@ public static class Extensions
             {
                 metrics.AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddRuntimeInstrumentation();
+                    .AddRuntimeInstrumentation()
+                    ;
             })
             .WithTracing(tracing =>
             {
@@ -80,7 +83,8 @@ public static class Extensions
                     .AddAspNetCoreInstrumentation()
                     // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                     //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
+                    .AddHttpClientInstrumentation()
+                    .AddSentry();
             });
 
         builder.AddOpenTelemetryExporters();
@@ -94,10 +98,12 @@ public static class Extensions
         {
             logging.AddOpenTelemetry(o =>
             {
+                o.IncludeScopes = true;
                 o.IncludeFormattedMessage = true;
                 o.IncludeScopes = true;
             });
-
+            
+            logging.SetMinimumLevel(LogLevel.Trace);
         });
 
         services.AddOpenTelemetry()
@@ -109,12 +115,13 @@ public static class Extensions
             })
             .WithTracing(tracing =>
             {
-                tracing.AddSource()
+                tracing.AddSource("BudgetPlannerClient")
                     .AddAspNetCoreInstrumentation()
                     // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                     //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
-            });
+                    .AddHttpClientInstrumentation()
+                    .AddSentry();
+            }).UseOtlpExporter();
 
         services.AddOpenTelemetryExporters();
 
@@ -149,7 +156,7 @@ public static class Extensions
         //if (useOtlpExporter)
         //{
         
-            services.AddOpenTelemetry().UseOtlpExporter();
+            //services.AddOpenTelemetry().UseOtlpExporter();
         //}
 
         // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)

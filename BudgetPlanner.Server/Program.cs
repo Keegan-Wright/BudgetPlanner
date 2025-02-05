@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Server;
 
@@ -28,7 +29,7 @@ public class Program
                 options.ProfilesSampleRate = builder.Configuration.GetValue<double>("SENTRY_PROFILES_SAMPLE_RATE");
                 options.Release = builder.Configuration.GetValue<string>("SENTRY_RELEASE");
                 options.CaptureFailedRequests = builder.Configuration.GetValue<bool>("SENTRY_CAPTURE_FAILED_REQUESTS");
-
+                options.UseOpenTelemetry();
                 options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
         });

@@ -23,6 +23,7 @@ using BudgetPlanner.Client.Handlers;
 using BudgetPlanner.Client.Services.Auth;
 using BudgetPlanner.Client.States;
 using Microsoft.Extensions.Hosting;
+using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Client
 {
@@ -76,8 +77,8 @@ namespace BudgetPlanner.Client
             }
 
             base.OnFrameworkInitializationCompleted();
-
-
+            
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
@@ -139,7 +140,7 @@ namespace BudgetPlanner.Client
                     options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
                     options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
                     options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
-
+                    options.UseOpenTelemetry();
                     options.AddDiagnosticSourceIntegration();
                     options.AddEntityFramework();
                 });

@@ -7,6 +7,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="9.0.1" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
         <PrivateAssets>all</PrivateAssets>
@@ -21,7 +22,6 @@
 
     <ItemGroup>
       <Reference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore">
-        <HintPath>..\..\..\.nuget\packages\microsoft.aspnetcore.dataprotection.entityframeworkcore\9.0.0\lib\net9.0\Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.dll</HintPath>
       </Reference>
     </ItemGroup>
 

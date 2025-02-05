@@ -16,6 +16,7 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1" />
 		<PackageReference Include="Sentry" Version="5.1.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
@@ -41,7 +42,6 @@
 	
 	<ItemGroup>
 	  <Reference Include="Microsoft.Extensions.Http">
-	    <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.1\Microsoft.Extensions.Http.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

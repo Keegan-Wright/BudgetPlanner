@@ -8,7 +8,7 @@ public static class TransactionEndPointExtensions
 {
     public static void MapTransactionsEndPoint(this WebApplication app)
     {
-        var transactionsGroup = app.MapGroup("/Transactions");
+        var transactionsGroup = app.MapGroup("/Transactions").RequireAuthorization();;
 
         transactionsGroup.MapGet("/CategoryFilters", async (ITransactionsService transactionsService) =>
         {

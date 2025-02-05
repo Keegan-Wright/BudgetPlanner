@@ -7,7 +7,7 @@ public static class CalendarEndPointExtensions
 {
     public static void MapCalendarEndPoint(this WebApplication app)
     {
-        var calendarGroup = app.MapGroup("/Calendar");
+        var calendarGroup = app.MapGroup("/Calendar").RequireAuthorization();;
 
         calendarGroup.MapGet("/GetMonth/{month}/{year}", async (int month, int year, ICalendarService calendarService) =>
         {

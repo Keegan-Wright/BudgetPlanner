@@ -8,15 +8,15 @@
   </PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="EFCore.BulkExtensions.Sqlite" Version="8.1.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="EFCore.BulkExtensions.Sqlite" Version="9.0.0" />
 		<PackageReference Include="FluentValidation" Version="11.11.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
-		<PackageReference Include="Sentry" Version="4.13.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+		<PackageReference Include="Sentry" Version="5.1.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>
@@ -41,7 +41,7 @@
 	
 	<ItemGroup>
 	  <Reference Include="Microsoft.Extensions.Http">
-	    <HintPath>..\..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.0\Microsoft.Extensions.Http.dll</HintPath>
+	    <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.1\Microsoft.Extensions.Http.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

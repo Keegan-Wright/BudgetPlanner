@@ -10,6 +10,7 @@
         Accounts,
         Transactions,
         SettingsClassifications,
-        Calendar
+        Calendar,
+        Logout
     }
 }

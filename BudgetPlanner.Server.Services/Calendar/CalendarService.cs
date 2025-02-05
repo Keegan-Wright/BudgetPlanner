@@ -1,14 +1,15 @@
+using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Shared.Models.Response.Calendar;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Calendar;
 
-public class CalendarService : ICalendarService
+public class CalendarService : BaseService, ICalendarService
 {
     private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
     
-    public CalendarService(BudgetPlannerDbContext budgetPlannerDbContext)
+    public CalendarService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
     {
         _budgetPlannerDbContext = budgetPlannerDbContext;
     }
@@ -19,14 +20,20 @@ public class CalendarService : ICalendarService
         var startDate = new DateTime(year, month, 1).ToUniversalTime();
         var endDate = new DateTime(year, month, daysInMonth).ToUniversalTime();
         
-        var transactions = await _budgetPlannerDbContext.OpenBankingTransactions
+        
+        
+        var transactions = await _budgetPlannerDbContext.IsolateToUser(UserId)
+            .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.Transactions)
+            .SelectMany(x => x.Providers.SelectMany(c => c.Accounts.SelectMany(c => c.Transactions)))
             .Where(x => x.TransactionTime >= startDate && x.TransactionTime < endDate)
             .Select(x => new CalendarTransactionItemResponse(){ Description = x.Description, Amount = x.Amount, TransactionType = x.TransactionType, TransactionTime = x.TransactionTime })
             .GroupBy(x => x.TransactionTime)
             .ToListAsync();
         
         List<string> events = ["Monthly events"];
-        var goals = await _budgetPlannerDbContext.BudgetCategories
+        var goals = await _budgetPlannerDbContext.IsolateToUser(UserId)
+            .Include(x => x.BudgetCategories)
+            .SelectMany(x => x.BudgetCategories)
             .Where(x => x.GoalCompletionDate >= startDate && x.GoalCompletionDate < endDate)
             .Select(x => new CalendarGoalItemResponse(){ Name = x.Name, GoalCompletionDate = x.GoalCompletionDate})
             .GroupBy(x => x.GoalCompletionDate)

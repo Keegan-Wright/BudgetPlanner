@@ -37,4 +37,17 @@ static class BuilderExtensions
             openBankingConfig["TrueLayer:ClientSecret"]);
         return resourceBuilder;
     }
+    
+    public static IResourceBuilder<T> AddAuth<T>(this IResourceBuilder<T> resourceBuilder,
+        IConfigurationSection authConfig)
+        where T : IResourceWithEnvironment
+    {
+        resourceBuilder.WithEnvironment("AUTH_ISSUER",
+            authConfig["Issuer"]);
+        resourceBuilder.WithEnvironment("AUTH_AUDIENCE",
+            authConfig["Audience"]);
+        resourceBuilder.WithEnvironment("AUTH_SIGNING_KEY",
+            authConfig["SigningKey"]);
+        return resourceBuilder;
+    }
 }

@@ -8,7 +8,9 @@
         public required string Currency { get; set; }
 
         public required Guid ProviderId { get; set; }
+        
         public OpenBankingProvider Provider { get; set; }
+        
         public OpenBankingAccountBalance? AccountBalance { get; set; }
 
         public ICollection<OpenBankingTransaction> Transactions { get; set; }

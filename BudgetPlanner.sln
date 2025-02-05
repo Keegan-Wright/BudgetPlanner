@@ -54,6 +54,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Host.AppHost", "BudgetPlanner.Host.AppHost\BudgetPlanner.Host.AppHost.csproj", "{6EA03216-CF1A-4A72-80A7-20CC1CB270AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{8FF09BB8-F212-4970-9A6F-1D6B9278B46E}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Server", "BudgetPlanner.Server\BudgetPlanner.Server.csproj", "{F05578EA-C605-467C-8121-7CA5761B5911}"
 EndProject

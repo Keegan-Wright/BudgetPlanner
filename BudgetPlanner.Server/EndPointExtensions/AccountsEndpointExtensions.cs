@@ -8,21 +8,23 @@ public static class AccountsEndpointExtensions
 {
     public static void MapAccountsEndPoint(this WebApplication app)
     {
-        var accountsGroup = app.MapGroup("/Accounts");
+        var accountsGroup = app.MapGroup("/Accounts").RequireAuthorization();
 
-        accountsGroup.MapPost("AccountsAndLatestTransactions", async (AccountAndTransactionsRequest request, IAccountsService accountsService) =>
-        {
-            async IAsyncEnumerable<AccountAndTransactionsResponse> AccountsAndLatestTransactionsStream()
+        accountsGroup.MapPost("AccountsAndLatestTransactions",
+            (AccountAndTransactionsRequest request, IAccountsService accountsService, HttpContext context) =>
             {
-                await foreach (var accountAndTransaction in accountsService.GetAccountsAndMostRecentTransactionsAsync(
-                                   request.TransactionsCount, request.SyncTypes))
+                async IAsyncEnumerable<AccountAndTransactionsResponse> AccountsAndLatestTransactionsStream()
                 {
-                    yield return accountAndTransaction;
+                    await foreach (var accountAndTransaction in accountsService
+                                       .GetAccountsAndMostRecentTransactionsAsync(
+                                           request.TransactionsCount, request.SyncTypes))
+                    {
+                        yield return accountAndTransaction;
+                    }
                 }
-            }
-            
-            return AccountsAndLatestTransactionsStream();
 
-        });
+                return AccountsAndLatestTransactionsStream();
+
+            });
     }
 }

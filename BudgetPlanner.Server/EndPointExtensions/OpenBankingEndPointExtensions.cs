@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using BudgetPlanner.Server.External.Services.Models.OpenBanking;
 using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Shared.Enums;
@@ -11,7 +12,7 @@ public static class OpenBankingEndPointExtensions
 {
     public static void MapOpenBankingEndPoint(this WebApplication app)
     {
-        var openBankingGroup = app.MapGroup("/OpenBanking");
+        var openBankingGroup = app.MapGroup("/OpenBanking").RequireAuthorization();;
 
         openBankingGroup.MapGet("/GetProviders", async  (IOpenBankingService openBankingService) =>
         {

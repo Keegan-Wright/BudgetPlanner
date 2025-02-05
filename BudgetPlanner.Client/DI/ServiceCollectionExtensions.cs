@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Client.Views;
 using BudgetPlanner.Server.External.Services.OpenBanking;
 using BudgetPlanner.Client.Services;
+using BudgetPlanner.Client.Services.Auth;
 using BudgetPlanner.Client.Services.BugetCategories;
 using BudgetPlanner.Client.Services.Calendar;
 using BudgetPlanner.Client.Services.Classifications;
@@ -35,6 +36,10 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<AddCustomClassificationViewModel>();
             services.AddTransient<AddCustomClassificationsToTransactionViewModel>();
             services.AddTransient<CalendarViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<RegisterViewModel>();
+            services.AddTransient<LandingPageViewModel>();
+
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -58,6 +63,9 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<AddCustomClassificationView>();
             services.AddTransient<AddCustomClassificationsToTransactionView>();
             services.AddTransient<CalendarView>();
+            services.AddTransient<LoginView>();
+            services.AddTransient<RegisterView>();
+            services.AddTransient<LandingPageView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)
@@ -72,6 +80,7 @@ namespace BudgetPlanner.Client.DI
             services.AddSingleton<IHouseholdMemberRequestService, HouseholdMemberRequestService>();
             services.AddSingleton<IOpenBankingRequestService, OpenBankingRequestService>();
             services.AddSingleton<ITransactionsRequestService, TransactionsRequestService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
         }
 
@@ -79,6 +88,9 @@ namespace BudgetPlanner.Client.DI
         {
             services.AddTransient<IValidator<AddCustomClassificationsToTransactionViewModel>, AddCustomClassificationsToTransactionViewModelValidator>();
             services.AddTransient<IValidator<AddCustomClassificationViewModel>, AddCustomClassificationViewModelValidator>();
+            
+            services.AddTransient<IValidator<LoginViewModel>, LoginViewModelValidator>();
+            services.AddTransient<IValidator<RegisterViewModel>, RegisterViewModelValidator>();
         }
 
         public static void AddExternalServices(this IServiceCollection services)

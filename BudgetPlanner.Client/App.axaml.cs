@@ -17,10 +17,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Sentry;
 using System.Diagnostics;
+using Avalonia.Controls;
 using BudgetPlanner.Client.Views;
 using BudgetPlanner.Client.Handlers;
+using BudgetPlanner.Client.Services.Auth;
 using BudgetPlanner.Client.States;
 using Microsoft.Extensions.Hosting;
+using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Client
 {
@@ -68,14 +71,14 @@ namespace BudgetPlanner.Client
 
                 singleViewPlatform.MainView = new MainView
                 {
-                    DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>())
+                    DataContext = new MainViewModel(Ioc.Default.GetRequiredService<INavigationService>(), Ioc.Default.GetRequiredService<IAuthenticationService>())
                 };
 
             }
 
             base.OnFrameworkInitializationCompleted();
-
-
+            
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
@@ -126,22 +129,23 @@ namespace BudgetPlanner.Client
             
             services.AddSingleton(config);
 
-
-        SentrySdk.Init(options =>
-        {
-            options.Dsn =   Environment.GetEnvironmentVariable("SENTRY_DSN");
-            options.Debug = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_DEBUG"));
-            options.AutoSessionTracking = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_AUTO_SESSION_TRACKING"));
-            options.TracesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_TRACES_SAMPLE_RATE"));
-            options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
-            options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
-            options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
-
-            options.AddDiagnosticSourceIntegration();
-            options.AddEntityFramework();
-        });
-
-
+            if (!Design.IsDesignMode)
+            {
+                SentrySdk.Init(options =>
+                {
+                    options.Dsn =   Environment.GetEnvironmentVariable("SENTRY_DSN");
+                    options.Debug = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_DEBUG"));
+                    options.AutoSessionTracking = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_AUTO_SESSION_TRACKING"));
+                    options.TracesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_TRACES_SAMPLE_RATE"));
+                    options.ProfilesSampleRate = double.Parse(Environment.GetEnvironmentVariable("SENTRY_PROFILES_SAMPLE_RATE"));
+                    options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE");
+                    options.CaptureFailedRequests = bool.Parse(Environment.GetEnvironmentVariable("SENTRY_CAPTURE_FAILED_REQUESTS"));
+                    options.UseOpenTelemetry();
+                    options.AddDiagnosticSourceIntegration();
+                    options.AddEntityFramework();
+                });
+            }
+            
             services.AddWindows();
             services.AddViews();
             services.AddViewModels();

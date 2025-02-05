@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Shared.Models.Request.Classifications;
 using BudgetPlanner.Shared.Models.Response;
 using BudgetPlanner.Shared.Models.Response.Classifications;
@@ -6,7 +7,7 @@ namespace BudgetPlanner.Client.Services.Classifications;
 
 public class ClassificationsRequestService : BaseRequestService, IClassificationsRequestService
 {
-    public ClassificationsRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public ClassificationsRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "classifications";
     }

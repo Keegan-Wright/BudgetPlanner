@@ -1,3 +1,4 @@
+using BudgetPlanner.Client.Data.Db;
 using BudgetPlanner.Shared.Models.Request.Dashboard;
 using BudgetPlanner.Shared.Models.Response;
 
@@ -5,7 +6,7 @@ namespace BudgetPlanner.Client.Services.Dashboard;
 
 public class DashboardRequestService : BaseRequestService, IDashboardRequestService
 {
-    public DashboardRequestService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public DashboardRequestService(IHttpClientFactory httpClientFactory, BudgetPlannerDbContext budgetPlannerDbContext) : base(httpClientFactory, budgetPlannerDbContext)
     {
         BaseRoute = "dashboard";
     }

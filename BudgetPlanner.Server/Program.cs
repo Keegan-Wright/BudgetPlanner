@@ -1,9 +1,16 @@
+using System.Text;
+using System.Text.Unicode;
 using BudgetPlanner.Server.Data.Db;
+using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Server.DI;
 using BudgetPlanner.Server.EndPoints;
 using BudgetPlanner.Server.Models.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.IdentityModel.Tokens;
+using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Server;
 
@@ -22,10 +29,40 @@ public class Program
                 options.ProfilesSampleRate = builder.Configuration.GetValue<double>("SENTRY_PROFILES_SAMPLE_RATE");
                 options.Release = builder.Configuration.GetValue<string>("SENTRY_RELEASE");
                 options.CaptureFailedRequests = builder.Configuration.GetValue<bool>("SENTRY_CAPTURE_FAILED_REQUESTS");
-
+                options.UseOpenTelemetry();
                 options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
         });
+
+        builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+            })
+            .AddEntityFrameworkStores<BudgetPlannerDbContext>()
+            .AddDefaultTokenProviders();
+        
+        builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration.GetValue<string>("AUTH_ISSUER"),
+                    ValidAudience = builder.Configuration.GetValue<string>("AUTH_AUDIENCE"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(builder.Configuration.GetValue<string>("AUTH_SIGNING_KEY")))),
+                };
+            });
+
+        builder.Services.AddAuthentication();
+        builder.Services.AddAuthorization();
+        
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
         {
             options.DisableRetry= false;
@@ -36,7 +73,7 @@ public class Program
         
         builder.Services.AddInternalServices();
         builder.Services.AddExternalServices();
-        
+        builder.Services.AddClaimsPrincipalServices();
         
         var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
         trueLayerConfig.BaseAuthUrl = builder.Configuration.GetValue<string>("OPEN_BANKING_TRUELAYER_BASE_AUTH_URL");
@@ -48,7 +85,10 @@ public class Program
         builder.Services.AddSingleton(trueLayerConfig);
         
         var app = builder.Build();
-        
+
+        app.UseAuthentication();
+        app.UseRouting();
+        app.UseAuthorization();
         
         app.UseExceptionHandler(exceptionHandlerApp 
             => exceptionHandlerApp.Run(async context 
@@ -56,7 +96,7 @@ public class Program
                     .ExecuteAsync(context)));
         
         
-        EnsureDbMigratedAsync(app);
+        await EnsureDbMigratedAsync(app);
         
         MapEndPoints(app);
 
@@ -76,6 +116,7 @@ public class Program
         app.MapClassificationEndPoint();
         app.MapHouseholdMembersEndpoint();
         app.MapTransactionsEndPoint();
+        app.MapAuthEndPoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)
@@ -89,7 +130,7 @@ public class Program
             {
                 await db.Database.MigrateAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await db.Database.EnsureCreatedAsync();
             }

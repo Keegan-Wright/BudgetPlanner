@@ -18,9 +18,15 @@ namespace BudgetPlanner.Client.ViewModels
         {
             SetLoading(true, "Loading Dashboard Data");
 
+            
+            var transaction = SentrySdk.StartTransaction("Load dashboard data", "Client loading data");
+                SentrySdk.ConfigureScope(scope => scope.Transaction = transaction);
+               
             await LoadUpcomingPayments();
             await LoadSpendingPeriods();
             SetLoading(false);
+            
+            transaction.Finish();
         }
   
         private async Task LoadSpendingPeriods()

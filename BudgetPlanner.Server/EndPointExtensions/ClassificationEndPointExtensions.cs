@@ -8,7 +8,7 @@ public static class ClassificationEndPointExtensions
 {
     public static void MapClassificationEndPoint(this WebApplication app)
     {
-        var classificationsGroup = app.MapGroup("/Classifications");
+        var classificationsGroup = app.MapGroup("/Classifications").RequireAuthorization();;
 
         classificationsGroup.MapGet("/GetAll", async (IClassificationService classificationService) =>
         {

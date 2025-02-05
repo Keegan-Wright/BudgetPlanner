@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using BudgetPlanner.Client.Services.Auth;
 
 namespace BudgetPlanner.Client.ViewModels
 {
@@ -14,9 +15,11 @@ namespace BudgetPlanner.Client.ViewModels
     {
 
         private readonly INavigationService _navigationService;
-        public MainViewModel(INavigationService navigationService)
+        private readonly IAuthenticationService _authenticationService;
+        public MainViewModel(INavigationService navigationService, IAuthenticationService authenticationService)
         {
             _navigationService = navigationService;
+            _authenticationService = authenticationService;
 
             SetupNavigationItems();
 
@@ -38,10 +41,14 @@ namespace BudgetPlanner.Client.ViewModels
                 new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = AppRoutes.Accounts},
                 new NavigationItemViewModel() { DisplayName = "Transactions", RouteType = AppRoutes.Transactions},
                 new NavigationItemViewModel() { DisplayName = "Calendar", RouteType = AppRoutes.Calendar},
-                new NavigationItemViewModel() { DisplayName = "Settings", SubItems = [ new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications } ]}
+                new NavigationItemViewModel() { DisplayName = "Settings", 
+                    SubItems = [ 
+                        new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications },
+                        new NavigationItemViewModel() { DisplayName = "Account", SubItems = [
+                        new NavigationItemViewModel() { DisplayName = "Logout", RouteType = AppRoutes.Logout },]}
+                    ]}
             ];
-
-            SelectedNavigationItem = NavigationItems[0];
+            
         }
 
         [ObservableProperty]
@@ -49,6 +56,10 @@ namespace BudgetPlanner.Client.ViewModels
 
         [ObservableProperty]
         private bool _loading;
+
+        [ObservableProperty]
+        private bool _showSideMenu;
+
 
         [ObservableProperty]
         private string? _loadingMessage;
@@ -67,7 +78,7 @@ namespace BudgetPlanner.Client.ViewModels
 
         [ObservableProperty]
 
-        private ViewModelBase? _currentPage = Ioc.Default.GetService<DashboardViewModel>();
+        private ViewModelBase? _currentPage = Ioc.Default.GetService<LandingPageViewModel>();
 
 
         private bool disposedValue;
@@ -89,6 +100,8 @@ namespace BudgetPlanner.Client.ViewModels
             if (value.RouteType == null)
                 return;
 
+            _showSideMenu = true;
+            
             switch (value.RouteType)
             {
                 case AppRoutes.Dashboard:
@@ -118,6 +131,10 @@ namespace BudgetPlanner.Client.ViewModels
                 case AppRoutes.SettingsClassifications:
                     _navigationService.RequestNavigation<ClassificationSettingsViewModel>();
                     break;
+                case AppRoutes.Logout:
+                    _ = _authenticationService.LogoutAsync();
+                    _navigationService.RequestNavigation<LoginViewModel>();
+                    break;
                 default:
                     throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");
             }
@@ -125,6 +142,20 @@ namespace BudgetPlanner.Client.ViewModels
 
         public void Receive(NavigationRequestedMessage message)
         {
+
+            var type = message.Value.GetType();
+
+            if (type == typeof(LandingPageViewModel) || type == typeof(LoginViewModel) ||
+                type == typeof(RegisterViewModel))
+            {
+                ShowSideMenu = false;
+                SideMenuExpanded = false;
+            }
+            else
+            {
+                ShowSideMenu = true;
+            }
+
             CurrentPage = message.Value;
         }
 

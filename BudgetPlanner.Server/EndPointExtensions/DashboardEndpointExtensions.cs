@@ -8,7 +8,7 @@ public static class DashboardEndpointExtensions
 {
     public static void MapDashboardEndPoint(this WebApplication app)
     {
-        var dashboardGroup = app.MapGroup("/Dashboard");
+        var dashboardGroup = app.MapGroup("/Dashboard").RequireAuthorization();;
 
         dashboardGroup.MapPost("/SpentInTimePeriod",
             async (SpentInTimePeriodRequest request, IDashboardService dashboardService) => await dashboardService.GetSpentInTimePeriod(request.StartDate, request.EndDate));

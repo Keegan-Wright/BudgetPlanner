@@ -31,7 +31,7 @@ namespace BudgetPlanner.Client.Data.Db
         }
 
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
-
+        public DbSet<AuthState> AuthState { get; set; }
 
         public DbSet<HouseholdMember> HouseholdMembers { get; set; }
         public DbSet<BudgetCategory> BudgetCategories { get; set; }

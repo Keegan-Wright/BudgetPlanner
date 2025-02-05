@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Shared.Models.Request.Budget;
@@ -6,17 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Budget
 {
-    public class BudgetCategoriesService : IBudgetCategoriesService
+    public class BudgetCategoriesService : BaseService, IBudgetCategoriesService
     {
         private readonly BudgetPlannerDbContext _budgetPlannerDbContext;
 
-        public BudgetCategoriesService(BudgetPlannerDbContext budgetPlannerDbContext)
+        public BudgetCategoriesService(BudgetPlannerDbContext budgetPlannerDbContext, ClaimsPrincipal user) : base(user, budgetPlannerDbContext)
         {
             _budgetPlannerDbContext = budgetPlannerDbContext;
         }
 
         public async Task<BudgetCategory> AddBudgetCategoryAsync(AddBudgetCategoryRequest categoryToAdd)
         {
+            var user = await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.BudgetCategories).FirstAsync();
+            
             var budgetCategory = new BudgetCategory()
             {
                 Name = categoryToAdd.Name,
@@ -26,8 +30,9 @@ namespace BudgetPlanner.Server.Services.Budget
                 MonthlyStart = categoryToAdd.MonthlyStart,
                 SavingsGoal = categoryToAdd.SavingsGoal,
             };
+            
+            user.BudgetCategories.Add(budgetCategory);
 
-            await _budgetPlannerDbContext.BudgetCategories.AddAsync(budgetCategory);
             await _budgetPlannerDbContext.SaveChangesAsync();
 
             return budgetCategory;
@@ -35,20 +40,26 @@ namespace BudgetPlanner.Server.Services.Budget
 
         public async Task<bool> DeleteBudgetCategoryAsync(Guid id)
         {
-            var budgetCategoryToDelete = await _budgetPlannerDbContext.BudgetCategories.FindAsync(id);
+            var user = await _budgetPlannerDbContext.IsolateToUser(UserId)
+                .Include(x => x.BudgetCategories).FirstAsync();
+            
+            var budgetCategory = user.BudgetCategories.FirstOrDefault(x => x.Id == id);
 
-            if (budgetCategoryToDelete is null)
+            if (budgetCategory != null)
             {
-                _budgetPlannerDbContext.BudgetCategories.Remove(budgetCategoryToDelete!);
-
-                return await _budgetPlannerDbContext.SaveChangesAsync() > 0;
+                _budgetPlannerDbContext.BudgetCategories.Remove(budgetCategory);
+                await _budgetPlannerDbContext.SaveChangesAsync();
             }
+
             return false;
         }
 
         public async IAsyncEnumerable<BudgetCategory> GetBudgetItemsAsync()
         {
-            await foreach(var category in _budgetPlannerDbContext.BudgetCategories.AsAsyncEnumerable())
+            await foreach(var category in _budgetPlannerDbContext.IsolateToUser(UserId)
+                              .Include(x => x.BudgetCategories)
+                              .SelectMany(x => x.BudgetCategories)
+                              .AsAsyncEnumerable())
             {
                 yield return category;
             }

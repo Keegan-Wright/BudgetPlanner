@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFrameworks>net9.0;net9.0-android</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -39,26 +39,26 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="11.2.3" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.3" />
-		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.3" />
+		<PackageReference Include="Avalonia" Version="11.2.4" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.4" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.4" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.3" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.4" />
 		<PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.0.8" />
 		<PackageReference Include="Avalonia.Xaml.Interactions" Version="11.2.0.8" />
 		<PackageReference Include="Avalonia.Xaml.Interactions.Events" Version="11.2.0.8" />
 		<PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.2.0.8" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
 
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
 
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -66,8 +66,8 @@
 		<PackageReference Include="Semi.Avalonia.ColorPicker" Version="11.2.1.4" />
 		<PackageReference Include="Semi.Avalonia.DataGrid" Version="11.2.1.4" />
 		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10.1" />
-		<PackageReference Include="Sentry.DiagnosticSource" Version="5.1.0" />
-		<PackageReference Include="Sentry.EntityFramework" Version="5.1.0" />
+		<PackageReference Include="Sentry.DiagnosticSource" Version="5.1.1" />
+		<PackageReference Include="Sentry.EntityFramework" Version="5.1.1" />
 
 
 		<PackageReference Include="SQLite" Version="3.13.0" />
@@ -78,7 +78,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\BudgetPlanner.Client.Handlers\BudgetPlanner.Client.Handlers.csproj" />
-		<ProjectReference Include="..\BudgetPlanner.Host.AppHost.ServiceDefaults\BudgetPlanner.Host.AppHost.ServiceDefaults.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.Data.SqliteMigrations\BudgetPlanner.Client.Data.SqliteMigrations.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Server.External.Services\BudgetPlanner.Server.External.Services.csproj" />
 		<ProjectReference Include="..\BudgetPlanner.Client.Messages\BudgetPlanner.Client.Messages.csproj" />
@@ -167,5 +166,11 @@
 	  <AdditionalFiles Include="Resources\Styles\Themes\Dark\MultiSelect.axaml" />
 	  <AdditionalFiles Include="Resources\Styles\Themes\Light\MultiSelect.axaml" />
 	  <AdditionalFiles Include="Resources\Styles\Themes\Shared\MultiSelect.axaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Sentry.OpenTelemetry">
+	    <HintPath>..\..\..\.nuget\packages\sentry.opentelemetry\5.1.1\lib\net9.0\Sentry.OpenTelemetry.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>

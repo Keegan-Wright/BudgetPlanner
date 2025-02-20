@@ -19,7 +19,7 @@
     <ItemGroup>
       <!-- ProjectReference Include="..\BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj" /> -->
       <!-- ProjectReference Include="..\BudgetPlanner.Client\BudgetPlanner.Client.csproj" /> -->
-      <ProjectReference Include="..\BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj" />
+        <ProjectReference Include="..\BudgetPlanner.Client.Desktop\BudgetPlanner.Client.Desktop.csproj" />
       <ProjectReference Include="..\BudgetPlanner.Server\BudgetPlanner.Server.csproj" />
     </ItemGroup>
 

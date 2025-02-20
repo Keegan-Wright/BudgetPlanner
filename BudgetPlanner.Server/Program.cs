@@ -62,6 +62,11 @@ public class Program
 
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
+
+        builder.Services.AddCors(o =>
+        {
+            o.AddDefaultPolicy(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
         
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
         {
@@ -89,6 +94,7 @@ public class Program
         app.UseAuthentication();
         app.UseRouting();
         app.UseAuthorization();
+        app.UseCors();
         
         app.UseExceptionHandler(exceptionHandlerApp 
             => exceptionHandlerApp.Run(async context 

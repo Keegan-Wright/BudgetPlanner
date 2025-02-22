@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net9.0-android</TargetFrameworks>
+		<TargetFrameworks>net9.0;</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -68,6 +68,7 @@
 		<PackageReference Include="Semi.Avalonia.TreeDataGrid" Version="11.0.10.1" />
 		<PackageReference Include="Sentry.DiagnosticSource" Version="5.1.1" />
 		<PackageReference Include="Sentry.EntityFramework" Version="5.1.1" />
+		<PackageReference Include="Sentry.OpenTelemetry" Version="5.1.1" />
 
 
 		<PackageReference Include="SQLite" Version="3.13.0" />

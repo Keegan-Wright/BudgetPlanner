@@ -20,6 +20,7 @@ public class Program
     {
         var builder = WebApplication.CreateSlimBuilder(args);
         builder.AddServiceDefaults();
+        
         builder.WebHost.UseSentry(options =>
         {
                 options.Dsn = builder.Configuration.GetValue<string>("SENTRY_DSN");
@@ -71,7 +72,7 @@ public class Program
         builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
         {
             options.DisableRetry= false;
-            options.CommandTimeout = 30;  
+            options.CommandTimeout = 0;
         });
 
 

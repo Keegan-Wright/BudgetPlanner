@@ -11,11 +11,11 @@ namespace BudgetPlanner.Client.ViewModels.Validators
             
             RuleFor(x => x.CustomTag).NotNull().NotEmpty().WithMessage("Classification is required");
 
-            RuleFor(x => x.CustomTag).MustAsync(async (tag, cancellation) =>
-            {
-                var existingTag = await budgetPlannerDbContext.CustomClassifications.FirstOrDefaultAsync(x => x.Tag.ToLower() == tag.ToLower());
-                return existingTag == null;
-            }).WithMessage("Classification must be unique");
+            //RuleFor(x => x.CustomTag).MustAsync(async (tag, cancellation) =>
+            //{
+            //    var existingTag = await budgetPlannerDbContext.CustomClassifications.FirstOrDefaultAsync(x => x.Tag.ToLower() == tag.ToLower());
+            //    return existingTag == null;
+            //}).WithMessage("Classification must be unique");
         }
     }
 

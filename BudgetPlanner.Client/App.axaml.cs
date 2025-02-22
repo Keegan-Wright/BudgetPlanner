@@ -20,6 +20,7 @@ using BudgetPlanner.Client.Views;
 using BudgetPlanner.Client.Handlers;
 using BudgetPlanner.Client.Services.Auth;
 using BudgetPlanner.Client.States;
+ using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Client
 {
@@ -119,6 +120,7 @@ namespace BudgetPlanner.Client
                 client.BaseAddress = new(config["Service:BaseUrl"]);
                 client.DefaultRequestHeaders.Add("Access-Control-Allow-Origin","*");
                 client.DefaultRequestHeaders.Add("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+                client.Timeout = TimeSpan.FromMinutes(30);
             });
                
             
@@ -138,6 +140,7 @@ namespace BudgetPlanner.Client
                     
                     options.AddDiagnosticSourceIntegration();
                     options.AddEntityFramework();
+                    options.UseOpenTelemetry();
                 });
             }
             

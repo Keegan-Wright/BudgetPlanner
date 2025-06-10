@@ -149,6 +149,7 @@ public class Program
         app.MapHouseholdMembersEndpoint();
         app.MapTransactionsEndPoint();
         app.MapAuthEndPoint();
+        app.MapReportingEndpoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

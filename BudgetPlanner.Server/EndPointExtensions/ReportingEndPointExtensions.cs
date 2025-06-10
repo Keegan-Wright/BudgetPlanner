@@ -1,12 +1,8 @@
 using System.ComponentModel;
 using BudgetPlanner.Server.Services.Reports;
-using BudgetPlanner.Server.Services.Transactions;
-using BudgetPlanner.Shared.Models.Request.Dashboard;
 using BudgetPlanner.Shared.Models.Request.Reports;
-using BudgetPlanner.Shared.Models.Response;
 using BudgetPlanner.Shared.Models.Response.Reports;
-using BudgetPlanner.Shared.Models.Response.Transaction;
-using Microsoft.AspNetCore.OpenApi;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetPlanner.Server.EndPoints;
 
@@ -18,13 +14,13 @@ public static class ReportingEndPointExtensions
     /// <param name="app">The web application instance</param>
     public static void MapReportingEndpoint(this WebApplication app)
     {
-        var transactionsGroup = app.MapGroup("/Reports")
+        var reportsGroup = app.MapGroup("/Reports")
             .WithTags("Reports")
             .WithSummary("Reporting Management")
             .WithDescription("Endpoints for generating and retrieving financial reports")
             .RequireAuthorization();
 
-        transactionsGroup.MapGet("/GetSpentInTimePeriod", async ([Description("The request containing the time period and filtering criteria for the report")] BaseReportRequest request, IReportService reportService) =>
+        reportsGroup.MapGet("/GetSpentInTimePeriod", async ([Description("The request containing the time period and filtering criteria for the report")] [FromBody]BaseReportRequest request, [FromServices]IReportService reportService) =>
         {
             return await reportService.GetSpentInTimePeriodReportAsync(request);
         })

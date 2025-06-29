@@ -1,12 +1,10 @@
 using System.Security.Claims;
-using System.Security.Cryptography.Xml;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
 using BudgetPlanner.Server.Services.OpenBanking;
 using BudgetPlanner.Shared.Models.Request.Reports;
 using BudgetPlanner.Shared.Models.Response;
 using BudgetPlanner.Shared.Models.Response.Reports;
-using BudgetPlanner.Shared.Models.Response.Transaction;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetPlanner.Server.Services.Reports;
@@ -23,9 +21,9 @@ public class ReportService : BaseService, IReportService
         _openBankingService = openBankingService;
     }
 
-    public async Task<SpentInTimePeriodReportResponse> GetSpentInTimePeriodReportAsync(BaseReportRequest request)
+    public async IAsyncEnumerable<SpentInTimePeriodReportResponse> GetSpentInTimePeriodReportAsync(BaseReportRequest request)
     {
-        await _openBankingService.PerformSyncAsync(request.SyncType);
+        await _openBankingService.PerformSyncAsync(request.SyncTypes);
 
         var query = GetQueryByBaseReportRequest(request);
 
@@ -40,14 +38,17 @@ public class ReportService : BaseService, IReportService
         var totalSpent = openBankingTransactions.Sum(x => x.Amount);
         var totalTransactions = openBankingTransactions.Count;
         
-        var rsp = new SpentInTimePeriodReportResponse
-        {
-            TotalSpent = totalSpent,
-            TotalTransactions = totalTransactions
-        };
+
 
         foreach (var yearlyGrouping in openBankingTransactions.GroupBy(x => x.TransactionTime.Year))
         {
+            
+            var rsp = new SpentInTimePeriodReportResponse
+            {
+                TotalSpent = totalSpent,
+                TotalTransactions = totalTransactions
+            };
+            
             var yearGrp = new SpentInTimePeriodReportYearlyBreakdownResponse()
             {
                 Year = yearlyGrouping.Key,
@@ -67,23 +68,124 @@ public class ReportService : BaseService, IReportService
             }
             
             rsp.YearlyBreakdown.Add(yearGrp);
+            yield return rsp;
         }
         
-        return rsp;
     }
 
 
-    public Task<CategoryBreakdownReportResponse> GetCategoryBreakdownReportAsync(BaseReportRequest request)
+    public async IAsyncEnumerable<CategoryBreakdownReportResponse> GetCategoryBreakdownReportAsync(BaseReportRequest request)
+    { 
+        var query = GetQueryByBaseReportRequest(request);
+
+        var openBankingTransactions = new List<OpenBankingTransaction>();
+        
+        await foreach (var transaction in query.OrderByDescending(x => x.TransactionTime)
+                           .ToAsyncEnumerable())
+        {
+            openBankingTransactions.Add(transaction);
+        }
+
+        var categoryGroups = openBankingTransactions.GroupBy(x => x.TransactionCategory);
+
+        foreach (var group in categoryGroups)
+        {
+            var grpTotal = group.Sum(x => x.Amount);
+            var grpTotalIn = group.Where(x => x.Amount > 0).Sum(x => x.Amount);
+            var grpTotalOut = group.Where(x => x.Amount < 0).Sum(x => x.Amount);
+            var grpCount = group.Count();
+
+            var rsp = new CategoryBreakdownReportResponse()
+            {
+                Total = grpTotal,
+                TotalIn = grpTotalIn,
+                TotalOut = grpTotalOut,
+                TotalTransactions = grpCount,
+                CategoryName = group.Key
+            };
+            
+            var subBreakdowns = new List<CategoryBreakdownReportItemResponse>();
+
+            foreach (var yearGrp in group.GroupBy(x =>  x.TransactionTime.Year))
+            {
+                foreach (var monthGrp in yearGrp.GroupBy(x => x.TransactionTime.Month))
+                {
+                    subBreakdowns.Add(new CategoryBreakdownReportItemResponse()
+                    {
+                        CategoryName = group.Key,
+                        Total = monthGrp.Sum(x => x.Amount),
+                        TotalIn = monthGrp.Where(x => x.Amount > 0).Sum(x => x.Amount),
+                        TotalOut = monthGrp.Where(x => x.Amount < 0).Sum(x => x.Amount),
+                        TotalTransactions = monthGrp.Count(),
+                        Date = new DateTime(yearGrp.Key, monthGrp.Key, 1)
+                    });
+                }
+            }
+            
+            rsp.SubItems = subBreakdowns.ToAsyncEnumerable();
+
+            yield return rsp;
+
+        }
+    }
+
+    public async IAsyncEnumerable<AccountBreakdownReportResponse> GetAccountBreakdownReportAsync(BaseReportRequest request)
     {
-        throw new NotImplementedException();
+        var query = GetQueryByBaseReportRequest(request);
+
+        var openBankingTransactions = new List<OpenBankingTransaction>();
+
+        await foreach (var transaction in query.OrderByDescending(x => x.TransactionTime)
+                           .ToAsyncEnumerable())
+        {
+            openBankingTransactions.Add(transaction);
+        }
+
+        var accountGroups = openBankingTransactions.GroupBy(x => x.Account.DisplayName);
+        ;
+
+        foreach (var group in accountGroups)
+        {
+            var grpTotal = group.Sum(x => x.Amount);
+            var grpTotalIn = group.Where(x => x.Amount > 0).Sum(x => x.Amount);
+            var grpTotalOut = group.Where(x => x.Amount < 0).Sum(x => x.Amount);
+            var grpCount = group.Count();
+
+            var rsp = new AccountBreakdownReportResponse()
+            {
+                Total = grpTotal,
+                TotalIn = grpTotalIn,
+                TotalOut = grpTotalOut,
+                TotalTransactions = grpCount,
+                AccountName = group.Key
+            };
+
+            var subBreakdowns = new List<AccountBreakdownReportItemResponse>();
+
+            foreach (var yearGrp in group.GroupBy(x => x.TransactionTime.Year))
+            {
+                foreach (var monthGrp in yearGrp.GroupBy(x => x.TransactionTime.Month))
+                {
+                    subBreakdowns.Add(new AccountBreakdownReportItemResponse()
+                    {
+                        AccountName = group.Key,
+                        Total = monthGrp.Sum(x => x.Amount),
+                        TotalIn = monthGrp.Where(x => x.Amount > 0).Sum(x => x.Amount),
+                        TotalOut = monthGrp.Where(x => x.Amount < 0).Sum(x => x.Amount),
+                        TotalTransactions = monthGrp.Count(),
+                        Date = new DateTime(yearGrp.Key, monthGrp.Key, 1)
+                    });
+                }
+            }
+
+            rsp.SubItems = subBreakdowns.ToAsyncEnumerable();
+
+            yield return rsp;
+
+        }
     }
 
-    public Task<SpentInTimePeriodResponse> AccountBreakdowmReportAsync(BaseReportRequest request)
-    {
-        throw new NotImplementedException();
-    }
-    
-    
+
     private IQueryable<OpenBankingTransaction> GetQueryByBaseReportRequest(BaseReportRequest request)
     {
         var query = _budgetPlannerDbContext.IsolateToUser(UserId)

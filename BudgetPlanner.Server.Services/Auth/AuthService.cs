@@ -27,6 +27,7 @@ public class AuthService : IAuthService
 
     public async Task<LoginResponse> LoginAsync(LoginRequest request)
     {
+        var users = await _budgetPlannerDbContext.Users.ToListAsync();
         var user = await _budgetPlannerDbContext.Users
             .Include(x => x.RefreshTokens)
             .FirstOrDefaultAsync(x => x.UserName == request.Username);

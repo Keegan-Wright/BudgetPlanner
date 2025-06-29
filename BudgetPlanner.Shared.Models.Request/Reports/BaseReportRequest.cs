@@ -25,5 +25,5 @@ public class BaseReportRequest
 
 
     [Description("Type of synchronization to perform")]
-    public required SyncTypes SyncType { get; set; }
+    public required SyncTypes SyncTypes { get; set; }
 }

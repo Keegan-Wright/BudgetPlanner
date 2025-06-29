@@ -8,6 +8,7 @@ using BudgetPlanner.Client.Services.Classifications;
 using BudgetPlanner.Client.Services.Dashboard;
 using BudgetPlanner.Client.Services.HouseholdMember;
 using BudgetPlanner.Client.Services.OpenBanking;
+using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
@@ -81,6 +82,7 @@ namespace BudgetPlanner.Client.DI
             services.AddSingleton<IOpenBankingRequestService, OpenBankingRequestService>();
             services.AddSingleton<ITransactionsRequestService, TransactionsRequestService>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IReportsService, ReportsService>();
 
         }
 

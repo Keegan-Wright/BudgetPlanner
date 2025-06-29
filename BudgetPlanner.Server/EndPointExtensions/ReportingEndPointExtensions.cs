@@ -20,10 +20,20 @@ public static class ReportingEndPointExtensions
             .WithDescription("Endpoints for generating and retrieving financial reports")
             .RequireAuthorization();
 
-        reportsGroup.MapGet("/GetSpentInTimePeriod", async ([Description("The request containing the time period and filtering criteria for the report")] [FromBody]BaseReportRequest request, [FromServices]IReportService reportService) =>
-        {
-            return await reportService.GetSpentInTimePeriodReportAsync(request);
-        })
+        reportsGroup.MapPost("/GetSpentInTimePeriod",
+            async (
+                [Description("The request containing the time period and filtering criteria for the report")] [FromBody]
+                BaseReportRequest request, [FromServices] IReportService reportService) =>
+            {
+              async IAsyncEnumerable<SpentInTimePeriodReportResponse> GetSpentInTimePeriodReportStream()
+              {
+                  await foreach (var report in reportService.GetSpentInTimePeriodReportAsync(request))
+                  {
+                      yield return report;
+                  }
+              }
+              return GetSpentInTimePeriodReportStream();
+            })
             .WithSummary("Get Spent In Time Period Report")
             .WithDescription("Retrieves a report of spending within a specified time period")
             .Accepts<BaseReportRequest>("application/json")
@@ -31,5 +41,54 @@ public static class ReportingEndPointExtensions
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
             .Produces(StatusCodes.Status400BadRequest);
+        
+        reportsGroup.MapPost("/GetCategoryBreakdownInTimePeriod",
+                async (
+                    [Description("The request containing the time period and filtering criteria for the report")]
+                    [FromBody]
+                    BaseReportRequest request, [FromServices] IReportService reportService) =>
+                {
+                    async IAsyncEnumerable<CategoryBreakdownReportItemResponse> GetCategoryBreakdownInTimePeriodReportStream()
+                    {
+                        await foreach (var report in reportService.GetCategoryBreakdownReportAsync(request))
+                        {
+                            yield return report;
+                        }
+                    }
+                    return GetCategoryBreakdownInTimePeriodReportStream();
+                })
+            .WithSummary("Get Category Breakdown In Time Period")
+            .WithDescription("Retrieves a report of spending for categories within a specified time period")
+            .Accepts<BaseReportRequest>("application/json")
+            .Produces<SpentInTimePeriodReportResponse>(200, "application/json")
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status403Forbidden)
+            .Produces(StatusCodes.Status400BadRequest);
+        
+        
+        reportsGroup.MapPost("/GetAccountBreakdownInTimePeriod",
+                async (
+                    [Description("The request containing the time period and filtering criteria for the report")]
+                    [FromBody]
+                    BaseReportRequest request, [FromServices] IReportService reportService) =>
+                {
+                    async IAsyncEnumerable<AccountBreakdownReportResponse> GetAccountBreakdownInTimePeriodReportStream()
+                    {
+                        await foreach (var report in reportService.GetAccountBreakdownReportAsync(request))
+                        {
+                            yield return report;
+                        }
+                    }
+                    return GetAccountBreakdownInTimePeriodReportStream();
+                })
+            .WithSummary("Get Account Breakdown In Time Period")
+            .WithDescription("Retrieves a report of spending for accounts within a specified time period")
+            .Accepts<BaseReportRequest>("application/json")
+            .Produces<SpentInTimePeriodReportResponse>(200, "application/json")
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status403Forbidden)
+            .Produces(StatusCodes.Status400BadRequest);
+
+
     }
 }

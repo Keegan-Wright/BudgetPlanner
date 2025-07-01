@@ -35,7 +35,8 @@ public class ReportService : BaseService, IReportService
             openBankingTransactions.Add(transaction);
         }
         
-        var totalSpent = openBankingTransactions.Sum(x => x.Amount);
+        var totalIn = openBankingTransactions.Where(x => !Decimal.IsNegative(x.Amount)).Sum(x => x.Amount);
+        var totalOut = openBankingTransactions.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount);
         var totalTransactions = openBankingTransactions.Count;
         
 
@@ -45,14 +46,16 @@ public class ReportService : BaseService, IReportService
             
             var rsp = new SpentInTimePeriodReportResponse
             {
-                TotalSpent = totalSpent,
+                TotalIn = totalIn,
+                TotalOut = totalOut,
                 TotalTransactions = totalTransactions
             };
             
             var yearGrp = new SpentInTimePeriodReportYearlyBreakdownResponse()
             {
                 Year = yearlyGrouping.Key,
-                TotalSpent = yearlyGrouping.Sum(x => x.Amount),
+                TotalIn = yearlyGrouping.Where(x => !Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
+                TotalOut = yearlyGrouping.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
                 TotalTransactions = yearlyGrouping.Count(),
             };
 
@@ -61,8 +64,9 @@ public class ReportService : BaseService, IReportService
                 var monthGrp = new SpentInTimePeriodReportMonthlyBreakdownResponse()
                 {
                     Month = monthlyGrouping.Key,
-                    TotalSpent = monthlyGrouping.Sum(x => x.Amount),
-                    TotalTransactions = yearlyGrouping.Count(),
+                    TotalIn = monthlyGrouping.Where(x => !Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
+                    TotalOut = monthlyGrouping.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
+                    TotalTransactions = monthlyGrouping.Count(),
                 };
                 yearGrp.MonthlyBreakdown.Add(monthGrp);
             }

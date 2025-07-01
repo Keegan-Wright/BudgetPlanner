@@ -11,6 +11,7 @@ using BudgetPlanner.Client.Services.OpenBanking;
 using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
+using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,7 +41,9 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
             services.AddTransient<LandingPageViewModel>();
-
+            services.AddTransient<SpentInTimePeriodReportViewModel>();
+            services.AddTransient<AccountBreakdownReportViewModel>();
+            services.AddTransient<CategoryBreakdownReportViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -67,6 +70,7 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<LoginView>();
             services.AddTransient<RegisterView>();
             services.AddTransient<LandingPageView>();
+            services.AddTransient<SpentInTimePeriodReportView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)

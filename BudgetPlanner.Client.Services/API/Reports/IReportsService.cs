@@ -23,10 +23,7 @@ public class ReportsService : BaseRequestService, IReportsService
 
     public async IAsyncEnumerable<SpentInTimePeriodReportResponse> GetSpentInTimePeriodReportAsync(BaseReportRequest request)
     {
-        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, SpentInTimePeriodReportResponse>("GetSpentInTimePeriod",new()
-                       {
-                           SyncTypes = request.SyncTypes
-                       } ))
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, SpentInTimePeriodReportResponse>("GetSpentInTimePeriod", request))
         {
             yield return accountAndTransaction;
         }
@@ -34,10 +31,7 @@ public class ReportsService : BaseRequestService, IReportsService
 
     public async IAsyncEnumerable<CategoryBreakdownReportResponse> GetCategoryBreakdownReportAsync(BaseReportRequest request)
     {
-        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, CategoryBreakdownReportResponse>("GetCategoryBreakdownInTimePeriod",new()
-                       {
-                           SyncTypes = request.SyncTypes
-                       } ))
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, CategoryBreakdownReportResponse>("GetCategoryBreakdownInTimePeriod",request))
         {
             yield return accountAndTransaction;
         }
@@ -45,10 +39,7 @@ public class ReportsService : BaseRequestService, IReportsService
 
     public async IAsyncEnumerable<AccountBreakdownReportResponse> GetAccountBreakdownReportAsync(BaseReportRequest request)
     {
-        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, AccountBreakdownReportResponse>("GetAccountBreakdownInTimePeriod",new()
-                       {
-                           SyncTypes = request.SyncTypes
-                       } ))
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, AccountBreakdownReportResponse>("GetAccountBreakdownInTimePeriod",request ))
         {
             yield return accountAndTransaction;
         }

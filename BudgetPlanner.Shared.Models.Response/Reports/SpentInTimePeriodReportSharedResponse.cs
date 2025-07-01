@@ -7,6 +7,9 @@ public class SpentInTimePeriodReportSharedResponse
     [Description("Total number of transactions in the time period")]
     public int TotalTransactions { get; set; }
 
-    [Description("Total amount spent in the time period")]
-    public decimal TotalSpent { get; set; }
+    [Description("Total amount incoming in the time period")]
+    public decimal TotalIn { get; set; }
+    
+    [Description("Total amount outgoing in the time period")]
+    public decimal TotalOut { get; set; }
 }

@@ -3,14 +3,26 @@ using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.Reports;
 using BudgetPlanner.Shared.Models.Response.Reports;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BudgetPlanner.Client.ViewModels;
 
 public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<SpentInTimePeriodReportResponse>
 {
+
+    [ObservableProperty]
+    private decimal _totalIn;
+    
+    [ObservableProperty]
+    private decimal _totalOut;
+    
+    [ObservableProperty]
+    private decimal _totalDif;
+    
+    
     public SpentInTimePeriodReportViewModel(IReportsService reportsService, INavigationService navigationService) : base(reportsService, navigationService)
     {
-
+        
     }
 
     protected override async Task LoadReportOptionsAsync()
@@ -25,6 +37,11 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
          {
              ReportItems.Add(reportItem);
          }
+         
+         TotalIn = ReportItems.Sum(x => x.TotalIn);
+         TotalOut = ReportItems.Sum(x => x.TotalOut);
+         TotalDif = decimal.Add(TotalOut, TotalIn);
+         
          SetLoading(false);
     }
 }

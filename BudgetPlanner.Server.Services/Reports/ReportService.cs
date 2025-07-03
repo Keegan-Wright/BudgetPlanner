@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Claims;
 using BudgetPlanner.Server.Data.Db;
 using BudgetPlanner.Server.Data.Models;
@@ -61,9 +62,10 @@ public class ReportService : BaseService, IReportService
 
             foreach (var monthlyGrouping in yearlyGrouping.GroupBy(x => x.TransactionTime.Month))
             {
+                var monthName = DateTimeFormatInfo.CurrentInfo.GetMonthName(monthlyGrouping.Key);
                 var monthGrp = new SpentInTimePeriodReportMonthlyBreakdownResponse()
                 {
-                    Month = monthlyGrouping.Key,
+                    Month = monthName,
                     TotalIn = monthlyGrouping.Where(x => !Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
                     TotalOut = monthlyGrouping.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
                     TotalTransactions = monthlyGrouping.Count(),

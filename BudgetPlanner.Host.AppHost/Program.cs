@@ -32,4 +32,4 @@ var desktopClient = builder.AddProject<Projects.BudgetPlanner_Client_Desktop>("B
 
 
 
-builder.Build().Run();
+await builder.Build().RunAsync();

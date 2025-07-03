@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:BudgetPlanner.Client.ViewModels;assembly=BudgetPlanner.Client.ViewModels"
 			 xmlns:controls="clr-namespace:BudgetPlanner.Client.Controls"
+             xmlns:lv="clr-namespace:LiveChartsCore;assembly=LiveChartsCore"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.SpentInTimePeriodReportView"
              x:DataType="vm:SpentInTimePeriodReportViewModel">
@@ -132,6 +134,52 @@
 			<StackPanel Orientation="Vertical">
 				<controls:SpentInTimePeriod TotalIn="{Binding TotalIn}" TotalOut="{Binding TotalOut}" Normalised="{Binding TotalDif}" Title="Overview"/>
 				
+				<lvc:PieChart 
+					LegendPosition="Left"
+					Series="{Binding TotalOverviewPieSeries}"
+					AutoUpdateEnabled="True"
+					Height="500"
+					Width="500"
+					TooltipPosition="Auto"
+					></lvc:PieChart>
+				
+				<ItemsControl ItemsSource="{Binding Path=ReportItems}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<ItemsControl ItemsSource="{Binding YearlyBreakdown}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<Expander>
+											<Expander.Header>
+												<TextBlock Text="{Binding Year}"></TextBlock>
+											</Expander.Header>
+											<Expander.ContentTemplate>
+												<DataTemplate>
+													<Grid RowDefinitions="Auto, *">
+														<TextBlock>Total in / out / dif cards</TextBlock>
+														
+														<!--
+														<ItemsControl Grid.Row="1"
+														              ItemsSource="{Binding MonthlyBreakdown}">
+															<ItemsControl.ItemTemplate>
+																<DataTemplate>
+																	<TextBlock Text="{Binding MonthName}"></TextBlock>
+																</DataTemplate>
+															</ItemsControl.ItemTemplate>
+														</ItemsControl>
+														-->
+														
+													</Grid>
+												</DataTemplate>
+											</Expander.ContentTemplate>
+										</Expander>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+
 			</StackPanel>
 		</ScrollViewer>
 	</StackPanel>

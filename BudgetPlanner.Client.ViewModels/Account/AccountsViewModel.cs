@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Shared.Enums;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.Client.ViewModels
 {
@@ -13,12 +14,12 @@ namespace BudgetPlanner.Client.ViewModels
         {
             _accountsRequestService = accountsService;
 
-            InitialiseAsync();
         }
-
-        private async void InitialiseAsync()
+        
+        [RelayCommand]
+        private async Task InitialiseAsync()
         {
-            await RunOnBackgroundThreadAsync(async () => await LoadDataAsync());
+            await RunOnBackgroundThreadAsync(LoadDataAsync());
         }
 
         [ObservableProperty]

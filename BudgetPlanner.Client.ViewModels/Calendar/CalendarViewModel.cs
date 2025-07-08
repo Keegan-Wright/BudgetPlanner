@@ -12,7 +12,6 @@ public partial class CalendarViewModel : PageViewModel
     public CalendarViewModel(ICalendarRequestService calenderRequestService)
     {
         _calenderRequestService = calenderRequestService;
-        InitialiseAsync();
     }
 
     [ObservableProperty]
@@ -22,24 +21,22 @@ public partial class CalendarViewModel : PageViewModel
     private ObservableCollection<IEnumerable<CalendarItemViewModel>> _calendarMonthItems = [];
 
     [RelayCommand]
-    public async Task RefreshCalendarAsync()
+    private async Task RefreshCalendarAsync()
     {
-        SetLoading(true, "Loading selected month");
-        await RunOnBackgroundThreadAsync(async () => await LoadSelectedCalendarMonthAsync());
-        SetLoading(false);
+        await RunOnBackgroundThreadAsync(LoadSelectedCalendarMonthAsync());
     }
     
-    private async void InitialiseAsync()
+    [RelayCommand]
+    private async Task InitialiseAsync()
     {
-        SetLoading(true, "Loading current month");
-        SelectedDate = DateTimeOffset.Now;
-        await RunOnBackgroundThreadAsync(async () => await LoadSelectedCalendarMonthAsync());
-
-        SetLoading(false);
+        await RunOnBackgroundThreadAsync(LoadSelectedCalendarMonthAsync());
     }
 
     private async Task LoadSelectedCalendarMonthAsync()
     {
+        SetLoading(true, "Loading calender month");
+        SelectedDate = DateTimeOffset.Now;
+        
         var calenderItems = new List<CalendarItemViewModel>();
         CalendarMonthItems.Clear();
         await foreach (var item in _calenderRequestService.GetMonthItemsAsync(SelectedDate!.Value.Month, SelectedDate!.Value.Year))
@@ -85,5 +82,7 @@ public partial class CalendarViewModel : PageViewModel
         {
             CalendarMonthItems.Add(item);
         }
+        
+        SetLoading(false);
     }
 }

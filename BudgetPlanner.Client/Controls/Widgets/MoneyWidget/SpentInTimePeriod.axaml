@@ -47,7 +47,7 @@
 						<controls:HeaderAndValueCard
 							Grid.Row="1"
 							Grid.Column="1"
-							Text="{TemplateBinding TotalOut, Converter={StaticResource DecimalToCurrencyConverter}}}"
+							Text="{TemplateBinding TotalOut, Converter={StaticResource DecimalToCurrencyConverter}}"
 							Title="Total Out"
 							Theme="{StaticResource Danger}"
 						></controls:HeaderAndValueCard>
@@ -55,7 +55,7 @@
 						<controls:HeaderAndValueCard
 							Grid.Row="1"
 							Grid.Column="2"
-							Text="{TemplateBinding Normalised, Converter={StaticResource DecimalToCurrencyConverter}}}"
+							Text="{TemplateBinding Normalised, Converter={StaticResource DecimalToCurrencyConverter}}"
 							Title="Difference"
 							Theme="{StaticResource Warning}"
 						></controls:HeaderAndValueCard>

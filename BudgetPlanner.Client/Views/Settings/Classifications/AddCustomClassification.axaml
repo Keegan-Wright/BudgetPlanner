@@ -7,6 +7,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.AddCustomClassificationView"
              x:DataType="vm:AddCustomClassificationViewModel">
+	
+	
 
 	<StackPanel>
 		<TextBlock Margin="0 5">Classification</TextBlock>

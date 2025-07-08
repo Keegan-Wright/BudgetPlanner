@@ -139,7 +139,7 @@ namespace BudgetPlanner.Client.ViewModels
                     Dispatcher.UIThread.Invoke(() => Transactions.Add(viewModel));
                 }
             }
-            catch(Exception ex)
+            catch(Exception? ex)
             {
                 ErrorHandler.HandleError(ex);
             }

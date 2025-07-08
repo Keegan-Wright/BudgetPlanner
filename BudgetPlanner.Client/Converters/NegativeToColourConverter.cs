@@ -13,7 +13,7 @@ namespace BudgetPlanner.Client.Converters
             {
                 SolidColorBrush brush = new SolidColorBrush();
                 
-                if (decimalValue != null && decimal.IsNegative(decimalValue))
+                if (decimal.IsNegative(decimalValue))
                 {
                     brush.Color = Colors.Red;
                 }

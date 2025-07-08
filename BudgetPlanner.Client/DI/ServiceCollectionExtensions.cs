@@ -11,7 +11,6 @@ using BudgetPlanner.Client.Services.OpenBanking;
 using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
-using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;

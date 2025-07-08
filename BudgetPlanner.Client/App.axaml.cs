@@ -46,7 +46,7 @@ namespace BudgetPlanner.Client
             {
                 db.Database.Migrate();
             }
-            catch (Exception ex)
+            catch (Exception? ex)
             {
                 ErrorHandler.HandleError(ex);
                 _ = db.Database.EnsureCreated();
@@ -97,7 +97,7 @@ namespace BudgetPlanner.Client
 
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            var DbPath = Path.Join(path, "BudgetPlanner.Client.db");
+            var dbPath = Path.Join(path, "BudgetPlanner.Client.db");
 
             var assembly = Assembly.GetExecutingAssembly();
             var appSettingPath = $"{assembly.GetName().Name}.appsettings.json";
@@ -105,7 +105,7 @@ namespace BudgetPlanner.Client
 
 
             IConfiguration config = new ConfigurationBuilder()
-                .AddJsonStream(stream)
+                .AddJsonStream(stream!)
                 .Build();
 
             
@@ -117,7 +117,7 @@ namespace BudgetPlanner.Client
             {
                 // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
                 // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-                client.BaseAddress = new(config["Service:BaseUrl"]);
+                client.BaseAddress = new(config["Service:BaseUrl"] ?? string.Empty);
                 client.DefaultRequestHeaders.Add("Access-Control-Allow-Origin","*");
                 client.DefaultRequestHeaders.Add("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
                 client.Timeout = TimeSpan.FromMinutes(30);
@@ -131,12 +131,12 @@ namespace BudgetPlanner.Client
                 SentrySdk.Init(options =>
                 {
                     options.Dsn = config["Sentry:Dsn"];
-                    options.Debug = bool.Parse(config["Sentry:Debug"]);
-                    options.AutoSessionTracking = bool.Parse(config["Sentry:AutoSessionTracking"]);
-                    options.TracesSampleRate = double.Parse(config["Sentry:TracesSampleRate"]);
-                    options.ProfilesSampleRate = double.Parse(config["Sentry:ProfilesSampleRate"]);
+                    options.Debug = bool.Parse(config["Sentry:Debug"] ?? string.Empty);
+                    options.AutoSessionTracking = bool.Parse(config["Sentry:AutoSessionTracking"] ?? string.Empty);
+                    options.TracesSampleRate = double.Parse(config["Sentry:TracesSampleRate"] ?? string.Empty);
+                    options.ProfilesSampleRate = double.Parse(config["Sentry:ProfilesSampleRate"] ?? string.Empty);
                     options.Release = config["Sentry:Release"];
-                    options.CaptureFailedRequests = bool.Parse(config["Sentry:CaptureFailedRequests"]);
+                    options.CaptureFailedRequests = bool.Parse(config["Sentry:CaptureFailedRequests"] ?? string.Empty);
                     
                     options.AddDiagnosticSourceIntegration();
                     options.AddEntityFramework();
@@ -153,7 +153,7 @@ namespace BudgetPlanner.Client
 
             services.AddSingleton(new DatabaseConfiguration()
             {
-                ConnectionString = DbPath
+                ConnectionString = dbPath
             });
 
             services.AddDbContext<BudgetPlannerDbContext>();

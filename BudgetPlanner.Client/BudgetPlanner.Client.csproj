@@ -43,6 +43,14 @@
 	    <DependentUpon>HeaderAndValueCard.axaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Views\Reports\AccountBreakdownReportView.axaml.cs">
+	    <DependentUpon>SpentInTimePeriodReportView2.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\Reports\CategoryBreakdownReportView.axaml.cs">
+	    <DependentUpon>AccountBreakdownReportView2.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
 	</ItemGroup>
 
 

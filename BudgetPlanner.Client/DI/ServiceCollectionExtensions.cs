@@ -70,6 +70,8 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<RegisterView>();
             services.AddTransient<LandingPageView>();
             services.AddTransient<SpentInTimePeriodReportView>();
+            services.AddTransient<AccountBreakdownReportView>();
+            services.AddTransient<CategoryBreakdownReportView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)

@@ -13,7 +13,6 @@ namespace BudgetPlanner.Client.ViewModels
         {
             _openBankingRequestService = openBankingRequestService;
 
-            InitialiseAsync();
         }
 
         [ObservableProperty]
@@ -26,9 +25,13 @@ namespace BudgetPlanner.Client.ViewModels
         [ObservableProperty]
         private string _openBankingCode;
 
+        [RelayCommand]
+        private async Task InitialiseAsync()
+        {
+            await RunOnBackgroundThreadAsync(LoadOpenBankingProvidersAsync());
+        }
 
-
-        private async void InitialiseAsync()
+        private async Task LoadOpenBankingProvidersAsync()
         {
             SetLoading(true, "Loading Providers");
 
@@ -59,7 +62,7 @@ namespace BudgetPlanner.Client.ViewModels
         }
 
         [RelayCommand]
-        public async void BuildAuthenticationUrl()
+        private async Task BuildAuthenticationUrl()
         {
             var selectedProviders = OpenBankingProviders.Where(x => x.Checked);
 
@@ -72,7 +75,7 @@ namespace BudgetPlanner.Client.ViewModels
 
 
         [RelayCommand]
-        public async Task AddProviderCommand()
+        private async Task AddProvider()
         {
             SetLoading(true, "Adding Provider");
             var requestModel = new AddVendorRequestModel()

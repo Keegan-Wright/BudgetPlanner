@@ -38,9 +38,9 @@
 			<SplitView
 				ZIndex="1"
 			IsPaneOpen="{Binding SideMenuExpanded}"
-			CompactPaneLength="45"
+			CompactPaneLength="50"
 			DisplayMode="CompactInline"
-			OpenPaneLength="190">
+			OpenPaneLength="210">
 				<SplitView.Pane>
 
 					<StackPanel Orientation="Vertical"

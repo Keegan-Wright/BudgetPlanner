@@ -181,79 +181,82 @@ AvaloniaProperty.RegisterDirect<OpenBankingTransactionFilters, DateTime?>(nameof
         if (change.Property == SelectedProvidersProperty)
         {
             var items = change.GetNewValue<IList?>();
-            CommandParameter.ProviderIds.Clear();
+            CommandParameter?.ProviderIds?.Clear();
             if (items is null)
                 return;
             foreach (var item in items)
             {
-                CommandParameter.ProviderIds.Add((item as TransactionProviderFilterViewModel).ProviderId);
+                CommandParameter?.ProviderIds?.Add(((item as TransactionProviderFilterViewModel)!).ProviderId);
             }
         }
 
         if (change.Property == SelectedAccountsProperty)
         {
             var items = change.GetNewValue<IList?>();
-            CommandParameter.AccountIds.Clear();
+            CommandParameter?.AccountIds?.Clear();
 
 
             if (items is null)
                 return;
             foreach (var item in items)
             {
-                CommandParameter.AccountIds.Add((item as TransactionAccountFilterViewModel).AccountId);
+                CommandParameter?.AccountIds?.Add(((item as TransactionAccountFilterViewModel)!).AccountId);
             }
         }
 
         if (change.Property == SelectedCategoriesProperty)
         {
             var items = change.GetNewValue<IList?>();
-            CommandParameter.Categories.Clear();
+            CommandParameter?.Categories?.Clear();
             if (items is null)
                 return;
             foreach (var item in items)
             {
-                CommandParameter.Categories.Add((item as TransactionCategoryFilterViewModel).TransactionCategory);
+                CommandParameter?.Categories?.Add((item as TransactionCategoryFilterViewModel)!.TransactionCategory);
             }
         }
 
         if (change.Property == SelectedTypesProperty)
         {
             var items = change.GetNewValue<IList?>();
-            CommandParameter.Types.Clear();
+            CommandParameter?.Types?.Clear();
             if (items is null)
                 return;
             foreach (var item in items)
             {
-                CommandParameter.Types.Add((item as TransactionTypeFilterViewModel).TransactionType);
+                CommandParameter?.Types?.Add(((item as TransactionTypeFilterViewModel)!).TransactionType);
             }
         }
 
         if (change.Property == SelectedTagsProperty)
         {
             var items = change.GetNewValue<IList?>();
-            CommandParameter.Tags.Clear();
+            CommandParameter?.Tags?.Clear();
             if (items is null)
                 return;
             foreach (var item in items)
             {
-                CommandParameter.Tags.Add((item as TransactionTagFilterViewModel).Tag);
+                CommandParameter?.Tags?.Add((item as TransactionTagFilterViewModel)!.Tag!);
             }
         }
 
 
         if (change.Property == SearchTermProperty)
         {
-            CommandParameter.SearchTerm = change.GetNewValue<string?>();
+            if (CommandParameter != null) 
+                CommandParameter.SearchTerm = change.GetNewValue<string?>();
         }
 
         if (change.Property == DateToProperty)
         {
-            CommandParameter.ToDate = change.GetNewValue<DateTime?>();
+            if (CommandParameter != null) 
+                CommandParameter.ToDate = change.GetNewValue<DateTime?>();
         }
 
         if (change.Property == DateFromProperty)
         {
-            CommandParameter.FromDate = change.GetNewValue<DateTime?>();
+            if (CommandParameter != null) 
+                CommandParameter.FromDate = change.GetNewValue<DateTime?>();
         }
 
     }

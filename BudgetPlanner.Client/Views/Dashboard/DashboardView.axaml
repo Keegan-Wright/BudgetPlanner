@@ -8,6 +8,15 @@
              x:Class="BudgetPlanner.Client.Views.DashboardView"
              x:DataType="vm:DashboardViewModel"
 			 >
+	
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior
+			RoutedEvent="{x:Static  Control.LoadedEvent}">
+			<InvokeCommandAction
+				Command="{Binding InitialiseCommand, Mode=OneTime}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
+	
 	<Panel>
 		<ScrollViewer>
 			<StackPanel>

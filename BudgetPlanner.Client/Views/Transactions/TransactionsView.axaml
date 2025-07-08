@@ -7,6 +7,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.TransactionsView"
              x:DataType="vm:TransactionsViewModel">
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior
+			RoutedEvent="{x:Static  Control.LoadedEvent}">
+			<InvokeCommandAction
+				Command="{Binding LoadFilterItemsAsync, Mode=OneTime}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
 
 	<Grid>
 

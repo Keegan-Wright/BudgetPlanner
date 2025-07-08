@@ -1,6 +1,8 @@
-﻿namespace BudgetPlanner.Shared.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace BudgetPlanner.Shared.Enums
 {
-    [Flags]
+    [Flags, JsonConverter(typeof(JsonStringEnumConverter<SyncTypes>))]
     public enum SyncTypes
     {
         Account = 1,

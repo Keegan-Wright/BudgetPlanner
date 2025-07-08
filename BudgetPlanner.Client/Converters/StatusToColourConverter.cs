@@ -13,16 +13,10 @@ namespace BudgetPlanner.Client.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            SolidColorBrush brush = new SolidColorBrush();
-            string status = value as string;
-            if (status != null && status.Equals("Pending"))
-            {
-                brush.Color = Colors.Red;
-            }
-            else
-            {
-                brush.Color = Colors.Green;
-            }
+            var brush = new SolidColorBrush();
+            var status = value as string;
+            
+            brush.Color = status is "Pending" ? Colors.Red : Colors.Green;
             return brush;
         }
 

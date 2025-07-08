@@ -44,7 +44,7 @@ namespace BudgetPlanner.Client.ViewModels
 
                 });
             }
-            catch (Exception ex)
+            catch (Exception? ex)
             {
                 ErrorHandler.HandleError(ex);
             }

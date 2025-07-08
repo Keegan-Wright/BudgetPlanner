@@ -20,15 +20,13 @@ namespace BudgetPlanner.Client.ViewModels
 
             WeakReferenceMessenger.Default.Register(this);
 
-            InitialiseAsync();
         }
-
-        private async void InitialiseAsync()
+        
+        [RelayCommand]
+        private async Task InitialiseAsync()
         {
-            await GetBudgetCategoriesAsync();
+            await RunOnBackgroundThreadAsync(GetBudgetCategoriesAsync());
         }
-
-
 
 
         [ObservableProperty]

@@ -9,10 +9,10 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="11.2.3" />
+		<PackageReference Include="Avalonia" Version="11.3.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="FluentValidation" Version="11.11.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+		<PackageReference Include="FluentValidation" Version="12.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -27,6 +27,15 @@
 	  <ProjectReference Include="..\BudgetPlanner.Client.Services\BudgetPlanner.Client.Services.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Client.States\BudgetPlanner.Client.States.csproj" />
 	  <ProjectReference Include="..\BudgetPlanner.Client.ViewModels.Shared\BudgetPlanner.Client.ViewModels.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="LiveChartsCore">
+	    <HintPath>..\..\..\.nuget\packages\livechartscore\2.0.0-rc5.4\lib\net8.0\LiveChartsCore.dll</HintPath>
+	  </Reference>
+	  <Reference Include="LiveChartsCore.SkiaSharpView">
+	    <HintPath>..\..\..\.nuget\packages\livechartscore.skiasharpview\2.0.0-rc5.4\lib\net8.0\LiveChartsCore.SkiaSharpView.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>

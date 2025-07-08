@@ -7,6 +7,16 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.SetupProviderView"
              x:DataType="vm:SetupProviderViewModel">
+	
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior
+			RoutedEvent="{x:Static  Control.LoadedEvent}">
+			<InvokeCommandAction
+				Command="{Binding InitialiseCommand, Mode=OneTime}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
+	
+	
 	<StackPanel Spacing="10">
 		<TextBlock>Provider Selection</TextBlock>
 		<Grid>

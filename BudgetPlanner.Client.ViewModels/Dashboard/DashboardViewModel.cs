@@ -1,6 +1,7 @@
 ﻿using BudgetPlanner.Shared.Extensions;
 using BudgetPlanner.Client.Services.Dashboard;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BudgetPlanner.Client.ViewModels
 {
@@ -11,16 +12,21 @@ namespace BudgetPlanner.Client.ViewModels
         public DashboardViewModel(IDashboardRequestService dashboardRequestService)
         {
             _dashboardRequestService = dashboardRequestService;
-            InitialiseAsync();
         }
 
-        private async void InitialiseAsync()
+        [RelayCommand]
+        private async Task InitialiseAsync()
+        {
+            await RunOnBackgroundThreadAsync(LoadDashoardData());
+        }
+
+        private async Task LoadDashoardData()
         {
             SetLoading(true, "Loading Dashboard Data");
 
             
             var transaction = SentrySdk.StartTransaction("Load dashboard data", "Client loading data");
-                SentrySdk.ConfigureScope(scope => scope.Transaction = transaction);
+            SentrySdk.ConfigureScope(scope => scope.Transaction = transaction);
                
             await LoadUpcomingPayments();
             await LoadSpendingPeriods();

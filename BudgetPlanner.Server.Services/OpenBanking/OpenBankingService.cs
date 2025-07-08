@@ -35,7 +35,9 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                                .Include(x => x.Providers).ThenInclude(x => x.Accounts).ThenInclude(x => x.AccountBalance)
                                .Include(x => x.Providers).ThenInclude(x => x.Scopes)
                                .Include(x => x.Providers).ThenInclude(x => x.Syncronisations)
-                               .SelectMany(x => x.Providers).AsAsyncEnumerable())
+                               .SelectMany(x => x.Providers)
+                               .AsSplitQuery()
+                               .AsAsyncEnumerable())
             {
                 yield return provider;
             }
@@ -47,6 +49,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                 .Include(x => x.Providers)
                 .SelectMany(x => x.Providers)
                 .Where(x => x.OpenBankingProviderId == providerId)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync();
 
             return provider;
@@ -81,10 +84,10 @@ namespace BudgetPlanner.Server.Services.OpenBanking
         public async Task PerformSyncAsync(SyncTypes syncFlags)
         {
             await foreach (var provider in GetOpenBankingProvidersAsync())
-                    {
-                        await BulkLoadProviderAsync(provider, syncFlags);
-                    }
-                    await _budgetPlannerDbContext.SaveChangesAsync();
+            {
+                await BulkLoadProviderAsync(provider, syncFlags);
+            }
+            await _budgetPlannerDbContext.SaveChangesAsync();
                     
         }
 
@@ -111,10 +114,7 @@ namespace BudgetPlanner.Server.Services.OpenBanking
                         Scopes = []
                     };
 
-                    if (user.Providers is null)
-                    {
-                        user.Providers = [];
-                    }
+                    user.Providers ??= [];
                     
                     user.Providers.Add(provider);
 

@@ -39,6 +39,10 @@
 	    <DependentUpon>LandingPageView.axaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Controls\Widgets\MoneyWidget\HeaderAndValueCard.axaml.cs">
+	    <DependentUpon>HeaderAndValueCard.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
 	</ItemGroup>
 
 
@@ -132,7 +136,10 @@
 		  <DependentUpon>ValidationContainer.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Controls\Widgets\MoneyWidget\SpentInTimePeriod.axaml.cs">
-		  <DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
+			<DependentUpon>SpentInTimePeriod.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\Widgets\MoneyWidget\HeaderAndValueCard.axaml.cs">
+			<DependentUpon>HeaderAndValueCard.axaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Account\AccountsView.axaml.cs">
 		  <DependentUpon>AccountsView.axaml</DependentUpon>

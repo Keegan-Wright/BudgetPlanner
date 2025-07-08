@@ -70,6 +70,20 @@ public class ReportService : BaseService, IReportService
                     TotalOut = monthlyGrouping.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
                     TotalTransactions = monthlyGrouping.Count(),
                 };
+                
+                
+                var dayGrp = monthlyGrouping.GroupBy(x => x.TransactionTime.Day);
+                foreach (var dayGrouping in dayGrp)
+                {
+                    monthGrp.DailyBreakdown.Add(new SpentInTimePeriodReportDailyBreakdownResponse()
+                    {
+                        Day = dayGrouping.Key,
+                        TotalIn = dayGrouping.Where(x => !Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
+                        TotalOut = dayGrouping.Where(x => Decimal.IsNegative(x.Amount)).Sum(x => x.Amount),
+                        TotalTransactions = dayGrouping.Count()
+                    });
+                }
+                
                 yearGrp.MonthlyBreakdown.Add(monthGrp);
             }
             
@@ -203,27 +217,51 @@ public class ReportService : BaseService, IReportService
             .AsNoTracking();
 
 
-        if (request.ProviderIds != null)
-        {
-            query = query.Where(x => request.ProviderIds.Contains(x.Provider.Id));
-        }
+            if (request.AccountIds is not null && request.AccountIds.Any())
+            {
+                query = query.Where(x => request.AccountIds.Contains(x.Account.Id));
+            }
 
-        if (request.AccountIds != null)
-        {
-            query = query.Where(x => request.AccountIds.Contains(x.Account.Id));
-        }
+            if (request.Types is not null && request.Types.Any())
+            {
+                query = query.Where(x => request.Types.Contains(x.TransactionType));
+            }
 
-        if (request.Categories != null)
-        {
-            query = query.Where(x => request.Categories.Contains(x.TransactionCategory));
-        }
-        
-        if (request.TransactionTypes != null)
-        {
-            query = query.Where(x => request.TransactionTypes.Contains(x.TransactionType));
-        }
-        
-        query = query.Where(x => x.TransactionTime >= request.FromDate && x.TransactionTime <= request.ToDate);
+            if (request.Categories is not null && request.Categories.Any())
+            {
+                query = query.Where(x => request.Categories.Contains(x.TransactionCategory));
+            }
+
+            if (request.Tags is not null && request.Tags.Any())
+            {
+                query = query.Where(x => request.Tags.Any(y => x.Classifications.Any(c => c.Classification == y)));
+            }
+
+            if (request.ProviderIds is not null && request.ProviderIds.Any())
+            {
+                
+                query = query.Where(x => request.ProviderIds.Contains(x.Provider.Id))
+                    .Select(x => x);
+            }
+
+            if (request.SearchTerm is not null)
+            {
+                query = query.Where(x => EF.Functions.Like(x.Description.ToLower(), $"%{request.SearchTerm.ToLower()}%"));
+
+            }
+
+            if (request.FromDate is not null)
+            {
+                query = query.Where(x => x.TransactionTime >= request.FromDate);
+            }
+
+            if (request.ToDate is not null)
+            {
+                query = query.Where(x => x.TransactionTime <= request.ToDate);
+            }
+            
+            query = query.Where(x => x.TransactionCategory != "TRANSFER");
+            
         
         return query;
     }

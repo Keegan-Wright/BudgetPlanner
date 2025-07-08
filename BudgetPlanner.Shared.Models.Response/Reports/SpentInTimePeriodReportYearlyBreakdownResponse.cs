@@ -10,3 +10,4 @@ public class SpentInTimePeriodReportYearlyBreakdownResponse : SpentInTimePeriodR
     [Description("Monthly breakdown of spending for the specified year")]
     public IList<SpentInTimePeriodReportMonthlyBreakdownResponse> MonthlyBreakdown { get; set; } = [];
 }
+

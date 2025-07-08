@@ -1,0 +1,91 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BudgetPlanner.Client.Controls"
+        xmlns:vm="clr-namespace:BudgetPlanner.Client.ViewModels;assembly=BudgetPlanner.Client.ViewModels"
+		>
+
+	<!--
+    Additional resources 
+    Using Control Themes:
+         https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
+    Using Theme Variants:
+         https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
+  -->
+
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<StackPanel Background="{DynamicResource SystemRegionBrush}">
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this week"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this Month"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent Today"/>
+				<controls:SpentInTimePeriod TotalIn="100" TotalOut="100" Normalised="100" Title="Spent this year"/>
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<ControlTheme x:Key="{x:Type controls:HeaderAndValueCard}" TargetType="controls:HeaderAndValueCard">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<StackPanel Orientation="Vertical" Spacing="10">
+						<TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
+						<TextBlock HorizontalAlignment="Center" 
+						           Text="{TemplateBinding Text}">
+						</TextBlock>
+					</StackPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+	
+	<ControlTheme x:Key="Danger" TargetType="controls:HeaderAndValueCard">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<StackPanel Orientation="Vertical" Spacing="10">
+						<TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
+						<TextBlock HorizontalAlignment="Center" 
+						           Classes="Danger"
+						           Text="{TemplateBinding Text}">
+						</TextBlock>
+					</StackPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="Warning" TargetType="controls:HeaderAndValueCard">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<StackPanel Orientation="Vertical" Spacing="10">
+						<TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
+						<TextBlock HorizontalAlignment="Center" 
+						           Classes="Warning"
+						           Text="{TemplateBinding Text}">
+						</TextBlock>
+					</StackPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	
+	<ControlTheme x:Key="Success" TargetType="controls:HeaderAndValueCard">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Theme="{StaticResource CardBorder}">
+					<StackPanel Orientation="Vertical" Spacing="10">
+						<TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Theme="{StaticResource TitleTextBlock}"></TextBlock>
+						<TextBlock HorizontalAlignment="Center" 
+						           Classes="Success"
+						           Text="{TemplateBinding Text}">
+						</TextBlock>
+					</StackPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	
+</ResourceDictionary>

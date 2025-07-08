@@ -32,7 +32,7 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" Text="{Binding Payment.PaymentName, RelativeSource={RelativeSource TemplatedParent}}" TextWrapping="Wrap"/>
-					<TextBlock Grid.Column="1" Text="{Binding Payment.Amount, RelativeSource={RelativeSource TemplatedParent}}" TextWrapping="Wrap"/>
+					<TextBlock Grid.Column="1" Text="{Binding Payment.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DecimalToCurrencyConverter}}" TextWrapping="Wrap"/>
 					<TextBlock Grid.Column="2" Text="{Binding Payment.PaymentDate, RelativeSource={RelativeSource TemplatedParent}}" TextWrapping="Wrap"/>
 					<TextBlock Grid.Column="3" Text="{Binding Payment.PaymentType, RelativeSource={RelativeSource TemplatedParent}}" TextWrapping="Wrap"/>
 

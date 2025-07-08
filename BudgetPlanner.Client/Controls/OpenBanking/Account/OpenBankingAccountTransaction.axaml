@@ -30,7 +30,7 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" Text="{Binding Transaction.Description, RelativeSource={RelativeSource TemplatedParent}}"></TextBlock>
-					<TextBlock Grid.Column="1" Text="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}}" Foreground="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NegativeToColourConverter}}"></TextBlock>
+					<TextBlock Grid.Column="1" Text="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DecimalToCurrencyConverter}}" Foreground="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NegativeToColourConverter}}"></TextBlock>
 
 					<TextBlock Grid.Column="2" Text="{Binding Transaction.Time, RelativeSource={RelativeSource TemplatedParent}}" ></TextBlock>
 					<TextBlock Grid.Column="3" Text="{Binding Transaction.Status, RelativeSource={RelativeSource TemplatedParent}}" Foreground="{Binding Transaction.Status, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StatusToColourConverter}}"></TextBlock>

@@ -12,13 +12,13 @@ public class BaseReportRequest
     public IList<Guid>? ProviderIds { get; set; }
 
     [Description("Start date for the report period")]
-    public DateTime FromDate { get; set; }
+    public DateTime? FromDate { get; set; }
 
     [Description("End date for the report period")]
-    public DateTime ToDate { get; set; }
+    public DateTime? ToDate { get; set; }
 
     [Description("List of transaction types to include in the report")]
-    public IList<string>? TransactionTypes { get; set; }
+    public IList<string>? Types { get; set; }
 
     [Description("List of transaction categories to include in the report")]
     public IList<string>? Categories { get; set; }
@@ -26,4 +26,10 @@ public class BaseReportRequest
 
     [Description("Type of synchronization to perform")]
     public required SyncTypes SyncTypes { get; set; }
+    
+    [Description("List of tags to filter the report")]
+    public IList<string>? Tags { get; set; } = [];
+    
+    [Description("Search term to filter transactions by description or other text fields")]
+    public string? SearchTerm { get; set; }
 }

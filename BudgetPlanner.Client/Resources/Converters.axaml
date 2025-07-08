@@ -4,4 +4,5 @@
     <!-- Add Resources Here -->
     <converters:StatusToColourConverter x:Key="StatusToColourConverter"/>
     <converters:NegativeToColourConverter x:Key="NegativeToColourConverter"/>
+    <converters:DecimalToCurrencyConverter x:Key="DecimalToCurrencyConverter"></converters:DecimalToCurrencyConverter>
 </ResourceDictionary>

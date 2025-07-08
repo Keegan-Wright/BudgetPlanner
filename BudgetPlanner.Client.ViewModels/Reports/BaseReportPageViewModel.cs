@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.Services.Reports;
+using BudgetPlanner.Client.Services.Transactions;
+using BudgetPlanner.Shared.Models.Request.Transaction;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -10,15 +12,15 @@ public abstract partial class BaseReportPageViewModel<TReportResponse> : PageVie
 {
     internal readonly IReportsService _reportsService;
     internal readonly INavigationService _navigationService;
+    internal readonly ITransactionsRequestService _transactionsRequestService;
     
     
     
-    protected BaseReportPageViewModel(IReportsService reportsService, INavigationService navigationService)
+    protected BaseReportPageViewModel(IReportsService reportsService, INavigationService navigationService, ITransactionsRequestService transactionsRequestService)
     {
         _reportsService = reportsService;
         _navigationService = navigationService;
-        
-        InitialiseAsync();
+        _transactionsRequestService = transactionsRequestService;
     }
     
     
@@ -32,21 +34,80 @@ public abstract partial class BaseReportPageViewModel<TReportResponse> : PageVie
     [ObservableProperty]
     private DateTime? _dateTo;
     
-    
-    
-    
-    
-    private async void InitialiseAsync()
-    {
-        SetLoading(true, "Loading report options");
-        await RunOnBackgroundThreadAsync(async () => await LoadReportOptionsAsync());
+    [ObservableProperty]
+    private ObservableCollection<TransactionProviderFilterViewModel> _providerFilterItems = [];
 
-        SetLoading(false);
-    }
+    [ObservableProperty]
+    private ObservableCollection<TransactionAccountFilterViewModel> _accountFilterItems = [];
 
+    [ObservableProperty]
+    private ObservableCollection<TransactionCategoryFilterViewModel> _categoryFilterItems = [];
+
+    [ObservableProperty]
+    private ObservableCollection<TransactionTypeFilterViewModel> _typeFilterItems = [];
+
+    [ObservableProperty]
+    private ObservableCollection<TransactionTagFilterViewModel> _tagFilterItems = [];
     
-    protected abstract Task LoadReportOptionsAsync();
+                    [RelayCommand]
+        public async Task LoadFilterItemsAsync()
+        {
+            
+            SetLoading(true, "Loading filter items");
+            await foreach (var provider in _transactionsRequestService.GetProvidersForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionProviderFilterViewModel()
+                {
+                    ProviderId = provider.ProviderId,
+                    ProviderName = provider.ProviderName,
+                };
+
+                ProviderFilterItems.Add(viewModel);
+            }
+
+            await foreach (var account in _transactionsRequestService.GetAccountsForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionAccountFilterViewModel()
+                {
+                    AccountId = account.AccountId,
+                    AccountName = account.AccountName,
+                };
+
+                AccountFilterItems.Add(viewModel);
+            }
+
+            await foreach (var type in _transactionsRequestService.GetTypesForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionTypeFilterViewModel()
+                {
+                    TransactionType = type.TransactionType
+                };
+
+                TypeFilterItems.Add(viewModel);
+            }
+
+            await foreach (var category in _transactionsRequestService.GetCategoriesForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionCategoryFilterViewModel()
+                {
+                    TransactionCategory = category.TransactionCategory
+                };
+                CategoryFilterItems.Add(viewModel);
+            }
+
+            await foreach(var tag in _transactionsRequestService.GetTagsForTransactionFiltersAsync())
+            {
+                var viewModel = new TransactionTagFilterViewModel()
+                {
+                    Tag = tag.Tag
+                };
+                TagFilterItems.Add(viewModel);
+            }
+            
+            SetLoading(false);
+        }
+
     
     [RelayCommand]
-    protected abstract Task LoadReportAsync();
+    public abstract Task LoadReportAsync(FilteredTransactionsRequest searchCriteria);
 }

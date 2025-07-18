@@ -7,6 +7,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.BudgetCategoriesView"
              x:DataType="vm:BudgetCategoriesViewModel">
+	
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior
+			RoutedEvent="{x:Static  Control.LoadedEvent}">
+			<InvokeCommandAction
+				Command="{Binding InitialiseCommand, Mode=OneTime}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
+	
 	<StackPanel>
 		<Button Command="{Binding NavigateToAddBudgetCategory}">Add New Category</Button>
 

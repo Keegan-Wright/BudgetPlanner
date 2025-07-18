@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using System.Text.Unicode;
 using BudgetPlanner.Server.Data.Db;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using Sentry.OpenTelemetry;
 
 namespace BudgetPlanner.Server;
@@ -19,9 +21,16 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
-        builder.AddServiceDefaults();
-        builder.WebHost.UseSentry(options =>
+
+        
+        // Exclude from openapi gen as it throws errors
+        if (Assembly.GetEntryAssembly()?.GetName().Name != "GetDocument.Insider")
         {
+            
+            builder.AddServiceDefaults();
+            
+            builder.WebHost.UseSentry(options =>
+            {
                 options.Dsn = builder.Configuration.GetValue<string>("SENTRY_DSN");
                 options.Debug = builder.Configuration.GetValue<bool>("SENTRY_DEBUG");
                 options.AutoSessionTracking = builder.Configuration.GetValue<bool>("SENTRY_AUTO_SESSION_TRACKING");;
@@ -32,7 +41,19 @@ public class Program
                 options.UseOpenTelemetry();
                 options.AddDiagnosticSourceIntegration();
                 options.AddEntityFramework();
-        });
+            });
+            
+            builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
+            {
+                options.DisableRetry= false;
+                options.CommandTimeout = 0;
+            });
+
+        }
+
+        
+        
+
 
         builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
@@ -62,18 +83,20 @@ public class Program
 
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
-        
-        builder.AddNpgsqlDbContext<BudgetPlannerDbContext>(connectionName: "budgetPlannerPostgresDb", options =>
+
+        builder.Services.AddCors(o =>
         {
-            options.DisableRetry= false;
-            options.CommandTimeout = 30;  
+            o.AddDefaultPolicy(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         });
+        
 
 
         
         builder.Services.AddInternalServices();
         builder.Services.AddExternalServices();
         builder.Services.AddClaimsPrincipalServices();
+
+        builder.Services.AddOpenApi();
         
         var trueLayerConfig = new TrueLayerOpenBankingConfiguration();
         trueLayerConfig.BaseAuthUrl = builder.Configuration.GetValue<string>("OPEN_BANKING_TRUELAYER_BASE_AUTH_URL");
@@ -89,6 +112,15 @@ public class Program
         app.UseAuthentication();
         app.UseRouting();
         app.UseAuthorization();
+        app.UseCors();
+
+        app.MapOpenApi();
+        app.MapScalarApiReference(x =>
+        {
+            x.WithClientButton(false);
+            x.WithTagSorter(TagSorter.Alpha);
+            x.WithOperationSorter(OperationSorter.Method);
+        });
         
         app.UseExceptionHandler(exceptionHandlerApp 
             => exceptionHandlerApp.Run(async context 
@@ -117,6 +149,7 @@ public class Program
         app.MapHouseholdMembersEndpoint();
         app.MapTransactionsEndPoint();
         app.MapAuthEndPoint();
+        app.MapReportingEndpoint();
     }
 
     private static async Task EnsureDbMigratedAsync(WebApplication app)

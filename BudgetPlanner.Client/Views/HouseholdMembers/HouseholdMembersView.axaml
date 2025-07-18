@@ -7,8 +7,17 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.HouseholdMembersView"
              x:DataType="vm:HouseholdMembersViewModel">
+	
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior
+			RoutedEvent="{x:Static  Control.LoadedEvent}">
+			<InvokeCommandAction
+				Command="{Binding InitialiseCommand, Mode=OneTime}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
+	
 	<StackPanel>
-		<Button Command="{Binding NavigateToAddHouseholdMember}">Add New Household Member</Button>
+		<Button Command="{Binding NavigateToAddHouseholdMemberCommand}">Add New Household Member</Button>
 
 
 		<controls:HouseholdMembers Members="{Binding HouseholdMembers}" />

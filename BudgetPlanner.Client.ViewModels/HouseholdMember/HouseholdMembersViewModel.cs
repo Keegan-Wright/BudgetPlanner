@@ -20,12 +20,12 @@ namespace BudgetPlanner.Client.ViewModels
 
             WeakReferenceMessenger.Default.Register(this);
 
-            InitialiseAsync();
         }
 
-        private async void InitialiseAsync()
+        [RelayCommand]
+        private async Task InitialiseAsync()
         {
-            await GetHouseholdMembersAsync();
+            await RunOnBackgroundThreadAsync(LoadHouseholdMembersAsync());
         }
 
 
@@ -36,7 +36,7 @@ namespace BudgetPlanner.Client.ViewModels
 
 
         [RelayCommand]
-        public async Task GetHouseholdMembersAsync()
+        private async Task GetHouseholdMembersAsync()
         {
             await LoadHouseholdMembersAsync();
         }
@@ -61,7 +61,7 @@ namespace BudgetPlanner.Client.ViewModels
         }
 
         [RelayCommand]
-        public void NavigateToAddHouseholdMember()
+        private void NavigateToAddHouseholdMember()
         {
             _navigationService.RequestNavigation<AddHouseholdMemberViewModel>();
         }

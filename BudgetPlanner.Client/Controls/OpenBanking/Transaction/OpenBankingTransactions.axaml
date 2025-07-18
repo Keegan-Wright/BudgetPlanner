@@ -49,7 +49,7 @@
 								Width="Auto">
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate x:DataType="vm:TransactionItemViewModel">
-										<TextBlock Text="{Binding Amount}"
+										<TextBlock Text="{Binding Amount, Converter={StaticResource DecimalToCurrencyConverter}}"
 										Foreground="{Binding Amount, Converter={StaticResource NegativeToColourConverter}}"/>
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>

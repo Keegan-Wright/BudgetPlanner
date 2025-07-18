@@ -42,7 +42,7 @@
 
 			<StackPanel Grid.Row="1">
 				<controls:ValidationContainer ValidationErrors="{Binding Errors}" ScrollViewerHeight="100" ScrollViewerMaxHeight="500"/>
-				<Button Command="{Binding AddCustomTagsToTransaction}">Confirm Selection</Button>
+				<Button Command="{Binding AddCustomTagsToTransactionCommand}">Confirm Selection</Button>
 			</StackPanel>
 		</Grid>
 

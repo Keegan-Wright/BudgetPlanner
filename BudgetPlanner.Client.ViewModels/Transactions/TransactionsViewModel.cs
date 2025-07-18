@@ -18,8 +18,6 @@ namespace BudgetPlanner.Client.ViewModels
         {
             _transactionsRequestService = transactionsRequestService;
             _navigationService = navigationService;
-            InitialiseAsync();
-
         }
 
         [ObservableProperty]
@@ -54,54 +52,11 @@ namespace BudgetPlanner.Client.ViewModels
             _navigationService.RequestNavigation<AddCustomClassificationsToTransactionViewModel>(transactionItemViewModel);
         }
 
-        private async void InitialiseAsync()
+                [RelayCommand]
+        public async Task LoadFilterItemsAsync()
         {
+            
             SetLoading(true, "Loading filter items");
-
-            await RunOnBackgroundThreadAsync(async () => await LoadFilterItemsAsync());
-
-            SetLoading(false);
-        }
-
-        private async Task LoadTransactionsAsync(FilteredTransactionsRequest searchCriteria)
-        {
-            SetLoading(true, "Loading Transactions");
-            try
-            {
-                Dispatcher.UIThread.Invoke(Transactions.Clear);
-
-                await foreach (var transaction in _transactionsRequestService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
-                {
-                    var viewModel = new TransactionItemViewModel()
-                    {
-                        Amount = transaction.Amount,
-                        Currency = transaction.Currency,
-                        Description = transaction.Description,
-                        Pending = transaction.Pending,
-                        TransactionCategory = transaction.TransactionCategory,
-                        TransactionId = transaction.TransactionId,
-                        TransactionDate = DateOnly.FromDateTime(transaction.TransactionTime),
-                        TransactionType = transaction.TransactionType,
-                        Tags = transaction.Tags.Select(tag => new TransactionTagFilterViewModel
-                        {
-                            Tag = tag
-                        })
-                    };
-
-                    Dispatcher.UIThread.Invoke(() => Transactions.Add(viewModel));
-                }
-            }
-            catch(Exception ex)
-            {
-                ErrorHandler.HandleError(ex);
-            }
-
-
-            SetLoading(false);
-        }
-
-        private async Task LoadFilterItemsAsync()
-        {
             await foreach (var provider in _transactionsRequestService.GetProvidersForTransactionFiltersAsync())
             {
                 var viewModel = new TransactionProviderFilterViewModel()
@@ -151,7 +106,49 @@ namespace BudgetPlanner.Client.ViewModels
                 };
                 TagFilterItems.Add(viewModel);
             }
+            
+            SetLoading(false);
         }
+     
+
+        private async Task LoadTransactionsAsync(FilteredTransactionsRequest searchCriteria)
+        {
+            SetLoading(true, "Loading Transactions");
+            try
+            {
+                Dispatcher.UIThread.Invoke(Transactions.Clear);
+
+                await foreach (var transaction in _transactionsRequestService.GetAllTransactionsAsync(searchCriteria, SyncTypes.Transactions | SyncTypes.PendingTransactions))
+                {
+                    var viewModel = new TransactionItemViewModel()
+                    {
+                        Amount = transaction.Amount,
+                        Currency = transaction.Currency,
+                        Description = transaction.Description,
+                        Pending = transaction.Pending,
+                        TransactionCategory = transaction.TransactionCategory,
+                        TransactionId = transaction.TransactionId,
+                        TransactionDate = DateOnly.FromDateTime(transaction.TransactionTime),
+                        TransactionType = transaction.TransactionType,
+                        Tags = transaction.Tags.Select(tag => new TransactionTagFilterViewModel
+                        {
+                            Tag = tag
+                        })
+                    };
+
+                    Dispatcher.UIThread.Invoke(() => Transactions.Add(viewModel));
+                }
+            }
+            catch(Exception? ex)
+            {
+                ErrorHandler.HandleError(ex);
+            }
+
+
+            SetLoading(false);
+        }
+
+
     }
 
     

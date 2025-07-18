@@ -7,12 +7,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BudgetPlanner.Client.Views.CalendarView"
              x:DataType="vm:CalendarViewModel">
+    
+    <Interaction.Behaviors>
+        <RoutedEventTriggerBehavior
+            RoutedEvent="{x:Static  Control.LoadedEvent}">
+            <InvokeCommandAction
+                Command="{Binding InitialiseCommand, Mode=OneTime}" />
+        </RoutedEventTriggerBehavior>
+    </Interaction.Behaviors>
+    
     <Grid>
         <ScrollViewer>
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <DatePicker DayVisible="False" SelectedDate="{Binding SelectedDate}"></DatePicker>
-                    <Button Command="{Binding RefreshCalendarAsync}">Update</Button>
+                    <Button Command="{Binding RefreshCalendarCommand}">Update</Button>
                 </StackPanel>
                 <controls:CalendarMonthItem WeeksInMonth="{Binding CalendarMonthItems}"></controls:CalendarMonthItem>
             </StackPanel>

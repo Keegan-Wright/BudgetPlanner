@@ -8,13 +8,10 @@ namespace BudgetPlanner.Server.Data.Db
 {
     public class BudgetPlannerDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IDesignTimeDbContextFactory<BudgetPlannerDbContext>
     {
-
         public BudgetPlannerDbContext()
         {
             
         }
-
-
 
         public BudgetPlannerDbContext(DbContextOptions<BudgetPlannerDbContext> options) : base(options)
         {

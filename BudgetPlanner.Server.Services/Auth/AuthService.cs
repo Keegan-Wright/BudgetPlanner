@@ -29,7 +29,7 @@ public class AuthService : IAuthService
     {
         var user = await _budgetPlannerDbContext.Users
             .Include(x => x.RefreshTokens)
-            .FirstOrDefaultAsync(x => x.UserName == request.Username);
+            .FirstOrDefaultAsync(x => x.UserName.ToUpper() == request.Username.ToUpper());
         
         var passwordIsCorrect = await _userManager.CheckPasswordAsync(user, request.Password);
         if (passwordIsCorrect)

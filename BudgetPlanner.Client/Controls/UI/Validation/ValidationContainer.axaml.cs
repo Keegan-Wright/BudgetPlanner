@@ -65,7 +65,7 @@ public class ValidationContainer : UserControl
 
     public void RemoveValidationItem(string validationItem)
     {
-        if(ValidationErrors.Contains(validationItem))
+        if(ValidationErrors!.Contains(validationItem))
             ValidationErrors.Remove(validationItem);
     }
 

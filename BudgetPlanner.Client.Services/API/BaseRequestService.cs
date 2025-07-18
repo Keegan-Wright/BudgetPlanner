@@ -167,7 +167,6 @@ public abstract class BaseRequestService : InstrumentedService, IBaseRequestServ
     private async Task ConsumeRefreshToken(HttpClient client, AuthState authState)
     {
         var authResponse = await client.PostAsJsonAsync($"auth/token",new TokenRequest(){ RefreshToken = authState.RefreshToken}, CancellationToken.None);
-        
         authResponse.EnsureSuccessStatusCode();
         
         var rsp = await authResponse.Content.ReadFromJsonAsync<TokenResponse>(cancellationToken: CancellationToken.None);

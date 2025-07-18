@@ -11,6 +11,16 @@
         Transactions,
         SettingsClassifications,
         Calendar,
-        Logout
+        Logout,
+        ReportsSpentInTimePeriod,
+        ReportsCategoryBreakdown,
+        ReportsAccountBreakdown
+    }
+    
+    public enum ReportType
+    {
+        SpentInTimePeriod,
+        CategoryBreakdown,
+        AccountBreakdown
     }
 }

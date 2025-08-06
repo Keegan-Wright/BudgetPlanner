@@ -11,7 +11,7 @@
             <ControlTemplate>
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBlock Text="{Binding Transaction.Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-                    <TextBlock Text="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <TextBlock Text="{Binding Transaction.Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DecimalToCurrencyConverter}}"/>
                 </StackPanel>
             </ControlTemplate>
         </Setter>

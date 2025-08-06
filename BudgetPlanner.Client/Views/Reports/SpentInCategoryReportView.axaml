@@ -1,0 +1,141 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetPlanner.Client.ViewModels;assembly=BudgetPlanner.Client.ViewModels"
+             xmlns:controls="clr-namespace:BudgetPlanner.Client.Controls"
+             xmlns:lv="clr-namespace:LiveChartsCore;assembly=LiveChartsCore"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetPlanner.Client.Views.SpentInCategoryReportView"
+             x:DataType="vm:SpentInCategoryReportViewModel">
+
+    <Interaction.Behaviors>
+        <RoutedEventTriggerBehavior
+            RoutedEvent="{x:Static  Control.LoadedEvent}">
+            <InvokeCommandAction
+                Command="{Binding LoadFilterItemsAsync, Mode=OneTime}" />
+        </RoutedEventTriggerBehavior>
+    </Interaction.Behaviors>
+    
+    <Grid RowDefinitions="Auto, *">
+
+        <Border Theme="{StaticResource CardBorder}">
+            <controls:OpenBankingTransactionFilters
+                Grid.Row="0"
+                Accounts="{Binding AccountFilterItems}"
+                Providers="{Binding ProviderFilterItems}"
+                Categories="{Binding CategoryFilterItems}"
+                Tags="{Binding TagFilterItems}"
+                Types="{Binding TypeFilterItems}"
+                SearchCommand="{Binding LoadReportAsync}"/>
+        </Border>
+
+        <Border Grid.Row="1" Theme="{StaticResource CardBorder}">
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <ItemsControl ItemsSource="{Binding ReportItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                                    <Border Theme="{StaticResource CardBorder}">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Category }" />
+                    <controls:SpentInTimePeriod TotalIn="{Binding TotalIn}" 
+                                                TotalOut="{Binding TotalOut}"
+                                                Normalised="{Binding TotalDif}" Title="Overview" />
+
+                    <!--<lvc:PieChart
+                        Margin="10"
+                        MinHeight="250"
+                        Series="{Binding TotalOverviewPieSeries}"
+                        AutoUpdateEnabled="True"
+                        TooltipPosition="Auto" />-->
+
+                                <ItemsControl ItemsSource="{Binding YearlyBreakdown}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander>
+                                                <Interaction.Behaviors>
+                                                    <RoutedEventTriggerBehavior
+                                                        RoutedEvent="{x:Static Expander.ExpandingEvent}">
+                                                        <InvokeCommandAction
+                                                            Command="{Binding UpdateGraphData, Mode=OneTime}" />
+                                                    </RoutedEventTriggerBehavior>
+                                                </Interaction.Behaviors>
+
+                                                <Expander.Header>
+                                                    <TextBlock Text="{Binding Year}" />
+                                                </Expander.Header>
+                                                <Grid RowDefinitions="Auto, Auto">
+
+                                                    <StackPanel>
+                                                        <controls:SpentInTimePeriod
+                                                            TotalIn="{Binding TotalIn}"
+                                                            TotalOut="{Binding TotalOut}"
+                                                            Normalised="{Binding TotalDif }"
+                                                            Title="Overview" />
+
+
+                                                        <lvc:CartesianChart
+                                                            MinHeight="500"
+                                                            ZoomMode="Both"
+                                                            XAxes="{Binding AxisX}"
+                                                            Series="{Binding MonthlyBreakdownSeries}"
+                                                            TooltipPosition="Auto"
+                                                            AutoUpdateEnabled="True" />
+
+
+                                                    </StackPanel>
+
+                                                    <ItemsControl Grid.Row="1"
+                                                                  ItemsSource="{Binding MonthlyBreakdown}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Expander>
+                                                                    <Interaction.Behaviors>
+                                                                        <RoutedEventTriggerBehavior
+                                                                            RoutedEvent="{x:Static Expander.ExpandingEvent}">
+                                                                            <InvokeCommandAction
+                                                                                Command="{Binding UpdateGraphData, Mode=OneTime}" />
+                                                                        </RoutedEventTriggerBehavior>
+                                                                    </Interaction.Behaviors>
+                                                                    <Expander.Header>
+                                                                        <TextBlock Text="{Binding Month}" />
+                                                                    </Expander.Header>
+                                                                    <Grid RowDefinitions="Auto, Auto">
+                                                                        <StackPanel>
+                                                                            <controls:SpentInTimePeriod
+                                                                                TotalIn="{Binding TotalIn}"
+                                                                                TotalOut="{Binding TotalOut}"
+                                                                                Normalised="{Binding TotalDif }"
+                                                                                Title="Overview" />
+                                                                            
+                                                                            <lvc:CartesianChart
+                                                                                MinHeight="500"
+                                                                                ZoomMode="Both"
+                                                                                XAxes="{Binding AxisX}"
+                                                                                Series="{Binding DailyBreakdownSeries}"
+                                                                                TooltipPosition="Auto"
+                                                                                AutoUpdateEnabled="True" />
+
+                                                                        </StackPanel>
+                                                                    </Grid>
+                                                                </Expander>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Grid>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                </StackPanel>
+        </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            </ScrollViewer>
+            </Border>
+    </Grid>
+</UserControl>

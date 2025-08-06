@@ -25,12 +25,12 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Android" Version="11.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Sentry.Android.AssemblyReader" Version="4.13.0" />
-    <PackageReference Include="Sentry.Bindings.Android" Version="4.13.0" />
+    <PackageReference Include="Sentry.Android.AssemblyReader" Version="5.1.1" />
+    <PackageReference Include="Sentry.Bindings.Android" Version="5.1.1" />
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.13" />
   </ItemGroup>
 

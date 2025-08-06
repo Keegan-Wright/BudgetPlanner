@@ -5,6 +5,7 @@ using BudgetPlanner.Client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace BudgetPlanner.Client.Controls;
 
@@ -22,31 +23,42 @@ AvaloniaProperty.RegisterDirect<SpentInTimePeriod, decimal>(nameof(Normalised), 
 
     public static readonly DirectProperty<SpentInTimePeriod, string> TitleProperty =
         AvaloniaProperty.RegisterDirect<SpentInTimePeriod, string>(nameof(Title), p => p.Title, (p, v) => p.Title = v);
+ 
+  
+    
 
     private decimal _totalOut = new decimal();
     private decimal _totalIn = new decimal();
     private decimal _normalised = new decimal();
-
     private string _title = "";
 
-    public string FormattedTotalSpent => $"�{TotalOut} {Title}";
 
     public decimal TotalOut
     {
         get => _totalOut;
-        set => SetAndRaise(TotalOutProperty, ref _totalOut, value);
+        set
+        {
+            SetAndRaise(TotalOutProperty, ref _totalOut, value);
+        }
     }
 
     public decimal TotalIn
     {
         get => _totalIn;
-        set => SetAndRaise(TotalInProperty, ref _totalIn, value);
+        set
+        {
+            SetAndRaise(TotalInProperty, ref _totalIn, value);
+        }
     }
+    
 
     public decimal Normalised
     {
         get => _normalised;
-        set => SetAndRaise(NormalisedProperty, ref _normalised, value);
+        set
+        {
+            SetAndRaise(NormalisedProperty, ref _normalised, value);
+        }
     }
 
     public string Title

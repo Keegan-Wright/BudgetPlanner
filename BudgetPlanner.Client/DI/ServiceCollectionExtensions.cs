@@ -8,6 +8,7 @@ using BudgetPlanner.Client.Services.Classifications;
 using BudgetPlanner.Client.Services.Dashboard;
 using BudgetPlanner.Client.Services.HouseholdMember;
 using BudgetPlanner.Client.Services.OpenBanking;
+using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Client.ViewModels;
 using BudgetPlanner.Client.ViewModels.Validators;
@@ -39,7 +40,9 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
             services.AddTransient<LandingPageViewModel>();
-
+            services.AddTransient<SpentInTimePeriodReportViewModel>();
+            services.AddTransient<SpentInAccountReportViewModel>();
+            services.AddTransient<SpentInCategoryReportViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -66,6 +69,9 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<LoginView>();
             services.AddTransient<RegisterView>();
             services.AddTransient<LandingPageView>();
+            services.AddTransient<SpentInTimePeriodReportView>();
+            services.AddTransient<SpentInAccountReportView>();
+            services.AddTransient<SpentInCategoryReportView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)
@@ -81,6 +87,7 @@ namespace BudgetPlanner.Client.DI
             services.AddSingleton<IOpenBankingRequestService, OpenBankingRequestService>();
             services.AddSingleton<ITransactionsRequestService, TransactionsRequestService>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IReportsService, ReportsService>();
 
         }
 

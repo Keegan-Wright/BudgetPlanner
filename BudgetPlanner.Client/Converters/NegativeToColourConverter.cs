@@ -9,17 +9,22 @@ namespace BudgetPlanner.Client.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            SolidColorBrush brush = new SolidColorBrush();
-            decimal decimalValue = Decimal.Parse(value.ToString());
-            if (decimalValue != null && decimal.IsNegative(decimalValue))
+            if (value is decimal decimalValue)
             {
-                brush.Color = Colors.Red;
+                SolidColorBrush brush = new SolidColorBrush();
+                
+                if (decimal.IsNegative(decimalValue))
+                {
+                    brush.Color = Colors.Red;
+                }
+                else
+                {
+                    brush.Color = Colors.Green;
+                }
+                return brush;
             }
-            else
-            {
-                brush.Color = Colors.Green;
-            }
-            return brush;
+
+            return null;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

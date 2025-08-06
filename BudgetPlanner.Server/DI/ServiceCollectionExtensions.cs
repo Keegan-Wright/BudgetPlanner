@@ -7,6 +7,7 @@ using BudgetPlanner.Server.Services.Calendar;
 using BudgetPlanner.Server.Services.Classifications;
 using BudgetPlanner.Server.Services.Dashboard;
 using BudgetPlanner.Server.Services.OpenBanking;
+using BudgetPlanner.Server.Services.Reports;
 using BudgetPlanner.Server.Services.Transactions;
 
 namespace BudgetPlanner.Server.DI;
@@ -24,6 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IClassificationService, ClassificationService>();
         services.AddScoped<ICalendarService, CalendarService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IReportService, ReportService>();
     }
     
     public static void AddExternalServices(this IServiceCollection services)

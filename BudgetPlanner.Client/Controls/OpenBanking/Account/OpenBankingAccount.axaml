@@ -55,12 +55,12 @@
 									Margin="0 20">
 							<StackPanel Orientation="Vertical">
 								<TextBlock TextAlignment="Center" FontWeight="Bold">Current Balance</TextBlock>
-								<TextBlock TextAlignment="Center" Text="{Binding Account.AccountBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AccountBalance, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DecimalToCurrencyConverter}}"/>
 							</StackPanel>
 
 							<StackPanel Orientation="Vertical">
 								<TextBlock TextAlignment="Center" FontWeight="Bold">Available Balance</TextBlock>
-								<TextBlock TextAlignment="Center" Text="{Binding Account.AvailableBalance, RelativeSource={RelativeSource TemplatedParent}}"/>
+								<TextBlock TextAlignment="Center" Text="{Binding Account.AvailableBalance, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DecimalToCurrencyConverter}}"/>
 							</StackPanel>
 
 						</StackPanel>

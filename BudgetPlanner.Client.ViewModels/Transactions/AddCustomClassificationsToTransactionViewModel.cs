@@ -20,17 +20,12 @@ namespace BudgetPlanner.Client.ViewModels
         {
             _classificationsRequestService = classificationsRequestService;
             _navigationService = navigationService;
-
-            InitialiseAsync();
         }
 
-        private async void InitialiseAsync()
+        [RelayCommand]
+        private async Task InitialiseAsync()
         {
-            SetLoading(true, "Loading Classifications");
-
-            await RunOnBackgroundThreadAsync(async () => await LoadClassificationsAsync());
-
-            SetLoading(false);
+            await RunOnBackgroundThreadAsync(LoadClassificationsAsync());
         }
 
         [ObservableProperty]
@@ -38,6 +33,8 @@ namespace BudgetPlanner.Client.ViewModels
 
         private async Task LoadClassificationsAsync()
         {
+            
+            SetLoading(true, "Loading Classifications");
             await foreach (var classification in _classificationsRequestService.GetAllCustomClassificationsAsync())
             {
                 Dispatcher.UIThread.Invoke(() => CustomClassifications.Add(new CustomClassificationSelectionItemViewModel()
@@ -49,17 +46,18 @@ namespace BudgetPlanner.Client.ViewModels
 
 
             }
+            SetLoading(false);
         }
 
 
         [RelayCommand]
-        public void ReturnToTransactions()
+        private void ReturnToTransactions()
         {
             NavigateBackToTransactions();
         }
 
         [RelayCommand]
-        public async Task AddCustomTagsToTransaction()
+        private async Task AddCustomTagsToTransaction()
         {
             try
             {
@@ -80,7 +78,7 @@ namespace BudgetPlanner.Client.ViewModels
                 });
 
             }
-            catch (Exception ex)
+            catch (Exception? ex)
             {
                 ErrorHandler.HandleError(ex);
             }

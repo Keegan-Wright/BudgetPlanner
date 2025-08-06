@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using BudgetPlanner.Client.Services.Auth;
+using BudgetPlanner.Client.ViewModels;
 
 namespace BudgetPlanner.Client.ViewModels
 {
@@ -41,6 +42,15 @@ namespace BudgetPlanner.Client.ViewModels
                 new NavigationItemViewModel() { DisplayName = "Accounts", RouteType = AppRoutes.Accounts},
                 new NavigationItemViewModel() { DisplayName = "Transactions", RouteType = AppRoutes.Transactions},
                 new NavigationItemViewModel() { DisplayName = "Calendar", RouteType = AppRoutes.Calendar},
+                new NavigationItemViewModel()
+                {
+                    DisplayName = "Reports",
+                    SubItems = [
+                        new NavigationItemViewModel() { DisplayName = "Spent In Time Period", RouteType = AppRoutes.ReportsSpentInTimePeriod },
+                        new NavigationItemViewModel() { DisplayName = "Account Breakdown", RouteType = AppRoutes.ReportsAccountBreakdown },
+                        new NavigationItemViewModel() { DisplayName = "Category Breakdown", RouteType = AppRoutes.ReportsCategoryBreakdown },
+                    ]
+                },
                 new NavigationItemViewModel() { DisplayName = "Settings", 
                     SubItems = [ 
                         new NavigationItemViewModel() { DisplayName = "Classifications", RouteType = AppRoutes.SettingsClassifications },
@@ -134,6 +144,15 @@ namespace BudgetPlanner.Client.ViewModels
                 case AppRoutes.Logout:
                     _ = _authenticationService.LogoutAsync();
                     _navigationService.RequestNavigation<LoginViewModel>();
+                    break;
+                case AppRoutes.ReportsSpentInTimePeriod:
+                    _navigationService.RequestNavigation<SpentInTimePeriodReportViewModel>();
+                    break;
+                case AppRoutes.ReportsAccountBreakdown:
+                    _navigationService.RequestNavigation<SpentInAccountReportViewModel>();
+                    break;
+                case AppRoutes.ReportsCategoryBreakdown:
+                    _navigationService.RequestNavigation<SpentInCategoryReportViewModel>();
                     break;
                 default:
                     throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");

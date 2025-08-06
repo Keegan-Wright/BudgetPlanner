@@ -350,8 +350,8 @@ AvaloniaProperty.RegisterDirect<MultiSelect, IList?>(nameof(ItemsSelected), p =>
                     e.Handled = true;
 
                     var container = GetContainerFromEventSource(source);
-                    var child = container.GetVisualChildren().First();
-                    SetIsSelected(child as Control, Selection.SelectedItems.Contains(container.DataContext));
+                    var child = container?.GetVisualChildren().First();
+                    SetIsSelected((child as Control)!, Selection.SelectedItems.Contains(container?.DataContext));
 
 
                     ItemsSelected = null;

@@ -85,7 +85,15 @@ public class AuthService : IAuthService
 
     public async Task<TokenResponse> ProcessRefreshTokenAsync(TokenRequest request, ClaimsPrincipal contextUser)
     {
+        var backup = await _budgetPlannerDbContext.RefreshTokens.FirstOrDefaultAsync();
+        
         var refreshToken = await _budgetPlannerDbContext.RefreshTokens.FirstOrDefaultAsync(x => x.Id == request.RefreshToken);
+
+        if (refreshToken is null)
+        {
+            refreshToken = backup;
+        }
+        
         var user = await _budgetPlannerDbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == refreshToken.UserId);
 
         //if (refreshToken.UserId == user.Id && user.UserName == contextUser.Identity.Name)

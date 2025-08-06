@@ -48,7 +48,7 @@ public static class ReportingEndPointExtensions
                     [FromBody]
                     BaseReportRequest request, [FromServices] IReportService reportService) =>
                 {
-                    async IAsyncEnumerable<CategoryBreakdownReportItemResponse> GetCategoryBreakdownInTimePeriodReportStream()
+                    async IAsyncEnumerable<SpentInCategoryReportResponse> GetCategoryBreakdownInTimePeriodReportStream()
                     {
                         await foreach (var report in reportService.GetCategoryBreakdownReportAsync(request))
                         {
@@ -72,7 +72,7 @@ public static class ReportingEndPointExtensions
                     [FromBody]
                     BaseReportRequest request, [FromServices] IReportService reportService) =>
                 {
-                    async IAsyncEnumerable<AccountBreakdownReportResponse> GetAccountBreakdownInTimePeriodReportStream()
+                    async IAsyncEnumerable<SpentInAccountReportResponse> GetAccountBreakdownInTimePeriodReportStream()
                     {
                         await foreach (var report in reportService.GetAccountBreakdownReportAsync(request))
                         {

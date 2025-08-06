@@ -7,8 +7,8 @@
              xmlns:lv="clr-namespace:LiveChartsCore;assembly=LiveChartsCore"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="BudgetPlanner.Client.Views.AccountBreakdownReportView"
-             x:DataType="vm:AccountBreakdownReportViewModel">
+             x:Class="BudgetPlanner.Client.Views.SpentInCategoryReportView"
+             x:DataType="vm:SpentInCategoryReportViewModel">
 
     <Interaction.Behaviors>
         <RoutedEventTriggerBehavior
@@ -32,24 +32,25 @@
         </Border>
 
         <Border Grid.Row="1" Theme="{StaticResource CardBorder}">
-            <!--<ScrollViewer>
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <ItemsControl ItemsSource="{Binding ReportItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                                    <Border Theme="{StaticResource CardBorder}">
                 <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Category }" />
                     <controls:SpentInTimePeriod TotalIn="{Binding TotalIn}" 
                                                 TotalOut="{Binding TotalOut}"
                                                 Normalised="{Binding TotalDif}" Title="Overview" />
 
-                    <lvc:PieChart
+                    <!--<lvc:PieChart
                         Margin="10"
-                        LegendPosition="Left"
                         MinHeight="250"
                         Series="{Binding TotalOverviewPieSeries}"
                         AutoUpdateEnabled="True"
-                        TooltipPosition="Auto">
-                    </lvc:PieChart>
-                    
-                    <ItemsControl ItemsSource="{Binding Path=ReportItems}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                        TooltipPosition="Auto" />-->
+
                                 <ItemsControl ItemsSource="{Binding YearlyBreakdown}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -63,7 +64,7 @@
                                                 </Interaction.Behaviors>
 
                                                 <Expander.Header>
-                                                    <TextBlock Text="{Binding Year}"></TextBlock>
+                                                    <TextBlock Text="{Binding Year}" />
                                                 </Expander.Header>
                                                 <Grid RowDefinitions="Auto, Auto">
 
@@ -76,14 +77,12 @@
 
 
                                                         <lvc:CartesianChart
-                                                            LegendPosition="Left"
                                                             MinHeight="500"
                                                             ZoomMode="Both"
                                                             XAxes="{Binding AxisX}"
                                                             Series="{Binding MonthlyBreakdownSeries}"
                                                             TooltipPosition="Auto"
-                                                            AutoUpdateEnabled="True">
-                                                        </lvc:CartesianChart>
+                                                            AutoUpdateEnabled="True" />
 
 
                                                     </StackPanel>
@@ -101,7 +100,7 @@
                                                                         </RoutedEventTriggerBehavior>
                                                                     </Interaction.Behaviors>
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding Month}"></TextBlock>
+                                                                        <TextBlock Text="{Binding Month}" />
                                                                     </Expander.Header>
                                                                     <Grid RowDefinitions="Auto, Auto">
                                                                         <StackPanel>
@@ -112,15 +111,13 @@
                                                                                 Title="Overview" />
                                                                             
                                                                             <lvc:CartesianChart
-                                                                                LegendPosition="Left"
                                                                                 MinHeight="500"
                                                                                 ZoomMode="Both"
                                                                                 XAxes="{Binding AxisX}"
                                                                                 Series="{Binding DailyBreakdownSeries}"
                                                                                 TooltipPosition="Auto"
-                                                                                AutoUpdateEnabled="True">
-                                                                            </lvc:CartesianChart>
-                                                                            
+                                                                                AutoUpdateEnabled="True" />
+
                                                                         </StackPanel>
                                                                     </Grid>
                                                                 </Expander>
@@ -132,11 +129,13 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
                 </StackPanel>
-            </ScrollViewer>-->
         </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            </ScrollViewer>
+            </Border>
     </Grid>
 </UserControl>

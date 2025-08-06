@@ -43,11 +43,11 @@
 	    <DependentUpon>HeaderAndValueCard.axaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Views\Reports\AccountBreakdownReportView.axaml.cs">
+	  <Compile Update="Views\Reports\SpentInAccountReportView.axaml.cs">
 	    <DependentUpon>SpentInTimePeriodReportView2.axaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Views\Reports\CategoryBreakdownReportView.axaml.cs">
+	  <Compile Update="Views\Reports\SpentInCategoryReportView.axaml.cs">
 	    <DependentUpon>AccountBreakdownReportView2.axaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>

@@ -4,9 +4,9 @@ using BudgetPlanner.Client.ViewModels;
 
 namespace BudgetPlanner.Client.Views
 {
-    public partial class CategoryBreakdownReportView : UserControl
+    public partial class SpentInAccountReportView : UserControl
     {
-        public CategoryBreakdownReportView()
+        public SpentInAccountReportView()
         {
             InitializeComponent();
         }

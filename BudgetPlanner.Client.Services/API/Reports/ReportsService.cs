@@ -22,17 +22,17 @@ public class ReportsService : BaseRequestService, IReportsService
         }
     }
 
-    public async IAsyncEnumerable<CategoryBreakdownReportResponse> GetCategoryBreakdownReportAsync(BaseReportRequest request)
+    public async IAsyncEnumerable<SpentInCategoryReportResponse> GetCategoryBreakdownReportAsync(BaseReportRequest request)
     {
-        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, CategoryBreakdownReportResponse>("GetCategoryBreakdownInTimePeriod",request))
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, SpentInCategoryReportResponse>("GetCategoryBreakdownInTimePeriod",request))
         {
             yield return accountAndTransaction;
         }
     }
 
-    public async IAsyncEnumerable<AccountBreakdownReportResponse> GetAccountBreakdownReportAsync(BaseReportRequest request)
+    public async IAsyncEnumerable<SpentInAccountReportResponse> GetAccountBreakdownReportAsync(BaseReportRequest request)
     {
-        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, AccountBreakdownReportResponse>("GetAccountBreakdownInTimePeriod",request ))
+        await foreach (var accountAndTransaction in PostAsyncEnumerableAsync<BaseReportRequest, SpentInAccountReportResponse>("GetAccountBreakdownInTimePeriod",request ))
         {
             yield return accountAndTransaction;
         }

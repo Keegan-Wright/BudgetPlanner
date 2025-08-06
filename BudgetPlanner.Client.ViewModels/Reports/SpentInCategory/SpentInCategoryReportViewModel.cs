@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using BudgetPlanner.Client.Services;
 using BudgetPlanner.Client.Services.Reports;
 using BudgetPlanner.Client.Services.Transactions;
@@ -6,37 +5,16 @@ using BudgetPlanner.Shared.Enums;
 using BudgetPlanner.Shared.Models.Request.Reports;
 using BudgetPlanner.Shared.Models.Request.Transaction;
 using BudgetPlanner.Shared.Models.Response.Reports;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LiveChartsCore;
-using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 
 namespace BudgetPlanner.Client.ViewModels;
 
-public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<SpentInTimePeriodReportItemViewModel>
+public partial class SpentInCategoryReportViewModel : BaseReportPageViewModel<SpentInCategoryReportItemViewModel>
 {
-
-    [ObservableProperty]
-    private decimal _totalIn;
-    
-    [ObservableProperty]
-    private decimal _totalOut;
-    
-    [ObservableProperty]
-    private decimal _totalDif;
-
-    [ObservableProperty]
-    private ObservableCollection<ISeries> _totalOverviewPieSeries = [];
-    
-    
-    public SpentInTimePeriodReportViewModel(IReportsService reportsService, INavigationService navigationService, ITransactionsRequestService transactionsRequestService) : base(reportsService, navigationService, transactionsRequestService)
+    public SpentInCategoryReportViewModel(IReportsService reportsService, INavigationService navigationService, ITransactionsRequestService transactionsRequestService) : base(reportsService, navigationService, transactionsRequestService)
     {
-        
     }
-
-
+    
     public override async Task LoadReportAsync(FilteredTransactionsRequest searchCriteria)
     {
         SetLoading(true, "Loading report...");
@@ -55,28 +33,29 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
             SearchTerm = searchCriteria.SearchTerm
         };
 
-        await foreach (var reportItem in _reportsService.GetSpentInTimePeriodReportAsync(request))
+                await foreach (var reportItem in _reportsService.GetCategoryBreakdownReportAsync(request))
         {
-            var newItem = new SpentInTimePeriodReportItemViewModel
+            var newItem = new SpentInCategoryReportItemViewModel
             {
                 TotalIn = reportItem.TotalIn,
                 TotalOut = reportItem.TotalOut,
-                TotalTransactions = reportItem.TotalTransactions
+                TotalTransactions = reportItem.TotalTransactions,
+                Category = reportItem.Category
             };
 
             foreach (var yearlyItem in reportItem.YearlyBreakdown)
             {
-                var newYearlyItem = new SpentInTimePeriodReportYearlyBreakdownViewModel
+                var newYearlyItem = new SpentInCategoryReportYearlyBreakdownViewModel()
                 {
                     TotalIn = yearlyItem.TotalIn,
                     TotalOut = yearlyItem.TotalOut,
                     TotalTransactions = yearlyItem.TotalTransactions,
-                    Year = yearlyItem.Year
+                    Year = yearlyItem.Year,
                 };
 
                 foreach (var monthlyItem in yearlyItem.MonthlyBreakdown)
                 {
-                    var newMonthlyItem = new SpentInTimePeriodReportMonthlyBreakdownViewModel
+                    var newMonthlyItem = new SpentInCategoryReportMonthlyBreakdownViewModel()
                     {
                         Month = monthlyItem.Month,
                         TotalIn = monthlyItem.TotalIn,
@@ -86,7 +65,7 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
 
                     foreach (var dailyItem in monthlyItem.DailyBreakdown)
                     {
-                        var newDailyItem = new SpentInTimePeriodDailyBreakdownViewModel()
+                        var newDailyItem = new SpentInCategoryDailyBreakdownViewModel()
                         {
                             Day = dailyItem.Day,
                             TotalIn = dailyItem.TotalIn,
@@ -109,9 +88,14 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
         UpdateTotals();
         UpdateOverviewPie();
         
+
         SetLoading(false);
     }
-
+    
+    public override async Task LoadFilterItemsAsync()
+    {
+        await base.LoadFilterItemsAsync();
+    }
     private void UpdateOverviewPie()
     {
         TotalOverviewPieSeries.Clear();
@@ -120,7 +104,6 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
         {
             Values = new List<decimal> { TotalIn},
             Name = "Income",
-            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
             DataLabelsSize = 22,
             DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
             DataLabelsFormatter = point => "ddd",
@@ -131,7 +114,6 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
         {
             Name = "Outgoing",
             Values = new List<decimal> { decimal.Abs(TotalOut)},
-            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
             DataLabelsSize = 22,
             DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
             DataLabelsFormatter = point => 
@@ -143,7 +125,6 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
         {
             Name = "Dif",
             Values = new List<decimal> { decimal.Abs(TotalDif)},
-            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
             DataLabelsSize = 22,
             DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
             DataLabelsFormatter = point => 
@@ -167,5 +148,4 @@ public partial class SpentInTimePeriodReportViewModel : BaseReportPageViewModel<
         
 
     }
-
 }

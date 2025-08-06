@@ -7,13 +7,13 @@ using LiveChartsCore.SkiaSharpView;
 
 namespace BudgetPlanner.Client.ViewModels;
 
-public partial class SpentInTimePeriodReportMonthlyBreakdownViewModel : SpentInTimePeriodBreakdownBaseViewModel
+public partial class SpentInCategoryReportMonthlyBreakdownViewModel : ReportItemStatsBaseViewModel
 {
     [ObservableProperty] 
     private string _month;
     
     [ObservableProperty]
-    private ObservableCollection<SpentInTimePeriodDailyBreakdownViewModel> _dailyBreakdown = [];
+    private ObservableCollection<SpentInCategoryDailyBreakdownViewModel> _dailyBreakdown = [];
     
     [ObservableProperty] private ObservableCollection<ISeries> _dailyBreakdownSeries = [];
 

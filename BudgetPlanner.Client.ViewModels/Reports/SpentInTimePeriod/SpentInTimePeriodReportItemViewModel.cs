@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BudgetPlanner.Client.ViewModels;
 
-public partial class SpentInTimePeriodReportItemViewModel : SpentInTimePeriodBreakdownBaseViewModel
+public partial class SpentInTimePeriodReportItemViewModel : ReportItemStatsBaseViewModel
 {
     [ObservableProperty]
     private ObservableCollection<SpentInTimePeriodReportYearlyBreakdownViewModel> _yearlyBreakdown = [];

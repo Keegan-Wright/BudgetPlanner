@@ -41,8 +41,8 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<RegisterViewModel>();
             services.AddTransient<LandingPageViewModel>();
             services.AddTransient<SpentInTimePeriodReportViewModel>();
-            services.AddTransient<AccountBreakdownReportViewModel>();
-            services.AddTransient<CategoryBreakdownReportViewModel>();
+            services.AddTransient<SpentInAccountReportViewModel>();
+            services.AddTransient<SpentInCategoryReportViewModel>();
         }
 
         public static void AddWindows(this IServiceCollection services)
@@ -70,8 +70,8 @@ namespace BudgetPlanner.Client.DI
             services.AddTransient<RegisterView>();
             services.AddTransient<LandingPageView>();
             services.AddTransient<SpentInTimePeriodReportView>();
-            services.AddTransient<AccountBreakdownReportView>();
-            services.AddTransient<CategoryBreakdownReportView>();
+            services.AddTransient<SpentInAccountReportView>();
+            services.AddTransient<SpentInCategoryReportView>();
         }
 
         public static void AddClientServices(this IServiceCollection services)

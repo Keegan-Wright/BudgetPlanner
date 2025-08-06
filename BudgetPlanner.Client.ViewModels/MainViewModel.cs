@@ -149,10 +149,10 @@ namespace BudgetPlanner.Client.ViewModels
                     _navigationService.RequestNavigation<SpentInTimePeriodReportViewModel>();
                     break;
                 case AppRoutes.ReportsAccountBreakdown:
-                    _navigationService.RequestNavigation<AccountBreakdownReportViewModel>();
+                    _navigationService.RequestNavigation<SpentInAccountReportViewModel>();
                     break;
                 case AppRoutes.ReportsCategoryBreakdown:
-                    _navigationService.RequestNavigation<CategoryBreakdownReportViewModel>();
+                    _navigationService.RequestNavigation<SpentInCategoryReportViewModel>();
                     break;
                 default:
                     throw new NotImplementedException($"Navigation for type {value.RouteType} is not implemented");

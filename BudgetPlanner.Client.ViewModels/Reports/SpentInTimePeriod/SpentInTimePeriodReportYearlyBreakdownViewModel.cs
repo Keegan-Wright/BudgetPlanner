@@ -8,7 +8,7 @@ using LiveChartsCore.SkiaSharpView;
 
 namespace BudgetPlanner.Client.ViewModels;
 
-public partial class SpentInTimePeriodReportYearlyBreakdownViewModel : SpentInTimePeriodBreakdownBaseViewModel
+public partial class SpentInTimePeriodReportYearlyBreakdownViewModel : ReportItemStatsBaseViewModel
 {
     [ObservableProperty]
     private int _year;

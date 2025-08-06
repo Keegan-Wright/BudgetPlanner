@@ -5,11 +5,25 @@ using BudgetPlanner.Client.Services.Transactions;
 using BudgetPlanner.Shared.Models.Request.Transaction;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LiveChartsCore;
 
 namespace BudgetPlanner.Client.ViewModels;
 
 public abstract partial class BaseReportPageViewModel<TReportResponse> : PageViewModel
 {
+    
+    [ObservableProperty]
+    private ObservableCollection<ISeries> _totalOverviewPieSeries = [];
+    
+    [ObservableProperty]
+    private decimal _totalIn;
+    
+    [ObservableProperty]
+    private decimal _totalOut;
+    
+    [ObservableProperty]
+    private decimal _totalDif;
+    
     internal readonly IReportsService _reportsService;
     internal readonly INavigationService _navigationService;
     internal readonly ITransactionsRequestService _transactionsRequestService;
@@ -49,8 +63,8 @@ public abstract partial class BaseReportPageViewModel<TReportResponse> : PageVie
     [ObservableProperty]
     private ObservableCollection<TransactionTagFilterViewModel> _tagFilterItems = [];
     
-                    [RelayCommand]
-        public async Task LoadFilterItemsAsync()
+       [RelayCommand]
+        public virtual async Task LoadFilterItemsAsync()
         {
             
             SetLoading(true, "Loading filter items");
